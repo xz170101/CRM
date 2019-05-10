@@ -23,7 +23,7 @@
 		<div id="login-header-nav_ctx">
 			<div class="l mt10px">
 				<a href="javascript:;" class="logoicon">logo图标</a>
-				<a href="javascript:;" class="logo_title">logo名称</a>
+				<a href="javascript:;" class="logo_title">log名称</a>
 				<a class="line"></a>
 				<a href="javascript:;" class="e">logo副标题</a>
 			</div>
