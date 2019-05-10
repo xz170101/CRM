@@ -39,3 +39,51 @@
 .accordion .accordion-header-selected .panel-title {
   color: #0074c7;
 }
+.accordion .panel-last > .accordion-header {
+  border-bottom-color: #817865;
+}
+.accordion .panel-last > .accordion-body {
+  border-bottom-color: #feeebd;
+}
+.accordion .panel-last > .accordion-header-selected,
+.accordion .panel-last > .accordion-header-border {
+  border-bottom-color: #494437;
+}
+.accordion> .panel-hleft {
+  float: left;
+}
+.accordion> .panel-hleft>.panel-header {
+  border-width: 0 1px 0 0;
+}
+.accordion> .panel-hleft> .panel-body {
+  border-width: 0 1px 0 0;
+}
+.accordion> .panel-hleft.panel-last > .accordion-header {
+  border-right-color: #817865;
+}
+.accordion> .panel-hleft.panel-last > .accordion-body {
+  border-right-color: #feeebd;
+}
+.accordion> .panel-hleft.panel-last > .accordion-header-selected,
+.accordion> .panel-hleft.panel-last > .accordion-header-border {
+  border-right-color: #494437;
+}
+.accordion> .panel-hright {
+  float: right;
+}
+.accordion> .panel-hright>.panel-header {
+  border-width: 0 0 0 1px;
+}
+.accordion> .panel-hright> .panel-body {
+  border-width: 0 0 0 1px;
+}
+.accordion> .panel-hright.panel-last > .accordion-header {
+  border-left-color: #817865;
+}
+.accordion> .panel-hright.panel-last > .accordion-body {
+  border-left-color: #feeebd;
+}
+.accordion> .panel-hright.panel-last > .accordion-header-selected,
+.accordion> .panel-hright.panel-last > .accordion-header-border {
+  border-left-color: #494437;
+}
