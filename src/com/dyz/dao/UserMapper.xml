@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dyz.dao.UserMapper">
+	<!-- 查询用户列表 -->
+	<select id="getCount" parameterType="fenye" resultType="int">
+		select count(1) from user
+	</select>
+	<!-- 查询所有数据 -->
+	<select id="selectUsers" parameterType="fenye" resultType="user">
+		select * from user
+		limit #{page},#{pageSize}
+	</select>
+	<!-- 验证用户名是否重复 -->
+	<select id="selectUser" parameterType="user" resultType="String">
+		select * from user where loginName=#{loginName}
+	</select>
+	<!-- 重置密码 -->
+	<update id="updatePsd" parameterType="string">
+		update user 
+		<set>
+			 passWord='ysd123' 
+		</set>
+		<where>
+			loginName=#{loginName}		
+		</where> 
+	</update>
+	<!-- 添加用户 -->
+	<insert id="inertUse" parameterType="user">
+		INSERT INTO 
+			user (loginName,passWord,protectEMail,protectMTel,createTime,isLockout) 
+			VALUES (#{loginName},#{passWord},#{protectEMail},#{protectMTel},curdate(),0)
+	</insert>
+	<!--修改用户  -->
+	<update id="updateUse" parameterType="user">
+		update user 
+		<set>
+			<if test="loginName !=null and loginName!='' ">
+				loginName=#{loginName},
+			</if>
+			<if test="protectMTel !=null and protectMTel!=''">
+				protectMTel=#{protectMTel},
+			</if>
+			<if test="protectEMail !=null and protectEMail!='' ">
+				protectEMail=#{protectEMail},
+			</if>
+		</set>
+		<where>
+			user_Id=#{user_Id}		
+		</where> 
+	</update>
+	<!--  根据id删除用户信息-->
+	<delete id="delUse" parameterType="int">
+		delete from user where user_Id=#{user_Id}
+	</delete>
+	<!-- 锁定用户lockUse -->
+	<update id="lockUse" parameterType="int">
+		update user 
+		<set>
+			 isLockout=1
+		</set>
+		<where>
+			user_Id=#{user_Id}	
+		</where> 
+	</update>
+	<!-- 解锁用户unLockUse -->
+	<update id="unLockUse" parameterType="int">
+		update user 
+		<set>
+			 isLockout=0 
+		</set>
+		<where>
+			user_Id=#{user_Id}	
+		</where> 
+	</update>
+
+
+</mapper>
