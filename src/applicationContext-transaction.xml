@@ -30,6 +30,7 @@
             <tx:method name="update*" propagation="REQUIRED"/>
             <tx:method name="insert*" propagation="REQUIRED"/>         
             <tx:method name="select*" read-only="true"/>
+            <tx:method name="get*" read-only="true"/>
         </tx:attributes>
    </tx:advice>
 
