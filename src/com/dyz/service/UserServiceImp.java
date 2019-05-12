@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.dyz.dao.UserMapper;
 import com.dyz.entity.Fenye;
+import com.dyz.entity.Role;
 import com.dyz.entity.User;
+import com.dyz.entity.UserRole;
 
 @Service
 public class UserServiceImp implements UserService{
@@ -63,5 +65,43 @@ public class UserServiceImp implements UserService{
 		// TODO Auto-generated method stub
 		return usermapper.selectUser(loginName);
 	}
-
+	@Override
+	public List<Role> selectUserRoles(Integer user_Id) {
+		// TODO Auto-generated method stub
+		return usermapper.selectUserRole(user_Id);
+	}
+	@Override
+	public List<Role> selectRoles() {
+		// TODO Auto-generated method stub
+		return usermapper.selectRole();
+	}
+	@Override
+	public Integer insertUserRole(UserRole userRole) {
+		// TODO Auto-generated method stub
+		Integer i=1;
+		System.out.println("用户id:"+userRole.getUserId());
+		List<Role> selectRole = usermapper.selectUserRole(userRole.getUserId());
+		if(selectRole!=null) {
+			for(Role r:selectRole) {
+				System.out.println("角色id:"+r.getRoles_Id());
+				if(r.getRoles_Id()==userRole.getRoleId()) {
+					i=0;
+				}
+			}
+		}
+		if(i>0) {
+			return usermapper.inertUserRol(userRole);
+		}
+		return 0;
+		
+	}
+	/**
+	 * 移除用户角色
+	 */
+	@Override
+	public Integer delUserRole(UserRole userRole) {
+		// TODO Auto-generated method stub
+		return usermapper.delUserRol(userRole);
+	}
+ 
 }

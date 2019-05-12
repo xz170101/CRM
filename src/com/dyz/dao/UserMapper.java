@@ -3,7 +3,9 @@ package com.dyz.dao;
 import java.util.List;
 
 import com.dyz.entity.Fenye;
+import com.dyz.entity.Role;
 import com.dyz.entity.User;
+import com.dyz.entity.UserRole;
 
 public interface UserMapper {
 	/**
@@ -58,5 +60,28 @@ public interface UserMapper {
 	 * @return
 	 */
 	Integer unLockUse(Integer user_Id);
+	/**
+	 * 根据id查村所有用户的角色
+	 * @param user_Id
+	 * @return
+	 */
+	List<Role> selectUserRole(Integer user_Id);
+	/**
+	 * 查询所有的角色
+	 * @return
+	 */
+	List<Role> selectRole();
+	/**
+	 * 添加用户角色
+	 * @param userRole
+	 * @return
+	 */
+	Integer inertUserRol(UserRole userRole);
+	/**
+	 * 移除用户角色
+	 * @param userRole
+	 * @return
+	 */
+	Integer delUserRol(UserRole userRole);
 
 }

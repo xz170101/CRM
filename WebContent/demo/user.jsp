@@ -52,6 +52,64 @@
 		// return  row.isLockout=0?'未锁定':'已锁定' ;
 		if(row.isLockout == 0){ return '未锁定'; }else{return '已锁定';}  
 	}
+	//设置角色
+	function SetRole(index){
+		$("#setRolse_window").window('open');
+		var data=$("#userDG").datagrid("getData");
+		var row=data.rows[index];
+		$("#setRolse_window").dialog("setTitle","您正在设置"+row.loginName+"的角色信息");
+		$("#allRole").datagrid({
+				url:"../selectRole_user",  //数据接口的地址
+		        rownumbers:true,
+		        singleSelect:true 
+	   });
+	    $("#myRole").datagrid({ 
+	    		url:"../selectUserRole",  //数据接口的地址
+		        rownumbers:true,
+		        singleSelect:true,
+		        queryParams: { //要发送的参数列表
+		        	user_Id: row.user_Id,
+	        }
+	   });
+	    //添加角色
+	   $("#addRole").click(function(){
+	   	var RoleRow=$("#allRole").datagrid("getSelected");
+	   	if(RoleRow){
+	      	 $.post("../addUserRole",{
+	      		userId: row.user_Id,
+	      		roleId: RoleRow.roles_Id 
+	   		},function(res){
+	   			if(res>0){
+	   				$("#myRole").datagrid("reload");
+	   			}else{
+	   				$.messager.alert("提示","已存在");
+	   			}
+	   		},"json");
+	   		}else{
+	   			$.messager.alert("提示","请先选择对象!");
+	   		}
+	   }); 
+	   //移除角色
+	  $("#removeRole").click(function(){
+		   		var RoleRow=$("#myRole").datagrid("getSelected");
+		   		if(RoleRow){
+	      	 $.post("../delUserRole",{
+	      		userId: row.user_Id,
+	      		roleId: RoleRow.roles_Id 
+	   		},function(res){
+	   			if(res>0){
+	   				$("#myRole").datagrid("reload");
+	   			}else{
+	   				$.messager.alert("提示","已移除");
+	   			}
+	   		},"json");
+	   		}else{
+	   			$.messager.alert("提示","请先选择对象!");
+	   		}
+	   	
+	   });
+	}
+	
 	//锁定用户
 	function LockUser(index){
 		$.messager.confirm('确认','您确认想要锁定用户吗？',function(r){   
@@ -314,7 +372,33 @@
             </table>
          </form>
 	</div>  
-
+	<!--设置用户-->
+	<div id="setRolse_window" class="easyui-window" data-options="modal:true,closed:true" >
+		<table   style="width:330px;height:500px;">
+				<tr valign="top">
+					<td>
+						<table  id="allRole" title="系统所有角色" class="easyui-datagrid">
+							<thead>
+								<th data-options="field:'roles_Id',width:280,hidden:true">用户ID</th>
+		             			<th data-options="field:'roles_Name',width:100">用户名</th>
+							</thead>
+						</table>
+					</td>
+					<td>
+						<input id="addRole" type="button"   value=">>" />
+						<input id="removeRole" type="button"  value="<<\" />
+					</td>
+					<td>
+						<table id="myRole" title="当前用户的角色" class="easyui-datagrid">
+							<thead>
+								<th data-options="field:'roles_Id',width:280,hidden:true">用户ID</th>
+		             			<th data-options="field:'roles_Name',width:100">用户名</th>
+							</thead>
+						</table>
+					</td>
+				</tr>
+		</table>			
+	</div>
 
 
 </body>

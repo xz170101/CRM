@@ -11,13 +11,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dyz.entity.Fenye;
+import com.dyz.entity.Role;
 import com.dyz.entity.User;
+import com.dyz.entity.UserRole;
 import com.dyz.service.UserService;
 
 @Controller
 public class UserController {
 	@Autowired
 	private UserService userService;
+	/**
+	 * 分页多条件查询用户信息
+	 * @param fenye
+	 * @return
+	 */
 	@RequestMapping(value="/selectUser",method=RequestMethod.POST)
 	@ResponseBody
 	public Fenye selectUser(Fenye fenye) {
@@ -26,7 +33,51 @@ public class UserController {
 		fenye.setPageSize(row);
 		return userService.getUsers(fenye);
 	}
-	//重置密码
+	/**
+	 * 查询所有角色
+	 */
+	@RequestMapping(value="/selectRole_user",method=RequestMethod.POST)
+	@ResponseBody
+	public  List<Role> selectRole_user() {
+		 
+		return userService.selectRoles();
+	}
+	/**
+	 * 给用户添加角色
+	 * @param userRole
+	 * @return
+	 */
+	@RequestMapping(value="/addUserRole",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer addUserRole(UserRole userRole) {
+		 
+		return userService.insertUserRole(userRole);
+	}
+	/**
+	 * 给移除用户角色
+	 * @param userRole
+	 * @return
+	 */
+	@RequestMapping(value="/delUserRole",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer delUserRole(UserRole userRole) {
+		 
+		return userService.delUserRole(userRole);
+	}
+	/**
+	 * 根据id查询用户角色
+	 * @return
+	 */
+	@RequestMapping(value="/selectUserRole",method=RequestMethod.POST)
+	@ResponseBody
+	public List<Role> selectUserRole(Integer user_Id){
+		return userService.selectUserRoles(user_Id);
+	}
+	/**
+	 * 重置密码
+	 * @param loginName
+	 * @return
+	 */
 	@RequestMapping(value="/resetPassword",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer resetPassword(String loginName) {
