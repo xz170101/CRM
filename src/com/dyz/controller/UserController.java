@@ -20,16 +20,16 @@ public class UserController {
 	private UserService userService;
 	@RequestMapping(value="/selectUser",method=RequestMethod.POST)
 	@ResponseBody
-	private Fenye selectUser(Fenye fenye) {
+	public Fenye selectUser(Fenye fenye) {
 		Integer row = Integer.parseInt((String)fenye.getRows().get(0));
-		fenye.setPage((fenye.getPage()-1)*row);
+		fenye.setPage(fenye.getPage());
 		fenye.setPageSize(row);
 		return userService.getUsers(fenye);
 	}
 	//重置密码
 	@RequestMapping(value="/resetPassword",method=RequestMethod.POST)
 	@ResponseBody
-	private Integer resetPassword(String loginName) {
+	public Integer resetPassword(String loginName) {
 		 
 		return userService.updatePassword(loginName);
 	} 
@@ -39,7 +39,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/addUser",method=RequestMethod.POST)
 	@ResponseBody
-	private Integer addUser(User user) {
+	public Integer addUser(User user) {
 		 
 		return  userService.inertUser(user);
 	}
@@ -50,7 +50,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/updateUser",method=RequestMethod.POST)
 	@ResponseBody
-	private Integer updateUser(User user) {
+	public Integer updateUser(User user) {
 		return  userService.updateUser(user);
 	}
 	/**
@@ -60,7 +60,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/delUser",method=RequestMethod.POST)
 	@ResponseBody
-	private Integer delUser(Integer user_Id) {
+	public Integer delUser(Integer user_Id) {
 		return  userService.delUser(user_Id);
 	}
 	/**
@@ -70,7 +70,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/lockUser",method=RequestMethod.POST)
 	@ResponseBody
-	private Integer lockUser(Integer user_Id) {
+	public Integer lockUser(Integer user_Id) {
 		return  userService.lockUser(user_Id);
 	}
 	/**
@@ -80,7 +80,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/unLockUser",method=RequestMethod.POST)
 	@ResponseBody
-	private Integer unLockUser(Integer user_Id) {
+	public Integer unLockUser(Integer user_Id) {
 		return  userService.unLockUser(user_Id);
 	}
 /**

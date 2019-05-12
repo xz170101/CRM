@@ -1,5 +1,8 @@
 package com.dyz.entity;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Askers {
 	private Integer askers_id;
 	private String askers_name;

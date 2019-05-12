@@ -24,7 +24,7 @@ public class RoleController {
 	 */
 	@RequestMapping(value="/selectRole",method=RequestMethod.POST)
 	@ResponseBody
-	private Fenye selectRole(Fenye fenye) {
+	public Fenye selectRole(Fenye fenye) {
 		Integer row = Integer.parseInt((String)fenye.getRows().get(0));
 		fenye.setPage((fenye.getPage()-1)*row);
 		fenye.setPageSize(row);
@@ -38,17 +38,17 @@ public class RoleController {
 	 */
 	@RequestMapping(value="/updateRole",method=RequestMethod.POST)
 	@ResponseBody
-	private Integer updateRole(Role role) {
+	public Integer updateRole(Role role) {
 		return  roleService.updateRole(role);
 	}
 	@RequestMapping(value="/insertRole",method=RequestMethod.POST)
 	@ResponseBody
-	private Integer insertRole(Role role) {
+	public Integer insertRole(Role role) {
 		return  roleService.insertRole(role);
 	}
 	@RequestMapping(value="/delRole",method=RequestMethod.POST)
 	@ResponseBody
-	private Integer delRole(Integer roles_Id) {
+	public Integer delRole(Integer roles_Id) {
 		return  roleService.delRole(roles_Id);
 	}
 	
