@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dyz.dao.RoleMapper">
+<!-- 查询总条数 -->
+	<select id="getCont" parameterType="fenye" resultType="int">
+		select count(1) from roles
+	</select>
+	<!-- 查询角色总数据 -->
+	<select id="selectRoles" parameterType="fenye" resultType="role">
+		select * from roles
+	</select>
+	<!-- 修改角色信息 -->
+	<update id="updateRole" parameterType="role">
+	 	update roles 
+		<set>
+			<if  test="roles_Name != null and roles_Name != '' ">
+			 roles_Name=#{roles_Name} 
+			</if>
+		</set>
+		<where>
+			roles_Id=#{roles_Id}		
+		</where> 
+	</update>
+	<!-- 删除角色 -->
+	<delete id="delRole"  parameterType="int">
+		delete from roles where roles_Id=#{roles_Id}	
+	</delete>
+	<!-- 添加角色 -->
+	<insert id="insertRole" parameterType="role">
+		insert  into 
+			roles (roles_Name )
+			values (#{roles_Name})
+	</insert>
+ 
+</mapper>
