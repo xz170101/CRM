@@ -79,18 +79,18 @@
 		    <div class="user_paswd">
 				<div class="login_input user_bg pwd" name="pwdParent" id="pwdParent">
 			      	<div id="newPwd" class="keyboards-box">
-				 		<input id="keyboards" value="" type="password" name="keyboards" tabindex="3" pa_ui_name="keyboard" pa_ui_keyboard_position="place" pa_ui_key_type="advance" class="styTextinput w162px" maxlength="20">
+				 		<input id="keyboards" value="" type="password" name="keyboards" tabindex="3" pa_ui_name="keyboard" pa_ui_keyboard_position="place" pa_ui_key_type="advance" class="styTextinput w162px" maxlength="20" >
 				 	</div>
 			  	</div> 
 			</div>
 
-			<div class="user_code">
+ 			<div class="user_code">
 				<div class="login_input user_bg vnc">
-		        	<input name="verification" id="verification" tabindex="1" value="验证码" type="text" class="usernameSty" onblur="if(this.value==&#39;&#39;) {this.value=&#39;验证码&#39;;this.style.color=&#39;#999&#39;}" onfocus="if(this.value==&#39;验证码&#39;) this.value=&#39;&#39;;this.style.color=&#39;#222&#39;" autocomplete="off">
-		        	<div id="v_container" class="codeimg"></div>
+		        	<input name="verification" id="verification" tabindex="1" value="验证码" type="text" class="codeSty" onblur="if(this.value==&#39;&#39;) {this.value=&#39;验证码&#39;;this.style.color=&#39;#999&#39;}" onfocus="if(this.value==&#39;验证码&#39;) this.value=&#39;&#39;;this.style.color=&#39;#222&#39;" autocomplete="off">
+		        	<img class="" src="checkCode" alt="" width="100" height="30"   style="height:43px;cursor:pointer;" onclick="this.src=this.src+'?'">
 		    	</div>
-		  	</div>
-		
+		  	</div> 
+		  
 			<div style="height:10px"></div>
 	      	<div class="remeber_name"> 
 				<b id="checked" class="normal" onclick="changeCheckRembername();"></b>
@@ -168,9 +168,6 @@
 
 
 <script src="js/assets/js/jquery2.1.1.js" type="text/javascript"></script>
-<!-- <script src="js/assets/login/js/jquery-ui.min.js" type="text/javascript"></script>
-<script src="js/assets/login/js/pa_ui.js" type="text/javascript"></script>
-<script src="js/assets/login/js/pa_ui_misc.js" type="text/javascript"></script> -->
 <script type="text/javascript">
 	$("#other-login").click(function(){
 		$("#login_list").toggle();
@@ -188,7 +185,7 @@
 	}
 
     //加入收藏
-        function AddFavorite(sURL, sTitle) {
+       /*  function AddFavorite(sURL, sTitle) {
             sURL = encodeURI(sURL); 
         try{   
             window.external.addFavorite(sURL, sTitle);   
@@ -199,16 +196,16 @@
                 alert("加入收藏失败，请使用Ctrl+D进行添加,或手动在浏览器里进行设置.");
             }   
         }
-    }
+    } */
     //设为首页
-    function SetHome(url){
+    /* function SetHome(url){
         if (document.all) {
             document.body.style.behavior='url(#default#homepage)';
                document.body.setHomePage(url);
         }else{
             alert("您好,您的浏览器不支持自动设置页面为首页功能,请您手动在浏览器里设置该页面为首页!");
         }
-    }
+    } */
 </script>
 </body>
 </html>
