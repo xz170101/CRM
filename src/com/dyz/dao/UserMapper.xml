@@ -6,10 +6,39 @@
 	<!-- 查询用户列表 -->
 	<select id="getCount" parameterType="fenye" resultType="int">
 		select count(1) from user
+		<where>
+	   		<if test="text2 != null and text2 != '' ">
+				and loginName LIKE  "%"#{text2}"%"
+			</if>
+			<if test="text3 != null and text3 != '' ">
+				and createTime &gt;= #{text3}
+			</if>
+			<if test="text4 != null and text4 != '' ">
+				and createTime &lt;=#{text4}
+			</if>
+			<if test="text5 != null and text5 != '' ">
+				and isLockout = #{text5}
+			</if>
+	   	</where>  
 	</select>
 	<!-- 查询所有数据 -->
 	<select id="selectUsers" parameterType="fenye" resultType="user">
 		select * from user
+		<where>
+			<if test="text2 != null and text2 != '' ">
+				and loginName LIKE  "%"#{text2}"%"
+			</if>
+			<if test="text3 != null and text3 != '' ">
+				and createTime &gt;= #{text3}
+			</if>
+			<if test="text4 != null and text4 != '' ">
+				and createTime &lt;=#{text4}
+			</if>
+			<if test="text5 != null and text5 != '' ">
+				and isLockout = #{text5}
+			</if>
+		</where>
+		order by #{text1}
 		limit #{page},#{pageSize}
 	</select>
 	<!-- 验证用户名是否重复 -->

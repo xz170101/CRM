@@ -22,14 +22,14 @@
 			        pagination:true,
 			        rownumbers:true,
 			        singleSelect:true,
-			        toolbar:'#usertb'
-			       /*  queryParams:{
-			        	stu_name:$("#stu_name").textbox("getValue"),
-			        	sex:$("#sex").textbox("getValue"),
-			        	mtel:$("#mtel").textbox("getValue"),
-			        	qq:$("#qq").textbox("getValue"),
-			        	class_id:classname
-			        } */
+			        toolbar:'#usertb'  ,
+			        queryParams: { //要发送的参数列表
+			        	text1:$("#ord").combobox("getValue"),
+			        	text2: $("#userName").textbox("getValue"), 
+			        	text3:$("#startdate").datetimebox("getValue"),
+			        	text4:$("#enddate").datetimebox("getValue"),
+			        	text5: $("#lock").combobox("getValue")
+					   }  
 			   });
 	}
 	//操作列
@@ -244,15 +244,15 @@
 		        			<input class="easyui-datetimebox" id="enddate" style="width:100px">
 		        	是否锁定：<select id="lock" class="easyui-combobox" name="lock" data-options="panelHeight:'auto'" >
 							    <option value="">-请选择-</option>
-							    <option value="是"> 是</option>
-							    <option value="否"> 否</option>
+							    <option value="1"> 是</option>
+							    <option value="0"> 否</option>
 							  </select>
 		        	排   序：<select id="ord" class="easyui-combobox" name="orderBy" data-options="panelHeight:'auto'" >
 						    <option value="">-请选择-</option>
-						    <option value="CreateTime">创建时间</option>
-						    <option value="LastLoginTime">最后登录时间</option>
+						    <option value="createTime">创建时间</option>
+						    <option value="loginTime">最后登录时间</option>
 						   </select>
-		        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="searchUserInfo()">查找</a>
+		        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="init()">查找</a>
 		    </div>
 		</div>
 		<!-- 新增面板 -->
