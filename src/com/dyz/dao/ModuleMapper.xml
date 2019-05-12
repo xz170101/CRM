@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dyz.dao.ModuleMapper">
+	<!-- 查询 -->
+	<select id="selectModules" resultType="module">
+		select * from modules
+	</select>
+	<!-- 修改 -->
+	<update id="updateModule" parameterType="module">
+		update modules 
+		<set>
+			<if  test="modules_Name != null and modules_Name != '' ">
+			 modules_Name=#{modules_Name} ,
+			</if>
+			<if  test="modules_path != null and modules_path != '' ">
+			 modules_path=#{modules_path} ,
+			</if>
+			<if  test="modules_weight != null and modules_weight != '' ">
+			 modules_weight=#{modules_weight} ,
+			</if>
+		</set>
+		<where>
+			modules_Id = #{modules_Id}		
+		</where> 
+	</update>
+	<!-- 添加 -->
+	<insert id="insertModule" parameterType="module">
+		insert  into 
+			modules (modules_Name,modules_path,modules_weight ,parentId)
+			values (#{modules_Name},#{modules_path},#{modules_weight},#{parentId})
+	</insert>
+	<!-- 删除 -->
+	<delete id="delModule" parameterType="int">
+		delete from modules where modules_Id = #{modules_Id}	 
+	</delete>
+</mapper>

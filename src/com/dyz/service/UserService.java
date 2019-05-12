@@ -1,11 +1,16 @@
 package com.dyz.service;
 
+
+
 import java.util.List;
 
 import com.dyz.entity.Fenye;
+import com.dyz.entity.Role;
 import com.dyz.entity.User;
+import com.dyz.entity.UserRole;
 
 public interface UserService {
+	List<Role> selectUserRoles(Integer user_Id);
 	/**
 	 * 分页查询是所有用户信息
 	 * @param fenye
@@ -54,6 +59,30 @@ public interface UserService {
 	 * @return
 	 */
 	User selectUser(String loginName);
+	/**
+	 * 查询所有的角色
+	 * @return
+	 */
+	List<Role> selectRoles();
+	/**
+	 * 创建用户角色
+	 * @param userRole
+	 * @return
+	 */
+	Integer insertUserRole(UserRole userRole);
+	/**
+	 * 移除用户角色
+	 * @param userRole
+	 * @return
+	 */
+	Integer delUserRole(UserRole userRole);
 	 
-
+	
+	/**
+	 * 判断用户现有角色
+	 * @param user
+	 * @return
+	 */
+/*	Integer panduanXianyoujuese(UserRole userRole);
+*/
 }

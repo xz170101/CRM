@@ -103,6 +103,24 @@
 			user_Id=#{user_Id}	
 		</where> 
 	</update>
-
-
+	<!-- 根据用户id查询用户的角色 -->
+	<select id="selectUserRole" parameterType="int" resultType="role">
+		SELECT r.*
+		FROM roles r,`user` u, userrole ur 
+		WHERE  ur.roleId = r.roles_Id AND ur.userId = u.user_Id AND user_Id =#{user_Id}
+	</select>
+	
+	<!-- 查询所有角色 -->
+	<select id="selectRole" resultType="role">
+		select * from roles	 
+	</select>
+	<!--添加 用户角色 -->
+	<insert id="inertUserRol" parameterType="userRole">
+		INSERT INTO 
+			userrole (roleId,userId) 
+			VALUES (#{roleId},#{userId})
+	</insert>
+	<delete id="delUserRol" parameterType="userRole">
+		DELETE from userrole where  userId =#{userId} and roleId=#{roleId}
+	</delete>
 </mapper>
