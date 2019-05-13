@@ -43,6 +43,7 @@ public class UserController {
 		Integer row = Integer.parseInt((String)fenye.getRows().get(0));
 		fenye.setPage((fenye.getPage()-1)*row);
 		fenye.setPageSize(row);
+
 		return userService.getUsers(fenye);
 	}
 	/**

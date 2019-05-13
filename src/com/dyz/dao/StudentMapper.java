@@ -5,7 +5,7 @@ import java.util.List;
 import com.dyz.entity.Fenye;
 import com.dyz.entity.Student;
 
-public interface AskersMapper {
+public interface StudentMapper {
 	/**
 	 * 查询所有学生
 	 * @param fenye
@@ -18,4 +18,11 @@ public interface AskersMapper {
 	 * @return
 	 */
 	Integer selectCount(Fenye fenye);
+	/**
+	 * 删除学生
+	 * @param stu_id
+	 * @return
+	 */
+	Integer delectStudent(Integer stu_id);
+	
 }

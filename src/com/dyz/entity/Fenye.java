@@ -108,6 +108,7 @@ public class Fenye {
 	public void setNum6(Integer num6) {
 		this.num6 = num6;
 	}
+	
 	public Integer getPage() {
 		return page;
 	}

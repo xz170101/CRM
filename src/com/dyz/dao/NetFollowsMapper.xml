@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dyz.dao.NetFollowsMapper">
+
+	<!-- 映射 -->
+  		<resultMap type="netFollows" id="followsMap">
+		<id property="follows_Id" column="follows_Id"></id>
+		<result property="followTime" column="followTime"/>
+		<result property="nextFollowTime" column="nextFollowTime"/>
+		<result property="conTent" column="conTent"/>
+		<result property="followType" column="followType"/>
+		<result property="createTime" column="createTime"/>
+		<result property="followState" column="followState"/>
+		<result property="nexit1int" column="nexit1int"/>
+		<result property="nexit2String" column="nexit2String"/>
+		
+		<result property="u_id" column="users.u_id"/>
+		<result property="u_name" column="users.u_name"/>
+		<result property="s_id" column="student.s_id"/>
+		<result property="s_name" column="student.s_name"/>
+	</resultMap>
+
+		<!-- 分页多条件查询 -->
+	<select id="selectNetFollows" parameterType="fenye" resultMap="followsMap">
+		select s.*,u.*,n.* FROM students s,`user` u,netfollows n 
+		<where>
+			 s.stu_Id=n.stu_Id and n.user_Id=u.user_Id
+		</where>		
+		limit #{page},#{pageSize}
+	</select>
+	<!-- 查询总条数 -->
+	<select id="selectCount" parameterType="fenye" resultType="int">
+		select count(1) from students s,`user` u,netfollows n
+	</select>
+		<!-- 删除学生 -->
+  	<!-- <delete id="delectStudent" parameterType="int">
+  		delete from students where stu_id=#{stu_id}
+  	</delete> -->
+</mapper>

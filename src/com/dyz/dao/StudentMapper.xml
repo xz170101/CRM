@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dyz.dao.StudentMapper">
+
+	<!-- 映射 -->
+  		<resultMap type="student" id="stu">
+			<id column="stu_id" property="stu_id"/>
+			<result column="stu_Name" property="stu_Name"/>
+			<result column="stu_Age" property="stu_Age"/>
+			<result column="stu_Sex" property="stu_Sex"/>
+			<result column="stu_Phone" property="stu_Phone"/>
+			<result column="stu_Status" property="stu_Status"/>
+			<result column="stu_PerState" property="stu_PerState"/>
+			<result column="stu_MsgSource" property="stu_MsgSource"/>
+			<result column="stu_SourceUrl" property="stu_SourceUrl"/>
+			<result column="stu_SourceKeyWord" property="stu_SourceKeyWord"/>
+			<result column="stu_Address" property="stu_Address"/>
+			<result column="stu_NetPusherld" property="stu_NetPusherld"/>
+			<result column="stu_qq" property="stu_qq"/>
+			<result column="stu_WeiXin" property="stu_WeiXin"/>
+			<result column="stu_Content" property="stu_Content"/>
+			<result column="stu_CreateTime" property="stu_CreateTime"/>
+			<result column="stu_LearnForward" property="stu_LearnForward"/>
+			<result column="stu_isValid" property="stu_isValid"/>
+			<result column="stu_Record" property="stu_Record"/>
+			<result column="stu_isReturnVist" property="stu_isReturnVist"/>
+			<result column="stu_isHome" property="stu_isHome"/>
+			<result column="stu_firstVisitTime" property="stu_firstVisitTime"/>
+			<result column="stu_HomeTime" property="stu_HomeTime"/>
+			<result column="stu_LostValid" property="stu_LostValid"/>
+			<result column="stu_isPay" property="stu_isPay"/>
+			<result column="stu_PayTime" property="stu_PayTime"/>
+			<result column="stu_Money" property="stu_Money"/>
+			<result column="stu_isReturnMoney" property="stu_isReturnMoney"/>
+			<result column="stu_isInClass" property="stu_isInClass"/>
+			<result column="stu_inClassTime" property="stu_inClassTime"/>
+			<result column="stu_inClassContent" property="stu_inClassContent"/>
+			<result column="stu_AskerContent" property="stu_AskerContent"/>
+			<result column="stu_isDel" property="stu_isDel"/>
+			<result column="stu_FromPart" property="stu_FromPart"/>
+			<result column="stu_stuConcern" property="stu_stuConcern"/>
+			<result column="stu_isBaoBei" property="stu_isBaoBei"/>
+			<result column="stu_ZiXunName" property="stu_ZiXunName"/>
+			<result column="stu_CreateUser" property="stu_CreateUser"/>
+			<result column="stu_preMoney" property="stu_preMoney"/>
+			<result column="stu_preMoneyTime" property="stu_preMoneyTime"/>
+			<result column="sexitInte" property="sexitInte"/>
+			<result column="sexitString" property="sexitString"/>
+
+			<result column="follows_Id" property="netfollows.follows_Id"/>
+			<result column="stu_Id" property="netfollows.stu_Id"/>
+			<result column="studentName" property="netfollows.studentName"/>
+			<result column="followTime" property="netfollows.followTime"/>
+			<result column="nextFollowTime" property="netfollows.nextFollowTime"/>
+			<result column="conTent" property="netfollows.conTent"/>
+			<result column="user_Id" property="netfollows.user_Id"/>
+			<result column="followType" property="netfollows.followType"/>
+			<result column="createTime" property="netfollows.createTime"/>
+			<result column="followState" property="netfollows.followState"/>
+			<result column="nexit1int" property="netfollows.nexit1int"/>
+			<result column="nexit2String" property="netfollows.nexit2String"/>
+	
+			
+						
+			<result column="user_Id" property="netfollows.user.user_Id"/>
+			<result column="loginName" property="netfollows.user.loginName"/>
+			<result column="passWord" property="netfollows.user.passWord"/>
+			<result column="psdWrongTime" property="netfollows.user.psdWrongTime"/>
+			<result column="lockTime" property="netfollows.user.lockTime"/>
+			<result column="protectEMail" property="netfollows.user.protectEMail"/>
+			<result column="protectMTel" property="netfollows.user.protectMTel"/>
+			<result column="loginTime" property="netfollows.user.loginTime"/>
+			<result column="createTime" property="netfollows.user.createTime"/>
+			<result column="isLockout" property="netfollows.user.isLockout"/>
+			<result column="uexit2String" property="netfollows.user.uexit2String"/>
+			<result column="uexit1int" property="netfollows.user.uexit1int"/>
+			
+		</resultMap> 
+		<!-- 分页多条件查询 -->
+	<select id="selectStudent" parameterType="fenye" resultMap="stu">
+		select s.*,u.*,n.* FROM students s,`user` u,netfollows n 
+		<where>
+			 s.stu_Id=n.stu_Id and n.user_Id=u.user_Id
+		</where>		
+		limit #{page},#{pageSize}
+	</select>
+	<!-- 查询总条数 -->
+	<select id="selectCount" parameterType="fenye" resultType="int">
+		select count(1) from students s,`user` u,netfollows n
+	</select>
+		<!-- 删除学生 -->
+  	<delete id="delectStudent" parameterType="int">
+  		delete from students where stu_id=#{stu_id}
+  	</delete>
+</mapper>

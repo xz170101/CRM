@@ -31,7 +31,7 @@ public class RoleController {
 		Integer row = Integer.parseInt((String)fenye.getRows().get(0));
 		fenye.setPage((fenye.getPage()-1)*row);
 		fenye.setPageSize(row);
- 		return roleService.getRole(fenye);
+ 		return roleService.getRole(fenye)
 	}
 	/**
 	 * 修改角色信息
