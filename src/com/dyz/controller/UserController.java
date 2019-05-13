@@ -27,10 +27,9 @@ public class UserController {
 	 */
 	@RequestMapping(value="/selectUser",method=RequestMethod.POST)
 	@ResponseBody
-	public Fenye selectUser(Fenye fenye) {
-		Integer row = Integer.parseInt((String)fenye.getRows().get(0));
-		fenye.setPage(fenye.getPage());
-		fenye.setPageSize(row);
+	public Fenye selectUser(Fenye fenye,Integer page,Integer rows) {
+		fenye.setPage((page-1)*rows);
+		fenye.setPageSize(rows);
 		return userService.getUsers(fenye);
 	}
 	/**

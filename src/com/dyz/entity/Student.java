@@ -50,6 +50,16 @@ public class Student {
 	private String stu_preMoneyTime;
 	private Integer sexitInte;
 	private String sexitString;
+	
+	private NetFollows netfollows;
+	
+	
+	public NetFollows getNetfollows() {
+		return netfollows;
+	}
+	public void setNetfollows(NetFollows netfollows) {
+		this.netfollows = netfollows;
+	}
 	public Integer getStu_id() {
 		return stu_id;
 	}

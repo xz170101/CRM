@@ -24,11 +24,9 @@ public class RoleController {
 	 */
 	@RequestMapping(value="/selectRole",method=RequestMethod.POST)
 	@ResponseBody
-	public Fenye selectRole(Fenye fenye) {
-		Integer row = Integer.parseInt((String)fenye.getRows().get(0));
-		fenye.setPage((fenye.getPage()-1)*row);
-		fenye.setPageSize(row);
-		System.out.println(roleService.getRole(fenye));
+	public Fenye selectRole(Fenye fenye,Integer page,Integer rows) {
+		fenye.setPage((page-1)*rows);
+		fenye.setPageSize(rows);
 		return roleService.getRole(fenye);
 	}
 	/**
