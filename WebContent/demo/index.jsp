@@ -47,7 +47,7 @@
         <div class="user-photo">
             <i class="fa fa-user-circle-o"></i>
         </div>
-        <h4 class="user-name ellipsis">Admin</h4>
+        <h4 class="user-name ellipsis">${user.loginName }</h4>
         <i class="fa fa-angle-down xiala"></i>
 
         <div class="viewui-userdrop-down">

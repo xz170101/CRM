@@ -83,5 +83,38 @@ public interface UserMapper {
 	 * @return
 	 */
 	Integer delUserRol(UserRole userRole);
-
+	/**
+	 * 根据用户名查询用户信息
+	 */
+	User findByloginName(String loginName);
+	/**
+	 * 注册用户
+	 * @param user
+	 * @return
+	 */
+	//Integer addUser(User user);
+	/**
+	 * 根据用户名查询用户
+	 * @param loginName
+	 * @return
+	 */
+	Integer selectByName(String loginName);
+	/**
+	 * 根据用户名查询是否锁定
+	 * @param loginName
+	 * @return
+	 */
+	Integer selectByNameLockout(String loginName);
+	/**
+	 * 修改最后登录时见
+	 * @param user
+	 * @return
+	 */
+	Integer updateUserLoginTime(User user);
+	/**
+	 * 根据用户名和密码查询用户信息
+	 * @param user
+	 * @return
+	 */
+	User selectUse(User user);
 }

@@ -35,4 +35,11 @@
 	<delete id="delModule" parameterType="int">
 		delete from modules where modules_Id = #{modules_Id}	 
 	</delete>
+	
+	<insert id="addRoleModule" parameterType="roleModules">
+		insert  into 
+			rolemodules (roles_Id,modules_Id)
+			values (#{roles_Id},#{modules_Id})
+	
+	</insert>
 </mapper>

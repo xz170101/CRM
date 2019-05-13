@@ -77,12 +77,36 @@ public interface UserService {
 	 */
 	Integer delUserRole(UserRole userRole);
 	 
-	
+	 
+	 
+	String getPasswordByUsername(String username);
 	/**
-	 * 判断用户现有角色
+	 * 根据名字查询数据
+	 * @param loginName
+	 * @return
+	 */
+	Integer selectByName(String loginName);
+	/**
+	 * 用户登录
 	 * @param user
 	 * @return
 	 */
-/*	Integer panduanXianyoujuese(UserRole userRole);
-*/
+	User selectLogin(User user);
+	
+	Integer updateLockUser(User user);
+	/**
+	 * 修改最后登录时间
+	 * @param user
+	 * @return
+	 */
+	//Integer updateUsers(User user);
+	/**
+	 * 根据名字查询是否锁定
+	 * @param loginName
+	 * @return
+	 */
+	Integer selectByNameLockout(String loginName);
+	 
+	 
+	 
 }

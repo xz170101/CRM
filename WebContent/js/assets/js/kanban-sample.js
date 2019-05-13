@@ -1,11 +1,4 @@
-﻿/***********
-* 作者：poya QQ：931989338
-* 讨论群：149663025
-* 更新日期：2017/1/8
-
-* 广告：本人承接各类大中小型管理系统的软件的设计与主题开发，有需要的朋友联系我啦~~~~*************************************/
-
-var myChart1 = echarts.init(document.getElementById('charts1'));
+﻿var myChart1 = echarts.init(document.getElementById('charts1'));
 
 option1 = {
     // tooltip : {

@@ -103,5 +103,52 @@ public class UserServiceImp implements UserService{
 		// TODO Auto-generated method stub
 		return usermapper.delUserRol(userRole);
 	}
+	 
+	
+	
+	////////////////////
+	
+	
+	public boolean isUserExist(String username) {
+		if (usermapper.findByloginName(username) == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+ 
+	//根据提供的用户名拿密码
+	public String getPasswordByUsername(String username) {
+		return usermapper.findByloginName(username).getPassWord();
+	}
+	@Override
+	public Integer selectByName(String loginName) {
+		// TODO Auto-generated method stub
+		return usermapper.selectByName(loginName);
+	}
+	/**
+	 * 根据用户名和密码查询用户信息
+	 */
+	@Override
+	public User selectLogin(User user) {
+		// TODO Auto-generated method stub
+		return usermapper.selectUse(user);
+	}
+	@Override
+	public Integer updateLockUser(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	/*@Override
+	public Integer updateUsers(User user) {
+		// TODO Auto-generated method stub
+		return usermapper.updateUse(user);
+	}*/
+	@Override
+	public Integer selectByNameLockout(String loginName) {
+		// TODO Auto-generated method stub
+		return usermapper.selectByNameLockout(loginName);
+	}
+
  
 }

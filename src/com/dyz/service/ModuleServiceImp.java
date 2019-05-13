@@ -17,7 +17,7 @@ public class ModuleServiceImp implements ModuleService {
 	@Override
 	public ArrayList<TreeModel> selectModu() {
 		// TODO Auto-generated method stub
-		ArrayList<TreeModel> root = new ArrayList<>();
+		//ArrayList<TreeModel> root = new ArrayList<>();
 		ArrayList<Module> list = moduleMapper.selectModules();
 		   ArrayList<TreeModel> tree = new ArrayList<>();
            for (Module module : list) {

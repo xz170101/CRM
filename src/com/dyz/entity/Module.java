@@ -11,6 +11,15 @@ public class Module {
 	private String modules_path;//模块路径
 	private Integer mexit1int;
 	private String mexit2String;
+	private RoleModules roleModules;
+	
+	 
+	public RoleModules getRoleModules() {
+		return roleModules;
+	}
+	public void setRoleModules(RoleModules roleModules) {
+		this.roleModules = roleModules;
+	}
 	public Integer getModules_Id() {
 		return modules_Id;
 	}
@@ -52,6 +61,12 @@ public class Module {
 	}
 	public void setMexit2String(String mexit2String) {
 		this.mexit2String = mexit2String;
+	}
+	@Override
+	public String toString() {
+		return "Module [modules_Id=" + modules_Id + ", parentId=" + parentId + ", modules_weight=" + modules_weight
+				+ ", modules_Name=" + modules_Name + ", modules_path=" + modules_path + ", mexit1int=" + mexit1int
+				+ ", mexit2String=" + mexit2String + "]";
 	}
 	
 	
