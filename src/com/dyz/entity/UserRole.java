@@ -1,5 +1,7 @@
 package com.dyz.entity;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -10,6 +12,21 @@ public class UserRole {
 	private Integer userId;
 	private Integer urexitInt;
 	private String urexit2String;
+	private User user;
+	private List<Role> role;
+	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public List<Role> getRole() {
+		return role;
+	}
+	public void setRole(List<Role> role) {
+		this.role = role;
+	}
 	public Integer getUr_Id() {
 		return ur_Id;
 	}

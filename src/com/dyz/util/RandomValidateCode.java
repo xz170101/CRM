@@ -101,6 +101,7 @@ public class RandomValidateCode {
      * 获取随机的字符
      */
     public String getRandomString(int num){
+    	System.out.println("验证码："+String.valueOf(randString.charAt(num)));
         return String.valueOf(randString.charAt(num));
     }
 }

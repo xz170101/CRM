@@ -109,9 +109,7 @@ public class Fenye {
 		this.num6 = num6;
 	}
 	public Integer getPage() {
-		if(page!=null && pageSize!=null)
-			return (page-1)*pageSize;
-		return 0;
+		return page;
 	}
 	public void setPage(Integer page) {
 		this.page = page;

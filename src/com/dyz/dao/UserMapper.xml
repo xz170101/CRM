@@ -74,6 +74,12 @@
 			<if test="protectEMail !=null and protectEMail!='' ">
 				protectEMail=#{protectEMail},
 			</if>
+			<if test="psdWrongTime !=null and psdWrongTime!='' ">
+				psdWrongTime=#{psdWrongTime},
+			</if>
+			<if test="loginTime !=null and loginTime!='' ">
+				loginTime=#{loginTime},
+			</if>
 		</set>
 		<where>
 			user_Id=#{user_Id}		
@@ -123,4 +129,24 @@
 	<delete id="delUserRol" parameterType="userRole">
 		DELETE from userrole where  userId =#{userId} and roleId=#{roleId}
 	</delete>
+	
+	
+	
+	
+	<!-- 登录 -->
+	<select id="findByloginName" resultType="user" parameterType="String">
+        select * from user where loginName = #{loginName}
+    </select>
+	<!--  selectByName-->
+	<select id="selectByName" parameterType="String" resultType="int" >
+		select user_Id from user where loginName = #{loginName}
+	</select>	
+	<!-- selectByNameLockout -->
+	<select id="selectByNameLockout" parameterType="String" resultType="int" >
+		select user_Id from user where loginName = #{loginName} and isLockout=1
+	</select>	
+	<!--  selectUse-->
+	<select id="selectUse" parameterType="user" resultType="user" >
+		select * from user where loginName = #{loginName} and passWord = #{passWord}
+	</select>	
 </mapper>

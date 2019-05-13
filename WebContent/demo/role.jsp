@@ -38,33 +38,35 @@
 				close:false,
 				title:"你正在设置"+data[index].roles_Name+"权限"
 			});
+			
 			$('#treemenu').tree({
-	  			lines:true,
-	  			url:globalData.server+'GetModulesByRoleId',
+	  			url:"../selectModule",
 	  			queryParams:{
-	  				roleId:data[index].Id,
-	  				token:token
-	  			},onContextMenu:function(e,node){
+	  				roles_Id:data[index].roles_Id
+	  			} ,onContextMenu:function(e,node){
 	  				$('#treemenu').tree('select',node.target);
 	  			}
 	  		});
+			//$("#setRolse_window").window("open");
 	  		//保存修改角色权限  **模块信息
 		  $("#saveSetRose").click(function(){
  			var data=$("#dg").datagrid("getRows");
+ 			//获取所有勾选项的树节点构成的数组
 			var nodes=$('#treemenu').tree('getChecked',['checked','indeterminate']);
+ 			alert(nodes);
 			var s="";
 			for (var i=0;i<nodes.length;i++) {
 				if(s==""){
-					s+=nodes[i].id;
+					s+=nodes[i].modules_Id;
 				}else{
 					s+=",";
-					s+=nodes[i].id;
+					s+=nodes[i].modules_Id;
 				}
 			}
-			$.post("../",{
-				parentIds: s,
-				roles_Id:data[index].Id,
-				token:token 
+			alert(s);
+			$.post("../saveRoleMod",{
+				modules_Id: s,
+				roles_Id:data[index].roles_Id 
 			},function(r){
 				if(r.success){
 					$("#SetRight").dialog("close"); 
