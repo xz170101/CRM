@@ -174,14 +174,14 @@ public class UserController {
 		int count=0;//用来记录错误密码次数
 		@RequestMapping(value ="/login", method = RequestMethod.POST)
 		@ResponseBody
-		public String login(User user, HttpServletResponse res,  String yzm, HttpSession session) {
+		public String login(User user, HttpServletResponse res, String yzm, HttpSession session) {
 			//String pwd1 = user.getPassWord();
 			 System.out.println("登录名："+user.getLoginName());
 			 System.out.println("密码："+user.getPassWord());
-			String code = (String) session.getAttribute("code");
-			/*if (!code.equalsIgnoreCase(yzm)) {
+			 String code =(String) session.getAttribute("randomcode_key");
+			 if (!code.equalsIgnoreCase(yzm)) {
 				return Result.toClient(false, "验证码不对");
-			} else {*/
+			} else { 
 				Integer name = userService.selectByName(user.getLoginName());//返回的是用户id
 				if (name == null) {
 					return Result.toClient(false, "用户名不存在");
@@ -228,7 +228,7 @@ public class UserController {
 						}
 					}
 				}
-			/*}*/
+			 } 
 		}
 		/**
 		 * 
@@ -239,10 +239,25 @@ public class UserController {
 		@ResponseBody
 		public ArrayList<TreeModel> getModules(HttpSession session) {
 			User users = (User) session.getAttribute("user");
-			System.out.println(users);
 			return userService.selectUsersByroles(users.getUser_Id());
 		}
-
+		/**
+		 * 修改密码
+		 * @param session
+		 * @return
+		 */
+		@RequestMapping(value ="/setPwd", method = RequestMethod.POST)
+		@ResponseBody
+		public Integer setPwd(User user) {
+	 
+			return userService.UpdatePwd(user);
+		}
+		@RequestMapping(value ="/newUser", method = RequestMethod.POST)
+		@ResponseBody
+		public Integer newUser(User user) {
+	 
+			return userService.insertUser(user);
+		}
 	 
 	/*  //注销方法
     @RequestMapping("/outLogin")
