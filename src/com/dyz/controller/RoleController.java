@@ -1,6 +1,6 @@
 package com.dyz.controller;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import com.dyz.entity.Module;
 import com.dyz.entity.Role;
 import com.dyz.entity.RoleModules;
 import com.dyz.service.RoleService;
-import com.dyz.util.TreeModel;
+
 
 @Controller
 public class RoleController {

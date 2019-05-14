@@ -5,7 +5,7 @@
 <mapper namespace="com.dyz.dao.StudentMapper">
 
 	<!-- 映射 -->
-  		<resultMap type="student" id="stu">
+  		<!-- <resultMap type="student" id="stu">
 			<id column="stu_id" property="stu_id"/>
 			<result column="stu_Name" property="stu_Name"/>
 			<result column="stu_Age" property="stu_Age"/>
@@ -77,21 +77,120 @@
 			<result column="uexit2String" property="netfollows.user.uexit2String"/>
 			<result column="uexit1int" property="netfollows.user.uexit1int"/>
 			
-		</resultMap> 
+		</resultMap>  -->
 		<!-- 分页多条件查询 -->
-	<select id="selectStudent" parameterType="fenye" resultMap="stu">
-		select s.*,u.*,n.* FROM students s,`user` u,netfollows n 
-		<where>
-			 s.stu_Id=n.stu_Id and n.user_Id=u.user_Id
-		</where>		
+	<select id="selectStudent" parameterType="fenye" resultType="student">
+		select * FROM students 
+		<where>			
+			<if test="text1 !=null and text1!=''">
+				and stu_Name like "%"#{text1}"%"
+			</if>
+			<if test="text2 !=null and text2!=''">
+				and stu_Phone like "%"#{text2}"%"
+			</if>
+			<if test="text3 !=null and text2!=''">
+				and stu_ZiXunName like "%"#{text2}"%"
+			</if>			
+			
+			<!--integer  -->
+			<if test="num1!=null and num1!=''">
+				and stu_isPay=#{num1}
+			</if>
+			<if test="num2!=null and num2!=''">
+				and stu_isValid=#{num2}
+			</if>
+			<if test="num3!=null and num3!=''">
+				and stu_isReturnVist=#{num3}
+			</if>
+						
+			<if test="text4 !=null and text4!=''">
+				and stu_qq like "%"#{text4}"%"
+			</if>
+			<if test="text5 !=null and text5!=''">
+				and stu_CreateTime like "%"#{text5}"%"
+			</if>
+				<if test="text6 !=null and text6!=''">
+				and stu_HomeTime like "%"#{text6}"%"
+			</if>
+			<if test="text7 !=null and text7!=''">
+				and stu_firstVisitTime like "%"#{text7}"%"
+			</if>
+				<if test="text8 !=null and text8!=''">
+				and stu_PayTime like "%"#{text8}"%"
+			</if>
+			<if test="text9 !=null and text9!=''">
+				and stu_isInClass like "%"#{text9}"%"
+			</if>
+		</where>				
 		limit #{page},#{pageSize}
 	</select>
 	<!-- 查询总条数 -->
 	<select id="selectCount" parameterType="fenye" resultType="int">
-		select count(1) from students s,`user` u,netfollows n
+		select count(1) from students 
+		<where>			
+			<if test="text1 !=null and text1!=''">
+				and stu_Name like "%"#{text1}"%"
+			</if>
+			<if test="text2 !=null and text2!=''">
+				and stu_Phone like "%"#{text2}"%"
+			</if>
+			<if test="text3 !=null and text2!=''">
+				and stu_ZiXunName like "%"#{text2}"%"
+			</if>			
+			
+			<!--integer  -->
+			<if test="num1!=null and num1!=''">
+				and stu_isPay=#{num1}
+			</if>
+			<if test="num2!=null and num2!=''">
+				and stu_isValid=#{num2}
+			</if>
+			<if test="num3!=null and num3!=''">
+				and stu_isReturnVist=#{num3}
+			</if>
+						
+			<if test="text4 !=null and text4!=''">
+				and stu_qq like "%"#{text4}"%"
+			</if>
+			<if test="text5 !=null and text5!=''">
+				and stu_CreateTime like "%"#{text5}"%"
+			</if>
+				<if test="text6 !=null and text6!=''">
+				and stu_HomeTime like "%"#{text6}"%"
+			</if>
+			<if test="text7 !=null and text7!=''">
+				and stu_firstVisitTime like "%"#{text7}"%"
+			</if>
+				<if test="text8 !=null and text8!=''">
+				and stu_PayTime like "%"#{text8}"%"
+			</if>
+			<if test="text9 !=null and text9!=''">
+				and stu_isInClass like "%"#{text9}"%"
+			</if>
+		</where>
 	</select>
 		<!-- 删除学生 -->
   	<delete id="delectStudent" parameterType="int">
   		delete from students where stu_id=#{stu_id}
   	</delete>
+  	<!-- 添加客户 -->
+  	<insert id="insertStudent" parameterType="student">
+  	 insert into students(stu_Name,stu_Sex,stu_Age,stu_Phone,
+  	 stu_Status,stu_PerState,stu_SourceUrl,stu_SourceKeyWord,
+  	 stu_qq,stu_WeiXin,stu_isBaoBei,stu_inClassContent) 
+  	  values(#{stu_Name},#{stu_Sex},#{stu_Age},#{stu_Phone},
+  	  #{stu_Status},#{stu_PerState},#{stu_SourceUrl},
+  	  #{stu_SourceKeyWord}, #{stu_qq},#{stu_WeiXin},
+  	   #{stu_isBaoBei},#{stu_inClassContent})
+  	</insert>
+  	<!-- 修改咨询师姓名 -->
+  	<update id="updatezixunname" parameterType="student">
+  			update students
+		<set>
+			<if test="stu_ZiXunName!=null and stu_ZiXunName!=''">
+				stu_ZiXunName=#{stu_ZiXunName},
+			</if>			
+		</set>		
+			where stu_id=#{stu_id}	
+  	</update>
 </mapper>

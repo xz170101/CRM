@@ -21,7 +21,9 @@ public class Fenye {
 	private String text4;
 	private String text5;
 	private String text6;
-	
+	private String text7;
+	private String text8;
+	private String text9;
 	
 	private Integer num1;
 	private Integer num2;
@@ -71,6 +73,25 @@ public class Fenye {
 	}
 	public void setText6(String text6) {
 		this.text6 = text6;
+	}
+	
+	public String getText7() {
+		return text7;
+	}
+	public void setText7(String text7) {
+		this.text7 = text7;
+	}
+	public String getText8() {
+		return text8;
+	}
+	public void setText8(String text8) {
+		this.text8 = text8;
+	}
+	public String getText9() {
+		return text9;
+	}
+	public void setText9(String text9) {
+		this.text9 = text9;
 	}
 	public Integer getNum1() {
 		return num1;

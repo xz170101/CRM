@@ -1,5 +1,7 @@
 package com.dyz.entity;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,7 +19,7 @@ public class NetFollows {
 	private String followState;
 	private Integer nexit1int;
 	private String nexit2String;
-	private User user;
+
 	private Student student;
 	
 	
@@ -126,13 +128,7 @@ public class NetFollows {
 	}
 
 	
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
+	
 
 	@Override
 	public String toString() {
@@ -140,7 +136,7 @@ public class NetFollows {
 				+ ", followTime=" + followTime + ", nextFollowTime=" + nextFollowTime + ", conTent=" + conTent
 				+ ", user_Id=" + user_Id + ", followType=" + followType + ", createTime=" + createTime
 				+ ", followState=" + followState + ", nexit1int=" + nexit1int + ", nexit2String=" + nexit2String
-				+ ", user=" + user + "]";
+				+  "]";
 	}
 
 		
