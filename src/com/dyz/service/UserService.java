@@ -2,12 +2,14 @@ package com.dyz.service;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.dyz.entity.Fenye;
 import com.dyz.entity.Role;
 import com.dyz.entity.User;
 import com.dyz.entity.UserRole;
+import com.dyz.util.TreeModel;
 
 public interface UserService {
 	List<Role> selectUserRoles(Integer user_Id);
@@ -76,9 +78,7 @@ public interface UserService {
 	 * @return
 	 */
 	Integer delUserRole(UserRole userRole);
-	 
-	 
-	 
+	  
 	String getPasswordByUsername(String username);
 	/**
 	 * 根据名字查询数据
@@ -92,20 +92,25 @@ public interface UserService {
 	 * @return
 	 */
 	User selectLogin(User user);
-	
-	Integer updateLockUser(User user);
 	/**
-	 * 修改最后登录时间
+	 * 修改用户的锁定状态
 	 * @param user
 	 * @return
 	 */
-	//Integer updateUsers(User user);
+	Integer updateLockUser(User user);
+	
 	/**
 	 * 根据名字查询是否锁定
 	 * @param loginName
 	 * @return
 	 */
 	Integer selectByNameLockout(String loginName);
+	/**
+	 * 根据角色查询
+	 * @param user_Id
+	 * @return
+	 */
+ 	ArrayList<TreeModel> selectUsersByroles(Integer user_Id);
 	 
 	 
 	 

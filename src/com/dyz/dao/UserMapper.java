@@ -1,11 +1,14 @@
 package com.dyz.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.dyz.entity.Fenye;
+import com.dyz.entity.Module;
 import com.dyz.entity.Role;
 import com.dyz.entity.User;
 import com.dyz.entity.UserRole;
+import com.dyz.util.TreeModel;
 
 public interface UserMapper {
 	/**
@@ -117,4 +120,10 @@ public interface UserMapper {
 	 * @return
 	 */
 	User selectUse(User user);
+	/**
+	 * 根据用户查询用户的角色模块
+	 * @param user_Id
+	 * @return
+	 */
+	ArrayList<Module> selectRoleModuleByUser(Integer user_Id);
 }

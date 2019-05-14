@@ -3,6 +3,7 @@ package com.dyz.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,7 @@ import com.dyz.entity.UserRole;
 import com.dyz.service.UserService;
 import com.dyz.util.RandomValidateCode;
 import com.dyz.util.Result;
+import com.dyz.util.TreeModel;
 
 @Controller
 public class UserController {
@@ -226,8 +228,19 @@ public class UserController {
 						}
 					}
 				}
-
 			/*}*/
+		}
+		/**
+		 * 
+		 * @param s
+		 * @return
+		 */
+		@RequestMapping(value ="/getSysRightsHtmlTree", method = RequestMethod.POST)
+		@ResponseBody
+		public ArrayList<TreeModel> getModules(HttpSession session) {
+			User users = (User) session.getAttribute("user");
+			System.out.println(users);
+			return userService.selectUsersByroles(users.getUser_Id());
 		}
 
 	 

@@ -1,6 +1,6 @@
 package com.dyz.service;
 
-import java.util.ArrayList;
+ 
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +8,7 @@ import com.dyz.entity.Fenye;
 import com.dyz.entity.Module;
 import com.dyz.entity.Role;
 import com.dyz.entity.RoleModules;
-import com.dyz.util.TreeModel;
+ 
 
 public interface RoleService {
 	/**
