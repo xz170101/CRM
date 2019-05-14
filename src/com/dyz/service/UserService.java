@@ -111,6 +111,18 @@ public interface UserService {
 	 * @return
 	 */
  	ArrayList<TreeModel> selectUsersByroles(Integer user_Id);
+ 	/**
+ 	 * 修改密码
+ 	 * @param user
+ 	 * @return
+ 	 */
+ 	Integer UpdatePwd(User user);
+ 	/**
+ 	 *注册用户
+ 	 * @param user
+ 	 * @return
+ 	 */
+	Integer insertUser(User user);
 	 
 	 
 	 

@@ -24,11 +24,11 @@
 			        singleSelect:true,
 			        toolbar:'#usertb'  ,
 			        queryParams: { //要发送的参数列表
-			        	text1:$("#ord").combobox("getValue"),
-			        	text2: $("#userName").textbox("getValue"), 
-			        	text3:$("#startdate").datetimebox("getValue"),
-			        	text4:$("#enddate").datetimebox("getValue"),
-			        	text5: $("#lock").combobox("getValue")
+			        	text1:$("#ord").combobox("getValue").trim(),
+			        	text2: $("#userName").textbox("getValue").trim(), 
+			        	text3:$("#startdate").datetimebox("getValue").trim(),
+			        	text4:$("#enddate").datetimebox("getValue").trim(),
+			        	text5: $("#lock").combobox("getValue").trim()
 					   }  
 			   });
 	}

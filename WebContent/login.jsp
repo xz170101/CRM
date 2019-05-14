@@ -20,14 +20,17 @@
 	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
-		
+		<link href="js/assets/css/reset.css" rel="stylesheet" type="text/css" />
+		<link href="js/assets/css/layout.css" rel="stylesheet" type="text/css" />
+<!-- 	   <script src='js/assets/js/index2.js' type="text/javascript"></script>  
+<script src='js/assets/js/system.menu2.js' type="text/javascript"></script>  -->
 </head>
 <script type="text/javascript">
 	//提交登陆表单
 	function subLogin() {
-		var login_name=$("#username").val();
+		var login_name=($("#username").val()).trim();
 		var login_pwd=$("#keyboards").val();
-		var code=$("#code").val();
+		var code=$("#verification").val().trim();
 		 if(login_name !=null && login_name !=""){
 			 if(login_pwd !=null && login_pwd !=""){
 			 
@@ -50,7 +53,46 @@
      		$.messager.alert("提示！","请输入用户名");
      	}
 	}
-
+	$(function(){
+		openNewUserWindow();
+	//	$('#newUser').click(function(){$('#updatePwd').window('open');});
+	})
+	//注册
+	 function openNewUserWindow() {
+    	$('#newUser').window({title: '注册', width: 400, modal: true, shadow: true, closed: true, height: 300, resizable:false }); 
+    } 
+	//打开注册页面
+ 	 function openNewUser() {
+		$('#newUser').window('open');
+	 } 
+	//关闭注册页面
+ 	 function closeWindow() {
+ 	    	$('#newUser').window('close');
+ 	}
+	//提交注册信息
+	 function subNewUser() {
+		 var name=$("#newusername").val();
+		 var pwd=$("#userpwd").val();
+		 var repwd=$("#reuserpwd").val();
+		 var tel=$("#usertel").val();
+		 var email=$("#useremail").val();
+		$.post("newUser",{
+			 loginName:name,
+			 passWord :pwd,
+			 protectMTel:tel,
+			 protectEMail :email 
+		 },function(res){
+			 if(res>0){
+				 $.messager.alert("提示！","注册成功！");
+				 // msgShow('系统提示', '恭喜，注册成功！<br/>请登录', 'info');
+				  closeWindow();
+			 }
+		 },'json') 
+		
+	 
+		
+	}
+	
 </script>
 <body>
 
@@ -83,7 +125,7 @@
 	  <div class="loginCont_dk post05" style="right: -17px;">
 	  <div class="loginCont">
 	    <div class="login_th"><h4 class="lgCurr bd_r">用户登录</h4>
-	    	<a href="javascript:;" class="login_help">注册新用户&gt;</a>
+	    	<a href="javascript:void(0);" class="login_help" onclick="openNewUser()">注册新用户&gt;&gt;</a>
 	    </div>
 	    <div class="login_text">
 			<!-- error start -->	 
@@ -96,7 +138,6 @@
 		        	<input name="username" id="username" tabindex="1"   type="text" class="usernameSty"   autocomplete="off">
 		    	</div>
 		  	</div>
-
 		    <div class="user_paswd">
 				<div class="login_input user_bg pwd" name="pwdParent" id="pwdParent">
 			      	<div id="newPwd" class="keyboards-box">
@@ -109,7 +150,7 @@
 				<div class="login_input user_bg vnc">
 		        	<input name="verification" id="verification" tabindex="1"   type="text" class="codeSty"   autocomplete="off">
 		        	<!-- 图片验证码 -->
-		        	<img class="" id="code" src="checkCode" alt="" width="100" height="30"   style="height:43px;cursor:pointer;" onclick="this.src=this.src+'?'">
+		        	<img class="" id="code" src="checkCode" alt="" width="100" height="25"   style="height:43px;cursor:pointer;" onclick="this.src=this.src+'?'">
 		    	</div>
 		  	</div> 
 		  
@@ -138,13 +179,7 @@
 		  </div>
 	  </div>
 	  <!--用户名密码出错弹出层end-->
-	  <!--验证码出错弹出层start-->
-	  <div class="login_error_w" style="top:232px;">
-		  <div class="login_error">
-		    <div class="login_error_th"><h4>验证码错误</h4></div>
-		  </div>
-	  </div>
-	  <!--验证码出错弹出层end-->
+	 
 	  </div>
 	</div>
 	<!--登录end-->	
@@ -152,7 +187,34 @@
 <!--底部start-->	
 <div style="clear:both"></div>
 <!--底部end-->
-
+<!--用户注册窗口-->
+<div data-options="collapsible:false,minimizable:false,maximizable:false" id="newUser" class="easyui-window updatePwd" title="用户注册">
+    <div class="row"> 
+      <label for="txtNewPass">用户名：</label>   
+      <input class="easyui-validatebox txt01" id="newusername" type="text" name="username" />   
+    </div>   
+    <div class="row">   
+      <label for="txtRePass">密码:</label>   
+      <input class="easyui-validatebox txt01" id="userpwd" type="Password" name="userpwd" />
+    </div>
+     <div class="row">   
+      <label for="txtRePass">确认密码:</label>   
+      <input class="easyui-validatebox txt01" id="reuserpwd" type="Password" name="reuserpwd" />
+    </div>
+     <div class="row">   
+      <label for="txtRePass">手机号:</label>   
+      <input class="easyui-validatebox txt01" id="usertel" type="text" name="usertel" />
+    </div>
+     <div class="row">   
+      <label for="txtRePass">邮箱:</label>   
+      <input class="easyui-validatebox txt01" id="useremail" type="text" name="useremail" />
+    </div>
+    
+    <div data-options="region:'south',border:false" class="pwdbtn">
+        <a id="btnEp" class="easyui-linkbutton " onclick="subNewUser()" href="javascript:void(0);" >注册</a> 
+        <a id="btnCancel" class="easyui-linkbutton btnDefault" onclick="closeWindow()" href="javascript:void(0);">取消</a>
+    </div>
+</div>
 
 <script type="text/javascript">
 	 
@@ -168,6 +230,8 @@
 		}
 	}
 
+	
+	
   
     
 </script>

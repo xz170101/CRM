@@ -25,20 +25,23 @@ var _menus=[
             return false;
         }
         if ($rePass.val() == '') {
-            msgShow('系统提示', '请在一次输入密码！', 'admin');
+            msgShow('系统提示', '请再一次输入密码！', 'admin');
             return false;
         }
 
         if ($newpass.val() != $rePass.val()) {
-            msgShow('系统提示', '两次密码不一至！请重新输入', 'admin');
+            msgShow('系统提示', '两次密码不一致！请重新输入', 'admin');
             return false;
         }
-
-        $.post('/ajax=' + $newpass.val(), function(msg) {
-            msgShow('系统提示', '恭喜，密码修改成功！<br>您的新密码为：' + msg, 'info');
-            $newpass.val('');
-            $rePass.val('');
-            close();
+        var name=$("#name").html();
+        alert(name);
+        $.post('../setPwd' ,{
+        		passWord:$newpass.val(),
+	        	loginName:name
+        	}, function(msg) {
+	            msgShow('系统提示', '恭喜，密码修改成功！', 'info');
+	             
+	            closePwd();
         })
         
     }
@@ -51,6 +54,7 @@ var _menus=[
         $('#loginOut').click(function() {
             $.messager.confirm('系统提示', '您确定要退出本次登录吗?', function(r) {
                 if (r) {
+                	sessionStorage.clear();//seesionStorage的数据不会跟随HTTP请求一起发送到服务器，只会在本地生效，并在关闭标签页后清除数据。
                     location.href = '../login.jsp';
                 }
             });
