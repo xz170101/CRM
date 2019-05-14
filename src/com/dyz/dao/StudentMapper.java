@@ -24,5 +24,18 @@ public interface StudentMapper {
 	 * @return
 	 */
 	Integer delectStudent(Integer stu_id);
+	/**
+	 * 添加客户
+	 * @param student
+	 * @return
+	 */
+	Integer insertStudent(Student student);
+	/**
+	 * 修改咨询师姓名
+	 * @param student
+	 * @return
+	 */
+	Integer updatezixunname(Student student);
+	
 	
 }

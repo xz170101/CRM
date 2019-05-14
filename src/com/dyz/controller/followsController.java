@@ -18,6 +18,7 @@ public class followsController {
 	public Fenye select(Fenye fenye,Integer page,Integer rows) {
 		fenye.setPage((page-1)*rows);
 		fenye.setPageSize(rows);
+		
 		return followsService.selectFollows(fenye);
 	} 
 }

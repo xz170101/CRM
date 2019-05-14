@@ -20,7 +20,17 @@
 			url:'../selectFollows',
 			method:'post',
 			fitColumns:true,
-			rownumbers:true
+			rownumbers:true,
+			toolbar:"#tb",			
+			queryParams:{				
+			//要发送的参数列表
+			text1:$("#sname").textbox("getValue"),	
+			text2:$("#zixunname").textbox("getValue"),	
+			text3:$("#startTime").textbox("getValue"),
+			text4:$("#endTime").textbox("getValue"), 
+			text5:$("#followstate").textbox("getValue"),	
+			text6:$("#followtype").textbox("getValue")
+			}
 		})
 	}
 	//显示学生名字
@@ -31,7 +41,7 @@
 	
 	//显示追踪者名称
 	function formatteruname(value,row,index) {
-		return row.user.loginName;
+		return row.student.stu_ZiXunName;
 	}
 	
 	function formattercaozuo(value,row,index){
@@ -47,14 +57,14 @@
 </script>
 </head>
 <body>
-	<table id="dg" class="easyui-datagrid" title="跟踪"
+	<table id="dg" class="easyui-datagrid" title="跟踪记录"
 		data-options="singleSelect:true,collapsible:true,pagination:true">
 		<thead>
 			<tr>
 				<th data-options="field:'checkbox',checkbox:true"></th>
 				<th data-options="field:'follows_Id'">编号</th>
-				<th data-options="field:'student',formatter:formattersname">学生名称</th>
-				<th data-options="field:'user',formatter:formatteruname">追踪者</th>
+				<th data-options="field:'stu_Name',formatter:formattersname">客户姓名</th>
+				<th data-options="field:'stu_ZiXunName',formatter:formatteruname">咨询师姓名</th>
 				<th data-options="field:'followTime'">追踪时间</th>
 				<th data-options="field:'nextFollowTime'">下次追踪时间</th>
 				<th data-options="field:'followType'">追踪类型</th>
@@ -64,29 +74,21 @@
 			</tr>
 		</thead>
 	</table>
-	
-	<!-- <div id="dgtool">
-		<input class="easyui-textbox" id="s_name">
-		<input class="easyui-textbox" id="u_name">
-		<input class="easyui-textbox" id="">
-		<input class="easyui-textbox" id="">
-		<input class="easyui-textbox" id="">
-		<input class="easyui-textbox" id="">
-	</div>
-	 -->
-	<!-- <div id="lookFollow_window" class="easyui-window" title="新增员工信息"
-		data-options="modal:true,closed:true,iconCls:'icon-save',colsed:true"
-		style="width: 300px; height: 200px; padding: 10px;">
-		<form id="lookFollowForm">
-			<table cellpadding="5">
-				<tr>
-					<td>用户名:</td>
-					<td><input class="easyui-textbox"  data-options="multiline:true"
-					 type="text" name="content"id="content" style="height:100px"></input></td>
-				</tr>
-			</table>
+	<!--多条件查询  -->
+	 <div id="tb" style="padding: 5px; height: auto">
+		<form id="sousuofrm" class="easyui-form">
+			客户姓名: <input class="easyui-textbox" id="sname" style="width: 80px">
+			跟踪者: <input class="easyui-textbox" id="zixunname" style="width: 80px">
+			 跟踪时间:<input class="easyui-textbox"   id="startTime" >~
+			 		<input class="easyui-textbox" id="endTime" >	 			
+			 回访情况: <input class="easyui-textbox" id="followstate" style="width: 80px">
+			跟踪方式: <input class="easyui-textbox" id="followtype" style="width: 80px">
+			 <a href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-search" onclick="init()">查找</a>
+			  <a href="javascript:void(0)" class="easyui-linkbutton"
+			   iconCls="icon-add" onclick="addFollow()">添加</a>   
 		</form>
-		
-	</div> -->
+	</div>
+	
 </body>
-<ml>
+<html>

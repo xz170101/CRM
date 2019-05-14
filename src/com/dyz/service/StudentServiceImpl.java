@@ -28,4 +28,16 @@ public class StudentServiceImpl implements StudentService {
 		return studentMapper.delectStudent(stu_id);
 	}
 
+	@Override
+	public Integer insertStudent(Student student) {
+		// TODO Auto-generated method stub
+		return studentMapper.insertStudent(student);
+	}
+
+	@Override
+	public Integer updatezixunname(Student student) {
+		// TODO Auto-generated method stub
+		return studentMapper.updatezixunname(student);
+	}
+
 }

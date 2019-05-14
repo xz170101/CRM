@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dyz.entity.Fenye;
+import com.dyz.entity.Student;
 import com.dyz.service.StudentService;
 
 @Controller
@@ -25,5 +26,16 @@ public class StudentController {
 	@ResponseBody
 	public Integer delect(@RequestParam(value="stu_id")Integer stu_id) {
 		return studentService.delectStudent(stu_id);
+	}
+	@RequestMapping(value="/insertstu",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer insert(Student student) {
+		return studentService.insertStudent(student);
+	}
+	
+	@RequestMapping(value="/updatezixunname",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer updatezixunname(Student student) {
+		return studentService.updatezixunname(student);
 	}
 }

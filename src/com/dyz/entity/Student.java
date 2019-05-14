@@ -11,8 +11,8 @@ public class Student {
 	private Integer stu_Age;
 	private Integer stu_Sex;
 	private String stu_Phone;
-	private String stu_Status;
-	private String stu_PerState;
+	private String stu_Status;//学历
+	private String stu_PerState;//状态
 	private String stu_MsgSource;
 	private String stu_SourceUrl;
 	private String stu_SourceKeyWord;
