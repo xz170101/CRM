@@ -90,7 +90,7 @@
 			</if>
 			<if test="text3 !=null and text2!=''">
 				and stu_ZiXunName like "%"#{text2}"%"
-			</if>			
+			</if>		
 			
 			<!--integer  -->
 			<if test="num1!=null and num1!=''">
@@ -136,7 +136,7 @@
 			</if>
 			<if test="text3 !=null and text2!=''">
 				and stu_ZiXunName like "%"#{text2}"%"
-			</if>			
+			</if>		
 			
 			<!--integer  -->
 			<if test="num1!=null and num1!=''">
@@ -176,12 +176,14 @@
   	<!-- 添加客户 -->
   	<insert id="insertStudent" parameterType="student">
   	 insert into students(stu_Name,stu_Sex,stu_Age,stu_Phone,
-  	 stu_Status,stu_PerState,stu_SourceUrl,stu_SourceKeyWord,
-  	 stu_qq,stu_WeiXin,stu_isBaoBei,stu_inClassContent) 
+  	 stu_Status,stu_PerState,stu_SourceUrl,stu_MsgSource,
+  	 stu_Address,stu_NetPusherld,stu_Content,stu_SourceKeyWord,stu_qq,
+  	 stu_WeiXin,stu_inClassContent,stu_CreateUser,stu_CreateTime) 
   	  values(#{stu_Name},#{stu_Sex},#{stu_Age},#{stu_Phone},
   	  #{stu_Status},#{stu_PerState},#{stu_SourceUrl},
-  	  #{stu_SourceKeyWord}, #{stu_qq},#{stu_WeiXin},
-  	   #{stu_isBaoBei},#{stu_inClassContent})
+  	  #{stu_MsgSource}, #{stu_Address},#{stu_NetPusherld},
+  	   #{stu_Content},#{stu_SourceKeyWord},#{stu_qq},#{stu_WeiXin},#{stu_inClassContent},
+  	   #{stu_CreateUser},#{stu_CreateTime})
   	</insert>
   	<!-- 修改咨询师姓名 -->
   	<update id="updatezixunname" parameterType="student">

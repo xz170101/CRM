@@ -28,8 +28,8 @@
    					text1:$("#sname").textbox("getValue"),	
    					text2:$("#phone").textbox("getValue"),	
    					text4:$("#qq").textbox("getValue"),	
-   					text5:$("#creattime").datebox("getValue")
-   					/* text9:$("#sex").textbox("getValue") */
+   					text5:$("#creattime").datebox("getValue"),
+   					text10:$("#zixunshi").textbox("getValue")
    				}
    			})			
    		}
@@ -38,7 +38,7 @@
    		}
    		//添加客户
    		//打开添加窗口
-   		 function addStu(){		
+   		function addStu(){		
    			$("#insertStu").dialog("open");			
    		} 
    		function formatterSex(value, row, index){
@@ -51,14 +51,19 @@
    				var stu_Sex1 = $("#stu_Sex1").combobox("getValue");
    				var stu_Age1= $("#stu_Age1").textbox("getValue");
    				var stu_Phone1= $("#stu_Phone1").textbox("getValue");					
-   				var stu_Status1= $("#stu_Status1").textbox("getValue");
-   				var stu_PerState1= $("#stu_PerState1").textbox("getValue");
-   				var stu_SourceUrl1= $("#stu_SourceUrl1").textbox("getValue");
-   				var stu_SourceKeyWord1 = $("#stu_SourceKeyWord1").textbox("getValue");
+   				var stu_Status1= $("#stu_Status1").combobox("getValue");
+   				var stu_PerState1= $("#stu_PerState1").combobox("getValue");
+   				var stu_SourceUrl1= $("#stu_SourceUrl1").combobox("getValue");
+   				var stu_MsgSource1 = $("#stu_MsgSource1").textbox("getValue");
+   				var stu_Address1= $("#stu_Address1").combobox("getValue");
+   				var stu_NetPusherld1= $("#stu_NetPusherld1").combobox("getValue");					
+   				var stu_Content1= $("#stu_Content1").textbox("getValue");
+   				var stu_SourceKeyWord1= $("#stu_SourceKeyWord1").textbox("getValue");
    				var stu_qq1= $("#stu_qq1").textbox("getValue");
-   				var stu_WeiXin= $("#stu_WeiXin").textbox("getValue");					
-   				var stu_isBaoBei1= $("#stu_isBaoBei1").combobox("getValue");
-   				var stu_inClassContent1= $("#stu_inClassContent1").textbox("getValue");	
+   				var stu_WeiXin1= $("#stu_WeiXin1").textbox("getValue");
+   				var stu_inClassContent1= $("#stu_inClassContent1").textbox("getValue");
+   				var stu_CreateUser1= $("#stu_CreateUser1").textbox("getValue");
+   				var stu_CreateTime1= $("#stu_CreateTime1").datebox("getValue");
    				//提交到添加的controller
    					$.post("../insertstu", {
    						stu_Name:stu_Name1,
@@ -68,11 +73,16 @@
    						stu_Status:stu_Status1,
    						stu_PerState:stu_PerState1,
    						stu_SourceUrl:stu_SourceUrl1,
+   						stu_MsgSource:stu_MsgSource1,
+   						stu_Address:stu_Address1,
+   						stu_NetPusherld:stu_NetPusherld1,
+   						stu_Content:stu_Content1,
    						stu_SourceKeyWord:stu_SourceKeyWord1,
    						stu_qq:stu_qq1,
-   						stu_WeiXin:stu_WeiXin,
-   						stu_isBaoBei:stu_isBaoBei1,
-   						stu_inClassContent:stu_inClassContent1
+   						stu_WeiXin:stu_WeiXin1,
+   						stu_inClassContent:stu_inClassContent1,
+   						stu_CreateUser:stu_CreateUser1,
+   						stu_CreateTime:stu_CreateTime1
    							},
    							function(res) {
    								var res=eval("("+res+")");
@@ -139,7 +149,7 @@
 		<form id="sousuofrm" class="easyui-form">
 			   客户姓名:<input class="easyui-textbox" id="sname"  style="width: 80px">
 			   电话:<input class="easyui-textbox" id="phone"  style="width: 80px">
-			   性别:<input class="easyui-textbox" id="sex"  style="width: 80px">			 				
+			   咨询师:<input class="easyui-textbox" id="zixunshi"  style="width: 80px">	 				
 			 QQ: <input class="easyui-textbox" id="qq"  style="width: 80px">			 
 			   创建时间:<input class="easyui-datebox" id="creattime"  style="width: 80px">
 			 <a href="javascript:void(0)" class="easyui-linkbutton"
@@ -162,67 +172,146 @@
 	    <form id="insertStuForm" class="easyui-form">
 	    	<table cellpadding="5">
 	    		<tr>
-	    			<td>姓名：</td>
+	    			<td>姓名:</td>
 	    			<td><input class="easyui-textbox" id="stu_Name1" ></td>
 	    		</tr>
 	    		<tr>
-	    			<td>性别</td>
+	    			<td>性别:</td>
 	    			<td>
 	    			
 	    				<select id="stu_Sex1" class="easyui-combobox" style="width:100px;">   
 							  <option>--请选择--</option> 
-							   <option value="0">男</option> 
-							    <option value="1">女</option> 
+							  <option value="0">男</option> 
+							  <option value="1">女</option> 
 						</select> 
 	    			</td>
 	    		</tr>
 	    		<tr>
-	    			<td>年龄：</td>
+	    			<td>年龄:</td>
 	    			<td><input class="easyui-textbox" id="stu_Age1" ></td>
 	    		</tr>
 	    		<tr>
-	    			<td>电话：</td>
+	    			<td>电话:</td>
 	    			<td><input class="easyui-textbox" id="stu_Phone1" ></td>
 	    		</tr>
 	    		<tr>
-	    			<td>学历：</td>
-	    			<td><input class="easyui-textbox" id="stu_Status1" ></td>
+	    			<td>学历:</td>
+	    			<td>
+	    			<select id="stu_Status1" class="easyui-combobox">
+	    				 <option>--请选择--</option> 
+					     <option value="0">大专</option> 
+						 <option value="1">高中</option>
+						 <option value="2">中专</option>
+						 <option value="3">初中</option>
+						 <option value="4">本科</option>
+						 <option value="5">其它</option>
+						 <option value="6">未知</option>
+	    			</select>
+	    			</td>
 	    		</tr>
 	    		<tr>
-	    			<td>状态：</td>
-	    			<td><input class="easyui-textbox" id="stu_PerState1" ></td>
+	    			<td>状态:</td>
+	    			<td>
+	    			<select id="stu_PerState1" class="easyui-combobox">
+	    				 <option>--请选择--</option> 
+					     <option value="0">待业</option> 
+						 <option value="1">在职</option>
+						 <option value="2">在读</option>
+						 <option value="3">未知</option>
+	    			</select>
+	    			</td>
 	    		</tr>
 	    		<tr>
-	    			<td>来源渠道：</td>
-	    			<td><input class="easyui-textbox" id="stu_SourceUrl1"></td>
+	    			<td>来源渠道:</td>
+	    			<td>
+	    			<select id="stu_SourceUrl1" class="easyui-combobox">
+	    				 <option>--请选择--</option> 
+					     <option value="0">百度</option> 
+						 <option value="1">百度移动端</option>
+						 <option value="2">360</option>
+						 <option value="3">360移动端</option>
+						 <option value="4">搜狗</option>
+						 <option value="5">搜狗移动端</option>
+						 <option value="6">UC移动端</option>
+						 <option value="7">直接输入</option>
+						 <option value="8">自然流量</option>
+						 <option value="9">直电</option>
+						 <option value="10">微信</option>
+						 <option value="11">QQ</option>
+						 <option value="12">未知</option>
+	    			</select>
+	    			</td>
 	    		</tr>
-	    		
 	    		<tr>
-	    			<td>来源关键字：</td>
+	    			<td>客户信息:</td>
+	    			<td><input class="easyui-textbox" id="stu_MsgSource1"></td>
+	    		</tr>
+	    		<tr>
+	    			<td>地址:</td>
+	    			<td>
+	    			<select id="stu_Address1" class="easyui-combobox">
+	    				 <option>--请选择--</option> 
+					     <option value="0">郑州</option> 
+						 <option value="1">开封</option>
+						 <option value="2">洛阳</option>
+						 <option value="3">南阳</option>
+						 <option value="4">漯河</option>
+						 <option value="5">三门峡</option>
+						 <option value="6">平顶山</option>
+						 <option value="7">周口</option>
+						 <option value="8">驻马店</option>
+						 <option value="9">新乡</option>
+						 <option value="10">鹤壁</option>
+						 <option value="11">焦作</option>
+						 <option value="12">濮阳</option>
+						 <option value="13">安阳</option>
+						 <option value="14">商丘</option>
+						 <option value="15">信阳</option>
+						 <option value="16">济源</option>
+						 <option value="17">其它</option>
+						 <option value="18">未知</option>
+	    			</select>
+	    			</td>
+	    		</tr>
+	    		<tr>
+	    			<td>来源网站:</td>
+	    			<td>
+	    			<select id="stu_NetPusherld1" class="easyui-combobox">
+	    				 <option>--请选择--</option> 
+					     <option value="0">职英B站</option> 
+						 <option value="1">高考站</option>
+						 <option value="2">职英A站</option>
+						 <option value="3">其它</option>
+	    			</select>
+	    			</td>
+	    		</tr>
+	    		<tr>
+	    			<td>内容:</td>
+	    			<td><input class="easyui-textbox" id="stu_Content1"></td>
+	    		</tr>
+	    		<tr>
+	    			<td>来源关键字:</td>
 	    			<td><input class="easyui-textbox" id="stu_SourceKeyWord1"></td>
 	    		</tr>
 	    		<tr>
-	    			<td>QQ：</td>
+	    			<td>QQ:</td>
 	    			<td><input class="easyui-textbox" id="stu_qq1"></td>
 	    		</tr>
 	    		<tr>
-	    			<td>微信号：</td>
-	    			<td><input class="easyui-textbox" id="stu_WeiXin"></td>
+	    			<td>微信号:</td>
+	    			<td><input class="easyui-textbox" id="stu_WeiXin1"></td>
 	    		</tr>
 	    		<tr>
-	    			<td>是否报备：</td>
-	    			<td>
-	    			<select id="stu_isBaoBei1" class="easyui-combobox">
-	    				 <option>--请选择--</option> 
-					     <option value="0">是</option> 
-						<option value="1">否</option>
-	    			</select>
-	    			</td>
-	    			
-	    		</tr>
-	    		<tr>
-	    			<td>在线备注：</td>
+	    			<td>在线备注:</td>
 	    			<td><input class="easyui-textbox" id="stu_inClassContent1"></td>
+	    		</tr>
+	    		<tr>
+	    			<td>创建人:</td>
+	    			<td><input class="easyui-textbox" id="stu_CreateUser1"></td>
+	    		</tr>
+	    		<tr>
+	    			<td>创建日期:</td>
+	    			<td><input class="easyui-datebox" id="stu_CreateTime1"></td>
 	    		</tr>
 	    	</table>
 	    </form>
@@ -273,6 +362,18 @@
 	    			<td><input class="easyui-textbox" id="stu_SourceKeyWord1" name="stu_SourceKeyWord"></td>
 	    		</tr>
 	    		<tr>
+	    			<td>来源网站:</td>
+	    			<td><input class="easyui-textbox" id="stu_NetPusherld1" name="stu_NetPusherld"></td>
+	    		</tr>
+	    		<tr>
+	    			<td>客户信息:</td>
+	    			<td><input class="easyui-textbox" id="stu_MsgSource1" name="stu_MsgSource"></td>
+	    		</tr>
+	    		<tr>
+	    			<td>地址:</td>
+	    			<td><input class="easyui-textbox" id="stu_Address1" name="stu_Address"></td>
+	    		</tr>
+	    		<tr>
 	    			<td>QQ：</td>
 	    			<td><input class="easyui-textbox" id="stu_qq1" name="stu_qq"></td>
 	    		</tr>
@@ -281,13 +382,16 @@
 	    			<td><input class="easyui-textbox" id="stu_WeiXin" name="stu_WeiXin"></td>
 	    		</tr>
 	    		<tr>
-	    			<td>是否报备：</td>
-	    			<td><input class="easyui-textbox" id="stu_isBaoBei1" name="stu_isBaoBei"></td>
-	    			
-	    		</tr>
-	    		<tr>
 	    			<td>在线备注：</td>
 	    			<td><input class="easyui-textbox" id="stu_inClassContent1" name="stu_inClassContent"></td>
+	    		</tr>
+	    		<tr>
+	    			<td>创建人:</td>
+	    			<td><input class="easyui-textbox" id="stu_CreateUser1" name="stu_CreateUser"></td>
+	    		</tr>
+	    		<tr>
+	    			<td>创建日期:</td>
+	    			<td><input class="easyui-textbox" id="stu_CreateTime1" name="stu_CreateTime"></td>
 	    		</tr>
 	    	</table>
 	    </form>
