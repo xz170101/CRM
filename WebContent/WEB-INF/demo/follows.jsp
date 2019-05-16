@@ -10,15 +10,15 @@
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.min.js"></script>
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
-
 	
 <script type="text/javascript">
 	$(function(){
 		init();
 	})
+	
 	function init(){
 		$("#dg").datagrid({
-			url:'../selectFollows',
+			url:'selectFollows',
 			method:'post',
 			fitColumns:true,
 			rownumbers:true,
@@ -27,16 +27,16 @@
 			//要发送的参数列表
 			text1:$("#sname").textbox("getValue"),	
 			text2:$("#zixunname").textbox("getValue"),	
-			text3:$("#startTime").textbox("getValue"),
-			text4:$("#endTime").textbox("getValue"), 
+			text3:$("#startTime").datebox("getValue"),
+			text4:$("#endTime").datebox("getValue"), 
 			text5:$("#followstate").textbox("getValue"),	
 			text6:$("#followtype").textbox("getValue")
 			}
 		})
+		$("#sousuofrm").form("reset");
 	}
 	//显示学生名字
-	function formattersname(value,row,index) {
-		
+	function formattersname(value,row,index) {		
 		return row.student.stu_Name;
 	}
 	
@@ -48,18 +48,22 @@
 	function formattercaozuo(value,row,index){
 		return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='look("+ index + ")'>查看</a>";
 	}
-	/* function look(index){
+	function look(index){
 		var data=$('#dg').datagrid('getData');
 		var row=data.rows[index];
 		$('#lookFollowForm').form('load',row);
-		$('#lookFollow_window').window('open');
-		
-	} */
+		$('#lookFollows').window('open');		
+	} 
+	
+	//查看的关闭
+		function Followclose(){
+			$('#lookFollows').dialog('close');
+		}
 </script>
 </head>
 <body>
 	<table id="dg" class="easyui-datagrid" title="跟踪记录"
-		data-options="singleSelect:true,collapsible:true,pagination:true">
+		data-options="collapsible:true,pagination:true">
 		<thead>
 			<tr>
 				<th data-options="field:'checkbox',checkbox:true"></th>
@@ -71,6 +75,7 @@
 				<th data-options="field:'followType'">追踪类型</th>
 				<th data-options="field:'createTime'">创建时间</th>
 				<th data-options="field:'followState'">追踪状态</th>
+				<th data-options="field:'conTent'">内容</th>
 				<th data-options="field:'caozuo',formatter:formattercaozuo">操作</th>
 			</tr>
 		</thead>
@@ -80,16 +85,32 @@
 		<form id="sousuofrm" class="easyui-form">
 			客户姓名: <input class="easyui-textbox" id="sname" style="width: 80px">
 			跟踪者: <input class="easyui-textbox" id="zixunname" style="width: 80px">
-			 跟踪时间:<input class="easyui-textbox"   id="startTime" >~
-			 		<input class="easyui-textbox" id="endTime" >	 			
+			 跟踪时间:<input class="easyui-datebox"   id="startTime" >~
+			 		<input class="easyui-datebox" id="endTime" >	 			
 			 回访情况: <input class="easyui-textbox" id="followstate" style="width: 80px">
 			跟踪方式: <input class="easyui-textbox" id="followtype" style="width: 80px">
 			 <a href="javascript:void(0)" class="easyui-linkbutton"
-				iconCls="icon-search" onclick="init()">查找</a>
-			  <a href="javascript:void(0)" class="easyui-linkbutton"
-			   iconCls="icon-add" onclick="addFollow()">添加</a>   
+				iconCls="icon-search" onclick="init()">查找</a>			   
 		</form>
 	</div>
 	
+	
+	<!-- 对学生进行跟踪 -->
+	<div id="lookFollows" class="easyui-dialog" title="查看跟踪信息" style="width:400px;height:300px;" 
+		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
+		buttons:[{
+				text:'关闭',
+				handler:function(){Followclose()}
+			}]">
+		
+	    <form id="lookFollowForm" class="easyui-form">
+	    	<table cellpadding="5">	    		
+	    		<tr>
+	    			<td>内容：</td>
+	    			<td><input class="easyui-textbox" id="content" name="conTent"></td>
+	    		</tr>	    		
+	    	</table>
+	    </form>
+	</div>
 </body>
 <html>

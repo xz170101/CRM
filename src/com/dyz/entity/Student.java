@@ -48,7 +48,7 @@ public class Student {
 	private String stu_ReturnMoneyReason;
 	private Double stu_preMoney;
 	private String stu_preMoneyTime;
-	private Integer sexitInte;
+	private Integer sexitInte;//打分
 	private String sexitString;
 	
 	private NetFollows netfollows;
