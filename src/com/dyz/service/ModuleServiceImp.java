@@ -53,4 +53,10 @@ public class ModuleServiceImp implements ModuleService {
 		return moduleMapper.delModule(modules_Id);
 	}
 
+	@Override
+	public Module selectModuleById(Integer modules_Id) {
+		// TODO Auto-generated method stub
+		return moduleMapper.selectModuleByMId(modules_Id);
+	}
+
 }

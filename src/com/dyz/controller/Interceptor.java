@@ -8,7 +8,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 public class Interceptor implements HandlerInterceptor {
-/**/
+ 
 		//controller执行后且视图返回后调用此方法
 		 public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
 				throws Exception {
@@ -32,9 +32,10 @@ public class Interceptor implements HandlerInterceptor {
 			HttpSession session = request.getSession();
 			//如果用户已登录也放行
 			if(session.getAttribute("user")!=null){
+				//request.getRequestDispatcher("/WEB-INF/demo/index.jsp").forward(request, response);
 				return true;
 			}
-			//用户没有登录挑战到登录页面
+			//用户没有登录跳转到登录页面
 			request.getRequestDispatcher("/WEB-INF/demo/login.jsp").forward(request, response);
 			
 			return false;

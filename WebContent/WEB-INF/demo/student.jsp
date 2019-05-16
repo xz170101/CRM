@@ -71,7 +71,9 @@
 			fitColumns:true,
 	        pagination:true,
 	        rownumbers:true,
-	       /*  singleSelect:true,	 */        
+ 
+	        singleSelect:true,
+ 
 	        toolbar:"#tb",
 	        queryParams:{				
 				//要发送的参数列表
@@ -91,9 +93,16 @@
 		})			
 	}
 	function formatterStu(value, row, index){
-		return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='chakanStu(" + index + ")'>查看</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='shezhiStu(" + index + ")'>设置</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='followStu(" + index + ")'>跟踪</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='updateStu(" + index + ")'>编辑</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='deleteStu(" + index + ")'>删除</a>";
+ 
+		return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='chakanStu(" + index + ")'>查看</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='shezhiStu(" + index + ")'>设置</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='genzongStu(" + index + ")'>跟踪</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='updateStu(" + index + ")'>编辑</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='deleteStu(" + index + ")'>删除</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='piliang(" + index + ")'>批量操作</a>";
 	}
-	
+	/* function formatterRole(value, row, index){
+		return row.role.roles_Name;
+	} */
+	/* function formatterUser(value, row, index){
+		return row.netfollows.user.loginName;
+	} */
+ 
 	function formatterSex(value, row, index){
 		return value==0? '男':'女';
 	}
@@ -207,6 +216,7 @@
 				}
 			})
 		}
+ 
 		
 		
 		//对学生进行后续跟踪
@@ -242,6 +252,7 @@
 				}
 			})
 		}
+ 
 
 	</script>
 </head>
@@ -249,6 +260,7 @@
 		<table id="stuTab" data-options="fitColumns:true">   
 	    <thead>   
 	        <tr> 
+ 
 	       		<th data-options="field:'checkbox',checkbox:true"></th>
 	        	<th data-options="field:'stu_id',width:100">编码</th>   
 	            <th data-options="field:'stu_Name',width:100">姓名</th> 
@@ -297,6 +309,7 @@
         		<th data-options="field:'setLo',width:200,align:'center',formatter:formatterStu">操作</th>            
 	             	
 	        	
+ 
 	        </tr>   
 	    </thead>   
 	</table>
@@ -329,9 +342,11 @@
 			 <a href="javascript:void(0)" class="easyui-linkbutton"
 				iconCls="icon-search" onclick="init()">查找</a>
 			  <a href="javascript:void(0)" class="easyui-linkbutton"
+ 
 			   iconCls="icon-add" onclick="addStu()">添加</a>
 			    <a href="javascript:void(0)" class="easyui-linkbutton"
 			   iconCls="icon-edit" onclick="piliang()">批量操作</a>   
+ 
 		</form>
 	</div>
 	
@@ -439,6 +454,7 @@
 	    </form>
 	</div>
 	
+ 
 	<!-- 对学生进行跟踪 -->
 	<div id="insertFollow" class="easyui-dialog" title="添加跟踪信息" style="width:400px;height:300px;" 
 		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
@@ -554,5 +570,6 @@
 	    	</table>
 	    </form>
 	</div> 	
+ 
 </body>
 </html>

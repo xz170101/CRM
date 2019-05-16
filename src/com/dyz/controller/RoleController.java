@@ -1,18 +1,20 @@
 package com.dyz.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.dyz.entity.Fenye;
-import com.dyz.entity.Module;
 import com.dyz.entity.Role;
 import com.dyz.entity.RoleModules;
 import com.dyz.service.RoleService;
+import com.dyz.util.TreeModel;
 
 
 @Controller
@@ -60,14 +62,14 @@ public class RoleController {
 	 */
 	@RequestMapping(value="/selectModuleByRoleId",method=RequestMethod.POST)
 	@ResponseBody
-	public List<Module> selectRoleMod(Integer roles_Id) {
+	public ArrayList<TreeModel> selectRoleMod(Integer roles_Id) {
 		return  roleService.selectRoleModules(roles_Id);
 	}
 	
 	@RequestMapping(value="/saveRoleMod",method=RequestMethod.POST)
 	@ResponseBody
-	public Integer saveRoleMod(RoleModules roleModules) {
-		System.out.println("+++++++++++++"+roleModules);
-		return  roleService.saveRoleModules(roleModules);
+	public Integer saveRoleMod(String modules_Ids,Integer roles_Id) {
+		 
+		return  roleService.insertRoleModules(modules_Ids,roles_Id);
 	}
 }

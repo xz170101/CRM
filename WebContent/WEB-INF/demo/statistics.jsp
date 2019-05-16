@@ -7,8 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>后台管理系统【统计】</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="../js/assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../js/assets/css/dashboard.css">
+ 
+    <link rel="stylesheet" href="js/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="js/assets/css/dashboard.css">
+ 
     
 </head>
 <body>
@@ -185,10 +187,12 @@
     </div>
 
 
-<script src="../js/assets/js/jquery2.1.1.js" type="text/javascript"></script>
-<script src="../js/assets/js/echarts.min.js"></script>
-<script src="../js/assets/js/charts/Chart.js"></script>
-<script src="../js/assets/js/dashboard.js"></script>
+ 
+<script src="js/assets/js/jquery2.1.1.js" type="text/javascript"></script>
+<script src="js/assets/js/echarts.min.js"></script>
+<script src="js/assets/js/charts/Chart.js"></script>
+<script src="js/assets/js/dashboard.js"></script>
+ 
 
 </body>
 </html>

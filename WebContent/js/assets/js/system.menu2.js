@@ -1,9 +1,9 @@
 ﻿var _menus_oneLeve=[{"menuid":"0","menuname":"首页","icon":"fa-home"}];
 var _menus=[
     {"menuid":"00","icon":"fa-trophy","menuname":"模块管理",parentMenu:'0',
-        "menus":[{"menuid":"002","menuname":"管理模块","icon":"fa-delicious","url":"../demo/indexGL.jsp"},
-        		{"menuid":"000","menuname":"统计模块1","icon":"fa-dashboard","url":"../demo/statistics.jsp"},
-                {"menuid":"001","menuname":"统计模块","icon":"fa-delicious","url":"../demo/statistics01.jsp"}
+        "menus":[{"menuid":"002","menuname":"管理模块","icon":"fa-delicious","url":"indexGL"},
+        		{"menuid":"000","menuname":"统计模块1","icon":"fa-dashboard","url":"statistics"},
+                {"menuid":"001","menuname":"统计模块","icon":"fa-delicious","url":"statistics01"}
             ]} 
 ];
 
@@ -55,7 +55,7 @@ var _menus=[
             $.messager.confirm('系统提示', '您确定要退出本次登录吗?', function(r) {
                 if (r) {
                 	sessionStorage.clear();//seesionStorage的数据不会跟随HTTP请求一起发送到服务器，只会在本地生效，并在关闭标签页后清除数据。
-                    location.href = '../login.jsp';
+                    location.href = 'crm';
                 }
             });
         })

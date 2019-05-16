@@ -1,7 +1,6 @@
 package com.dyz.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -34,11 +33,7 @@ public class LoginUI {
         response.setDateHeader("Expire", 0);
         
         RandomValidateCode randomValidateCode = new RandomValidateCode();
-      /*  ArrayList<String> yzm=new ArrayList<>(); 
-        for(int i=1;i<=4;i++) {
-        	yzm.add(randomValidateCode.getRandomString(i));
-        	System.out.println(randomValidateCode.getRandomString(i));
-        }*/
+       
         try {
             randomValidateCode.getRandcode(request, response);//输出图片方法
         } catch (Exception e) {

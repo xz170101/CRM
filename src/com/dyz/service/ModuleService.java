@@ -24,5 +24,11 @@ public interface ModuleService {
 	 * 根据id删除模块
 	 */
 	Integer delModu(Integer modules_Id);
+	/**
+	 * 根据id传模块信息
+	 * @param modules_Id
+	 * @return
+	 */
+	Module selectModuleById(Integer modules_Id);
 
 }
