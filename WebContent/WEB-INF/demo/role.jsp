@@ -48,7 +48,6 @@
 	  				$('#treemenu').tree('select',node.target);
 	  			}
 	  		});
-			//$("#setRolse_window").window("open");
 	  		//保存修改角色权限  **模块信息
 		  $("#saveSetRose").click(function(){
  			var data=$("#dg").datagrid("getRows");
@@ -147,21 +146,6 @@
  				 }   
 			});
 		}
-		/*function setRightData(x){
-			var data=$("#dg").datagrid("getRows");
-			$("#diaSetRight").dialog({
-				close:false,
-				title:"你正在设置"+data[x].Name
-			});
-			$.post(globalData.server+"GetModulesByRoleId",{
-				roleId:data[x].Id,
-				token:token 
-			},function(r){
-				cur_roleId=data[x].Id;
-				$("#rightTree").tree("loadData",r);
-			},"json")
-		}*/
-		
 	</script>
 	<body>
 		<table name="center" class="easyui-datagrid" id="dg" title="角色列表" style="width:300;height:400"  >

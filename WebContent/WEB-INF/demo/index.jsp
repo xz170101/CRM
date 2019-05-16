@@ -20,7 +20,19 @@
 <link href="js/assets/js/themes/default/easyui.css" rel="stylesheet" type="text/css" />
 <link href="js/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <link href="js/assets/css/layout.css" rel="stylesheet" type="text/css" />
-
+<script src="js/assets/js/jquery2.1.1.js" type="text/javascript"></script>
+<script src="js/assets/js/jquery.easyui.min.js" type="text/javascript"></script>
+<script src='js/assets/js/index2.js' type="text/javascript"></script>
+<script src='js/assets/js/system.menu2.js' type="text/javascript"></script>
+<script type="text/javascript">
+//yufangsession失效
+<%-- 	  $(function(){
+		var user="<%=session.getAttribute("user")%>";
+		if(user==null){
+			window.location.href="crm";	
+		}
+	});   --%>
+</script>
 
 </head>
 <body class="easyui-layout vui-easyui" scroll="no">
@@ -130,10 +142,7 @@
 </div>
 
 
-<script src="js/assets/js/jquery2.1.1.js" type="text/javascript"></script>
-<script src="js/assets/js/jquery.easyui.min.js" type="text/javascript"></script>
-<script src='js/assets/js/index2.js' type="text/javascript"></script>
-<script src='js/assets/js/system.menu2.js' type="text/javascript"></script>
+
 <script type="text/javascript">
 
 

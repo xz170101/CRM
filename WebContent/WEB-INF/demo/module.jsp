@@ -72,8 +72,7 @@
 	var parentId;
 	function updataModuledg(){
 		var nodes = $('#treemenu').tree('getSelected');
-		if(nodes != null) {
-			alert("开始编辑"+nodes.id);
+ 			alert("开始编辑"+nodes.id);
 			$.ajax({
 				type:"post",
 				dataType:'json',
@@ -85,9 +84,7 @@
 						$("#updataModule_window").dialog("open");
 				}
 			});
-		} else {
-			$.messager.alert("提示信息","请选择父节点！","info");
-		}
+		 
 	}
 	function updatesubmitModuleForms(){
 		var nodes = $('#treemenu').tree('getSelected');
@@ -104,7 +101,9 @@
 					myTree();
 					clearModuleForm();
 					//$("#updataModule_window").dialog("close");
-					$.messager.alert("错误提示","修改成功");
+					
+					 window.parent.location.href = "indexGL";
+					$.messager.alert("提示","修改成功");
 				}else
 				$.messager.alert("错误提示","修改失败");
 			}
@@ -140,11 +139,11 @@
 		
 	<table name="center1" class="easyui-datagrid" id="Moduledg" title="模块信息" style="width: 100%; height:auto;" data-options="method:'post'">
 	</table>
-	<div style="margin-bottom: 5px;">
+	<!-- <div style="margin-bottom: 5px;">
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" onclick="addModuleInfo()">添加</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" onclick="updataModuledg()">编辑</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cut" onclick="deleteModuledg()">删除</a>
-	</div>
+	</div> -->
 	
 	<div id="moduleDiv" title="请选择模块" style="width: 650px; height: 500px; background: #eee;">
 		<ul id="treemenu"></ul>

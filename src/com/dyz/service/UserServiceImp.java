@@ -52,7 +52,11 @@ public class UserServiceImp implements UserService{
 	@Override
 	public Integer delUser(Integer user_Id) {
 		// TODO Auto-generated method stub
-		return usermapper.delUse(user_Id);
+		List<Role> i=usermapper.selectUserRole(user_Id);
+		if(i==null) {
+			return usermapper.delUse(user_Id);
+		}
+		return 0;
 	}
 	@Override
 	public Integer lockUser(Integer user_Id) {

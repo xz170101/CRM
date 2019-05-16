@@ -39,8 +39,8 @@
 	<!-- 查询角色模块 -->
  	<select id="selectRoleModu" parameterType="int" resultType="module">
  		select m.*
- 		from modules m,rolemodules rm 
- 		where m.parentId=rm.modules_Id and  rm.roles_Id=#{roles_Id}
+ 		from modules m  INNER JOIN  rolemodules rm  on m.modules_Id=rm.modules_Id
+ 		where   rm.roles_Id=#{roles_Id}
  		ORDER BY m.modules_weight asc
  	</select>
  	<!--  deleteRoleModuleByRoleId-->

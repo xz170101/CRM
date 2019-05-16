@@ -59,14 +59,14 @@ public class RoleServiceImp implements RoleService{
 		ArrayList<Module> list = moduleMapper.selectModules(); //查询所有
  		ArrayList<TreeModel> tree = new ArrayList<>();
         for (Module module : list) {
-        	System.out.println("要开始添加了+++++++++++++++++");
-        	TreeModel node = new TreeModel();
-	        	for(Module module1 : roleModu) {
-	        		if(module.getParentId()!=0) {
-		        		if(module.getModules_Id()==module1.getModules_Id() ) {
-		        			node.setChecked(true); 
-		        			System.out.println("备选中的磨块 ："+module1);
-		        		}
+         	TreeModel node = new TreeModel();
+        		if(module.getParentId()!=0) {
+        			for(Module module1 : roleModu) {
+        				if(module1.getParentId()!=0) {
+			        		if(module.getModules_Id()==module1.getModules_Id() ) {
+			        			node.setChecked(true); 
+			         		}
+        				}
 		        	}
 	        	}
 	            node.setId(module.getModules_Id());
@@ -76,20 +76,23 @@ public class RoleServiceImp implements RoleService{
         } 
         return TreeNode.getTree(tree);
 	}
+	/**
+	 * 添加角色模块
+	 */
 	@Override
 	public Integer insertRoleModules(String modules_Ids,Integer roles_Id) {
 		// TODO Auto-generated method stub
-		roleMapper.deleteRoleModuleByRoleId(roles_Id);
-		System.out.println("字符串： ++++++++++++++++"+modules_Ids);
-		System.out.println(roles_Id);
+		 int nn=roleMapper.deleteRoleModuleByRoleId(roles_Id);
+		 System.out.println("本次删除角色模块：："+nn);
+		 System.out.println("角色id::::::::::::"+roles_Id);
 		 String[] arr=modules_Ids.split(",");
+		 System.out.println("数组长度+++++++："+arr.length);
 		 Integer module_Id;
 		if(modules_Ids!="" && modules_Ids!=null) {
 			for(int i=0;i<arr.length;i++) {
-				System.out.println("选中模块：+++++++"+arr[i]);
+				 System.out.println("第"+i+"次添加");
 				module_Id=Integer.parseInt(arr[i]);
-				roleMapper.insertRoleModule(module_Id,roles_Id);
-				System.out.println(i);
+ 				roleMapper.insertRoleModule(module_Id,roles_Id);
 			}
 		}else {
 			return 0;
