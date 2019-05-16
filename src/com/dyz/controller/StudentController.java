@@ -1,5 +1,7 @@
 package com.dyz.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dyz.entity.Askers;
 import com.dyz.entity.Fenye;
 import com.dyz.entity.Student;
 import com.dyz.service.StudentService;
@@ -37,5 +40,17 @@ public class StudentController {
 	@ResponseBody
 	public Integer updatezixunname(Student student) {
 		return studentService.updatezixunname(student);
+	}
+	
+	@RequestMapping(value="/updateStudent",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer updateStudent(Student student) {
+		return studentService.updateStudent(student);
+	}
+	
+	@RequestMapping(value="/selectzixunname",method=RequestMethod.POST)
+	@ResponseBody
+	public List<Askers> selectzixunname() {
+		return studentService.selectzixunname();
 	}
 }

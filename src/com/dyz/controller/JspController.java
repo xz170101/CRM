@@ -43,5 +43,10 @@ public class JspController {
 	 public ModelAndView followsjsp() {
 		 return new ModelAndView("/demo/follows"); 
 	 } 
-	  
+	 
+	 @RequestMapping(value="/studentjsp",method=RequestMethod.GET)
+	 public ModelAndView studentjsp() {
+		 return new ModelAndView("/demo/student"); 
+	 }
+	
 }

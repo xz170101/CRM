@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dyz.dao.StudentMapper;
+import com.dyz.entity.Askers;
 import com.dyz.entity.Fenye;
 import com.dyz.entity.Student;
 @Service
@@ -38,6 +39,18 @@ public class StudentServiceImpl implements StudentService {
 	public Integer updatezixunname(Student student) {
 		// TODO Auto-generated method stub
 		return studentMapper.updatezixunname(student);
+	}
+
+	@Override
+	public Integer updateStudent(Student student) {
+		// TODO Auto-generated method stub
+		return studentMapper.updateStudent(student);
+	}
+
+	@Override
+	public List<Askers> selectzixunname() {
+		// TODO Auto-generated method stub
+		return studentMapper.selectzixunname();
 	}
 
 }

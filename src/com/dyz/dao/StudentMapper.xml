@@ -90,7 +90,7 @@
 			</if>
 			<if test="text3 !=null and text2!=''">
 				and stu_ZiXunName like "%"#{text2}"%"
-			</if>			
+			</if>		
 			
 			<!--integer  -->
 			<if test="num1!=null and num1!=''">
@@ -136,7 +136,7 @@
 			</if>
 			<if test="text3 !=null and text2!=''">
 				and stu_ZiXunName like "%"#{text2}"%"
-			</if>			
+			</if>		
 			
 			<!--integer  -->
 			<if test="num1!=null and num1!=''">
@@ -169,6 +169,12 @@
 			</if>
 		</where>
 	</select>
+	
+	<!-- 查询咨询师 -->
+	<select id="selectzixunname" resultType="askers">
+		SELECT * FROM askers where roleName='咨询师'
+	</select>
+	
 		<!-- 删除学生 -->
   	<delete id="delectStudent" parameterType="int">
   		delete from students where stu_id=#{stu_id}
@@ -188,9 +194,124 @@
   			update students
 		<set>
 			<if test="stu_ZiXunName!=null and stu_ZiXunName!=''">
-				stu_ZiXunName=#{stu_ZiXunName},
+				stu_ZiXunName=#{stu_ZiXunName}
 			</if>			
 		</set>		
 			where stu_id=#{stu_id}	
   	</update>
+  	<!-- 修改客户信息 -->
+  	<update id="updateStudent" parameterType="student">
+		update students
+		<set>
+			<if test="stu_Name!=null and stu_Name!=''">
+				stu_Name=#{stu_Name},
+			</if>
+			<if test="stu_Sex!=null and stu_Sex!=''">
+				stu_Sex=#{stu_Sex},
+			</if>
+			<if test="stu_Age!=null and stu_Age!=''">
+				stu_Age=#{stu_Age},
+			</if>
+			<if test="stu_Phone !=null and stu_Phone!=''">
+				stu_Phone=#{stu_Phone},
+			</if>
+			<if test="stu_Status !=null and stu_Status!=''">
+				stu_Status=#{stu_Status},
+			</if>
+			<if test="stu_PerState!=null and stu_PerState!=''">
+				stu_PerState=#{stu_PerState},
+			</if>
+			<if test="stu_SourceUrl!=null and stu_SourceUrl!=''">
+				stu_SourceUrl=#{stu_SourceUrl},
+			</if>
+			<if test="stu_NetPusherld!=null and stu_NetPusherld!=''">
+				stu_NetPusherld=#{stu_NetPusherld},
+			</if>
+			<if test="stu_SourceKeyWord!=null and stu_SourceKeyWord!=''">
+				stu_SourceKeyWord=#{stu_SourceKeyWord},
+			</if>
+			<if test="stu_Address!=null and stu_Address!=''">
+				stu_Address=#{stu_Address},
+			</if>			
+			<if test="stu_stuConcern!=null and stu_stuConcern!=''">
+				stu_stuConcern=#{stu_stuConcern},
+			</if>
+			<if test="stu_FromPart!=null and stu_FromPart!=''">
+				stu_FromPart=#{stu_FromPart},
+			</if>
+			<if test="stu_qq!=null and stu_qq!=''">
+				stu_qq=#{stu_qq},
+			</if>
+			<if test="stu_WeiXin!=null and stu_WeiXin!=''">
+				stu_WeiXin=#{stu_WeiXin},
+			</if>
+			<if test="stu_isBaoBei!=null and stu_isBaoBei!=''">
+				stu_isBaoBei=#{stu_isBaoBei},
+			</if>	
+			<if test="stu_ZiXunName!=null and stu_ZiXunName!=''">
+				stu_ZiXunName=#{stu_ZiXunName},
+			</if>
+			<if test="stu_CreateUser!=null and stu_CreateUser!=''">
+				stu_CreateUser=#{stu_CreateUser},
+			</if>
+			<if test="stu_LearnForward!=null and stu_LearnForward!=''">
+				stu_LearnForward=#{stu_LearnForward},
+			</if>
+			<if test="sexitInte!=null and sexitInte!=''">
+				sexitInte=#{sexitInte},
+			</if>
+			<if test="stu_isValid!=null and stu_isValid!=''">
+				stu_isValid=#{stu_isValid},
+			</if>			
+			<if test="stu_isReturnVist!=null and stu_isReturnVist!=''">
+				stu_isReturnVist=#{stu_isReturnVist},
+			</if>
+			<if test="stu_isHome!=null and stu_isHome!=''">
+				stu_isHome=#{stu_isHome},
+			</if>
+			<if test="stu_HomeTime!=null and stu_HomeTime!=''">
+				stu_HomeTime=#{stu_HomeTime},
+			</if>
+			<if test="stu_LostValid!=null and stu_LostValid!=''">
+				stu_LostValid=#{stu_LostValid},
+			</if>
+			<if test="stu_isPay!=null and stu_isPay!=''">
+				stu_isPay=#{stu_isPay},
+			</if>			
+			<if test="stu_PayTime!=null and stu_PayTime!=''">
+				stu_PayTime=#{stu_PayTime},
+			</if>	
+			<if test="stu_Money!=null and stu_Money!=''">
+				stu_Money=#{stu_Money},
+			</if>
+			<if test="stu_isReturnMoney!=null and stu_isReturnMoney!=''">
+				stu_isReturnMoney=#{stu_isReturnMoney},
+			</if>
+			<if test="stu_isInClass!=null and stu_isInClass!=''">
+				stu_isInClass=#{stu_isInClass},
+			</if>
+			<if test="stu_inClassTime!=null and stu_inClassTime!=''">
+				stu_inClassTime=#{stu_inClassTime},
+			</if>
+			<if test="stu_inClassContent!=null and stu_inClassContent!=''">
+				stu_inClassContent=#{stu_inClassContent},
+			</if>			
+			<if test="stu_AskerContent!=null and stu_AskerContent!=''">
+				stu_AskerContent=#{stu_AskerContent},
+			</if>
+			<if test="stu_isDel!=null and stu_isDel!=''">
+				stu_isDel=#{stu_isDel},
+			</if>
+			<if test="stu_ReturnMoneyReason!=null and stu_ReturnMoneyReason!=''">
+				stu_ReturnMoneyReason=#{stu_ReturnMoneyReason},
+			</if>
+			<if test="stu_preMoney!=null and stu_preMoney!=''">
+				stu_preMoney=#{stu_preMoney},
+			</if>
+			<if test="stu_preMoneyTime!=null and stu_preMoneyTime!=''">
+				stu_preMoneyTime=#{stu_preMoneyTime}
+			</if>			
+		</set>		
+			where stu_id=#{stu_id}				
+	</update>
 </mapper>
