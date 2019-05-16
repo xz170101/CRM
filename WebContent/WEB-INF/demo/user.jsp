@@ -6,13 +6,13 @@
 <meta charset="UTF-8">
 <title>用户列表</title>
 <link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/icon.css">
-   		<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/metro/easyui.css">
+    <link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/metro/easyui.css">
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.min.js"></script>
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
  <script type="text/javascript">
 	$(function() {// 初始化内容
-			init();
+		 init();
 	});  
 	function init() { //显示加载数据表格
 			$("#userDG").datagrid({ 
