@@ -7,21 +7,19 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-<title>VIEW_UI_EASYUI</title>
+<title>CRM</title>
 <meta name="KEYWords" contect="VIEWUI,VIEW_UI_EASYUI,EasyUI,后台管理系统,酷设网">
 <meta name="description" contect="viewUI基于EasyUI定制的主题皮肤">
 <meta name="author" contect="djcbpl@163.com">
 <meta property="og:title" content="EasyUI">
 <meta property="og:description" content="HTML, CSS, JS">
-
 <!-- Meta -->
-
-<link rel="Bookmark" href="../js/assets/default/images/logoIco.ico" />
-<link rel="Shortcut Icon" href="../js/assets/default/images/logoIco.ico" />
-<link href="../js/assets/css/reset.css" rel="stylesheet" type="text/css" />
-<link href="../js/assets/js/themes/default/easyui.css" rel="stylesheet" type="text/css" />
-<link href="../js/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-<link href="../js/assets/css/layout.css" rel="stylesheet" type="text/css" />
+<link rel="Bookmark" href="js/assets/default/images/logoIco.ico" />
+<link rel="Shortcut Icon" href="js/assets/default/images/logoIco.ico" />
+<link href="js/assets/css/reset.css" rel="stylesheet" type="text/css" />
+<link href="js/assets/js/themes/default/easyui.css" rel="stylesheet" type="text/css" />
+<link href="js/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="js/assets/css/layout.css" rel="stylesheet" type="text/css" />
 
 
 </head>
@@ -88,7 +86,7 @@
 <!-- 版权 -->
 <div data-options="region:'south',split:false,border:false" class="copyright">
     <div class="footer">
-        <span class="pull-left"> 新职170101版权所有 </a>  &copy; Copyright ©2019 ~ <font id="timeYear">2019</font>. View UI. All Rights Reserved.</span>
+        <span class="pull-left"> 新职170101版权所有 </a>  &copy; Copyright ©2019 ~ <font id="timeYear">2019</font> All Rights Reserved.</span>
         <span class="pull-right">
             <a href="javascript:;"><i class="fa fa-download"></i> 下载管理</a>
             <a href="javascript:;"><i class="fa fa-volume-up"></i> 消息</a>
@@ -132,10 +130,10 @@
 </div>
 
 
-<script src="../js/assets/js/jquery2.1.1.js" type="text/javascript"></script>
-<script src="../js/assets/js/jquery.easyui.min.js" type="text/javascript"></script>
-<script src='../js/assets/js/index2.js' type="text/javascript"></script>
-<script src='../js/assets/js/system.menu2.js' type="text/javascript"></script>
+<script src="js/assets/js/jquery2.1.1.js" type="text/javascript"></script>
+<script src="js/assets/js/jquery.easyui.min.js" type="text/javascript"></script>
+<script src='js/assets/js/index2.js' type="text/javascript"></script>
+<script src='js/assets/js/system.menu2.js' type="text/javascript"></script>
 <script type="text/javascript">
 
 

@@ -8,8 +8,8 @@
 	<meta content="" name="description" />
     <meta content="webthemez" name="author" />
     <title>视图看板【统计】</title>
-    <link href="../js/assets/css/grid.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../js/assets/css/kanban.css">
+    <link href="js/assets/css/grid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="js/assets/css/kanban.css">
 </head>
 
 <body>
@@ -352,10 +352,10 @@
 </div>
 <!-- /. 51vui-View  -->
 
-<script src="../js/assets/js/jquery2.1.1.js" type="text/javascript"></script>
-<script src="../js/assets/js/echarts.min.js" type="text/javascript"></script>
-<script src="../js/assets/js/custom.js" type="text/javascript"></script>
-<script src="../js/assets/js/jquery.spinner.js" type="text/javascript"></script>
+<script src="js/assets/js/jquery2.1.1.js" type="text/javascript"></script>
+<script src="js/assets/js/echarts.min.js" type="text/javascript"></script>
+<script src="js/assets/js/custom.js" type="text/javascript"></script>
+<script src="js/assets/js/jquery.spinner.js" type="text/javascript"></script>
 
 <script type="text/javascript">
     $('.spinnerExample').spinner({});

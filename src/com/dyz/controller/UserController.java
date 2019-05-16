@@ -1,32 +1,27 @@
 package com.dyz.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
+ 
 import com.dyz.entity.Fenye;
 import com.dyz.entity.Role;
 import com.dyz.entity.User;
 import com.dyz.entity.UserRole;
 import com.dyz.service.UserService;
-import com.dyz.util.RandomValidateCode;
+import com.dyz.util.MD5Util;
 import com.dyz.util.Result;
 import com.dyz.util.TreeModel;
 
@@ -34,7 +29,9 @@ import com.dyz.util.TreeModel;
 public class UserController {
 	@Autowired
 	private UserService userService;
-	/**
+	  //return new ModelAndView("test");  
+	
+	 /**
 	 * 分页多条件查询用户信息
 	 * @param fenye
 	 * @return
@@ -106,7 +103,7 @@ public class UserController {
 	@RequestMapping(value="/addUser",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer addUser(User user) {
-		 
+		 user.setPassWord(MD5Util.MD5(user.getPassWord()));
 		return  userService.inertUser(user);
 	}
 	/**
@@ -174,10 +171,12 @@ public class UserController {
 		int count=0;//用来记录错误密码次数
 		@RequestMapping(value ="/login", method = RequestMethod.POST)
 		@ResponseBody
-		public String login(User user, HttpServletResponse res, String yzm, HttpSession session) {
+		public String login(User user, HttpServletResponse res,String reuser, String yzm, HttpSession session,Model model) {
 			//String pwd1 = user.getPassWord();
 			 System.out.println("登录名："+user.getLoginName());
 			 System.out.println("密码："+user.getPassWord());
+			String passWord = user.getPassWord();
+			 user.setPassWord(MD5Util.MD5(user.getPassWord()));
 			 String code =(String) session.getAttribute("randomcode_key");
 			 if (!code.equalsIgnoreCase(yzm)) {
 				return Result.toClient(false, "验证码不对");
@@ -208,14 +207,14 @@ public class UserController {
 						if (lockout != null) {
 							return Result.toClient(false, "该用户被锁定，请联系管理员解锁");
 						} else {
-							/*if (yzm.equals("y")) {
+							 if ("y".equals(reuser)) {
 								Cookie uname = new Cookie("u_name", u.getLoginName());
-								uname.setMaxAge(24 * 60 * 7);
+								uname.setMaxAge(60*60*24*7);
 								res.addCookie(uname);
-								Cookie pwd = new Cookie("u_pwd", pwd1);
-								pwd.setMaxAge(24 * 60 * 7 * 60);
+								Cookie pwd = new Cookie("u_pwd", passWord);
+								pwd.setMaxAge(60*60*24*7);
 								res.addCookie(pwd);
-							}*/
+							} 
 							//该登录时间
 							User us=new User();
 							SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -224,7 +223,8 @@ public class UserController {
 							us.setUser_Id(u.getUser_Id());
 							userService.updateUser(us);
 							session.setAttribute("user", u);
-							return Result.toClient(true, (u != null ? true : false) == true ? "登录成功" : "登录失败");
+							 
+							return Result.toClient(true, (u != null ? true : false) == true ? "crmIndex" : "登录失败");
 						}
 					}
 				}
@@ -255,9 +255,26 @@ public class UserController {
 		@RequestMapping(value ="/newUser", method = RequestMethod.POST)
 		@ResponseBody
 		public Integer newUser(User user) {
-	 
+			 user.setPassWord(MD5Util.MD5(user.getPassWord()));
+			System.out.println("用户：：：：：：：：：：：：：：："+user);
 			return userService.insertUser(user);
 		}
+		/**
+		 * 根据用户名查询用户
+		 * @param user
+		 * @return
+		 */
+		@RequestMapping(value ="/selectUserByName", method = RequestMethod.POST)
+		@ResponseBody
+		public Integer selectUserByName(String loginName) {
+ 			Integer i=userService.selectByName(loginName);
+			if(i==null) {
+				return 0;
+			}else {
+				return 1;
+			}
+		}
+	 
 	 
 	/*  //注销方法
     @RequestMapping("/outLogin")

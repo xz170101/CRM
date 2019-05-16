@@ -1,19 +1,13 @@
 package com.dyz.controller;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.dyz.entity.Fenye;
 import com.dyz.entity.Module;
-import com.dyz.entity.Role;
 import com.dyz.service.ModuleService;
-import com.dyz.service.RoleService;
 import com.dyz.util.TreeModel;
 
 @Controller
@@ -22,7 +16,7 @@ public class ModuleController {
 	private ModuleService moduleService;
 	
 	/**
-	 * 分页查询所有角色
+	 * 查询所有模块
 	 * @param fenye
 	 * @return
 	 */
@@ -31,6 +25,11 @@ public class ModuleController {
 	public ArrayList<TreeModel> selectModule() {
 		 
 		return  moduleService.selectModu();
+	}
+	@RequestMapping(value="/selectModuleById",method=RequestMethod.POST)
+	@ResponseBody
+	public Module selectModuleById(Integer modules_Id) {
+		return  moduleService.selectModuleById(modules_Id);
 	}
 	/**
 	 * 修改角色信息

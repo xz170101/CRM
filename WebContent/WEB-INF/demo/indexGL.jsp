@@ -5,17 +5,17 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>管理首页</title>
-		<link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.4.3/themes/icon.css">
-   		<link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.4.3/themes/metro/easyui.css">
-    	<script type="text/javascript" src="../js/jquery-easyui-1.4.3/jquery.min.js"></script>
-    	<script type="text/javascript" src="../js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
-    	<script type="text/javascript" src="../js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
+		<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/icon.css">
+   		<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/metro/easyui.css">
+    	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.min.js"></script>
+    	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
+    	<script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
 	
 		<script type="text/javascript">
 		//树形结构显示
 		$(function() {
 			 $('#menuTree').tree({
-				url :"../getSysRightsHtmlTree",
+				url :"getSysRightsHtmlTree",
 				method : "post",
 				onClick : function (node) { // attributes 属性返回指定节点属性的集合。
 					// alert(node.modules_path)
@@ -36,7 +36,7 @@
 						 }
 				       //}   
 					 }, onLoadError:function(none){
-				     	window.parent.location.href="../login.jsp"
+				     	window.parent.location.href="login"
 					   } 
 				}); 
 			});

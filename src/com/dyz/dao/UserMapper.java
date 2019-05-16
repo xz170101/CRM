@@ -8,7 +8,7 @@ import com.dyz.entity.Module;
 import com.dyz.entity.Role;
 import com.dyz.entity.User;
 import com.dyz.entity.UserRole;
-import com.dyz.util.TreeModel;
+
 
 public interface UserMapper {
 	/**

@@ -1,7 +1,6 @@
 package com.dyz.dao;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.dyz.entity.Module;
 
@@ -25,5 +24,11 @@ public interface ModuleMapper {
 	 * 根据id删除模块
 	 */
 	Integer delModule(Integer modules_Id);
+	/**
+	 * 根据id查询模块信息
+	 * @param modules_Id
+	 * @return
+	 */
+	Module selectModuleByMId(Integer modules_Id);
 
 }

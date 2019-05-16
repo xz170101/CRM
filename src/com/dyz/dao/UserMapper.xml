@@ -153,12 +153,10 @@
 	<!--selectRoleModuleByUser  -->
 	<select id="selectRoleModuleByUser" parameterType="int" resultType="module" >
 		select m.modules_Id,m.modules_Name,m.parentId,m.modules_path,m.modules_weight,m.mexit1int 
-		from `user` u
-		INNER JOIN userrole ur on u.user_Id=ur.userId
-		INNER JOIN roles r ON r.roles_Id=ur.roleId
+		from userrole ur INNER JOIN roles r ON r.roles_Id=ur.roleId
 		INNER JOIN rolemodules rm on r.roles_Id=rm.roles_Id
 		INNER JOIN  modules m  on rm.modules_Id=m.parentId
-		where u.user_Id=#{user_Id}
+		where ur.userId=#{user_Id}
 	</select>
 	<!-- 修改密码updateUserPwd -->
 	<update id="updateUserPwd" parameterType="user">
