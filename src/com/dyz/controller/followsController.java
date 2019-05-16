@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dyz.entity.Fenye;
+import com.dyz.entity.NetFollows;
 import com.dyz.service.FollowsService;
 
 @Controller
@@ -20,5 +21,12 @@ public class followsController {
 		fenye.setPageSize(rows);
 		
 		return followsService.selectFollows(fenye);
+	} 
+	
+	@RequestMapping(value="/insertFollows",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer insert(NetFollows follows) {
+		
+		return followsService.insertFollows(follows);
 	} 
 }

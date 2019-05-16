@@ -81,4 +81,11 @@
   	<!-- <delete id="delectStudent" parameterType="int">
   		delete from students where stu_id=#{stu_id}
   	</delete> -->
+  	
+  	<insert id="insertFollows"  parameterType="netFollows">
+  		INSERT INTO netfollows(stu_Id,followTime,followState,followType,
+  		nextFollowTime,conTent)values(#{stu_Id},#{followTime},#{followState},
+  		#{followType},#{nextFollowTime},#{conTent})
+  	</insert>
+  	
 </mapper>
