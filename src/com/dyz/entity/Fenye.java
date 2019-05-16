@@ -25,6 +25,7 @@ public class Fenye {
 	private String text8;
 	private String text9;
 	
+	
 	private Integer num1;
 	private Integer num2;
 	private Integer num3;
@@ -154,7 +155,4 @@ public class Fenye {
 	public void setRows(List<?> rows) {
 		this.rows = rows;
 	}
-	
-	
-
 }

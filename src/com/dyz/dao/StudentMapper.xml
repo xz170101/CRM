@@ -90,7 +90,7 @@
 			</if>
 			<if test="text3 !=null and text2!=''">
 				and stu_ZiXunName like "%"#{text2}"%"
-			</if>			
+			</if>		
 			
 			<!--integer  -->
 			<if test="num1!=null and num1!=''">
@@ -136,7 +136,7 @@
 			</if>
 			<if test="text3 !=null and text2!=''">
 				and stu_ZiXunName like "%"#{text2}"%"
-			</if>			
+			</if>		
 			
 			<!--integer  -->
 			<if test="num1!=null and num1!=''">
