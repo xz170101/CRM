@@ -35,7 +35,7 @@ var _menus=[
         }
         var name=$("#name").html();
         alert(name);
-        $.post('../setPwd' ,{
+        $.post('setPwd' ,{
         		passWord:$newpass.val(),
 	        	loginName:name
         	}, function(msg) {
@@ -54,13 +54,20 @@ var _menus=[
         $('#loginOut').click(function() {
             $.messager.confirm('系统提示', '您确定要退出本次登录吗?', function(r) {
                 if (r) {
-                	sessionStorage.clear();//seesionStorage的数据不会跟随HTTP请求一起发送到服务器，只会在本地生效，并在关闭标签页后清除数据。
-                    location.href = 'crm';
+                	$.ajax({
+        				url:"outLogin",
+        				method:'post',
+        				dataType:'json',
+        				success:function(data){
+        					location.href = 'crm';
+        				}
+        			})
+                	//sessionStorage.clear();//seesionStorage的数据不会跟随HTTP请求一起发送到服务器，只会在本地生效，并在关闭标签页后清除数据。
+                	//session.invalidate();
                 }
             });
         })
     });
-
 $(function(){
 	var mydate = new Date(); 
 	var tm=mydate.getFullYear(); 

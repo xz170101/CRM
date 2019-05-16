@@ -138,4 +138,10 @@ public interface UserMapper {
 	 * @return
 	 */
 	Integer insertNewUser(User user);
+	/**
+	 * 根据id查询用户角色
+	 * @param user_Id
+	 * @return
+	 */
+	/*Integer selectUserRoleByUserId(Integer user_Id);*/
 }
