@@ -21,5 +21,10 @@ public class FollowsServiceImpl implements FollowsService {
 		fenye.setRows(rows);
 		return fenye;
 	}
+	@Override
+	public Integer insertFollows(NetFollows follows) {
+		// TODO Auto-generated method stub
+		return followsMapper.insertFollows(follows);
+	}
 
 }

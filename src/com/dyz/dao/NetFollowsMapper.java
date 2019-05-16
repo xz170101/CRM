@@ -19,4 +19,10 @@ public interface NetFollowsMapper {
 	 * @return
 	 */
 	Integer selectCount(Fenye fenye);
+	/**
+	 * 添加跟踪信息
+	 * @param follows
+	 * @return
+	 */
+	Integer insertFollows(NetFollows follows);
 }
