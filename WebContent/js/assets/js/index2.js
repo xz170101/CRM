@@ -116,7 +116,7 @@ function createFrame(opts){
 	 
 //打开首页
 function addFristPage(){
-	var $iframe=$("<iframe id='center_iframe' class='main_iframe' border='1'  scrolling='auto' src='../demo/statistics01.jsp' width='100%' height='100%'></iframe>");
+	var $iframe=$("<iframe id='center_iframe' class='main_iframe' border='1'  scrolling='auto' src='statistics' width='100%' height='100%'></iframe>");
 	$('#layout_center_plan').panel( {
 		title:'<ul class="navigation-path"><li><a href="javascript:;" onclick="addFristPage()" >首页</a></li></ul>',
 		closable:false,

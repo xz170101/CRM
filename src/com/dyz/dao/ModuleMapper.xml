@@ -5,7 +5,11 @@
 <mapper namespace="com.dyz.dao.ModuleMapper">
 	<!-- 查询 -->
 	<select id="selectModules" resultType="module">
-		select * from modules
+		select * from modules order by modules_path asc
+	</select>
+	<!--  selectModuleByMId-->
+	<select id="selectModuleByMId" resultType="module">
+		select * from modules where modules_Id=#{modules_Id}
 	</select>
 	<!-- 修改 -->
 	<update id="updateModule" parameterType="module">

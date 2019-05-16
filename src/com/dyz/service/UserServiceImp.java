@@ -52,7 +52,11 @@ public class UserServiceImp implements UserService{
 	@Override
 	public Integer delUser(Integer user_Id) {
 		// TODO Auto-generated method stub
-		return usermapper.delUse(user_Id);
+		List<Role> i=usermapper.selectUserRole(user_Id);
+		if(i==null) {
+			return usermapper.delUse(user_Id);
+		}
+		return 0;
 	}
 	@Override
 	public Integer lockUser(Integer user_Id) {
@@ -134,6 +138,7 @@ public class UserServiceImp implements UserService{
 	@Override
 	public User selectLogin(User user) {
 		// TODO Auto-generated method stub
+		
 		return usermapper.selectUse(user);
 	}
 	@Override
@@ -163,13 +168,22 @@ public class UserServiceImp implements UserService{
              TreeModel node = new TreeModel();
              node.setId(module.getModules_Id());
              node.setText(module.getModules_Name());
-             //node.setState(module.getIs_open());
-             //node.setLevel_id(module.getLevel_id());
+             node.setModules_path(module.getModules_path());
              node.setParent_id(module.getParentId());
              tree.add(node);
          }//简单的来说，就是把数据库里所有数据查出来之后，然后一条一条的封装，扔进TreeModel里，作为一个个节点，然后放在ArrayList里
-          System.out.println("yonghu shu:+++++++++++ "+TreeNode.getTree(tree));
+         
          return TreeNode.getTree(tree);
+	}
+	@Override
+	public Integer UpdatePwd(User user) {
+		// TODO Auto-generated method stub
+		return usermapper.updateUserPwd(user);
+	}
+	@Override
+	public Integer insertUser(User user) {
+		// TODO Auto-generated method stub
+		return usermapper.insertNewUser(user);
 	} 
 
  

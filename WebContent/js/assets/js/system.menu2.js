@@ -1,9 +1,9 @@
 ﻿var _menus_oneLeve=[{"menuid":"0","menuname":"首页","icon":"fa-home"}];
 var _menus=[
     {"menuid":"00","icon":"fa-trophy","menuname":"模块管理",parentMenu:'0',
-        "menus":[{"menuid":"002","menuname":"管理模块","icon":"fa-delicious","url":"../demo/indexGL.jsp"},
-        		{"menuid":"000","menuname":"统计模块1","icon":"fa-dashboard","url":"../demo/statistics.jsp"},
-                {"menuid":"001","menuname":"统计模块","icon":"fa-delicious","url":"../demo/statistics01.jsp"}
+        "menus":[{"menuid":"002","menuname":"管理模块","icon":"fa-delicious","url":"indexGL"},
+        		{"menuid":"000","menuname":"统计模块1","icon":"fa-dashboard","url":"statistics"},
+                {"menuid":"001","menuname":"统计模块","icon":"fa-delicious","url":"statistics01"}
             ]} 
 ];
 
@@ -25,20 +25,23 @@ var _menus=[
             return false;
         }
         if ($rePass.val() == '') {
-            msgShow('系统提示', '请在一次输入密码！', 'admin');
+            msgShow('系统提示', '请再一次输入密码！', 'admin');
             return false;
         }
 
         if ($newpass.val() != $rePass.val()) {
-            msgShow('系统提示', '两次密码不一至！请重新输入', 'admin');
+            msgShow('系统提示', '两次密码不一致！请重新输入', 'admin');
             return false;
         }
-
-        $.post('/ajax=' + $newpass.val(), function(msg) {
-            msgShow('系统提示', '恭喜，密码修改成功！<br>您的新密码为：' + msg, 'info');
-            $newpass.val('');
-            $rePass.val('');
-            close();
+        var name=$("#name").html();
+        alert(name);
+        $.post('setPwd' ,{
+        		passWord:$newpass.val(),
+	        	loginName:name
+        	}, function(msg) {
+	            msgShow('系统提示', '恭喜，密码修改成功！', 'info');
+	             
+	            closePwd();
         })
         
     }
@@ -51,12 +54,20 @@ var _menus=[
         $('#loginOut').click(function() {
             $.messager.confirm('系统提示', '您确定要退出本次登录吗?', function(r) {
                 if (r) {
-                    location.href = '../login.jsp';
+                	$.ajax({
+        				url:"outLogin",
+        				method:'post',
+        				dataType:'json',
+        				success:function(data){
+        					location.href = 'crm';
+        				}
+        			})
+                	//sessionStorage.clear();//seesionStorage的数据不会跟随HTTP请求一起发送到服务器，只会在本地生效，并在关闭标签页后清除数据。
+                	//session.invalidate();
                 }
             });
         })
     });
-
 $(function(){
 	var mydate = new Date(); 
 	var tm=mydate.getFullYear(); 

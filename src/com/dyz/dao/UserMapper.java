@@ -8,7 +8,7 @@ import com.dyz.entity.Module;
 import com.dyz.entity.Role;
 import com.dyz.entity.User;
 import com.dyz.entity.UserRole;
-import com.dyz.util.TreeModel;
+
 
 public interface UserMapper {
 	/**
@@ -126,4 +126,22 @@ public interface UserMapper {
 	 * @return
 	 */
 	ArrayList<Module> selectRoleModuleByUser(Integer user_Id);
+	/**
+	 * 根据用户名修改用户密码
+	 * @param user
+	 * @return
+	 */
+	Integer updateUserPwd(User user);
+	/**
+	 * 注册用户
+	 * @param user
+	 * @return
+	 */
+	Integer insertNewUser(User user);
+	/**
+	 * 根据id查询用户角色
+	 * @param user_Id
+	 * @return
+	 */
+	/*Integer selectUserRoleByUserId(Integer user_Id);*/
 }

@@ -1,32 +1,27 @@
 package com.dyz.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
+ 
 import com.dyz.entity.Fenye;
 import com.dyz.entity.Role;
 import com.dyz.entity.User;
 import com.dyz.entity.UserRole;
 import com.dyz.service.UserService;
-import com.dyz.util.RandomValidateCode;
+import com.dyz.util.MD5Util;
 import com.dyz.util.Result;
 import com.dyz.util.TreeModel;
 
@@ -34,7 +29,7 @@ import com.dyz.util.TreeModel;
 public class UserController {
 	@Autowired
 	private UserService userService;
-	/**
+	 /**
 	 * 分页多条件查询用户信息
 	 * @param fenye
 	 * @return
@@ -106,7 +101,7 @@ public class UserController {
 	@RequestMapping(value="/addUser",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer addUser(User user) {
-		 
+		 user.setPassWord(MD5Util.MD5(user.getPassWord()));
 		return  userService.inertUser(user);
 	}
 	/**
@@ -149,89 +144,70 @@ public class UserController {
 	public Integer unLockUser(Integer user_Id) {
 		return  userService.unLockUser(user_Id);
 	}
-/**
- * 检验是否重复
- * @param loginName
- 
-	@RequestMapping(value="/check",method=RequestMethod.POST) 
-	@ResponseBody 
-	private User  checkout(String loginName){ 
-			System.out.println("检验执行"); 
-			PrintWriter out = null; 
-			//调用service层方法findXueyuan(xueyuan_name) 
-			User list=  userService.selectUser(loginName); 
-			//if(null != list && !list.isEmpty()) 判断集合是否为空，如果为空说明当前没有学院名，否则改学院已经存在 
-			if(list==null){ 
-				return  1;
-				}else{ 
-				return 2;
-			} 
-		 
-		}
-		*/
-			
 		//关于用户登录的表单提交
-		int count=0;//用来记录错误密码次数
-		@RequestMapping(value ="/login", method = RequestMethod.POST)
-		@ResponseBody
-		public String login(User user, HttpServletResponse res,  String yzm, HttpSession session) {
-			//String pwd1 = user.getPassWord();
-			 System.out.println("登录名："+user.getLoginName());
-			 System.out.println("密码："+user.getPassWord());
-			String code = (String) session.getAttribute("code");
-			/*if (!code.equalsIgnoreCase(yzm)) {
-				return Result.toClient(false, "验证码不对");
-			} else {*/
-				Integer name = userService.selectByName(user.getLoginName());//返回的是用户id
-				if (name == null) {
-					return Result.toClient(false, "用户名不存在");
-				} else {
-					User u = userService.selectLogin(user);
-					 
-					if (u == null) {
-						count++;
-							User use=new User();
-							use.setUser_Id(name);
-							use.setPsdWrongTime(count);
-							userService.updateUser(use);
-							if(count>3) {
-								SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-								String time = s.format(new Date());
-								use.setLockTime(time);
-								use.setIsLockout(1);
-								userService.lockUser(name);
-								return Result.toClient(false, "输入次数大于三次，该用户已被锁定，请联系管理员解锁");
-						}
-						return Result.toClient(false, "密码不正确");
-					} else {
-						Integer lockout = userService.selectByNameLockout(user.getLoginName());
-						if (lockout != null) {
-							return Result.toClient(false, "该用户被锁定，请联系管理员解锁");
-						} else {
-							/*if (yzm.equals("y")) {
-								Cookie uname = new Cookie("u_name", u.getLoginName());
-								uname.setMaxAge(24 * 60 * 7);
-								res.addCookie(uname);
-								Cookie pwd = new Cookie("u_pwd", pwd1);
-								pwd.setMaxAge(24 * 60 * 7 * 60);
-								res.addCookie(pwd);
-							}*/
-							//该登录时间
-							User us=new User();
+	int count=0;//用来记录错误密码次数
+	@RequestMapping(value ="/login", method = RequestMethod.POST)
+	@ResponseBody
+	public String login(User user, HttpServletResponse res,String reuser, String yzm, HttpSession session,Model model) {
+		//String pwd1 = user.getPassWord();
+		 System.out.println("登录名："+user.getLoginName());
+		 System.out.println("密码："+user.getPassWord());
+		String passWord = user.getPassWord();
+		 user.setPassWord(MD5Util.MD5(user.getPassWord()));
+		 String code =(String) session.getAttribute("randomcode_key");
+		 if (!code.equalsIgnoreCase(yzm)) {
+			return Result.toClient(false, "验证码不对");
+		} else { 
+			Integer name = userService.selectByName(user.getLoginName());//返回的是用户id
+			if (name == null) {
+				return Result.toClient(false, "用户名不存在");
+			} else {
+				User u = userService.selectLogin(user);
+				 
+				if (u == null) {
+					count++;
+						User use=new User();
+						use.setUser_Id(name);
+						use.setPsdWrongTime(count);
+						userService.updateUser(use);
+						if(count>3) {
 							SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 							String time = s.format(new Date());
-							us.setLoginTime(time);
-							us.setUser_Id(u.getUser_Id());
-							userService.updateUser(us);
-							session.setAttribute("user", u);
-							return Result.toClient(true, (u != null ? true : false) == true ? "登录成功" : "登录失败");
-						}
+							use.setLockTime(time);
+							use.setIsLockout(1);
+							userService.lockUser(name);
+							return Result.toClient(false, "输入次数大于三次，该用户已被锁定，请联系管理员解锁");
+					}
+					return Result.toClient(false, "密码不正确");
+				} else {
+					Integer lockout = userService.selectByNameLockout(user.getLoginName());
+					if (lockout != null) {
+						return Result.toClient(false, "该用户被锁定，请联系管理员解锁");
+					} else {
+						 if ("y".equals(reuser)) {
+							Cookie uname = new Cookie("u_name", u.getLoginName());
+							uname.setMaxAge(60*60*24*7);
+							res.addCookie(uname);
+							Cookie pwd = new Cookie("u_pwd", passWord);
+							pwd.setMaxAge(60*60*24*7);
+							res.addCookie(pwd);
+						} 
+						//该登录时间
+						User us=new User();
+						SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						String time = s.format(new Date());
+						us.setLoginTime(time);
+						us.setUser_Id(u.getUser_Id());
+						userService.updateUser(us);
+						session.setAttribute("user", u);
+						return Result.toClient(true, (u != null ? true : false) == true ? "crmIndex" : "登录失败");
 					}
 				}
-			/*}*/
-		}
+			}
+		 } 
+	}
 		/**
-		 * 
+		 * 管理首页树
 		 * @param s
 		 * @return
 		 */
@@ -239,16 +215,46 @@ public class UserController {
 		@ResponseBody
 		public ArrayList<TreeModel> getModules(HttpSession session) {
 			User users = (User) session.getAttribute("user");
-			System.out.println(users);
 			return userService.selectUsersByroles(users.getUser_Id());
 		}
-
-	 
-	/*  //注销方法
-    @RequestMapping("/outLogin")
-    public String outLogin(HttpSession session){
+		/**
+		 * 修改密码
+		 * @param session
+		 * @return
+		 */
+		@RequestMapping(value ="/setPwd", method = RequestMethod.POST)
+		@ResponseBody
+		public Integer setPwd(User user) {
+			user.setPassWord(MD5Util.MD5(user.getPassWord()));
+			return userService.UpdatePwd(user);
+		}
+		@RequestMapping(value ="/newUser", method = RequestMethod.POST)
+		@ResponseBody
+		public Integer newUser(User user) {
+			 user.setPassWord(MD5Util.MD5(user.getPassWord()));
+			return userService.insertUser(user);
+		}
+		/**
+		 * 根据用户名查询用户
+		 * @param user
+		 * @return
+		 */
+		@RequestMapping(value ="/selectUserByName", method = RequestMethod.POST)
+		@ResponseBody
+		public Integer selectUserByName(String loginName) {
+ 			Integer i=userService.selectByName(loginName);
+			if(i==null) {
+				return 0;
+			}else {
+				return 1;
+			}
+		}
+	   //注销方法
+    @RequestMapping(value="/outLogin", method = RequestMethod.POST)
+    @ResponseBody
+    public Integer outLogin(HttpSession session){
         //通过session.invalidata()方法来注销当前的session
         session.invalidate();
-        return "login";
-    }*/
+        return 1;
+    } 
 }

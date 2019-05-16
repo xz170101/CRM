@@ -6,11 +6,26 @@ public class TreeModel {
 	private int id;                    //id
     private String text;                //标题内容
     private String state;               //状态 closed-合起、open-打开
+    private Boolean  checked	;		//1:被选中的；0：未被选中的
+    private String modules_path;               //路径
     private ArrayList<TreeModel> children;   //子节点，子节点有0个或多个，所以用链表存放
     private int level_id;               //层级       根层级为1
     private int parent_id;              //父节点   根节点为0
     
-    public int getId() {
+     
+	public Boolean getChecked() {
+		return checked;
+	}
+	public void setChecked(Boolean checked) {
+		this.checked = checked;
+	}
+	public String getModules_path() {
+		return modules_path;
+	}
+	public void setModules_path(String modules_path) {
+		this.modules_path = modules_path;
+	}
+	public int getId() {
         return id;
     }
     public void setId(int id) {

@@ -1,3 +1,6 @@
+ 
+   
+ 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -5,17 +8,17 @@
 <head>
 <meta charset="UTF-8">
 <title>角色</title>
-	<link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.4.3/themes/icon.css">
-	<link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.4.3/themes/metro/easyui.css">
-   	<script type="text/javascript" src="../js/jquery-easyui-1.4.3/jquery.min.js"></script>
-   	<script type="text/javascript" src="../js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
-   	<script type="text/javascript" src="../js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
+	<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/metro/easyui.css">
+   	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.min.js"></script>
+   	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
+   	<script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
  <script type="text/javascript">
 		 
 		//加载角色信息
 		$(function(){
 		    $("#dg").datagrid({ 
-		    	url:"../selectRole",  //数据接口的地址
+		    	url:"selectRole",  //数据接口的地址
 		    	method:'post',
 		        fitColumns:true,
 		        pagination:true,
@@ -38,43 +41,43 @@
 				close:false,
 				title:"你正在设置"+data[index].roles_Name+"权限"
 			});
-			
+			//alert(data[index].roles_Id);
 			$('#treemenu').tree({
-	  			url:"../selectModule",
+	  			url:"selectModuleByRoleId",
 	  			queryParams:{
 	  				roles_Id:data[index].roles_Id
 	  			} ,onContextMenu:function(e,node){
+	  				
 	  				$('#treemenu').tree('select',node.target);
 	  			}
 	  		});
-			//$("#setRolse_window").window("open");
 	  		//保存修改角色权限  **模块信息
 		  $("#saveSetRose").click(function(){
  			var data=$("#dg").datagrid("getRows");
  			//获取所有勾选项的树节点构成的数组
 			var nodes=$('#treemenu').tree('getChecked',['checked','indeterminate']);
- 			alert(nodes);
 			var s="";
 			for (var i=0;i<nodes.length;i++) {
 				if(s==""){
-					s+=nodes[i].modules_Id;
+					s+=nodes[i].id;
 				}else{
 					s+=",";
-					s+=nodes[i].modules_Id;
+					s+=nodes[i].id;
 				}
 			}
-			alert(s);
-			$.post("../saveRoleMod",{
-				modules_Id: s,
+			$.post("saveRoleMod",{
+				modules_Ids: s,
 				roles_Id:data[index].roles_Id 
 			},function(r){
-				if(r.success){
+				if(r>0){
 					$("#SetRight").dialog("close"); 
 					$("#dg").datagrid("reload");
 					$.messager.alert("提示","保存权限成功");
 					 //window.top.loadTree();
  				}else{
-					$.messager.alert("提示",r.message);
+ 					$("#SetRight").dialog("close"); 
+					$("#dg").datagrid("reload");
+					$.messager.alert("提示","已清空！");
 				}
 			},"json");
 			});
@@ -88,8 +91,8 @@
 			var flag=$("#addRolseForm").form("validate");//验证文本框内容是否有效
             var rname=$("#rname").val();
 			if(flag){
-                $.post("../insertRole", {    
-                        roles_Name:rname,
+                $.post("insertRole", {    
+                        roles_Name:rname
                     }, function(res){
                         if(res>0){
                             $("#addRolse_window").dialog("close");//关闭添加窗口
@@ -112,7 +115,7 @@
             var rid=$("#rId_exit").val();
             alert(rname);
             alert(rid);
-             $.post("../updateRole",{
+             $.post("updateRole",{
             	 roles_Name:rname,
 					roles_Id:rid,
                 },function(res){
@@ -134,7 +137,7 @@
     		if (r){ // 用户点击了确认按钮 执行删除    
  				var data = $("#dg").datagrid("getData"); //获取datagrid对应的json对象集合  
 	            var row = data.rows[index]; //获取第index行对应的json对象
-	            $.post("../delRole",
+	            $.post("delRole",
                     {
                         roles_Id:row.roles_Id,
                     },function(res){
@@ -146,21 +149,6 @@
  				 }   
 			});
 		}
-		/*function setRightData(x){
-			var data=$("#dg").datagrid("getRows");
-			$("#diaSetRight").dialog({
-				close:false,
-				title:"你正在设置"+data[x].Name
-			});
-			$.post(globalData.server+"GetModulesByRoleId",{
-				roleId:data[x].Id,
-				token:token 
-			},function(r){
-				cur_roleId=data[x].Id;
-				$("#rightTree").tree("loadData",r);
-			},"json")
-		}*/
-		
 	</script>
 	<body>
 		<table name="center" class="easyui-datagrid" id="dg" title="角色列表" style="width:300;height:400"  >
@@ -229,4 +217,6 @@
 	 	  <a id="saveSetRose" href="javascript:void(0)"class="easyui-linkbutton"  onclick="submitSetRolseForm()">保存</a> 
 		 </div>
 	</body>
+ 
+ 
 </html>

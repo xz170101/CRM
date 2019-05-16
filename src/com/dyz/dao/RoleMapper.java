@@ -3,6 +3,8 @@ package com.dyz.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.dyz.entity.Fenye;
 import com.dyz.entity.Module;
 import com.dyz.entity.Role;
@@ -37,9 +39,16 @@ public interface RoleMapper {
 	 */
 	ArrayList<Module> selectRoleModu(Integer roles_Id);
 	/**
-	 * 创建用户角色
+	 * 根据角色id删除所有的角色模块
+	 * @param roles_Id
+	 * @return
+	 */
+	Integer deleteRoleModuleByRoleId(Integer roles_Id);
+	/**
+	 * 创建角色磨块
 	 * @param roleModules
 	 * @return
 	 */
-	Integer addRoleModule(RoleModules roleModules);
+	Integer insertRoleModule(@Param("module_Id")Integer module_Id,@Param("roles_Id")Integer roles_Id);
+	 
 }

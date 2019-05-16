@@ -39,7 +39,18 @@
 	<!-- 查询角色模块 -->
  	<select id="selectRoleModu" parameterType="int" resultType="module">
  		select m.*
- 		from roles r,modules m,rolemodules rm 
- 		where m.parentId=rm.modules_Id and  r.roles_Id=rm.roles_Id and r.roles_Id=#{roles_Id}
+ 		from modules m  INNER JOIN  rolemodules rm  on m.modules_Id=rm.modules_Id
+ 		where   rm.roles_Id=#{roles_Id}
+ 		ORDER BY m.modules_weight asc
  	</select>
+ 	<!--  deleteRoleModuleByRoleId-->
+ 	<delete id="deleteRoleModuleByRoleId"  parameterType="int">
+		delete from rolemodules where roles_Id=#{roles_Id}	
+ 	</delete>
+ 	<!-- 添加角色模块信息 -->
+ 	<insert id="insertRoleModule" parameterType="roleModules">
+		insert  into 
+			rolemodules (roles_Id,modules_Id )
+			values (#{roles_Id},#{module_Id})
+	</insert>
 </mapper>
