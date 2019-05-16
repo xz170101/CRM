@@ -1,6 +1,4 @@
  
-   
- 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -65,7 +63,27 @@
 					s+=nodes[i].id;
 				}
 			}
-			$.post("saveRoleMod",{
+			$.ajax({
+				url:"saveRoleMod",
+				type:"post",
+				async: false,
+				dataType:'json',
+				data:{"modules_Ids":s,"roles_Id":data[index].roles_Id},
+				success:function(r){
+					if(r>0){
+						$("#SetRight").dialog("close"); 
+						$("#dg").datagrid("reload");
+						$.messager.alert("提示","保存权限成功");
+						s="";
+						 //window.top.loadTree();
+	 				}else{
+	 					$("#SetRight").dialog("close"); 
+						$("#dg").datagrid("reload");
+						$.messager.alert("提示","已清空！");
+					}
+				}
+			});
+			/* $.post("saveRoleMod",{
 				modules_Ids: s,
 				roles_Id:data[index].roles_Id 
 			},function(r){
@@ -73,13 +91,14 @@
 					$("#SetRight").dialog("close"); 
 					$("#dg").datagrid("reload");
 					$.messager.alert("提示","保存权限成功");
+					s="";
 					 //window.top.loadTree();
  				}else{
  					$("#SetRight").dialog("close"); 
 					$("#dg").datagrid("reload");
 					$.messager.alert("提示","已清空！");
 				}
-			},"json");
+			},"json"); */
 			});
 		}
 		//打开添加面板
@@ -186,7 +205,7 @@
              
   		</div>
 		<!--修改面板-->
-		<div id="updateRolse_window" class="easyui-dialog" title="修改员工信息" data-options="modal:true,closed:true,iconCls:'icon-save',buttons:[{
+		<div id="updateRolse_window" class="easyui-dialog" title="修改角色信息" data-options="modal:true,closed:true,iconCls:'icon-save',buttons:[{
 								text:'保存',
 								handler:function(){ submitUpdateRolseForm();}
 							},{
@@ -209,7 +228,7 @@
     	</div>
 		<!--设置角色权限-->
 	 	 <div id="setRolse_window" class="easyui-dialog" title="设置角色" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:500px;height:300px;padding:10px;">
-         	 <div id="SetRight" data-options="buttons:'#bb'"  title="请选择模块" style="width: 400px;height: 600px;background: #eee;">
+         	 <div id="SetRight" data-options="buttons:'#bb'"  title="请选择模块" style="width: 400px;height: 450px;background: #eee;">
 				<ul id="treemenu" data-options="checkbox:true"></ul>
 			</div>
     	</div>
@@ -217,6 +236,8 @@
 	 	  <a id="saveSetRose" href="javascript:void(0)"class="easyui-linkbutton"  onclick="submitSetRolseForm()">保存</a> 
 		 </div>
 	</body>
+ 
+ 
  
  
 </html>
