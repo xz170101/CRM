@@ -10,12 +10,14 @@
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.min.js"></script>
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
+
 	
 		<script type="text/javascript">
 		//树形结构显示
 		$(function() {
 			 $('#menuTree').tree({
 				url :"getSysRightsHtmlTree",
+
 				method : "post",
 				onClick : function (node) { // attributes 属性返回指定节点属性的集合。
 					// alert(node.modules_path)

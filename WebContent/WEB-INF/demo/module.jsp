@@ -14,6 +14,7 @@
 	$(function() {
 		$("#treemenu").tree({
 			url:"selectModule",
+
 			lines: true,
 			onContextMenu:function(e,node){
 				e.preventDefault();
@@ -29,15 +30,16 @@
 	});
 	function myTree(){
 		$("#treemenu").tree({
+
 			url:"selectModule",
 			lines: true 
-		})
-	}
-	function addModuleInfo() {
+		}
+	functionaddModuleInfo() {
 		var nodes = $('#treemenu').tree('getSelected'); // get checked nodes
 		if(nodes != null) {
 			$("#parentModulename").text(nodes.text);
-			$("#addModule_window").dialog("open");
+
+			$("#addModule_window").dialog("open
 		} else {
 			$.messager.alert("提示信息","请选择父节点！","info");
 		}
@@ -45,18 +47,24 @@
 	function submitModuleForms(){
 		if($("#addModuleForm").form("validate")){
 			var nodes = $('#treemenu').tree('getSelected');
+ 
+ 
 			var weight=$("#weight").val();
 			var path=$("#path").val();
 			var name=$("#name").val();
 			$.ajax({
+ 
 				url:"insertModule",
 				method:'post',
 				data:{"modules_Name":name,"parentId":nodes.id,"modules_path":path,"modules_weight":weight},
+ 
 				dataType:'json',
 				success:function(data){
 					if(data>0){
 						$.messager.alert("提示信息","添加成功！","info");
+ 
 						$("#addModule_window").dialog("close");
+ 
 						myTree();
 					}else
 					    $.messager.alert("提示信息","添加失败！","info");
@@ -66,13 +74,16 @@
 		$.messager.alert("错误信息","请填写完整！","info");
 	}
 	function clearModuleForm(){
+ 
 		$("#addModule_window").dialog("close");
 		$("#updataModule_window").dialog("close");
+ 
 	}
 	var parentId;
 	function updataModuledg(){
 		var nodes = $('#treemenu').tree('getSelected');
 		if(nodes != null) {
+ 
 			alert("开始编辑"+nodes.id);
 			$.ajax({
 				type:"post",
@@ -85,6 +96,7 @@
 						$("#updataModule_window").dialog("open");
 				}
 			});
+ 
 		} else {
 			$.messager.alert("提示信息","请选择父节点！","info");
 		}
@@ -118,8 +130,10 @@
 		    if (r){ // 用户点击了确认按钮
 		    	$.ajax({
 		    		type:"post",
+ 
 		    		url:"delModule",
 		    		data:{"modules_Id":nodes.id },
+
 		    		dataType:'json',
 		    		success:function(res){
 		    			if(res>0){
@@ -151,6 +165,7 @@
 	</div>
 	
 	<!--新增模块-->
+ 
 	<div id="addModule_window" class="easyui-dialog" title="新增模块信息" data-options="modal:true,closed:true,iconCls:'icon-save',buttons:[{
 								text:'保存',
 								handler:function(){ submitModuleForms();}
@@ -158,6 +173,7 @@
 								text:'关闭',
 								handler:function(){ clearModuleForm();}
 							}]" style="width:500px;height:300px;padding:10px; top: 200px;">
+
 		<form id="addModuleForm">
 			<table cellpadding="5">
 				<tr> 
@@ -181,6 +197,7 @@
 				</tr>
 			</table>
 		</form>
+ 
 	</div>
 	
 	<!--修改模块-->
@@ -191,6 +208,7 @@
 								text:'关闭',
 								handler:function(){ clearModuleForm();}
 							}]" style="width:500px;height:300px;padding:10px; top: 200px;">
+ 
 		<form id="updateModuleForm">
 			<table cellpadding="5">
 				<tr>

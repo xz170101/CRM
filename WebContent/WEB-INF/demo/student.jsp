@@ -71,7 +71,9 @@
 			fitColumns:true,
 	        pagination:true,
 	        rownumbers:true,
+ 
 	        singleSelect:true,
+ 
 	        toolbar:"#tb",
 	        queryParams:{				
 				//要发送的参数列表
@@ -91,6 +93,7 @@
 		})			
 	}
 	function formatterStu(value, row, index){
+ 
 		return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='chakanStu(" + index + ")'>查看</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='shezhiStu(" + index + ")'>设置</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='genzongStu(" + index + ")'>跟踪</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='updateStu(" + index + ")'>编辑</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='deleteStu(" + index + ")'>删除</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='piliang(" + index + ")'>批量操作</a>";
 	}
 	/* function formatterRole(value, row, index){
@@ -99,6 +102,7 @@
 	/* function formatterUser(value, row, index){
 		return row.netfollows.user.loginName;
 	} */
+ 
 	function formatterSex(value, row, index){
 		return value==0? '男':'女';
 	}
@@ -212,6 +216,43 @@
 				}
 			})
 		}
+ 
+		
+		
+		//对学生进行后续跟踪
+		function followStu(index){
+			var data=$('#stuTab').datagrid('getData');
+			var row=data.rows[index];
+			$('#insertFollowForm').form("load",row);
+			$('#studentId').next().hide();//让学生编号的文本框进行隐藏
+			$('#insertFollow').dialog('open');
+		}
+		//对具体某一个学生进行跟踪数据的提交
+		function insertFollowsave(){
+			$.ajax({
+				url:'../insertFollows',
+				method:'post',
+				dataType:'json',
+				data:{
+					stu_Id:$('#studentId').textbox('getValue'),
+					followTime:$('#followtime').textbox('getValue'),
+					followState:$('#followstate').textbox('getValue'),
+					followType:$('#followtype').textbox('getValue'),
+					nextFollowTime:$('#nextfollowtime').textbox('getValue'),
+					conTent:$('#content').textbox('getValue')
+				},
+				success:function(res){
+					if(res>0){
+						$.messager.alert('提示','添加成功');
+						$('#stuTab').datagrid('reload');
+						$('#insertFollow').dialog('close');
+					}else{
+						$.messager.alert('提示','添加失败');
+					}
+				}
+			})
+		}
+ 
 
 	</script>
 </head>
@@ -219,31 +260,56 @@
 		<table id="stuTab" data-options="fitColumns:true">   
 	    <thead>   
 	        <tr> 
-	        	<th data-options="field:'checkbox',checkbox:true"></th>  
-	            <th data-options="field:'stu_id'">编码</th>   
-	            <th data-options="field:'stu_Name'">姓名</th>	            
-	            <th data-options="field:'stu_Age'">年龄</th>   
-	        	<th data-options="field:'stu_Sex',formatter:formatterSex">性别</th>  
-	        	<th data-options="field:'stu_Phone'">手机号</th>
-	        	<th data-options="field:'stu_Status'">学历</th>   
-	            <th data-options="field:'stu_PerState'">状态</th>
-	        	<th data-options="field:'stu_SourceUrl'">信息来源</th> 
-	            <th data-options="field:'stu_NetPusherld'">来源网站</th>   
-	        	<th data-options="field:'stu_qq'">QQ</th>  
-	        	<th data-options="field:'stu_WeiXin'">微信</th>	        	  
-	        	<th data-options="field:'stu_isValid',formatter:formatterIs">是否有效</th>
-	            <th data-options="field:'stu_isReturnVist',formatter:formatterIs">是否要回访</th>   
-	            <th data-options="field:'stu_isHome',formatter:formatterIs">是否上门</th>   
-	        	<th data-options="field:'stu_firstVisitTime'">回访时间</th>  
-	        	<th data-options="field:'stu_HomeTime'">上门时间</th>  
-	            <th data-options="field:'stu_isPay',formatter:formatterIs">是否缴费</th>   
-	        	<th data-options="field:'stu_PayTime'">缴费时间</th>	        	
-	        	<th data-options="field:'stu_isReturnMoney',formatter:formatterIs">是否退费</th>   
-	            <th data-options="field:'stu_isInClass',formatter:formatterIs">是否进班</th>   
-	            <th data-options="field:'stu_inClassTime'">进班日期</th>	        	 
-	       		<th data-options="field:'stu_ZiXunName'">咨询师</th>	        		        	
-	        	<th data-options="field:'setLo',width:200,align:'center',formatter:formatterStu">操作</th>            
-	        
+ 
+	       		<th data-options="field:'checkbox',checkbox:true"></th>
+	        	<th data-options="field:'stu_id',width:100">编码</th>   
+	            <th data-options="field:'stu_Name',width:100">姓名</th> 
+	            <th data-options="field:'stu_Age',width:100">年龄</th>   
+	        	<th data-options="field:'stu_Sex',width:100,formatter:formatterSex">性别</th>  
+	        	<th data-options="field:'stu_Phone',width:100">手机号</th>
+	        	<th data-options="field:'stu_Status',width:100">客户状态</th>   
+	            <th data-options="field:'stu_PerState',width:100">个人状态</th>   
+	        	<th data-options="field:'stu_MsgSource',width:100">客户信息</th>  
+	        	<th data-options="field:'stu_SourceUrl',width:100">信息来源</th>    	
+	        	
+	        	<th data-options="field:'stu_SourceKeyWord',width:100">来源关键字</th>   
+	            <th data-options="field:'stu_Address',width:100">地址</th>   
+	            <th data-options="field:'stu_NetPusherld',width:100">来源网站</th>   
+	        	<th data-options="field:'stu_qq',width:100">QQ</th>  
+	        	<th data-options="field:'stu_WeiXin',width:100">微信</th>
+	        	<th data-options="field:'stu_Content',width:100">内容</th>   
+	            <th data-options="field:'stu_CreateTime',width:100">创建日期</th>   
+	        	<th data-options="field:'stu_LearnForward',width:100">课程方向</th>  
+	        	<th data-options="field:'stu_isValid',width:100,formatter:formatterIs">是否有效</th>
+	        		        	
+	        	<th data-options="field:'stu_Record',width:100">客户记录</th>   
+	            <th data-options="field:'stu_isReturnVist',width:100,formatter:formatterIs">是否要回访</th>   
+	            <th data-options="field:'stu_isHome',width:100,formatter:formatterIs">是否上门</th>   
+	        	<th data-options="field:'stu_firstVisitTime',width:100">回访时间</th>  
+	        	<th data-options="field:'stu_HomeTime',width:100">上门时间</th>
+	        	<th data-options="field:'stu_LostValid',width:100">无效原因</th>   
+	            <th data-options="field:'stu_isPay',width:100,formatter:formatterIs">是否缴费</th>   
+	        	<th data-options="field:'stu_PayTime',width:100">缴费时间</th>  
+	        	<th data-options="field:'stu_Money',width:100">缴费金额</th>       
+	        	
+	        	
+	        	<th data-options="field:'stu_isReturnMoney',width:100,formatter:formatterIs">是否退费</th>   
+	            <th data-options="field:'stu_isInClass',width:100,formatter:formatterIs">是否进班</th>   
+	            <th data-options="field:'stu_inClassTime',width:100">进班日期</th>   
+	        	<th data-options="field:'stu_inClassContent',width:100">进班备注</th>  
+	        	<th data-options="field:'stu_AskerContent',width:100">咨询内容</th>
+	        	<th data-options="field:'stu_isDel',width:100,formatter:formatterIs">是否删除</th>   
+	            <th data-options="field:'stu_FromPart',width:100">来源部门</th>   
+	        	<th data-options="field:'stu_stuConcern',width:100">学员关注</th>  
+	        	<th data-options="field:'stu_isBaoBei',width:100,formatter:formatterIs">是否报备</th>	       
+	       
+	       		<th data-options="field:'stu_ZiXunName',width:100">咨询师备注</th>   
+	            <th data-options="field:'stu_CreateUser',width:100">创建用户</th>   
+	            <th data-options="field:'stu_ReturnMoneyReason',width:100">退费时间</th>
+        		<th data-options="field:'setLo',width:200,align:'center',formatter:formatterStu">操作</th>            
+	             	
+	        	
+ 
 	        </tr>   
 	    </thead>   
 	</table>
@@ -276,7 +342,11 @@
 			 <a href="javascript:void(0)" class="easyui-linkbutton"
 				iconCls="icon-search" onclick="init()">查找</a>
 			  <a href="javascript:void(0)" class="easyui-linkbutton"
-			   iconCls="icon-add" onclick="addStu()">添加</a>   
+ 
+			   iconCls="icon-add" onclick="addStu()">添加</a>
+			    <a href="javascript:void(0)" class="easyui-linkbutton"
+			   iconCls="icon-edit" onclick="piliang()">批量操作</a>   
+ 
 		</form>
 	</div>
 	
@@ -384,9 +454,48 @@
 	    </form>
 	</div>
 	
+ 
+	<!-- 对学生进行跟踪 -->
+	<div id="insertFollow" class="easyui-dialog" title="添加跟踪信息" style="width:400px;height:300px;" 
+		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
+		buttons:[{
+				text:'保存',
+				handler:function(){insertFollowsave()}
+			},{
+				text:'关闭',
+				handler:function(){insertFollowclose()}
+			}]">
+
+	    <form id="insertFollowForm" class="easyui-form">
+	    	<table cellpadding="5">
+	    		<input class="easyui-textbox" id="studentId" name="stu_id"/>
+	    		<tr>
+	    			<td>回访时间：</td>
+	    			<td><input class="easyui-textbox" id="followtime" ></td>
+	    		</tr>
+	    		<tr>
+	    			<td>回访情况：</td>
+	    			<td><input class="easyui-textbox" id="followstate" ></td>
+	    		</tr>
+	    		<tr>
+	    			<td>跟踪方式：</td>
+	    			<td><input class="easyui-textbox" id="followtype" ></td>
+	    		</tr>
+	    		<tr>
+	    			<td>下次跟踪时间：</td>
+	    			<td><input class="easyui-textbox" id="nextfollowtime" ></td>
+	    		</tr>
+	    		<tr>
+	    			<td>备注：</td>
+	    			<td><input class="easyui-textbox" id="content" ></td>
+	    		</tr>
+	    		
+	    	</table>
+	    </form>
+	</div>
 	
-	<!-- 修改窗体 -->
-	<!-- <div id="insertStu" class="easyui-dialog" title="添加客户" style="width:400px;height:500px;" 
+	<!-- 查看窗体 -->
+	<div id="chakanStu" class="easyui-dialog" title="查看客户" style="width:400px;height:500px;" 
 		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
 		buttons:[{
 				text:'保存',
@@ -399,70 +508,68 @@
 	    <form id="insertStuForm" class="easyui-form">
 	    	<table cellpadding="5">
 	    		<tr>
-	    			<td>姓名：</td>
-	    			<td><input class="easyui-textbox" id="stu_Name1" ></td>
-	    		</tr>
-	    		<tr>
-	    			<td>性别</td>
-	    			<td>
+	    			<td>姓名:</td>
+	    			<td><input class="easyui-textbox" id="stu_Name1" name="stu_Name" ></td>
 	    			
-	    				<select id="stu_Sex1" class="easyui-combobox" style="width:100px;">   
-							  <option>--请选择--</option> 
-							   <option value="0">男</option> 
-							    <option value="1">女</option> 
-						</select> 
-	    			</td>
+	    			<td>性别:</td>	    			
+	    			<td><input class="easyui-textbox" id="stu_Name1" name="stu_Sex" ></td>
 	    		</tr>
 	    		<tr>
-	    			<td>年龄：</td>
-	    			<td><input class="easyui-textbox" id="stu_Age1" ></td>
-	    		</tr>
-	    		<tr>
-	    			<td>电话：</td>
-	    			<td><input class="easyui-textbox" id="stu_Phone1" ></td>
-	    		</tr>
-	    		<tr>
-	    			<td>学历：</td>
-	    			<td><input class="easyui-textbox" id="stu_Status1" ></td>
-	    		</tr>
-	    		<tr>
-	    			<td>状态：</td>
-	    			<td><input class="easyui-textbox" id="stu_PerState1" ></td>
-	    		</tr>
-	    		<tr>
-	    			<td>来源渠道：</td>
-	    			<td><input class="easyui-textbox" id="stu_SourceUrl1"></td>
-	    		</tr>
-	    		
-	    		<tr>
-	    			<td>来源关键字：</td>
-	    			<td><input class="easyui-textbox" id="stu_SourceKeyWord1"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>QQ：</td>
-	    			<td><input class="easyui-textbox" id="stu_qq1"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>微信号：</td>
-	    			<td><input class="easyui-textbox" id="stu_WeiXin"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>是否报备：</td>
-	    			<td>
-	    			<select id="stu_isBaoBei1" class="easyui-combobox">
-	    				 <option>--请选择--</option> 
-					     <option value="0">是</option> 
-						<option value="1">否</option>
-	    			</select>
-	    			</td>
+	    			<td>年龄:</td>
+	    			<td><input class="easyui-textbox" id="stu_Name1" name="stu_Age" ></td>
 	    			
+	    			<td>电话:</td>	    			
+	    			<td><input class="easyui-textbox" id="stu_Name1" name="stu_Phone" ></td>
 	    		</tr>
 	    		<tr>
-	    			<td>在线备注：</td>
-	    			<td><input class="easyui-textbox" id="stu_inClassContent1"></td>
+	    			<td>学历:</td>
+	    			<td><input class="easyui-textbox" id="stu_Name1" name="stu_Status" ></td>
+	    			
+	    			<td>状态:</td>	    			
+	    			<td><input class="easyui-textbox" id="stu_Name1" name="stu_PerState" ></td>
 	    		</tr>
+	    		<tr>
+	    			<td>来源渠道:</td>
+	    			<td><input class="easyui-textbox" id="stu_Name1" name="stu_SourceUrl" ></td>
+	    			
+	    			<td>来源网站:</td>	    			
+	    			<td><input class="easyui-textbox" id="stu_Name1" name="stu_NetPusherld" ></td>
+	    		</tr>
+	    		<tr>
+	    			<td>来源关键字:</td>
+	    			<td><input class="easyui-textbox" id="stu_Name1" name="stu_SourceKeyWord" ></td>
+	    			
+	    			<td>所在区域:</td>	    			
+	    			<td><input class="easyui-textbox" id="stu_Name1" name="stu_Address" ></td>
+	    		</tr>
+	    		<tr>
+	    			<td>学员关注:</td>
+	    			<td><input class="easyui-textbox" id="stu_Name1" name="stu_stuConcern" ></td>
+	    			
+	    			<td>来源部门:</td>	    			
+	    			<td><input class="easyui-textbox" id="stu_Name1" name="stu_FromPart" ></td>
+	    		</tr>
+	    		<tr>
+	    			<td>qq:</td>
+	    			<td><input class="easyui-textbox" id="stu_Name1" name="stu_qq" ></td>
+	    			
+	    			<td>微信:</td>	    			
+	    			<td><input class="easyui-textbox" id="stu_Name1" name="stu_WeiXin" ></td>
+	    		</tr>
+	    		<tr>
+	    			<td>是否报备:</td>
+	    			<td><input class="easyui-textbox" id="stu_Name1" name="stu_isBaoBei" ></td>
+	    			
+	    			<td>咨询师:</td>	    			
+	    			<td><input class="easyui-textbox" id="stu_Name1" name="stu_ZiXunName" ></td>
+	    		</tr>
+	    		<tr>
+	    			<td>录入人:</td>
+	    			<td><input class="easyui-textbox" id="stu_Name1" name="" ></td>	    			
+	    		</tr>	    		
 	    	</table>
 	    </form>
-	</div> 	 -->
+	</div> 	
+ 
 </body>
 </html>
