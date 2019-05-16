@@ -2,6 +2,7 @@ package com.dyz.dao;
 
 import java.util.List;
 
+import com.dyz.entity.Askers;
 import com.dyz.entity.Fenye;
 import com.dyz.entity.Student;
 
@@ -36,6 +37,16 @@ public interface StudentMapper {
 	 * @return
 	 */
 	Integer updatezixunname(Student student);
-	
+	/**
+	 * 修改客户信息
+	 * @param student
+	 * @return
+	 */
+	Integer updateStudent(Student student);
+	/**
+	 * 查询咨询师
+	 * @return
+	 */
+	List<Askers> selectzixunname();
 	
 }

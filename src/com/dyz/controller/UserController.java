@@ -145,6 +145,7 @@ public class UserController {
 		return  userService.unLockUser(user_Id);
 	}
 		//关于用户登录的表单提交
+ 
 	int count=0;//用来记录错误密码次数
 	@RequestMapping(value ="/login", method = RequestMethod.POST)
 	@ResponseBody
@@ -171,6 +172,7 @@ public class UserController {
 						use.setPsdWrongTime(count);
 						userService.updateUser(use);
 						if(count>3) {
+ 
 							SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 							String time = s.format(new Date());
 							use.setLockTime(time);
