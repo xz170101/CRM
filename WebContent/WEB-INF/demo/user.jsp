@@ -5,22 +5,18 @@
 <head>
 <meta charset="UTF-8">
 <title>用户列表</title>
- 
 <link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/icon.css">
    		<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/metro/easyui.css">
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.min.js"></script>
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
- 
  <script type="text/javascript">
 	$(function() {// 初始化内容
 			init();
 	});  
 	function init() { //显示加载数据表格
 			$("#userDG").datagrid({ 
- 
 				 	url:"selectUser",  //数据接口的地址
- 
 				 	method:'post',
 			        fitColumns:true,
 			        pagination:true,
@@ -63,19 +59,15 @@
 		var row=data.rows[index];
 		$("#setRolse_window").dialog("setTitle","您正在设置"+row.loginName+"的角色信息");
 		$("#allRole").datagrid({
- 
-				url:"selectRole_user",  //数据接口的地址
- 
+				url:"selectRole_user",  
 		        rownumbers:true,
 		        singleSelect:true 
 	   });
 	    $("#myRole").datagrid({ 
- 
-	    		url:"selectUserRole",  //数据接口的地址
- 
+	    		url:"selectUserRole",   
 		        rownumbers:true,
 		        singleSelect:true,
-		        queryParams: { //要发送的参数列表
+		        queryParams: {  
 		        	user_Id: row.user_Id,
 	        }
 	   });
@@ -83,36 +75,33 @@
 	   $("#addRole").click(function(){
 	   	var RoleRow=$("#allRole").datagrid("getSelected");
 	   	if(RoleRow){
- 
-	      	 $.post("addUserRole",{
- 
-	      		userId: row.user_Id,
-	      		roleId: RoleRow.roles_Id 
-	   		},function(res){
-	   			if(res>0){
-	   				$("#myRole").datagrid("reload");
-	   			}else{
-	   				$.messager.alert("提示","已存在");
-	   			}
-	   		},"json");
+	   		alert(RoleRow+":RoleRow");
+	   		alert(row.user_Id+":row.user_Id");
+	   		alert(RoleRow.roles_Id+":RoleRow.roles_Id");
+		        $.post("addUserRole",{
+		      		userId: row.user_Id,
+		      		roleId: RoleRow.roles_Id 
+		   		},function(res){
+		   			if(res>0){
+		   				$("#myRole").datagrid("reload");
+		   			}else{
+		   				$.messager.alert("提示","已存在");
+		   			}
+		   		},"json");
 	   		}else{
 	   			$.messager.alert("提示","请先选择对象!");
 	   		}
 	   }); 
 	   //移除角色
 	  $("#removeRole").click(function(){
-		   		var RoleRow=$("#myRole").datagrid("getSelected");
-		   		if(RoleRow){
- 
+   		var RoleRow=$("#myRole").datagrid("getSelected");
+   		if(RoleRow){
 	      	 $.post("delUserRole",{
- 
 	      		userId: row.user_Id,
 	      		roleId: RoleRow.roles_Id 
 	   		},function(res){
 	   			if(res>0){
 	   				$("#myRole").datagrid("reload");
-	   			}else{
-	   				$.messager.alert("提示","已移除");
 	   			}
 	   		},"json");
 	   		}else{
@@ -128,9 +117,7 @@
     		if (r){ // 用户点击了确认按钮 执行删除    
  				var data = $("#userDG").datagrid("getData"); //获取datagrid对应的json对象集合  
 	            var row = data.rows[index]; //获取第index行对应的json对象
- 
 	            $.post("lockUser",
- 
                     {
                         user_Id:row.user_Id,
                     },function(res){
@@ -148,9 +135,7 @@
     		if (r){ // 用户点击了确认按钮 执行删除    
  				var data = $("#userDG").datagrid("getData"); //获取datagrid对应的json对象集合  
 	            var row = data.rows[index]; //获取第index行对应的json对象
- 
 	            $.post("unLockUser",
- 
                     {
                         user_Id:row.user_Id,
                     },function(res){
@@ -168,9 +153,7 @@
 		var row=data.rows[index];
 		$.messager.confirm('确认','您确认重置用户密码吗？',function(r){   
 		 if (r){ 
- 
 			$.post("resetPassword",{
- 
 				loginName:row.loginName,
 		   		},function(res){
 		   			if(res>0){
@@ -193,61 +176,8 @@
     	$("#adduser_window").dialog("close");
     	$("#edituser_window").dialog("close");
     }
-	//点击新增窗体保存按钮
- 
-        /*  function submitUserForm(){
- 
-        	//validate-->验证文本框中的内容是否有效
-            var flag=$("#adduserForm").form("validate");
-          /*验证用户名是否重复 
-          $("#ename").change(function(){ 
-            	var loginName = this.value; 
-            	$.ajax({ 
-            		url:"../checkLoginName", 
-            		data:"loginName="+loginName, 
-            		type:"POST", 
-            		success:function(data){ 
-            			if(data=="1"){ 
-            				show_validate_msg("#ename","success","学院名可用"); 
-            				$("#xueyuan_save_btn").attr("ajax-va","success"); 
-            				}else { 
-            					show_validate_msg("#ename","error","学院名重复"); 
-            					$("#xueyuan_save_btn").attr("ajax-va","error"); 
-            					} 
-            			} 
-            		}); 
- 
-            	}); 
- 
-            var ename=$("#ename").val();
-            var pwd=$("#pwd").val();
-            var email=$("#email").val();
-            var mtel=$("#mtel").val();
-	            if(!(/^(13|15|17|18)\d{9}$/.test(mtel))){
- 
-	            	$.messager.alert("手机号码格式有误，请重新输入！");
-	                return false;
-	            }
-            if(flag){
-                $.post("addUser", {    
- 
-                		loginName:ename,
-                        passWord:pwd,
-                        protectEMail:email,
-                        protectMTel:mtel 
-                    }, function(res){
-                        if(res>0){
-                        	closeUserForm();
-                            $("#userDG").datagrid("reload"); //通过调用reload方法，让datagrid刷新显示数据
-                       		$.messager.alert("提示!","新增成功！");
-                        }
-                },"json");
-            }    
- 
-        }   */
- 
-       //修改用户信息
- 		  function updateInfo(index){
+   //修改用户信息
+ 	   function updateInfo(index){
  			var data = $("#userDG").datagrid("getData"); //获取datagrid对应的json对象集合  
             var row = data.rows[index]; //获取第index行对应的json对象
            	$("#edituserForm").form("load",row); //使用form的load方法，快速将json对象的数据显示到 弹出窗口的表单元素之中。
@@ -255,21 +185,22 @@
  		}
  		//提交修改
  		function submitUserEditForm(){
- 			 
  			var flag=$("#edituserForm").form("validate");
  			var userid=$("#userid").val();
  			var ename=$("#eename").val();
  			var email=$("#eemail").val();
  			var etel=$("#metel").val();
  			 
- 			 if(!(/^(13|15|17|18)\d{9}$/.test(etel))){
- 
+ 			if(!(/^(13|15|17|18)\d{9}$/.test(etel))){
  				 $.messager.alert("提示","手机号码格式有误，请重新输入！");
+	                return false;
+	            }
+ 			if(!(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(email))){
+				 $.messager.alert("提示","邮箱格式有误，请重新输入！");
 	                return false;
 	            }
  			if(flag){
 	 			$.post("updateUser",{
- 
 	 					protectEMail:email,
 	                    protectMTel:etel,
 	 					loginName:ename,
@@ -283,21 +214,20 @@
 	                 },"json");
  			} 
  		}  
-	//删除
+		//删除
 		function delInfo(index){
 			$.messager.confirm('确认','您确认想要删除用户吗？',function(r){   
     		if (r){ // 用户点击了确认按钮 执行删除    
  				var data = $("#userDG").datagrid("getData"); //获取datagrid对应的json对象集合  
 	            var row = data.rows[index]; //获取第index行对应的json对象
- 
-	            $.post("delUser",
- 
-                    {
+	            $.post("delUser", {
                         user_Id:row.user_Id,
                     },function(res){
                         if(res>0){
                         	$("#userDG").datagrid("reload");
 	                        $.messager.alert("提示！","删除成功");
+                        }else{
+                        	$.messager.alert("提示！","该用户具有角色不可删除!");
                         }
                     });   
  				 }   
@@ -309,17 +239,17 @@
 	<table name="center" class="easyui-datagrid" id="userDG" title="用户列表" style="width:300;height:400"  >
 	    <thead>
 	        <tr>
-             	<th data-options="field:'user_Id',width:280,hidden:true">用户ID</th>
-	             <th data-options="field:'loginName',width:100">用户名</th>
-	             <th data-options="field:'protectEMail',width:100">邮箱</th>
-	             <th data-options="field:'protectMTel',width:100,">手机号</th>
-	             <th data-options="field:'isLockout',width:100,formatter:formatterisLockout">是否锁定</th>
-	             <th data-options="field:'createTime',width:160,">创建时间</th>
-	             <th data-options="field:'loginTime',width:160,">最后登录的时间</th>
-	             <th data-options="field:'JueSe',width:80,formatter:formatterJueSe">角色</th>
-	             <th data-options="field:'YHCaoZuo',width:100,formatter:formatterYHCaoZuo">用户操作</th>
-	             <th data-options="field:'Password',width:100,formatter:formatterPassword">操作</th>
-	             <th data-options="field:'caozuo',width:160, formatter:formatterCaoZuo" >操作</th>
+             	<th data-options="field:'user_Id',hidden:true">用户ID</th>
+	             <th data-options="field:'loginName'">用户名</th>
+	             <th data-options="field:'protectEMail'">邮箱</th>
+	             <th data-options="field:'protectMTel'">手机号</th>
+	             <th data-options="field:'isLockout',formatter:formatterisLockout">是否锁定</th>
+	             <th data-options="field:'createTime'">创建时间</th>
+	             <th data-options="field:'loginTime'">最后登录的时间</th>
+	             <th data-options="field:'JueSe',formatter:formatterJueSe">角色</th>
+	             <th data-options="field:'YHCaoZuo',formatter:formatterYHCaoZuo">用户操作</th>
+	             <th data-options="field:'Password',formatter:formatterPassword">操作</th>
+	             <th data-options="field:'caozuo', formatter:formatterCaoZuo" >操作</th>
  	    	</tr>
 	    </thead>
 	</table>
@@ -332,10 +262,8 @@
 		        			<input class="easyui-datetimebox" id="enddate" style="width:100px">
 		        	是否锁定：<select id="lock" class="easyui-combobox" name="lock" data-options="panelHeight:'auto'" >
 							    <option value="">-请选择-</option>
- 
 							    <option value="1"> 已锁定</option>
 							    <option value="0"> 未锁定</option>
- 
 							  </select>
 		        	排   序：<select id="ord" class="easyui-combobox" name="orderBy" data-options="panelHeight:'auto'" >
 						    <option value="">-请选择-</option>
@@ -345,19 +273,14 @@
 		        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="init()">查找</a>
 		    </div>
 		</div>
- 
 		
 		
 <script type="text/javascript">
 //对新增表单的验证
- 		 var name=$("#newusername").val();
-		 var pwd=$("#userpwd").val();
-		 var repwd=$("#reuserpwd").val();
-		 var tel=$("#usertel").val();
-		 var email=$("#useremail").val();
+ 		
 	function vnewusername() {
 		var name=$("#newusername").val().trim();
-		if(name!=''){
+ 		if(name!=''){
 			$.ajax({
 				url:"selectUserByName",
 				method:'post',
@@ -366,22 +289,24 @@
 				success:function(data){
 					if(data>0){
 						document.getElementById('yznewusername').innerHTML = '用户名已存在！';
-						document.getElementById('yznewusername').style.color = 'yellow';
+						document.getElementById('yznewusername').style.color = 'red';
+						return false;
 					}else
 						document.getElementById('yznewusername').innerHTML = 'ok！';
 						document.getElementById('yznewusername').style.color = 'green';
+						return true;
 					}
 				});
-			}else{
-				return vNull('newusername');
 			}
-		
+		return vNull('newusername');
 	}
 	function vuserpwd() {
 		
 		return vRegexp('userpwd',/^[a-z0-9]{6,12}$/);
 	}
 	function vreuserpwd() {
+ 		 var pwd=$("#userpwd").val().trim();
+		 var repwd=$("#reuserpwd").val().trim();
 		if(pwd!=repwd){
 			document.getElementById('yzreuserpwd').innerHTML = '两次密码不一致！';
 			document.getElementById('yznewusername').style.color = 'red';
@@ -425,24 +350,36 @@
 		  }
 	}
 	function submitUserForm(){
+		 var name=$("#newusername").val().trim();
+		 var pwd=$("#userpwd").val().trim();
+ 		 var tel=$("#usertel").val().trim();
+		 var email=$("#useremail").val().trim();
 		var flag=$("#adduserForm").form("validate");
-		if(vRegexp){
-            $.post("newUser", {    
-            		loginName:name,
-                    passWord:pwd,
-                    protectEMail:email,
-                    protectMTel:tel 
-                }, function(res){
-                    if(res>0){
-                    	closeUserForm();
-                        $("#userDG").datagrid("reload"); //通过调用reload方法，让datagrid刷新显示数据
-                   		$.messager.alert("提示!","新增成功！");
-                    }
-            },"json");
-		}
+		alert("ajin");
+		 //vRegexp();
+		 //alert("vRegexp:"+vRegexp());
+		//if(vRegexp()){
+		//	alert("vRegexpTRUE:"+vRegexp());
+			//if(vnewusername()){
+			//	alert("vnewusername:"+vnewusername());
+				$.post("newUser", {    
+	        		loginName:name,
+	                passWord:pwd,
+	                protectEMail:email,
+	                protectMTel:tel 
+	            }, function(res){
+	                if(res>0){
+	                	closeUserForm();
+	                    $("#userDG").datagrid("reload"); //通过调用reload方法，让datagrid刷新显示数据
+	               		$.messager.alert("提示!","新增成功！");
+	                }
+	        },"json");
+		//		}
+		//}else{
+			 
+		//}
 	}
 </script>
- 
 		<!-- 新增面板 -->
 		<div id="adduser_window" class="easyui-dialog" title="新增用户信息" data-options="modal:true,closed:true,iconCls:'icon-save',buttons:[{
 								text:'保存',
@@ -450,38 +387,36 @@
 							},{
 								text:'关闭',
 								handler:function(){ closeUserForm();}
-							}]" style="width:350px;height:300px;padding:10px;">
+							}]" style="width:400px;height:300px;padding:10px;">
          	<form id="adduserForm">
                 <table cellpadding="5">
                     <tr>
                         <td>用户名:</td>
- 
-                        <td><input onblur="vnewusername()" class="easyui-textbox" type="text" name="name"  id="newusername" data-options="required:true"></input></td>
+                        <td><input onblur="vnewusername()"   type="text" name="name"  id="newusername" data-options="required:true"></input></td>
                     	<td><span id="yznewusername"></span></td>
                     </tr>
                     <tr>
                         <td>密码:</td>
-                        <td><input onblur="vuserpwd()"  class="easyui-textbox" type="password" id="userpwd" name="pwd" data-options="required:true"></input></td>
+                        <td><input onkeyup="vuserpwd()"    type="password" id="userpwd" name="pwd" data-options="required:true"></input></td>
                    		<td><span id="yzuserpwd">由6-12位数字或字母组成</span></td>
                     </tr>
                     <tr>
-                        <td>再次输入密码:</td>
-                        <td><input onkeyup="vreuserpwd()" class="easyui-textbox" type="password" id="reuserpwd" name="pwd" data-options="required:true"></input></td>
+                        <td>确认密码:</td>
+                        <td><input onkeyup="vreuserpwd()"   type="password" id="reuserpwd" name="pwd" data-options="required:true"></input></td>
                    		<td><span id="yzreuserpwd"></span></td>
                     </tr>
                     <tr>
                         <td>手机号:</td>
-                        <td><input onkeyup="vusertel()" type="text" class="easyui-numberbox" id="usertel"  name="protectMTel" data-options="required:true"></td>
+                        <td><input onkeyup="vusertel()" type="text"   id="usertel"  name="protectMTel" data-options="required:true"></td>
                     	<td><span id="yzusertel"></span></td>
                     </tr>       
                     <tr>
                         <td>Email:</td>
-                        <td><input onkeyup="vuseremail()" class="easyui-textbox" type="text" id="useremail" name="email" data-options="required:true,validType:'email'"></input></td>
+                        <td><input onkeyup="vuseremail()"   type="text" id="useremail" name="email" data-options="required:true,validType:'email'"></input></td>
                     	<td><span id="yzuseremail"></span></td>
                     </tr>
                
                                  
- 
                 </table>
         	 </form>
     	</div>
@@ -498,30 +433,22 @@
             	<tr>
                     <td> </td>
                     <td><input    type="hidden"   name="user_Id" id="userid"  /></td>
- 
                		<td><span ></span></td>
- 
                 </tr>
                 <tr>
                     <td>用户名:</td>
                     <td><input class="easyui-textbox" type="text" readonly name="loginName" id="eename"  ></input></td>
- 
                 	<td><span></span></td>
- 
                 </tr>
                 <tr>
                     <td>Email:</td>
                     <td><input class="easyui-textbox" type="text" name="protectEMail" id="eemail" data-options="required:true,validType:'email'"></input></td>
- 
                 	<td><span id="editEmail"></span></td>
- 
                 </tr>
                 <tr>
                     <td>手机号:</td>
                     <td><input type="text" class="easyui-numberbox" name="protectMTel" id="metel" data-options="required:true"></td>
- 
                		<td><span id="editTel"></span></td>
- 
                 </tr>                    
             </table>
          </form>
@@ -556,4 +483,6 @@
 
 
 </body>
+ 
+ 
 </html>

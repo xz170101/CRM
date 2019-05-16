@@ -1,3 +1,4 @@
+ 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,7 +15,6 @@
 	$(function() {
 		$("#treemenu").tree({
 			url:"selectModule",
-
 			lines: true,
 			onContextMenu:function(e,node){
 				e.preventDefault();
@@ -30,16 +30,15 @@
 	});
 	function myTree(){
 		$("#treemenu").tree({
-
 			url:"selectModule",
 			lines: true 
-		}
-	functionaddModuleInfo() {
+		})
+	}
+	function addModuleInfo() {
 		var nodes = $('#treemenu').tree('getSelected'); // get checked nodes
 		if(nodes != null) {
 			$("#parentModulename").text(nodes.text);
-
-			$("#addModule_window").dialog("open
+			$("#addModule_window").dialog("open");
 		} else {
 			$.messager.alert("提示信息","请选择父节点！","info");
 		}
@@ -47,24 +46,18 @@
 	function submitModuleForms(){
 		if($("#addModuleForm").form("validate")){
 			var nodes = $('#treemenu').tree('getSelected');
- 
- 
 			var weight=$("#weight").val();
 			var path=$("#path").val();
 			var name=$("#name").val();
 			$.ajax({
- 
 				url:"insertModule",
 				method:'post',
 				data:{"modules_Name":name,"parentId":nodes.id,"modules_path":path,"modules_weight":weight},
- 
 				dataType:'json',
 				success:function(data){
 					if(data>0){
 						$.messager.alert("提示信息","添加成功！","info");
- 
 						$("#addModule_window").dialog("close");
- 
 						myTree();
 					}else
 					    $.messager.alert("提示信息","添加失败！","info");
@@ -74,17 +67,13 @@
 		$.messager.alert("错误信息","请填写完整！","info");
 	}
 	function clearModuleForm(){
- 
 		$("#addModule_window").dialog("close");
 		$("#updataModule_window").dialog("close");
- 
 	}
 	var parentId;
 	function updataModuledg(){
 		var nodes = $('#treemenu').tree('getSelected');
-		if(nodes != null) {
- 
-			alert("开始编辑"+nodes.id);
+ 			alert("开始编辑"+nodes.id);
 			$.ajax({
 				type:"post",
 				dataType:'json',
@@ -96,10 +85,7 @@
 						$("#updataModule_window").dialog("open");
 				}
 			});
- 
-		} else {
-			$.messager.alert("提示信息","请选择父节点！","info");
-		}
+		 
 	}
 	function updatesubmitModuleForms(){
 		var nodes = $('#treemenu').tree('getSelected');
@@ -116,7 +102,9 @@
 					myTree();
 					clearModuleForm();
 					//$("#updataModule_window").dialog("close");
-					$.messager.alert("错误提示","修改成功");
+					
+					 window.parent.location.href = "indexGL";
+					$.messager.alert("提示","修改成功");
 				}else
 				$.messager.alert("错误提示","修改失败");
 			}
@@ -130,10 +118,8 @@
 		    if (r){ // 用户点击了确认按钮
 		    	$.ajax({
 		    		type:"post",
- 
 		    		url:"delModule",
 		    		data:{"modules_Id":nodes.id },
-
 		    		dataType:'json',
 		    		success:function(res){
 		    			if(res>0){
@@ -154,18 +140,17 @@
 		
 	<table name="center1" class="easyui-datagrid" id="Moduledg" title="模块信息" style="width: 100%; height:auto;" data-options="method:'post'">
 	</table>
-	<div style="margin-bottom: 5px;">
+	<!-- <div style="margin-bottom: 5px;">
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" onclick="addModuleInfo()">添加</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" onclick="updataModuledg()">编辑</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cut" onclick="deleteModuledg()">删除</a>
-	</div>
+	</div> -->
 	
 	<div id="moduleDiv" title="请选择模块" style="width: 650px; height: 500px; background: #eee;">
 		<ul id="treemenu"></ul>
 	</div>
 	
 	<!--新增模块-->
- 
 	<div id="addModule_window" class="easyui-dialog" title="新增模块信息" data-options="modal:true,closed:true,iconCls:'icon-save',buttons:[{
 								text:'保存',
 								handler:function(){ submitModuleForms();}
@@ -173,7 +158,6 @@
 								text:'关闭',
 								handler:function(){ clearModuleForm();}
 							}]" style="width:500px;height:300px;padding:10px; top: 200px;">
-
 		<form id="addModuleForm">
 			<table cellpadding="5">
 				<tr> 
@@ -197,7 +181,6 @@
 				</tr>
 			</table>
 		</form>
- 
 	</div>
 	
 	<!--修改模块-->
@@ -208,7 +191,6 @@
 								text:'关闭',
 								handler:function(){ clearModuleForm();}
 							}]" style="width:500px;height:300px;padding:10px; top: 200px;">
- 
 		<form id="updateModuleForm">
 			<table cellpadding="5">
 				<tr>
@@ -236,4 +218,6 @@
 		<div onclick="deleteModuledg()" data-options="iconCls:'icon-remove'">移除</div>
 	</div>
 	</body>
+	 
+ 
 </html>
