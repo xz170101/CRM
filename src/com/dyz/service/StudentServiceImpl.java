@@ -53,4 +53,10 @@ public class StudentServiceImpl implements StudentService {
 		return studentMapper.selectzixunname();
 	}
 
+	@Override
+	public List<Student> selectLog(Integer stu_id) {
+		// TODO Auto-generated method stub
+		return studentMapper.selectLog(stu_id);
+	}
+
 }

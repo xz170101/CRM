@@ -3,6 +3,7 @@ package com.dyz.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,5 +53,11 @@ public class StudentController {
 	@ResponseBody
 	public List<Askers> selectzixunname() {
 		return studentService.selectzixunname();
+	}
+	
+	@RequestMapping(value="/selectlog",method=RequestMethod.POST)
+	@ResponseBody
+	public List<Student> selectlog(@RequestParam(value="stu_id")Integer stu_id) {
+		return studentService.selectLog(stu_id);
 	}
 }

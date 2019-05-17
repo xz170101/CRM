@@ -1,5 +1,4 @@
- 
-<%@ page language="java" contentType="textml; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,7 +10,6 @@
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.min.js"></script>
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
-	
 <script type="text/javascript">
 	$(function(){
 		init();
@@ -63,7 +61,7 @@
 </script>
 </head>
 <body>
-	<table id="dg" class="easyui-datagrid" title="跟踪记录"
+<table id="dg" class="easyui-datagrid" title="跟踪记录"
 		data-options="collapsible:true,pagination:true">
 		<thead>
 			<tr>
@@ -108,11 +106,11 @@
 	    	<table cellpadding="5">	    		
 	    		<tr>
 	    			<td>内容：</td>
-	    			<td><input class="easyui-textbox" id="content" name="conTent"></td>
+	    			<!-- <td><input class="easyui-textbox" id="content" name="conTent"></td> -->
+	    			<td><input class="easyui-textbox" data-options="multiline:true" id="content" name="conTent" ></td>
 	    		</tr>	    		
 	    	</table>
 	    </form>
 	</div>
 </body>
-<html>
- 
+</html>

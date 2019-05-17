@@ -44,4 +44,11 @@ public interface StudentService {
 	 * @return
 	 */
 	List<Askers> selectzixunname();
+	
+	/**
+	 * 查询跟踪日志
+	 * @param student
+	 * @return
+	 */
+	List<Student> selectLog(Integer stu_id);
 }
