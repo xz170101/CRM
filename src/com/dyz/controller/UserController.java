@@ -154,6 +154,7 @@ public class UserController {
 		//String pwd1 = user.getPassWord();
 		 System.out.println("登录名："+user.getLoginName());
 		 System.out.println("密码："+user.getPassWord());
+		 System.out.println("加密密码："+MD5Util.MD5(user.getPassWord()));
 		String passWord = user.getPassWord();
 		 user.setPassWord(MD5Util.MD5(user.getPassWord()));
 		 String code =(String) session.getAttribute("randomcode_key");

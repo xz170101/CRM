@@ -48,10 +48,16 @@ public class JspController {
 	 public ModelAndView studentjsp() {
 		 return new ModelAndView("/demo/student"); 
 	 }
-	 
+ 
 	 @RequestMapping(value="/NetworkConsultantjsp",method=RequestMethod.GET)
 	 public ModelAndView NetworkConsultantjsp() {
 		 return new ModelAndView("/demo/NetworkConsultant"); 
 	 }
+ 
+	 @RequestMapping(value="/consultantjsp",method=RequestMethod.GET)
+	 public ModelAndView consultantjsp() {
+		 return new ModelAndView("/demo/consultant"); 
+	 }
+ 
 	
 }

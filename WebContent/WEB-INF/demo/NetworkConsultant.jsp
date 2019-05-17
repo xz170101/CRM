@@ -5,18 +5,18 @@
 <head>
 <meta charset="UTF-8">
 <title>网络咨询师</title>
-	<link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.4.3/themes/icon.css">
-  	<link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.4.3/themes/metro/easyui.css">
-   	<script type="text/javascript" src="../js/jquery-easyui-1.4.3/jquery.min.js"></script>
-   	<script type="text/javascript" src="../js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
-   	<script type="text/javascript" src="../js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
+	<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/icon.css">
+  	<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/metro/easyui.css">
+   	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.min.js"></script>
+   	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
+   	<script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
    	<script type="text/javascript">
    		$(function(){
    			init();
    		})
    		function init(){
    			$("#stuTab").datagrid({
-   				url:"../selectStu",
+   				url:"selectStu",
    				method:"post",			
    				fitColumns:true,
    		        pagination:true,
@@ -64,7 +64,7 @@
    				var stu_CreateUser1= $("#stu_CreateUser1").textbox("getValue");
    				var stu_CreateTime1= $("#stu_CreateTime1").datebox("getValue");
    				//提交到添加的controller
-   					$.post("../insertStu", {
+   					$.post("insertStu", {
    						stu_Name:stu_Name1,
    						stu_Sex:stu_Sex1,
    						stu_Age:stu_Age1,
@@ -301,13 +301,13 @@
 	    			<td>
 	    			<select id="stu_Status1" class="easyui-combobox">
 	    				 <option>--请选择--</option> 
-					     <option value="0">大专</option> 
-						 <option value="1">高中</option>
-						 <option value="2">中专</option>
-						 <option value="3">初中</option>
-						 <option value="4">本科</option>
-						 <option value="5">其它</option>
-						 <option value="6">未知</option>
+					     <option value="大专">大专</option> 
+						 <option value="高中">高中</option>
+						 <option value="中专">中专</option>
+						 <option value="初中">初中</option>
+						 <option value="本科">本科</option>
+						 <option value="其它">其它</option>
+						 <option value="未知">未知</option>
 	    			</select>
 	    			</td>
 	    		</tr>
@@ -316,10 +316,10 @@
 	    			<td>
 	    			<select id="stu_PerState1" class="easyui-combobox">
 	    				 <option>--请选择--</option> 
-					     <option value="0">待业</option> 
-						 <option value="1">在职</option>
-						 <option value="2">在读</option>
-						 <option value="3">未知</option>
+					     <option value="待业">待业</option> 
+						 <option value="在职">在职</option>
+						 <option value="在读">在读</option>
+						 <option value="未知">未知</option>
 	    			</select>
 	    			</td>
 	    		</tr>
@@ -328,19 +328,19 @@
 	    			<td>
 	    			<select id="stu_SourceUrl1" class="easyui-combobox">
 	    				 <option>--请选择--</option> 
-					     <option value="0">百度</option> 
-						 <option value="1">百度移动端</option>
-						 <option value="2">360</option>
-						 <option value="3">360移动端</option>
-						 <option value="4">搜狗</option>
-						 <option value="5">搜狗移动端</option>
-						 <option value="6">UC移动端</option>
-						 <option value="7">直接输入</option>
-						 <option value="8">自然流量</option>
-						 <option value="9">直电</option>
-						 <option value="10">微信</option>
-						 <option value="11">QQ</option>
-						 <option value="12">未知</option>
+					     <option value="百度">百度</option> 
+						 <option value="百度移动端">百度移动端</option>
+						 <option value="360">360</option>
+						 <option value="360移动端">360移动端</option>
+						 <option value="搜狗">搜狗</option>
+						 <option value="搜狗移动端">搜狗移动端</option>
+						 <option value="UC移动端">UC移动端</option>
+						 <option value="直接输入">直接输入</option>
+						 <option value="自然流量">自然流量</option>
+						 <option value="直电">直电</option>
+						 <option value="微信">微信</option>
+						 <option value="QQ">QQ</option>
+						 <option value="未知">未知</option>
 	    			</select>
 	    			</td>
 	    		</tr>
@@ -353,25 +353,25 @@
 	    			<td>
 	    			<select id="stu_Address1" class="easyui-combobox">
 	    				 <option>--请选择--</option> 
-					     <option value="0">郑州</option> 
-						 <option value="1">开封</option>
-						 <option value="2">洛阳</option>
-						 <option value="3">南阳</option>
-						 <option value="4">漯河</option>
-						 <option value="5">三门峡</option>
-						 <option value="6">平顶山</option>
-						 <option value="7">周口</option>
-						 <option value="8">驻马店</option>
-						 <option value="9">新乡</option>
-						 <option value="10">鹤壁</option>
-						 <option value="11">焦作</option>
-						 <option value="12">濮阳</option>
-						 <option value="13">安阳</option>
-						 <option value="14">商丘</option>
-						 <option value="15">信阳</option>
-						 <option value="16">济源</option>
-						 <option value="17">其它</option>
-						 <option value="18">未知</option>
+					     <option value="郑州">郑州</option> 
+						 <option value="开封">开封</option>
+						 <option value="洛阳">洛阳</option>
+						 <option value="南阳">南阳</option>
+						 <option value="漯河">漯河</option>
+						 <option value="三门峡">三门峡</option>
+						 <option value="平顶山">平顶山</option>
+						 <option value="周口">周口</option>
+						 <option value="驻马店">驻马店</option>
+						 <option value="新乡">新乡</option>
+						 <option value="鹤壁">鹤壁</option>
+						 <option value="焦作">焦作</option>
+						 <option value="濮阳">濮阳</option>
+						 <option value="安阳">安阳</option>
+						 <option value="商丘">商丘</option>
+						 <option value="信阳">信阳</option>
+						 <option value="济源">济源</option>
+						 <option value="其它">其它</option>
+						 <option value="未知">未知</option>
 	    			</select>
 	    			</td>
 	    		</tr>
@@ -380,10 +380,10 @@
 	    			<td>
 	    			<select id="stu_NetPusherld1" class="easyui-combobox">
 	    				 <option>--请选择--</option> 
-					     <option value="0">职英B站</option> 
-						 <option value="1">高考站</option>
-						 <option value="2">职英A站</option>
-						 <option value="3">其它</option>
+					     <option value="职英B站">职英B站</option> 
+						 <option value="高考站">高考站</option>
+						 <option value="职英A站">职英A站</option>
+						 <option value="其它">其它</option>
 	    			</select>
 	    			</td>
 	    		</tr>

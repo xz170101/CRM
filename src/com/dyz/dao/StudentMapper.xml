@@ -78,6 +78,32 @@
 			<result column="uexit1int" property="netfollows.user.uexit1int"/>
 			
 		</resultMap>  -->
+		<resultMap type="student" id="stu">
+			<id column="stu_id" property="stu_id"/>
+			<result column="stu_Name" property="stu_Name"/>
+			<collection property="netfollows" ofType="netFollows">
+				<result property="follows_Id" column="follows_Id"/>
+				<result property="followTime" column="followTime"/>
+				<result property="nextFollowTime" column="nextFollowTime"/>
+				<result property="conTent" column="conTent"/>
+				<result property="followType" column="followType"/>
+				<result property="createTime" column="createTime"/>
+				<result property="followState" column="followState"/>
+				<result property="nexit1int" column="nexit1int"/>
+				<result property="nexit2String" column="nexit2String"/>	
+				<result property="stu_Id" column="stu_Id"/>		
+			</collection>
+		</resultMap>
+		<!-- 查询日志 -->
+		<select id="selectLog" parameterType="int" resultMap="stu">
+			SELECT s.stu_id,s.stu_Name,n.followTime,n.conTent,n.nextFollowTime from
+			 students s,netfollows n 
+			 <where>
+			 	 s.stu_id=n.stu_Id
+			 	 and s.stu_id=#{stu_id}
+			 </where>			 
+		</select>
+		
 		<!-- 分页多条件查询 -->
 	<select id="selectStudent" parameterType="fenye" resultType="student">
 		select * FROM students 

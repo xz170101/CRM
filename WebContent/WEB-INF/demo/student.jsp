@@ -15,7 +15,36 @@
 		
 		init();
 	})
-
+	
+	//查看日志的打开
+	function looklogf(index){
+		var data = $("#stuTab").datagrid("getData");
+		var row = data.rows[index];
+			$("#dg").datagrid({
+				url:"selectlog",
+				method:"post",
+				queryParams:{
+					stu_id:row.stu_id
+				}
+			})			
+		$("#looklog").dialog("open");			
+		} 
+	//查看日志的关闭
+	function logclose(){
+		$("#looklog").dialog("close");
+	}  
+	//跟踪日志的查看
+	function lookcontent(index){
+		var data=$('#dg').datagrid('getData');
+		var row=data.rows[index];
+		$('#lookFollowForm').form('load',row);
+		$('#lookFollows').window('open');		
+	} 
+	
+	//查看的关闭
+		function Followclose(){
+			$('#lookFollows').dialog('close');
+		}
 	function init(){
 		$("#stuTab").datagrid({
 			url:"selectStudent",
@@ -42,8 +71,22 @@
 		})
 		$("#sousuofrm").form("reset");
 	}
+	
+	function formatterfollowTime(value, row, index){
+		return row.netfollows.followTime;
+	}
+	function formatterContent(value, row, index){
+		return row.netfollows.conTent;
+	}
+	function formatternextTime(value, row, index){
+		return row.netfollows.nextFollowTime;
+	}
+	function formattercaozuo(value, row, index){ 
+		return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='lookcontent(" + index + ")'>查看</a>";
+	}
+	
 	function formatterStu(value, row, index){ 
-		return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='lookStu(" + index + ")'>查看</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='genzongStu(" + index + ")'>跟踪</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='updateStu(" + index + ")'>编辑</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='deleteStu(" + index + ")'>删除</a>";
+		return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='lookStu(" + index + ")'>查看</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='genzongStu(" + index + ")'>跟踪</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='updateStu(" + index + ")'>编辑</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='deleteStu(" + index + ")'>删除</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='looklogf(" + index + ")'>跟踪日志</a>";
 	}	
  
 	function formatterSex(value, row, index){
@@ -306,7 +349,7 @@
 		}
 		
 		//对学生进行后续跟踪
-		function followStu(index){
+		function genzongStu(index){
 			var data=$('#stuTab').datagrid('getData');
 			var row=data.rows[index];
 			$('#insertFollowForm').form("load",row);
@@ -456,7 +499,7 @@
 </head>
 <body>
 		<table id="stuTab" data-options="fitColumns:true">   
-	    <thead>   
+	     <thead>   
 	        <tr>  
 	       		<th data-options="field:'checkbox',checkbox:true"></th>
 	        	<th data-options="field:'stu_id'">编码</th>   
@@ -528,28 +571,53 @@
 			 上门时间:<input class="easyui-datebox" id="hometime"  style="width: 80px">
 			 首次回访时间:<input class="easyui-datebox" id="firstvisittime"  style="width: 80px">			 
 			  缴费时间:<input class="easyui-datebox" id="paytime"  style="width: 80px">
-			 进班时间:<input class="easyui-datebox" id="inclasstime"  style="width: 80px">
-				
-			 <a href="javascript:void(0)" class="easyui-linkbutton"
-				iconCls="icon-search" onclick="init()">查找</a>
-			  <a href="javascript:void(0)" class="easyui-linkbutton"
- 
-			   iconCls="icon-add" onclick="addStu()">添加</a>
-			    <a href="javascript:void(0)" class="easyui-linkbutton"
-			   iconCls="icon-edit" onclick="piliang()">批量操作</a> 
-			   
-			   <a href="javascript:void(0)" class="easyui-linkbutton"
-			    data-options="iconCls:'icon-edit'" 
-			    onclick="selectColumn()">设置隐藏列</a>
-			    
-			   <a href="javascript:void(0)" class="easyui-linkbutton"
-			    data-options="iconCls:'icon-edit'" 
-			    onclick="ExportForm()">导出表格</a>
- 	 
- 
+			 进班时间:<input class="easyui-datebox" id="inclasstime"  style="width: 80px">				
+			 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="init()">查找</a>
+			 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" onclick="addStu()">添加</a>
+			 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" onclick="piliang()">批量操作</a> 
+			 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" onclick="selectColumn()">设置隐藏列</a>
+			 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" onclick="ExportForm()">导出表格</a>	 
+ 			
 		</form>
 	</div>
-	
+	<!-- 日志log -->
+	 <div id="looklog" class="easyui-dialog" title="查看跟踪日志"  
+		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
+		buttons:[{
+				text:'关闭',
+				handler:function(){logclose()}
+			}]">
+			<table id="dg" class="easyui-datagrid" style="width:400px;height:250px" data-options="fitColumns:true">   
+			    <thead>   
+			        <tr>   
+			            <th data-options="field:'stu_id'">编码</th>   
+			            <th data-options="field:'stu_Name'">姓名</th>   
+			            <th data-options="field:'followTime',formatter:formatterfollowTime">追踪时间</th>
+				        <th data-options="field:'nextFollowTime',formatter:formatternextTime">下次追踪时间</th>  
+				        <th data-options="field:'conTent',formatter:formatterContent">内容</th>
+						<th data-options="field:'caozuo',formatter:formattercaozuo">操作</th> 
+			        </tr>   
+			    </thead>   
+			</table>			
+		</div>
+	<!-- 对学生进行跟踪 -->
+	<div id="lookFollows" class="easyui-dialog" title="查看跟踪信息" style="width:400px;height:300px;" 
+		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
+		buttons:[{
+				text:'关闭',
+				handler:function(){Followclose()}
+			}]">
+		
+	    <form id="lookFollowForm" class="easyui-form">
+	    	<table cellpadding="5">	    		
+	    		<tr>
+	    			<td>内容：</td>
+	    			<td><input class="easyui-textbox" id="content" name="conTent"></td>
+	    		</tr>	    		
+	    	</table>
+	    </form>
+	</div>
+	 
 	<!-- 添加窗体 -->
 	<div id="insertStu" class="easyui-dialog" title="添加客户" style="width:400px;height:500px;" 
 		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
