@@ -48,5 +48,11 @@ public interface StudentMapper {
 	 * @return
 	 */
 	List<Askers> selectzixunname();
+	/**
+	 * 查询跟踪日志
+	 * @param stu_id
+	 * @return
+	 */
+	List<Student> selectLog(Integer stu_id);
 	
 }

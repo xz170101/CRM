@@ -1,5 +1,7 @@
 package com.dyz.entity;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -50,14 +52,13 @@ public class Student {
 	private String stu_preMoneyTime;
 	private Integer sexitInte;//打分
 	private String sexitString;
-	
-	private NetFollows netfollows;
-	
-	
-	public NetFollows getNetfollows() {
+		
+	private List<NetFollows> netfollows;	
+
+	public List<NetFollows> getNetfollows() {
 		return netfollows;
 	}
-	public void setNetfollows(NetFollows netfollows) {
+	public void setNetfollows(List<NetFollows> netfollows) {
 		this.netfollows = netfollows;
 	}
 	public Integer getStu_id() {
