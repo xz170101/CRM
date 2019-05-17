@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dyz.dao.ConsultantMapper">
+	<!-- 分页多条件查询 -->
+	<select id="selectStuAll" parameterType="fenye" resultType="student">
+		select * FROM students 
+		<where>			
+			<if test="text1 !=null and text1!=''">
+				and stu_Name like "%"#{text1}"%"
+			</if>
+			<if test="text2 !=null and text2!=''">
+				and stu_Phone like "%"#{text2}"%"
+			</if>
+			<if test="text3 !=null and text2!=''">
+				and stu_ZiXunName like "%"#{text2}"%"
+			</if>		
+			
+			<!--integer  -->
+			<if test="num1!=null and num1!=''">
+				and stu_isPay=#{num1}
+			</if>
+			<if test="num2!=null and num2!=''">
+				and stu_isValid=#{num2}
+			</if>
+			<if test="num3!=null and num3!=''">
+				and stu_isReturnVist=#{num3}
+			</if>
+						
+			<if test="text4 !=null and text4!=''">
+				and stu_qq like "%"#{text4}"%"
+			</if>
+			<if test="text5 !=null and text5!=''">
+				and stu_CreateTime like "%"#{text5}"%"
+			</if>
+				<if test="text6 !=null and text6!=''">
+				and stu_HomeTime like "%"#{text6}"%"
+			</if>
+			<if test="text7 !=null and text7!=''">
+				and stu_firstVisitTime like "%"#{text7}"%"
+			</if>
+				<if test="text8 !=null and text8!=''">
+				and stu_PayTime like "%"#{text8}"%"
+			</if>
+			<if test="text9 !=null and text9!=''">
+				and stu_isInClass like "%"#{text9}"%"
+			</if>
+		</where>				
+		limit #{page},#{pageSize}
+	</select>
+	<!-- 查询总条数 -->
+	<select id="selectCountStu" parameterType="fenye" resultType="int">
+		select count(1) from students 
+		<where>			
+			<if test="text1 !=null and text1!=''">
+				and stu_Name like "%"#{text1}"%"
+			</if>
+			<if test="text2 !=null and text2!=''">
+				and stu_Phone like "%"#{text2}"%"
+			</if>
+			<if test="text3 !=null and text2!=''">
+				and stu_ZiXunName like "%"#{text2}"%"
+			</if>		
+			
+			<!--integer  -->
+			<if test="num1!=null and num1!=''">
+				and stu_isPay=#{num1}
+			</if>
+			<if test="num2!=null and num2!=''">
+				and stu_isValid=#{num2}
+			</if>
+			<if test="num3!=null and num3!=''">
+				and stu_isReturnVist=#{num3}
+			</if>
+						
+			<if test="text4 !=null and text4!=''">
+				and stu_qq like "%"#{text4}"%"
+			</if>
+			<if test="text5 !=null and text5!=''">
+				and stu_CreateTime like "%"#{text5}"%"
+			</if>
+				<if test="text6 !=null and text6!=''">
+				and stu_HomeTime like "%"#{text6}"%"
+			</if>
+			<if test="text7 !=null and text7!=''">
+				and stu_firstVisitTime like "%"#{text7}"%"
+			</if>
+				<if test="text8 !=null and text8!=''">
+				and stu_PayTime like "%"#{text8}"%"
+			</if>
+			<if test="text9 !=null and text9!=''">
+				and stu_isInClass like "%"#{text9}"%"
+			</if>
+		</where>
+	</select>
+</mapper>
