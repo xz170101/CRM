@@ -48,7 +48,11 @@ public class RoleServiceImp implements RoleService{
 	@Override
 	public Integer delRole(Integer roles_Id) {
 		// TODO Auto-generated method stub
-		return roleMapper.delRole(roles_Id);
+		ArrayList<Module> i=roleMapper.selectRoleModu(roles_Id);
+		if(i==null) {
+			return roleMapper.delRole(roles_Id);
+		}
+		return 0;
 	}
 	/**
 	 * 查询角色模块【树形】

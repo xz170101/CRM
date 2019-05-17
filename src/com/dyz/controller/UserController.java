@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -149,7 +150,7 @@ public class UserController {
 	int count=0;//用来记录错误密码次数
 	@RequestMapping(value ="/login", method = RequestMethod.POST)
 	@ResponseBody
-	public String login(User user, HttpServletResponse res,String reuser, String yzm, HttpSession session,Model model) {
+	public String login(User user,HttpServletRequest req, HttpServletResponse res,String yes, String yzm, HttpSession session,Model model) {
 		//String pwd1 = user.getPassWord();
 		 System.out.println("登录名："+user.getLoginName());
 		 System.out.println("密码："+user.getPassWord());
@@ -173,7 +174,6 @@ public class UserController {
 						use.setPsdWrongTime(count);
 						userService.updateUser(use);
 						if(count>3) {
- 
 							SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 							String time = s.format(new Date());
 							use.setLockTime(time);
@@ -187,14 +187,16 @@ public class UserController {
 					if (lockout != null) {
 						return Result.toClient(false, "该用户被锁定，请联系管理员解锁");
 					} else {
-						 if ("y".equals(reuser)) {
-							Cookie uname = new Cookie("u_name", u.getLoginName());
-							uname.setMaxAge(60*60*24*7);
-							res.addCookie(uname);
-							Cookie pwd = new Cookie("u_pwd", passWord);
+						   if ("yes".equals(yes)) {
+							Cookie lname = new Cookie("loginName", u.getLoginName());
+							lname.setPath(req.getContextPath());////默认只对当前路径下的资源有效
+							lname.setMaxAge(60*60*24*7);//cookie.setMaxAge();单位为秒
+							res.addCookie(lname);
+							Cookie pwd = new Cookie("loginPwd", passWord);
+							pwd.setPath(req.getContextPath());
 							pwd.setMaxAge(60*60*24*7);
 							res.addCookie(pwd);
-						} 
+						}  
 						//该登录时间
 						User us=new User();
 						SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

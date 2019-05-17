@@ -18,11 +18,8 @@
 		$(function() {
 			 $('#menuTree').tree({
 				url :"getSysRightsHtmlTree",
-
 				method : "post",
 				onClick : function (node) { // attributes 属性返回指定节点属性的集合。
-					// alert(node.modules_path)
-					//alert(node.attributes.modules_path);
 			        //if (node.attributes) {  
 						var flag = $("#tt").tabs('exists', node.text);
 						var isLeaf = $('#menuTree').tree('isLeaf', node.target); //是否是叶子节点
@@ -39,20 +36,11 @@
 						 }
 				       //}   
 					 }, onLoadError:function(none){
-				     	window.parent.location.href="login"
+				     	window.parent.location.href="login";
 					   } 
 				}); 
 			});
-		   /*退出  
-		   function tuichu(){
-		    	$.messager.confirm("确认","你确认要推出当前页面吗？",function(r){
-		    		if(r){
-			    		sessionStorage.clear();
-			    		window.location.href="index.jsp";
-		    		}
-		    	});
-		    }
-		 */
+		   
 		</script>
 	</head>
 	<body>

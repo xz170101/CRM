@@ -16,6 +16,7 @@
 		 init();
 	});  
 	function init() { //显示加载数据表格
+		//alert($("#ord").combobox("getValue").trim());
 			$("#userDG").datagrid({ 
 				 	url:"selectUser",  //数据接口的地址
 				 	method:'post',
@@ -76,7 +77,6 @@
 	   $("#addRole").click(function(){
 	   	var RoleRow=$("#allRole").datagrid("getSelected");
 	   	if(RoleRow){
-	   		alert(RoleRow+":RoleRow");
 	   		alert(row.user_Id+":row.user_Id");
 	   		alert(RoleRow.roles_Id+":RoleRow.roles_Id");
 		        $.post("addUserRole",{
@@ -358,9 +358,7 @@
 		var flag=$("#adduserForm").form("validate");
 		alert("ajin");
 		 //vRegexp();
-		 //alert("vRegexp:"+vRegexp());
 		//if(vRegexp()){
-		//	alert("vRegexpTRUE:"+vRegexp());
 			//if(vnewusername()){
 			//	alert("vnewusername:"+vnewusername());
 				$.post("newUser", {    

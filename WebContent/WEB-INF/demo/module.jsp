@@ -123,10 +123,10 @@
 		    		dataType:'json',
 		    		success:function(res){
 		    			if(res>0){
-		    				$.messager.alert("提示信息","删除成功");
+		    				$.messager.alert("提示","ok");
 		    				myTree();
 		    			}else
-		    			$.messager.alert("错误信息","删除失败");
+		    			$.messager.alert("提示","该模块有角色引用,不可删除");
 		    		}
 		    	});
 		    }

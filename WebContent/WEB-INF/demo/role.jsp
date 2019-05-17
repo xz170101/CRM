@@ -33,24 +33,25 @@
 		function formatterPower(value,row,index){
 			return "<a href='javascript:void(0);'  onclick='SetPower(" + index + ")'>设置</a> "
 		}
+		var roles_id;
 		function SetPower(index){
  			var data=$("#dg").datagrid("getRows");
 			$("#SetRight").dialog({
 				close:false,
 				title:"你正在设置"+data[index].roles_Name+"权限"
 			});
-			//alert(data[index].roles_Id);
+			roles_id=data[index].roles_Id;
 			$('#treemenu').tree({
 	  			url:"selectModuleByRoleId",
 	  			queryParams:{
-	  				roles_Id:data[index].roles_Id
+	  				roles_Id:roles_id
 	  			} ,onContextMenu:function(e,node){
-	  				
 	  				$('#treemenu').tree('select',node.target);
 	  			}
-	  		});
+	  	    	});
+	    	}
 	  		//保存修改角色权限  **模块信息
-		  $("#saveSetRose").click(function(){
+		   function submitSetRolseForm(){
  			var data=$("#dg").datagrid("getRows");
  			//获取所有勾选项的树节点构成的数组
 			var nodes=$('#treemenu').tree('getChecked',['checked','indeterminate']);
@@ -63,44 +64,25 @@
 					s+=nodes[i].id;
 				}
 			}
-			$.ajax({
-				url:"saveRoleMod",
-				type:"post",
-				async: false,
-				dataType:'json',
-				data:{"modules_Ids":s,"roles_Id":data[index].roles_Id},
-				success:function(r){
+			 $.post("saveRoleMod",{
+					modules_Ids: s,
+					roles_Id:roles_id
+				},function(r){
 					if(r>0){
+						s="";
 						$("#SetRight").dialog("close"); 
 						$("#dg").datagrid("reload");
 						$.messager.alert("提示","保存权限成功");
-						s="";
+						
 						 //window.top.loadTree();
 	 				}else{
 	 					$("#SetRight").dialog("close"); 
 						$("#dg").datagrid("reload");
 						$.messager.alert("提示","已清空！");
 					}
-				}
-			});
-			/* $.post("saveRoleMod",{
-				modules_Ids: s,
-				roles_Id:data[index].roles_Id 
-			},function(r){
-				if(r>0){
-					$("#SetRight").dialog("close"); 
-					$("#dg").datagrid("reload");
-					$.messager.alert("提示","保存权限成功");
-					s="";
-					 //window.top.loadTree();
- 				}else{
- 					$("#SetRight").dialog("close"); 
-					$("#dg").datagrid("reload");
-					$.messager.alert("提示","已清空！");
-				}
-			},"json"); */
-			});
-		}
+				},"json");  
+			} 
+	 
 		//打开添加面板
 		function addRoles(){
 			$('#addRolse_window').dialog('open');
@@ -163,6 +145,8 @@
                         if(res>0){
                         	$("#dg").datagrid("load");
 	                        $.messager.alert("提示！","删除成功");
+                        }else{
+                        	$.messager.alert("提示！","该角色具有模块不可删除!");
                         }
                     });   
  				 }   
@@ -233,7 +217,7 @@
 			</div>
     	</div>
 	 	 <div id="bb" hidden="hidden">
-	 	  <a id="saveSetRose" href="javascript:void(0)"class="easyui-linkbutton"  onclick="submitSetRolseForm()">保存</a> 
+	 	  <a id="saveSetRose" href="javascript:void(0)" class="easyui-linkbutton"  onclick="submitSetRolseForm()">保存</a> 
 		 </div>
 	</body>
  

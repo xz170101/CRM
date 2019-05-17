@@ -38,7 +38,9 @@
 				and isLockout = #{text5}
 			</if>
 		</where>
-		order by #{text1}
+		<if test="text1 != null and text1 != '' ">
+			order by ${text1} 
+		</if>
 		limit #{page},#{pageSize}
 	</select>
 	<!-- 验证用户名是否重复 -->
@@ -152,7 +154,9 @@
 	
 	<!--selectRoleModuleByUser  -->
 	<select id="selectRoleModuleByUser" parameterType="int" resultType="module" >
-		select m.modules_Id,m.modules_Name,m.parentId,m.modules_path,m.modules_weight 
+ 
+		select DISTINCT m.modules_Id,m.modules_Name,m.parentId,m.modules_path,m.modules_weight,m.mexit1int 
+ 
 		from `user` u
 		INNER JOIN userrole ur on u.user_Id =ur.userId
 		INNER JOIN roles r ON r.roles_Id=ur.roleId
@@ -172,7 +176,7 @@
 			loginName=#{loginName}	
 		</where> 
 	</update>
-	<!-- 注册用户insertNewUser -->
+	<!-- 用户insertNewUser -->
 	<insert id="insertNewUser" parameterType="user">
 		INSERT INTO  `user`
 			 (loginName,passWord,protectEMail,protectMTel,createTime,isLockout,psdWrongTime) 

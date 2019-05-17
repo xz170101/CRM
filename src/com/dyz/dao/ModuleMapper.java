@@ -1,8 +1,10 @@
 package com.dyz.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.dyz.entity.Module;
+import com.dyz.entity.Role;
 
   
 
@@ -30,5 +32,11 @@ public interface ModuleMapper {
 	 * @return
 	 */
 	Module selectModuleByMId(Integer modules_Id);
+	/**
+	 * 查是否有角色引用这个模块
+	 * @param modules_Id
+	 * @return
+	 */
+	List<Role> selectRoleByModuleId(Integer modules_Id);
 
 }
