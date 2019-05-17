@@ -77,8 +77,8 @@
 	   $("#addRole").click(function(){
 	   	var RoleRow=$("#allRole").datagrid("getSelected");
 	   	if(RoleRow){
-	   		alert(row.user_Id+":row.user_Id");
-	   		alert(RoleRow.roles_Id+":RoleRow.roles_Id");
+	   		//alert(row.user_Id+":row.user_Id");
+	   		//alert(RoleRow.roles_Id+":RoleRow.roles_Id");
 		        $.post("addUserRole",{
 		      		userId: row.user_Id,
 		      		roleId: RoleRow.roles_Id 
