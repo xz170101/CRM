@@ -40,7 +40,19 @@ public class Interceptor implements HandlerInterceptor {
 			/*Cookie cookie=new Cookie(name, value);
 			if(cookie) {
 				
-			}*/
+			} */
+			//如果cookie中存的有值也放行
+			Cookie[] cookies = request.getCookies();
+			if(cookies!=null) {
+			    for(Cookie cookie : cookies){
+			        if("loginName".equals(cookie.getName())){
+			        	return true;
+			        }/*else {
+			        	request.getRequestDispatcher("/WEB-INF/demo/login.jsp").forward(request, response);
+			        	return false;
+			        }*/
+			     } 
+			} 
 			//用户没有登录跳转到登录页面
 			request.getRequestDispatcher("/WEB-INF/demo/login.jsp").forward(request, response);
 			

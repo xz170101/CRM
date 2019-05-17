@@ -1,10 +1,18 @@
 package com.dyz.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.dyz.dao.UserMapper;
 import com.dyz.entity.Fenye;
@@ -12,6 +20,8 @@ import com.dyz.entity.Module;
 import com.dyz.entity.Role;
 import com.dyz.entity.User;
 import com.dyz.entity.UserRole;
+import com.dyz.util.MD5Util;
+import com.dyz.util.Result;
 import com.dyz.util.TreeModel;
 import com.dyz.util.TreeNode;
 
@@ -133,17 +143,22 @@ public class UserServiceImp implements UserService{
 	@Override
 	public Integer selectByName(String loginName) {
 		// TODO Auto-generated method stub
-		return usermapper.selectByName(loginName);
+		//Integer i=userService.selectByName(loginName);
+		Integer i=usermapper.selectByName(loginName);
+		if(i==null) {
+			return 0;
+		}else {
+			return 1;
+		}
 	}
 	/**
 	 * 根据用户名和密码查询用户信息
 	 */
-	@Override
+	/*@Override
 	public User selectLogin(User user) {
 		// TODO Auto-generated method stub
-		
 		return usermapper.selectUse(user);
-	}
+	}*/
 	@Override
 	public Integer updateLockUser(User user) {
 		// TODO Auto-generated method stub
@@ -154,11 +169,11 @@ public class UserServiceImp implements UserService{
 		// TODO Auto-generated method stub
 		return usermapper.updateUse(user);
 	}*/
-	@Override
+	/*@Override
 	public Integer selectByNameLockout(String loginName) {
 		// TODO Auto-generated method stub
 		return usermapper.selectByNameLockout(loginName);
-	}
+	}*/
 	/**
 	 * 根据角色查询所有模块
 	 */
@@ -186,7 +201,87 @@ public class UserServiceImp implements UserService{
 	public Integer insertUser(User user) {
 		// TODO Auto-generated method stub
 		return usermapper.insertNewUser(user);
-	} 
+	}
+	int count=0;
+	@Override
+	public String getLogin(User user, String yes, String yzm, HttpSession session, HttpServletRequest req,
+			HttpServletResponse res, Model model) {
+		// TODO Auto-generated method stub
+		 String passWord = user.getPassWord();
+		 user.setPassWord(MD5Util.MD5(user.getPassWord()));
+		 String code =(String) session.getAttribute("randomcode_key");
+		 if (!code.equalsIgnoreCase(yzm)) {
+			return Result.toClient(false, "验证码不对");
+		} else { 
+			//根句登录名查询用户id判断是否存在该用户
+			Integer nameId = usermapper.selectByName(user.getLoginName());//返回的是用户id
+			if (nameId == null) {
+				return Result.toClient(false, "用户名不存在");
+			} else {
+				//根据用户名和密码查询用户信息 判断密码是否正确
+				User u = usermapper.selectUse(user);
+				if (u == null) {
+					count++;
+						User use=new User();
+						use.setUser_Id(nameId);
+						use.setPsdWrongTime(count);
+						//修改用户密码错误次数
+						usermapper.updateUse(use);
+						if(count>3) {
+							SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+							String time = s.format(new Date());
+							use.setLockTime(time);
+							use.setIsLockout(1);
+							//锁定用户
+							usermapper.lockUse(nameId);
+							return Result.toClient(false, "错误次数大于三次，该用户已被锁定，请联系管理员解锁！");
+					}
+					return Result.toClient(false, "密码不正确");
+				} else {
+					//判断是有设备登录uexit1int{1：有设备登录0：没有登录}
+					Integer uexit1int = usermapper.selectUexit1intByName(user.getLoginName());
+					if(uexit1int==0) { 
+						//判断该用户是否锁定
+						Integer lockout = usermapper.selectByNameLockout(user.getLoginName());
+						if (lockout != null) {
+							return Result.toClient(false, "该用户被锁定，请联系管理员解锁!");
+						} else {
+							   if ("yes".equals(yes)) {
+								Cookie lname = new Cookie("loginName", u.getLoginName());
+								lname.setPath(req.getContextPath());////默认只对当前路径下的资源有效
+								lname.setMaxAge(60*60*24*7);//cookie.setMaxAge();单位为秒
+								res.addCookie(lname);
+							    Cookie pwd = new Cookie("loginPwd", passWord);
+								pwd.setPath(req.getContextPath());
+								pwd.setMaxAge(60*60*24*7);
+								res.addCookie(pwd);  
+							}  
+							//该登录时间
+							User us=new User();
+							SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+							String time = s.format(new Date());
+							us.setLoginTime(time);
+							us.setUser_Id(u.getUser_Id());
+							//登陆成功修改用户最后登录时间
+							usermapper.updateUse(us);
+							session.setAttribute("user", u);
+							return Result.toClient(true, (u != null ? true : false) == true ? "crmIndex" : "登录失败!");
+						}
+					}
+					 return Result.toClient(false, "该账户正在其他设备登录！");
+				} 
+			}
+		 } 
+		 
+	}
+	@Override
+	public Integer updateLoginStat(Integer user_Id) {
+		// TODO Auto-generated method stub
+		return usermapper.updateLoginStatu(user_Id);
+	}
+ 
+	
+	
 
  
 }

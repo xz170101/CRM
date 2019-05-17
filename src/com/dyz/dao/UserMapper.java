@@ -144,4 +144,16 @@ public interface UserMapper {
 	 * @return
 	 */
 	/*Integer selectUserRoleByUserId(Integer user_Id);*/
+	/**
+	 * 根据用户名查看是否在其他页面登录
+	 * @param loginName
+	 * @return
+	 */
+	Integer selectUexit1intByName(String loginName);
+	/**
+	 * 修改登录状态
+	 * @param user_Id
+	 * @return
+	 */
+	Integer updateLoginStatu(Integer user_Id);
 }
