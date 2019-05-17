@@ -1,5 +1,6 @@
 package com.dyz.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -29,12 +30,17 @@ public class Interceptor implements HandlerInterceptor {
 			if(request.getRequestURI().indexOf("login")>=0){
 				return true;
 			}
+			
 			HttpSession session = request.getSession();
 			//如果用户已登录也放行
 			if(session.getAttribute("user")!=null){
 				//request.getRequestDispatcher("/WEB-INF/demo/index.jsp").forward(request, response);
 				return true;
 			}
+			/*Cookie cookie=new Cookie(name, value);
+			if(cookie) {
+				
+			}*/
 			//用户没有登录跳转到登录页面
 			request.getRequestDispatcher("/WEB-INF/demo/login.jsp").forward(request, response);
 			

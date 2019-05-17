@@ -7,19 +7,16 @@
  
 <title>CRML</title>
  <meta name="robots" cotent="all">
- 
 <meta name="author" content="djcbpl@163.com">
 <meta name="Copyright" content="djcbpl@163.com">
 <meta name="description" content="easyUI主题UI">
 <meta name="keywords" content="">
- 
 <meta name="searchtitle" content="">  
 	<link rel="Bookmark" href="js/assets/images/logoIco.ico" />
 	<link rel="Shortcut Icon" href="js/assets/images/logoIco.ico" />
 	<link type="text/css" rel="stylesheet" href="js/assets/default/login/css/login.css">
 <!-- 	<script  type="text/javascript" src="js/assets/js/jquery2.1.1.js"></script>-->
  	<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/icon.css">
- 
 	<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/metro/easyui.css">
 	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
@@ -32,19 +29,47 @@
  
 </head>
 <script type="text/javascript">
+	  $(function() {
+		/* alert(document.cookie.length);
+		   alert(getCookie('loginName')); */
+		//复选框对勾
+		if(getCookie('loginName')!=null && getCookie('loginName')!="" ){
+			document.getElementById("rembername").value = 'true';
+			$('#checked').attr("class","checked");
+			}
+		});  
+	  //遍历获取cookie中的值
+	  function getCookie(name){
+		  var strcookie = document.cookie;//获取cookie字符串
+		  var arrcookie = strcookie.split(";");//分割
+		  //遍历匹配
+		  for ( var i = 0; i < arrcookie.length; i++) {
+			  var arr = arrcookie[i].split("=");
+			  if (arr[0] == name){
+			  	return arr[1];
+				  }
+		  }
+		 return "";
+	 }
+	   
 	//提交登陆表单
 	function subLogin() {
- 
+		var yes='';
+		//var rembername = document.getElementById("rembername").value;
+		var rembername = $("#rembername").val();
+		if(rembername=='true'){
+			yes='yes';
+		};
 		var login_name=($("#username").val()).trim();
 		var login_pwd=$("#keyboards").val();
 		var code=$("#verification").val().trim();
 		 if(login_name !=null && login_name !=""){
 			 if(login_pwd !=null && login_pwd !=""){
- 
 			 $.post("login", {    
 				 loginName:login_name,
 				 passWord:login_pwd,
-				 yzm:code
+				 yzm:code,
+				 yes:yes
 	         }, function(res){
 	        	 if (res.success) {
  
@@ -61,38 +86,20 @@
      		$.messager.alert("提示！","请输入用户名");
      	}
 	}
- 
-	 
 	//处理记住用户名
 	function changeCheckRembername() {
 		var rembername = document.getElementById("rembername").value;
 		if(rembername == 'true') {//选中，置为不选中
 			document.getElementById("rembername").value = 'false';
 			$('#checked').attr("class","normal");
+			return "yes";
 		}else {
 			document.getElementById("rembername").value = 'true';
 			$('#checked').attr("class","checked");
+			return "no";
 		}
 	}
-	 
 </script>
-<%
-	Cookie [] c = request.getCookies();
-	String name = "";
-	String password = "";
-	if(c!=null){
-		for(int i = 0; i < c.length; i++){
-			if(c[i].getName().equals("name")){
-				name = c[i].getValue();
-			}
-			if(c[i].getName().equals("password")){
-				password = c[i].getValue();
-			}
-		}
-	}
-
-%>
- 
 <body>
 
 <!--头部start-->	
@@ -136,14 +143,14 @@
 			<!-- end -->
 			<div class="user_parent">
 				<div class="login_input user_bg unm">
-		        	<input name="username" id="username" tabindex="1"   type="text" class="usernameSty"   autocomplete="off">
+		        	<input name="username" id="username" value="${cookie.loginName.value }" tabindex="1"   type="text" class="usernameSty"   autocomplete="off">
 		    	</div>
 		  	</div>
  
 		    <div class="user_paswd">
 				<div class="login_input user_bg pwd" name="pwdParent" id="pwdParent">
 			      	<div id="newPwd" class="keyboards-box">
-				 		<input id="keyboards" value="" type="password" name="keyboards" tabindex="3" pa_ui_name="keyboard" pa_ui_keyboard_position="place" pa_ui_key_type="advance" class="styTextinput w162px" maxlength="20" >
+				 		<input id="keyboards" value="${cookie.loginPwd.value }" type="password" name="keyboards" tabindex="3" pa_ui_name="keyboard" pa_ui_keyboard_position="place" pa_ui_key_type="advance" class="styTextinput w162px" maxlength="20" >
 				 	</div>
 			  	</div> 
 			</div>
@@ -163,7 +170,7 @@
  
 				<!-- <input id="checked" type="checkbox" class="normal" onclick="changeCheckRembername();"> -->
  
-				<b id="checked" class="normal" onclick="changeCheckRembername();"></b>
+				<b id="checked" class="normal" onclick="changeCheckRembername();" ></b>
 				<label id="login_save" style="float:left;">记住用户名</label>
 				<div class="login-wjpw">
 					<a class="blue" href="javascript:;">忘记用户名？</a>&nbsp;|&nbsp;&nbsp;

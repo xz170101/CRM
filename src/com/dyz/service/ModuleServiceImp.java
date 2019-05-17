@@ -1,13 +1,14 @@
 package com.dyz.service;
 
 import java.util.ArrayList;
- 
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dyz.dao.ModuleMapper;
 import com.dyz.entity.Module;
+import com.dyz.entity.Role;
 import com.dyz.util.TreeModel;
 import com.dyz.util.TreeNode;
 @Service
@@ -50,7 +51,11 @@ public class ModuleServiceImp implements ModuleService {
 	@Override
 	public Integer delModu(Integer modules_Id) {
 		// TODO Auto-generated method stub
-		return moduleMapper.delModule(modules_Id);
+		List<Role> i=moduleMapper.selectRoleByModuleId(modules_Id);
+		if(i==null) {
+			return moduleMapper.delModule(modules_Id);
+		}
+		return 0;
 	}
 
 	@Override

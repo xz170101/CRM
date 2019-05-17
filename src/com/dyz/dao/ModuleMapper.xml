@@ -46,4 +46,10 @@
 			values (#{roles_Id},#{modules_Id})
 	
 	</insert>
+	
+	
+	<!-- selectRoleByModuleId -->
+	<select id="selectRoleByModuleId" parameterType="int" resultType="role">
+		select * from rolemodules where  modules_Id=#{modules_Id}
+	</select>
 </mapper>

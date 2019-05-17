@@ -33,7 +33,7 @@ public interface RoleMapper {
 	 */
 	Integer delRole(Integer roles_Id);
 	/**
-	 * 根据角色id查询该教师下的模块
+	 * 根据角色id查询该角色下的模块
 	 * @param roles_Id
 	 * @return
 	 */

@@ -49,6 +49,9 @@ public class UserServiceImp implements UserService{
 		// TODO Auto-generated method stub
 		return usermapper.updateUse(user);
 	}
+	/**
+	 * 删除模块
+	 */
 	@Override
 	public Integer delUser(Integer user_Id) {
 		// TODO Auto-generated method stub
@@ -115,13 +118,13 @@ public class UserServiceImp implements UserService{
 	////////////////////
 	
 	
-	public boolean isUserExist(String username) {
+	/*public boolean isUserExist(String username) {
 		if (usermapper.findByloginName(username) == null) {
 			return false;
 		} else {
 			return true;
 		}
-	}
+	}*/
  
 	//根据提供的用户名拿密码
 	public String getPasswordByUsername(String username) {
@@ -172,7 +175,6 @@ public class UserServiceImp implements UserService{
              node.setParent_id(module.getParentId());
              tree.add(node);
          }//简单的来说，就是把数据库里所有数据查出来之后，然后一条一条的封装，扔进TreeModel里，作为一个个节点，然后放在ArrayList里
-         
          return TreeNode.getTree(tree);
 	}
 	@Override
