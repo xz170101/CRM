@@ -5,6 +5,12 @@ package com.dyz.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.ui.Model;
+
 import com.dyz.entity.Fenye;
 import com.dyz.entity.Role;
 import com.dyz.entity.User;
@@ -36,7 +42,7 @@ public interface UserService {
 	 * @param user
 	 * @return
 	 */
-	Integer updateUser(User user);
+	 Integer updateUser(User user);
 	/**
 	 * 根据id删除用户
 	 * @param user_Id
@@ -85,13 +91,13 @@ public interface UserService {
 	 * @param loginName
 	 * @return
 	 */
-	Integer selectByName(String loginName);
+	 Integer selectByName(String loginName);
 	/**
 	 * 用户登录
 	 * @param user
 	 * @return
 	 */
-	User selectLogin(User user);
+	//User selectLogin(User user);
 	/**
 	 * 修改用户的锁定状态
 	 * @param user
@@ -104,7 +110,7 @@ public interface UserService {
 	 * @param loginName
 	 * @return
 	 */
-	Integer selectByNameLockout(String loginName);
+	//Integer selectByNameLockout(String loginName);
 	/**
 	 * 根据角色查询
 	 * @param user_Id
@@ -123,6 +129,25 @@ public interface UserService {
  	 * @return
  	 */
 	Integer insertUser(User user);
+	 /**
+	  * 登录时的判断
+	  * @param user
+	  * @param yes
+	  * @param yzm
+	  * @param session
+	  * @param req
+	  * @param res
+	  * @param model
+	  * @return
+	  */
+	String getLogin(User user, String yes, String yzm, HttpSession session, HttpServletRequest req,
+			HttpServletResponse res, Model model);
+	/**
+	 * 退出时修改登录状态
+	 * @param user_Id
+	 * @return
+	 */
+	Integer updateLoginStat(Integer user_Id);
 	 
 	 
 	 

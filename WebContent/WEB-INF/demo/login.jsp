@@ -55,8 +55,7 @@
 	//提交登陆表单
 	function subLogin() {
 		var yes='';
-		//var rembername = document.getElementById("rembername").value;
-		var rembername = $("#rembername").val();
+ 		var rembername = $("#rembername").val();
 		if(rembername=='true'){
 			yes='yes';
 		};
@@ -64,26 +63,28 @@
 		var login_pwd=$("#keyboards").val();
 		var code=$("#verification").val().trim();
 		 if(login_name !=null && login_name !=""){
-			 if(login_pwd !=null && login_pwd !=""){
-			 $.post("login", {    
-				 loginName:login_name,
-				 passWord:login_pwd,
-				 yzm:code,
-				 yes:yes
-	         }, function(res){
-	        	 if (res.success) {
- 
-				     window.location.href = "crmIndex";
- 
-					} else {
-						$.messager.alert("提示！",res.message);
-					}
-	     		},"json");
+			 if(/^[a-z0-9]{6,12}$/.test(login_pwd) ){
+				 if(code !=null && code !=""){
+					 $.post("login", {    
+						 loginName:login_name,
+						 passWord:login_pwd,
+						 yzm:code,
+						 yes:yes
+			         }, function(res){
+			        	 if (res.success) {
+						     window.location.href = "crmIndex";
+							} else {
+								$.messager.alert("提示！",res.message);
+							}
+			     		},"json");
+					 }else{
+						 $.messager.alert("提示","密码必须为6~12位之间的数字或字母！");
+					 }
+				 }else{
+		     		$.messager.alert("提示","请输入用户名！");
+		     	}
 			 }else{
-				 $.messager.alert("提示！","请输入密码");
-			 }
-		 }else{
-     		$.messager.alert("提示！","请输入用户名");
+				 $.messager.alert("提示","请输入验证码！");
      	}
 	}
 	//处理记住用户名
