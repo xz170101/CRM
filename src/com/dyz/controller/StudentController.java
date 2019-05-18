@@ -57,7 +57,11 @@ public class StudentController {
 	
 	@RequestMapping(value="/selectlog",method=RequestMethod.POST)
 	@ResponseBody
-	public List<Student> selectlog(@RequestParam(value="stu_id")Integer stu_id) {
-		return studentService.selectLog(stu_id);
+	public Fenye selectlog(Fenye fenye,Integer page,Integer rows,Student student) {
+		fenye.setStudent(student);
+		fenye.setPage((page-1)*rows);
+		fenye.setPageSize(rows);
+		System.out.println(fenye);
+		return studentService.selectLog(fenye);
 	}
 }

@@ -52,14 +52,14 @@ public class Student {
 	private String stu_preMoneyTime;
 	private Integer sexitInte;//打分
 	private String sexitString;
-		
-	private List<NetFollows> netfollows;	
+	private NetFollows netFollows;
+	
 
-	public List<NetFollows> getNetfollows() {
-		return netfollows;
+	public NetFollows getNetFollows() {
+		return netFollows;
 	}
-	public void setNetfollows(List<NetFollows> netfollows) {
-		this.netfollows = netfollows;
+	public void setNetFollows(NetFollows netFollows) {
+		this.netFollows = netFollows;
 	}
 	public Integer getStu_id() {
 		return stu_id;

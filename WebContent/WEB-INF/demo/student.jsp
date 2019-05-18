@@ -23,6 +23,7 @@
 			$("#dg").datagrid({
 				url:"selectlog",
 				method:"post",
+				pagination:true,
 				queryParams:{
 					stu_id:row.stu_id
 				}
@@ -41,10 +42,13 @@
 		$('#lookFollows').window('open');		
 	} 
 	
-	//查看的关闭
+	//跟踪日志的查看的关闭
 		function Followclose(){
 			$('#lookFollows').dialog('close');
 		}
+	
+	
+	
 	function init(){
 		$("#stuTab").datagrid({
 			url:"selectStudent",
@@ -73,13 +77,14 @@
 	}
 	
 	function formatterfollowTime(value, row, index){
-		return row.netfollows.followTime;
+		alert(row.netFollows);
+		return row.netFollows.followTime;
 	}
 	function formatterContent(value, row, index){
-		return row.netfollows.conTent;
+		return row.netFollows.conTent;
 	}
 	function formatternextTime(value, row, index){
-		return row.netfollows.nextFollowTime;
+		return row.netFollows.nextFollowTime;
 	}
 	function formattercaozuo(value, row, index){ 
 		return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='lookcontent(" + index + ")'>查看</a>";
@@ -364,10 +369,10 @@
 				dataType:'json',
 				data:{
 					stu_Id:$('#studentId').textbox('getValue'),
-					followTime:$('#followtime').textbox('getValue'),
+					followTime:$('#followtime').datebox('getValue'),
 					followState:$('#followstate').textbox('getValue'),
 					followType:$('#followtype').textbox('getValue'),
-					nextFollowTime:$('#nextfollowtime').textbox('getValue'),
+					nextFollowTime:$('#nextfollowtime').datebox('getValue'),
 					conTent:$('#content').textbox('getValue')
 				},
 				success:function(res){
@@ -744,7 +749,7 @@
 	    		<input class="easyui-textbox" id="studentId" name="stu_id"/>
 	    		<tr>
 	    			<td>回访时间：</td>
-	    			<td><input class="easyui-textbox" id="followtime" ></td>
+	    			<td><input class="easyui-datebox" id="followtime" ></td>
 	    		</tr>
 	    		<tr>
 	    			<td>回访情况：</td>
@@ -756,7 +761,7 @@
 	    		</tr>
 	    		<tr>
 	    			<td>下次跟踪时间：</td>
-	    			<td><input class="easyui-textbox" id="nextfollowtime" ></td>
+	    			<td><input class="easyui-datebox" id="nextfollowtime" ></td>
 	    		</tr>
 	    		<tr>
 	    			<td>备注：</td>

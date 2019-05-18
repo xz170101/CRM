@@ -33,12 +33,19 @@ public class Fenye {
 	private Integer num5;
 	private Integer num6;
  
+	private Student student;
 	
 	
 	
 	
 	
  
+	public Student getStudent() {
+		return student;
+	}
+	public void setStudent(Student student) {
+		this.student = student;
+	}
 	public String getText1() {
 		return text1;
 	}
@@ -155,4 +162,13 @@ public class Fenye {
 	public void setRows(List<?> rows) {
 		this.rows = rows;
 	}
+	@Override
+	public String toString() {
+		return "Fenye [page=" + page + ", pageSize=" + pageSize + ", total=" + total + ", rows=" + rows + ", text1="
+				+ text1 + ", text2=" + text2 + ", text3=" + text3 + ", text4=" + text4 + ", text5=" + text5 + ", text6="
+				+ text6 + ", text7=" + text7 + ", text8=" + text8 + ", text9=" + text9 + ", num1=" + num1 + ", num2="
+				+ num2 + ", num3=" + num3 + ", num4=" + num4 + ", num5=" + num5 + ", num6=" + num6 + ", student="
+				+ student + "]";
+	}
+	
 }

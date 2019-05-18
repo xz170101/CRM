@@ -50,5 +50,5 @@ public interface StudentService {
 	 * @param student
 	 * @return
 	 */
-	List<Student> selectLog(Integer stu_id);
+	Fenye selectLog(Fenye fenye);
 }
