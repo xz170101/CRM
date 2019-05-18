@@ -81,27 +81,29 @@
 		<resultMap type="student" id="stu">
 			<id column="stu_id" property="stu_id"/>
 			<result column="stu_Name" property="stu_Name"/>
-			<collection property="netfollows" ofType="netFollows">
-				<result property="follows_Id" column="follows_Id"/>
-				<result property="followTime" column="followTime"/>
-				<result property="nextFollowTime" column="nextFollowTime"/>
-				<result property="conTent" column="conTent"/>
-				<result property="followType" column="followType"/>
-				<result property="createTime" column="createTime"/>
-				<result property="followState" column="followState"/>
-				<result property="nexit1int" column="nexit1int"/>
-				<result property="nexit2String" column="nexit2String"/>	
-				<result property="stu_Id" column="stu_Id"/>		
-			</collection>
+			<!-- <collection property="netfollows" ofType="netFollows"> -->
+				<result column="follows_Id" property="netFollows.follows_Id"/>
+				<result column="followTime" property="netFollows.followTime"/>
+				<result column="nextFollowTime" property="netFollows.nextFollowTime"/>
+				<result column="conTent" property="netFollows.conTent"/>
+				<result column="followType" property="netFollowsfollowType"/>
+				<result column="createTime" property="netFollows.createTime"/>
+				<result column="followState" property="netFollows.followState"/>
+				<result column="nexit1int" property="netFollows.nexit1int"/>
+				<result column="nexit2String" property="netFollows.nexit2String"/>	
+				<result column="stu_Id" property="netFollows.stu_Id"/>		
+			<!-- </collection> -->
 		</resultMap>
 		<!-- 查询日志 -->
-		<select id="selectLog" parameterType="int" resultMap="stu">
-			SELECT s.stu_id,s.stu_Name,n.followTime,n.conTent,n.nextFollowTime from
-			 students s,netfollows n 
+		<select id="selectLog" parameterType="fenye" resultMap="stu">
+			select s.stu_id,s.stu_Name, n.followTime,n.conTent,n.nextFollowTime
+			from students s INNER JOIN netfollows n			 
 			 <where>
-			 	 s.stu_id=n.stu_Id
-			 	 and s.stu_id=#{stu_id}
-			 </where>			 
+			     s.stu_id=n.stu_Id			 	
+			 	 and s.stu_id=#{student.stu_id}	
+			 	 order by n.followTime desc		 	
+			 </where>
+		       limit #{page},#{pageSize}			 
 		</select>
 		
 		<!-- 分页多条件查询 -->

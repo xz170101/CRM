@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dyz.dao.UserChecksMapper">
+
+	<!-- 分页多条件查询签到信息 -->
+	<select id="selectUserChecks" parameterType="fenye" resultType="userChecks">
+		SELECT checks_Id,user_Id,userName,checkInTime,
+		checkState,isCancel,checkOutTime,ucexit1int,ucexit2String
+		 from userchecks ORDER BY checkInTime
+		 limit #{page},#{pageSize}
+	</select>
+	<!-- 查询总条数 -->
+	<select id="selectCount" parameterType="fenye" resultType="int">
+		select count(1) from userchecks
+	</select>
+	
+	
+</mapper>

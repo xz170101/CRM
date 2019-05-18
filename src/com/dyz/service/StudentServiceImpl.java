@@ -54,9 +54,12 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public List<Student> selectLog(Integer stu_id) {
-		// TODO Auto-generated method stub
-		return studentMapper.selectLog(stu_id);
+	public Fenye selectLog(Fenye fenye) {
+		Integer total=studentMapper.selectCount(fenye);
+		List<Student> rows=studentMapper.selectLog(fenye);
+		fenye.setTotal(total);
+		fenye.setRows(rows);
+		return fenye;
 	}
 
 }

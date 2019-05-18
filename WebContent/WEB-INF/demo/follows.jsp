@@ -95,7 +95,7 @@
 	
 	
 	<!-- 对学生进行跟踪 -->
-	<div id="lookFollows" class="easyui-dialog" title="查看跟踪信息" style="width:400px;height:300px;" 
+	<div id="lookFollows" class="easyui-dialog" title="查看跟踪信息" style="width:500px;height:300px;" 
 		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
 		buttons:[{
 				text:'关闭',
@@ -107,7 +107,7 @@
 	    		<tr>
 	    			<td>内容：</td>
 	    			<!-- <td><input class="easyui-textbox" id="content" name="conTent"></td> -->
-	    			<td><input class="easyui-textbox" data-options="multiline:true" id="content" name="conTent" ></td>
+	    			<td><input class="easyui-textbox" data-options="multiline:true" id="content" name="conTent" style="width:400px;height:200px;"></td>
 	    		</tr>	    		
 	    	</table>
 	    </form>

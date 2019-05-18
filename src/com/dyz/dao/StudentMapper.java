@@ -53,6 +53,6 @@ public interface StudentMapper {
 	 * @param stu_id
 	 * @return
 	 */
-	List<Student> selectLog(Integer stu_id);
+	List<Student> selectLog(Fenye fenye);
 	
 }
