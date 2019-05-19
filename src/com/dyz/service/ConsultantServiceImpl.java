@@ -22,10 +22,4 @@ public class ConsultantServiceImpl implements ConsultantService {
 		return fenye;
 	}
 
-	@Override
-	public Integer updateStu(Student student) {
-		// TODO Auto-generated method stub
-		return consultantMapper.updateStu(student);
-	}
-
 }
