@@ -24,7 +24,13 @@ public interface StudentMapper {
 	 * @param stu_id
 	 * @return
 	 */
+	
 	Integer delectStudent(Integer stu_id);
+	/**
+	 * 查询所有没有咨询师跟踪的学生
+	 * @return
+	 */
+	List<Student> selectStuByZiXunName();
 	/**
 	 * 添加客户
 	 * @param student

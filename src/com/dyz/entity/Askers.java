@@ -22,6 +22,7 @@ public class Askers {
 	public void setAskers_Id(Integer askers_Id) {
 		this.askers_Id = askers_Id;
 	}
+	
 	public String getAskers_Name() {
 		return askers_Name;
 	}
