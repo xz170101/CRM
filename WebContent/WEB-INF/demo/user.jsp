@@ -190,7 +190,7 @@
  			var email=$("#eemail").val();
  			var etel=$("#metel").val();
  			 
- 			if(!(/^(13|15|17|18)\d{9}$/.test(etel))){
+ 			if(!(/^(13|14|15|17|18)\d{9}$/.test(etel))){
  				 $.messager.alert("提示","手机号码格式有误，请重新输入！");
 	                return false;
 	            }
@@ -272,12 +272,9 @@
 		        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="init()">查找</a>
 		    </div>
 		</div>
-		
-		
 <script type="text/javascript">
 //对新增表单的验证
- 		
-	function vnewusername() {
+	function vnewusername() {//验证用户名是否存在
 		var name=$("#newusername").val().trim();
  		if(name!=''){
 			$.ajax({
@@ -286,18 +283,22 @@
 				data:{"loginName":name},
 				dataType:'json',
 				success:function(data){
-					if(data>0){
-						document.getElementById('yznewusername').innerHTML = '用户名已存在！';
-						document.getElementById('yznewusername').style.color = 'red';
-						return false;
-					}else
-						document.getElementById('yznewusername').innerHTML = 'ok！';
-						document.getElementById('yznewusername').style.color = 'green';
-						return true;
+						if(data>0){
+							document.getElementById('yznewusername').innerHTML = '用户名已存在！';
+	 						document.getElementById('yznewusername').style.color = 'red';
+							return false;
+						}else{
+							$("#yznewusername").html('ok');
+						//	document.getElementById('yznewusername').innerHTML = 'ok！';
+							document.getElementById('yznewusername').style.color = 'green';
+							return true;
+						}
 					}
 				});
+			}else{
+				document.getElementById('yznewusername').innerHTML = '用户名不能为空！';
+				document.getElementById('yznewusername').style.color = 'red';
 			}
-		return vNull('newusername');
 	}
 	function vuserpwd() {
 		return vRegexp('userpwd',/^[a-z0-9]{6,12}$/);
@@ -310,12 +311,35 @@
 			document.getElementById('yznewusername').style.color = 'red';
 			return false;
 		}
-		
 		return vRegexp('reuserpwd',/^[a-z0-9]{6,12}$/);
 	}
 	function vusertel() {
-		return vRegexp('usertel',/^1[34578]\d{9}$/);
-	}
+		var tel=$("#usertel").val();
+		var telRegexp= /^1[34578]\d{9}$/.test(tel) ;
+		  if(telRegexp){
+			$.ajax({
+				url:"selectUserByTel",
+				method:'post',
+				data:{"protectMTel":tel},
+				dataType:'json',
+				success:function(data){
+					 	if(data>0){
+							document.getElementById('yzusertel').innerHTML = '一个手机号只能绑定一个用户！';
+	 						document.getElementById('yzusertel').style.color = 'red';
+							return false;
+						}else{
+							document.getElementById('yzusertel').innerHTML = 'ok！';
+							document.getElementById('yzusertel').style.color = 'green';
+							return true;
+						}   
+					}
+				});
+		  	}else{
+				document.getElementById('yzusertel').innerHTML = '您的输入不合法！';
+				document.getElementById('yzusertel').style.color = 'red';
+			}
+		} 
+ 
 	function vuseremail() {
 		return vRegexp('useremail',/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/);
 	}
@@ -352,28 +376,27 @@
 		 var pwd=$("#userpwd").val().trim();
  		 var tel=$("#usertel").val().trim();
 		 var email=$("#useremail").val().trim();
-		var flag=$("#adduserForm").form("validate");
-		alert("ajin");
-		 //vRegexp();
-		//if(vRegexp()){
-			//if(vnewusername()){
-			//	alert("vnewusername:"+vnewusername());
-				$.post("newUser", {    
-	        		loginName:name,
-	                passWord:pwd,
-	                protectEMail:email,
-	                protectMTel:tel 
-	            }, function(res){
-	                if(res>0){
-	                	closeUserForm();
-	                    $("#userDG").datagrid("reload"); //通过调用reload方法，让datagrid刷新显示数据
-	               		$.messager.alert("提示!","新增成功！");
-	                }
-	        },"json");
-		//		}
-		//}else{
-			
-		//}
+		 var flag=$("#adduserForm").form("validate");
+			 if(vnewusername()){
+				 if(vusertel()){
+					 $.post("newUser", {    
+			        		loginName:name,
+			                passWord:pwd,
+			                protectEMail:email,
+			                protectMTel:tel 
+			            }, function(res){
+			                if(res>0){
+			                	closeUserForm();
+			                    $("#userDG").datagrid("reload"); //通过调用reload方法，让datagrid刷新显示数据
+			               		$.messager.alert("提示!","新增成功！");
+			                }
+			        },"json");
+				 }else{
+					 $.messager.alert("提示!","一个手机号只能绑定一个用户！");
+				 }
+		 }else{
+			 $.messager.alert("提示!","用户名已存在！");
+		 }
 	}
 </script>
 		<!-- 新增面板 -->
@@ -388,12 +411,12 @@
                 <table cellpadding="5">
                     <tr>
                         <td>用户名:</td>
-                        <td><input onblur="vnewusername()"   type="text" name="name"  id="newusername" data-options="required:true"></input></td>
+                        <td><input onblur="vnewusername()" type="text" name="name"  id="newusername" data-options="required:true"></input></td>
                     	<td><span id="yznewusername"></span></td>
                     </tr>
                     <tr>
                         <td>密码:</td>
-                        <td><input onkeyup="vuserpwd()"    type="password" id="userpwd" name="pwd" data-options="required:true"></input></td>
+                        <td><input onkeyup="vuserpwd()" type="password" id="userpwd" name="pwd" data-options="required:true"></input></td>
                    		<td><span id="yzuserpwd">由6-12位数字或字母组成</span></td>
                     </tr>
                     <tr>

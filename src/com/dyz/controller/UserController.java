@@ -1,29 +1,23 @@
 package com.dyz.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
-import javax.servlet.http.Cookie;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
- 
 import com.dyz.entity.Fenye;
 import com.dyz.entity.Role;
 import com.dyz.entity.User;
 import com.dyz.entity.UserRole;
 import com.dyz.service.UserService;
 import com.dyz.util.MD5Util;
-import com.dyz.util.Result;
 import com.dyz.util.TreeModel;
 
 @Controller
@@ -140,9 +134,7 @@ public class UserController {
 	public Integer unLockUser(Integer user_Id) {
 		return  userService.unLockUser(user_Id);
 	}
-		//关于用户登录的表单提交
- 
-	int count=0;//用来记录错误密码次数
+	//关于用户登录的表单提交
 	@RequestMapping(value ="/login", method = RequestMethod.POST)
 	@ResponseBody
 	public String login( User user,String yes, String yzm,
@@ -167,9 +159,9 @@ public class UserController {
 		 */
 		@RequestMapping(value ="/setPwd", method = RequestMethod.POST)
 		@ResponseBody
-		public Integer setPwd(User user) {
+		public Integer setPwd(User user,String pwd) {
 			user.setPassWord(MD5Util.MD5(user.getPassWord()));
-			return userService.UpdatePwd(user);
+			return userService.UpdatePwd(user,pwd );
 		}
 		@RequestMapping(value ="/newUser", method = RequestMethod.POST)
 		@ResponseBody
@@ -187,13 +179,43 @@ public class UserController {
 		public Integer selectUserByName(String loginName) {
  		 return userService.selectByName(loginName);
 		}
+		/**
+		 * 根据手机号查询用户 
+		 * @param loginName
+		 * @return
+		 */
+		@RequestMapping(value ="/selectUserByTel", method = RequestMethod.POST)
+		@ResponseBody
+		public Integer selectUserByTel(String protectMTel) {
+			System.out.println("开始查询手机号咯+++++++++++++++++");
+			return userService.selectUserByTel(protectMTel);
+		}
 	   //注销方法
     @RequestMapping(value="/outLogin", method = RequestMethod.POST)
     @ResponseBody
     public Integer outLogin(HttpSession session){
         //通过session.invalidata()方法来注销当前的session
-    	User users = (User) session.getAttribute("user");
+    	//User users = (User) session.getAttribute("user");
         session.invalidate();
-        return userService.updateLoginStat(users.getUser_Id());
+        return  1;
+    } 
+    
+    /* int p= (int)((Math.random()*9+1)*100000);//获取6位随机验证码
+ 		IndustrySMS.setTo(phone);//发送到这个手机号
+ 		String smsContent = "【CRM管理平台】您的验证码为"+p+"，请于30分钟内正确输入，如非本人操作，请忽略此短信。";//发送的内容
+ 		IndustrySMS.setSmsContent(smsContent);//把发送的信息内容存到这个对象类中
+ 		IndustrySMS.execute();//执行发送验证码方法
+ 		request.getSession().setAttribute("p", p);//把验证码存入到键值并存在session中
+ 		 */
+    
+    
+    /***
+           * 找回密码
+     * @return
+     */
+    @RequestMapping(value="/findPwd", method = RequestMethod.POST)
+    @ResponseBody
+    public Integer findPwd(){
+        return  null  ;
     } 
 }

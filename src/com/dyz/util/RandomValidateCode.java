@@ -11,7 +11,11 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
- 
+/**
+ * 图片验证码 
+ * @author DELL
+ *
+ */
 public class RandomValidateCode {
  
     public static final String RANDOMCODEKEY = "randomcode_key";//放到session中的key
