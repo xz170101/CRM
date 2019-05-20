@@ -55,6 +55,9 @@ public class Student {
 	private NetFollows netFollows;
 	
 
+	public Student() {
+		super();
+	}
 	public NetFollows getNetFollows() {
 		return netFollows;
 	}
