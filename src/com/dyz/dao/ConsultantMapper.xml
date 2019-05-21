@@ -143,9 +143,6 @@
 			<if test="stu_isBaoBei!=null and stu_isBaoBei!=''">
 				stu_isBaoBei=#{stu_isBaoBei},
 			</if>	
-			<if test="stu_ZiXunName!=null and stu_ZiXunName!=''">
-				stu_ZiXunName=#{stu_ZiXunName},
-			</if>
 			<if test="stu_CreateUser!=null and stu_CreateUser!=''">
 				stu_CreateUser=#{stu_CreateUser},
 			</if>
