@@ -20,6 +20,7 @@ import com.dyz.entity.Module;
 import com.dyz.entity.Role;
 import com.dyz.entity.User;
 import com.dyz.entity.UserRole;
+import com.dyz.util.IndustrySMS;
 import com.dyz.util.MD5Util;
 import com.dyz.util.Result;
 import com.dyz.util.SessionSave;
@@ -152,7 +153,7 @@ public class UserServiceImp implements UserService{
 		if(i==null) {
 			return 0;
 		}else {
-			return 1;
+			return i;
 		}
 	}
 	/**
@@ -271,10 +272,10 @@ public class UserServiceImp implements UserService{
 								lname.setPath(req.getContextPath());////默认只对当前路径下的资源有效
 								lname.setMaxAge(60*60*24*7);//cookie.setMaxAge();单位为秒
 								res.addCookie(lname);
-							    Cookie pwd = new Cookie("loginPwd", passWord);
+							    /*Cookie pwd = new Cookie("loginPwd", passWord);
 								pwd.setPath(req.getContextPath());
 								pwd.setMaxAge(60*60*24*7);
-								res.addCookie(pwd);  
+								res.addCookie(pwd);  */
 							}  
 							//该登录时间
 							User us=new User();
@@ -298,17 +299,73 @@ public class UserServiceImp implements UserService{
 	@Override
 	public Integer selectUserByTel(String protectMTel) {
 		// TODO Auto-generated method stub
- 		Integer i=usermapper.selectUserByTel(protectMTel);
-		if(i>0) {
-			return 1;
-		}else {
+ 		User user=usermapper.selectUserByTel(protectMTel);
+		if(user==null) {
 			return 0;
+		}else {
+			return user.getUser_Id();
 		}
 	}
-	 
- 
-	
-	
+	/**
+	 * 找回密码
+	 */
+	/*@Override
+	public String findPassWord(User user, String phoneCode, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		String userName=user.getLoginName();
+		Integer phoCode=Integer.parseInt(phoneCode);
+		Integer nameId = usermapper.selectByName(userName);//根据用户名查询用户id
+		if (nameId == null) {
+			return Result.toClient(false, "1用户名不存在");
+		} else {
+			Integer uId=usermapper.selectUserByTel(user.getProtectMTel());//根据是手机号查询用户id
+			if(nameId==uId) {
+				int p= (int)((Math.random()*9+1)*100000);//获取6位随机验证码
+		 		IndustrySMS.setTo(user.getProtectMTel());//发送到这个手机号
+		 		String smsContent = "【CRM管理平台】您的验证码为"+p+"，请于30分钟内正确输入，如非本人操作，请忽略此短信。";//发送的内容
+		 		IndustrySMS.setSmsContent(smsContent);//把发送的信息内容存到这个对象类中
+		 		IndustrySMS.execute();//执行发送验证码方法
+		 		request.getSession().setAttribute("pCode", p);//把验证码存入到键值并存在session中
+		 		if(phoCode==p) {
+		 			return Result.toClient(false, "4验证码正确");
+		 		}else {
+		 			return Result.toClient(false, "3验证码不正确");
+		 		}
+			}else {
+				return Result.toClient(false, "2手机号不匹配");
+			}
+		}
+ 	}*/
+	@Override
+	public Integer sendToPhoneCode(User user, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		int p= (int)((Math.random()*9+1)*100000);//获取6位随机验证码
+ 		IndustrySMS.setTo(user.getProtectMTel());//发送到这个手机号
+ 		String smsContent = "【CRM管理平台】您的验证码为"+p+"，请于30分钟内正确输入，如非本人操作，请忽略此短信。";//发送的内容
+ 		IndustrySMS.setSmsContent(smsContent);//把发送的信息内容存到这个对象类中
+ 		IndustrySMS.execute();//执行发送验证码方法
+ 		request.getSession().setAttribute("phoneCode", p);//把验证码存入到键值并存在session中
+		return p;
+	}
+	/**
+	 * 发送密码到手机号
+	 */
+	@Override
+	public Integer sendPwdToPhone(User user, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		User use=usermapper.selectUserByTel(user.getProtectMTel());
+		IndustrySMS.setTo(user.getProtectMTel());//发送到这个手机号
+ 		String smsContent = "【CRM管理平台】尊敬的"+use.getLoginName()+"用户，您的密码为"+MD5Util.JM(use.getPassWord())+"，请确认是本人操作。";//发送的内容
+ 		IndustrySMS.setSmsContent(smsContent);//把发送的信息内容存到这个对象类中
+ 		IndustrySMS.execute();//执行发送验证码方法
+		return 1;
+	}
 
- 
+    /* int p= (int)((Math.random()*9+1)*100000);//获取6位随机验证码
+ 		IndustrySMS.setTo(phone);//发送到这个手机号
+ 		String smsContent = "【CRM管理平台】您的验证码为"+p+"，请于30分钟内正确输入，如非本人操作，请忽略此短信。";//发送的内容
+ 		IndustrySMS.setSmsContent(smsContent);//把发送的信息内容存到这个对象类中
+ 		IndustrySMS.execute();//执行发送验证码方法
+ 		request.getSession().setAttribute("p", p);//把验证码存入到键值并存在session中
+ 	 */
 }

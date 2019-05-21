@@ -149,7 +149,7 @@ public interface UserMapper {
 	 * @param protectMTel
 	 * @return
 	 */
-	Integer selectUserByTel(String protectMTel);
+	User selectUserByTel(String protectMTel);
  
 	 
 }
