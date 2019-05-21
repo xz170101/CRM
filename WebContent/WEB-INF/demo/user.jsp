@@ -51,7 +51,7 @@
 		return "<a href='javascript:void(0);'  onclick='LockUser(" + index + ")'>锁定用户</a> <a href='javascript:void(0);' onclick='UnLockUser(" + index + ")'>解锁用户</a>"
 	} 
 	function formatterisLockout(value,row,index){
-		// return  row.isLockout=0?'未锁定':'已锁定' ;
+		// return  row.isLockout==0?'未锁定':'已锁定' ;
 		if(row.isLockout == 0){ return '未锁定'; }else{return '已锁定';}  
 	}
 	//设置角色
@@ -109,7 +109,6 @@
 	   	
 	   });
 	}
-	
 	//锁定用户
 	function LockUser(index){
 		$.messager.confirm('确认','您确认想要锁定用户吗？',function(r){   

@@ -158,17 +158,13 @@
 				<div class="login_input user_bg vnc">
 		        	<input name="verification" id="verification" tabindex="1"   type="text" class="codeSty"   autocomplete="off">
 		        	<!-- 图片验证码 -->
- 
 		        	<img class="" id="code" src="checkCode" alt="" width="100" height="25"   style="height:43px; cursor:pointer;" onclick="this.src=this.src+'?'">
- 
 		    	</div>
 		  	</div> 
 		  
 			<div style="height:10px"></div>
 	      	<div class="remeber_name"> 
- 
 				<!-- <input id="checked" type="checkbox" class="normal" onclick="changeCheckRembername();"> -->
- 
 				<b id="checked" class="normal" onclick="changeCheckRembername();" ></b>
 				<label id="login_save" style="float:left;">记住用户名</label>
 				<div class="login-wjpw">
@@ -181,7 +177,6 @@
 			<input name="submitBtn" id="submitBtn" type="button" onclick="subLogin()" tabindex="5" class="login_btn" value="登录">
 	    </div>
 	    <div style="height:24px"></div>
-		 
 	  </div>
 	  </div>
 	  <div class="filter box_shadow"></div>
@@ -197,9 +192,40 @@
 	</div>
 	<!--登录end-->	
 </form>
+<!--修改密码窗口-->
+<div data-options="collapsible:false,minimizable:false,maximizable:false" id="findPwd" class="easyui-window updatePwd" title="找回密码">
+    <div class="row"> 
+      <label for="txtPass">用户名：</label>   
+      <input class="easyui-validatebox txt01" id="fUserName" type="text" name="fUserName" />
+    </div>  
+    <div class="row"> 
+      <label for="txtNewPass">手机号：</label>   
+      <input class="easyui-validatebox txt01" id="fphone" type="text" name="fphone" />   
+    </div>   
+    <div class="row"> 
+      <label for="txtNewPass">验证码：</label>   
+      <input class="easyui-validatebox txt01" id="fphoneCode" type="text" name="fphoneCode" /> 
+      <a id="btnEp" class="easyui-linkbutton " href="javascript:void(0);" >点击发送验证码</a>  
+    </div>   
+    <div data-options="region:'south',border:false" class="pwdbtn">
+        <a id="btnEp" class="easyui-linkbutton " href="javascript:;" >确定</a> 
+        <a id="btnCancel" class="easyui-linkbutton btnDefault" href="javascript:;">取消</a>
+    </div>
+</div>
 <!--底部start-->	
 <div style="clear:both"></div>
 <!--底部end-->
+ <script type="text/javascript">
+	$(function(){
+		 $('#findPwd').window({title: '找回密码', width: 400, modal: true, shadow: true, closed: true, height: 250, resizable:false }); 
+	})
+	 function fintPwd() {
+	 	 $('#findPwd').window("open"); 
+	 }
+	$("#btnCancel").click(function() {
+		$('#findPwd').window("close"); 
+	})
  
+ </script>
 </body>
 </html>
