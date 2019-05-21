@@ -305,6 +305,11 @@ public class UserServiceImp implements UserService{
 			return 0;
 		}
 	}
+	@Override
+	public Integer selectLoginR_id(int userId) {
+		// TODO Auto-generated method stub
+		return usermapper.selectLoginR_id(userId);
+	}
 	 
  
 	

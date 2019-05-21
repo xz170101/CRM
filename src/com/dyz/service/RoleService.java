@@ -47,5 +47,11 @@ public interface RoleService {
 	 * @return
 	 */
 	Integer insertRoleModules(String s,Integer roles_Id);
+	/**
+	 * 
+	 * @param roles_Id
+	 * @return
+	 */
+	String selectbyRolesRid(Integer roles_Id);
  
 }

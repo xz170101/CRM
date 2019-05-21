@@ -15,18 +15,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.dyz.entity.Askers;
 import com.dyz.entity.Student;
+import com.dyz.service.FenLiangService;
 import com.dyz.service.StudentService;
 
 @Controller
 public class FenLiangController {
 	@Autowired
-	private StudentService studentService;
+	private FenLiangService fenLiangService;
 	
 	@RequestMapping(value="/fenliang",method=RequestMethod.POST)
 	public void fenliang() {
 		// TODO Auto-generated method stub
-		 List<Student> stuByZiXunName = studentService.selectStuByZiXunName();//所有没有分配的学生
-		 List<Askers> askers = studentService.selectzixunname();//按权重查询所有的咨询师
+		 List<Student> stuByZiXunName = fenLiangService.selectStuByZiXunName();//所有没有分配的学生
+		 List<Askers> askers = fenLiangService.selectzixunname();//按权重查询所有的咨询师
 		 int total=stuByZiXunName.size();//总任务的长度
 		 int totalWeight=0;//总权重
 		 for (int i = 0; i < askers.size(); i++) {

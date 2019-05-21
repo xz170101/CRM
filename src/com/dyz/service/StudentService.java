@@ -47,8 +47,8 @@ public interface StudentService {
 	/**
 	 * 查询所有没有咨询师跟踪的学生
 	 * @return
-	 */
-	List<Student> selectStuByZiXunName();
+	 *//*
+	List<Student> selectStuByZiXunName();*/
 	/**
 	 * 查询跟踪日志
 	 * @param student

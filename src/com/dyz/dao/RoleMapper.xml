@@ -53,4 +53,7 @@
 			rolemodules (roles_Id,modules_Id )
 			values (#{roles_Id},#{module_Id})
 	</insert>
+	<select id="selectbyRolesRid" parameterType="int" resultType="String">
+	select roles_Name  from roles  where r_id=#{roles_Id}
+	</select>
 </mapper>
