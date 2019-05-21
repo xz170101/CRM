@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dyz.entity.Fenye;
+import com.dyz.entity.Student;
 import com.dyz.service.ConsultantService;
 
 @Controller

@@ -18,4 +18,10 @@ public interface ConsultantMapper {
 	 * @return
 	 */
 	Integer selectCountStu(Fenye fenye);
+	/**
+	 * 修改客户信息
+	 * @param student
+	 * @return
+	 */
+	Integer updateStu(Student student);
 }

@@ -49,24 +49,35 @@
 		$("#sousuofrm").form("reset");
 		}
 		function formatterStu(value, row, index){ 
-			return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='lookStu(" + index + ")'>查看</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='rizhiStu(" + index + ")'>日志</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='updateStu(" + index + ")'>编辑</a>";
+			return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='lookStu(" + index + ")'>查看</a>   <a href='javascript:void(0)' style='cursor: pointer;' onclick='genzong(" + index + ")'>跟踪</a>    <a href='javascript:void(0)' style='cursor: pointer;' onclick='updateStu(" + index + ")'>编辑</a>";
 		}	
 	 
 		function formatterSex(value, row, index){
 			return value==0? '男':'女';
 		}
 		
+		//是否有效
 		function formatterIsValid(value, row, index){
-			return value==0? '否':'是';
+			var valid='';
+			if(row.stu_isValid==0){
+				valid='否';
+			}else if(row.stu_isValid==1){
+				valid='是';
+			}else if(row.stu_isValid==2){
+				valid='待定';
+			}
+			return valid;
 		}
+		//回访情况
 		function formatterIsReturnVist(value, row, index){
-			return value==0? '否':'是';
+			return value==0? '未回访':'已回访';
 		}
 		function formatterIsHome(value, row, index){
 			return value==0? '否':'是';
 		}
+		//是否缴费
 		function formatterIsPay(value, row, index){
-			return value==0? '否':'是';
+			return value==0? '未缴费':'已缴费';
 		}
 		function formatterIsReturnMoney(value, row, index){
 			return value==0? '否':'是';
@@ -277,6 +288,44 @@
 		//修改的关闭
 		function editStuclose(){
 			$('#editStu').dialog('close');
+		}
+		
+		//对学生进行后续跟踪
+		function genzong(index){
+			var data=$('#stuTab').datagrid('getData');
+			var row=data.rows[index];
+			$('#insertFollowForm').form("load",row);
+			$('#studentId').next().hide();//让学生编号的文本框进行隐藏
+			$('#insertFollow').dialog('open');
+		}
+		//对具体某一个学生进行跟踪数据的提交
+		function insertFollowsave(){
+			$.ajax({
+				url:'insertFollows',
+				method:'post',
+				dataType:'json',
+				data:{
+					stu_Id:$('#studentId').textbox('getValue'),
+					followTime:$('#followtime').datebox('getValue'),
+					followState:$('#followstate').textbox('getValue'),
+					followType:$('#followtype').textbox('getValue'),
+					nextFollowTime:$('#nextfollowtime').datebox('getValue'),
+					conTent:$('#content').textbox('getValue')
+				},
+				success:function(res){
+					if(res>0){
+						$.messager.alert('提示','添加成功');
+						$('#stuTab').datagrid('reload');
+						$('#insertFollow').dialog('close');
+					}else{
+						$.messager.alert('提示','添加失败');
+					}
+				}
+			})
+		}
+		//跟踪的关闭
+		function insertFollowclose(){
+			$("#insertFollow").dialog("close");
 		}
 
 	</script>
@@ -789,5 +838,45 @@
 	<div id="lie_window" class="easyui-dialog"
 		data-options="title:'设置显示列',modal:true,closed:'true'"
 		style="width: 200px"></div>
+
+	<!-- 对学生进行跟踪 -->
+	<div id="insertFollow" class="easyui-dialog" title="添加跟踪信息"
+		style="width: 400px; height: 300px;"
+		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
+		buttons:[{
+				text:'保存',
+				handler:function(){insertFollowsave()}
+			},{
+				text:'关闭',
+				handler:function(){insertFollowclose()}
+			}]">
+
+		<form id="insertFollowForm" class="easyui-form">
+			<table cellpadding="5">
+				<input class="easyui-textbox" id="studentId" name="stu_id" />
+				<tr>
+					<td>回访时间：</td>
+					<td><input class="easyui-datebox" id="followtime"></td>
+				</tr>
+				<tr>
+					<td>回访情况：</td>
+					<td><input class="easyui-textbox" id="followstate"></td>
+				</tr>
+				<tr>
+					<td>跟踪方式：</td>
+					<td><input class="easyui-textbox" id="followtype"></td>
+				</tr>
+				<tr>
+					<td>下次跟踪时间：</td>
+					<td><input class="easyui-datebox" id="nextfollowtime"></td>
+				</tr>
+				<tr>
+					<td>备注：</td>
+					<td><input class="easyui-textbox" id="content"></td>
+				</tr>
+
+			</table>
+		</form>
+	</div>
 </body>
 </html>
