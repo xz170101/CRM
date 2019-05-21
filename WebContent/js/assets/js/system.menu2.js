@@ -9,7 +9,7 @@ var _menus=[
 
     //设置登录窗口
     function openPwd() {
-    	$('#updatePwd').window({title: '修改密码', width: 300, modal: true, shadow: true, closed: true, height: 160, resizable:false }); 
+    	$('#updatePwd').window({title: '修改密码', width: 300, modal: true, shadow: true, closed: true, height: 200, resizable:false }); 
     }
     //关闭登录窗口
     function closePwd() {
@@ -19,13 +19,17 @@ var _menus=[
     function serverLogin() {
         var $newpass = $('#txtNewPass');
         var $rePass = $('#txtRePass');
-
+        var pwd= $("#txtPass").val();
+        if (pwd == '') {
+            msgShow('系统提示', '请输入原密码！', 'admin');
+            return false;
+        }
         if ($newpass.val() == '') {
-            msgShow('系统提示', '请输入密码！', 'admin');
+            msgShow('系统提示', '请输入新密码！', 'admin');
             return false;
         }
         if ($rePass.val() == '') {
-            msgShow('系统提示', '请再一次输入密码！', 'admin');
+            msgShow('系统提示', '请再一次输入新密码！', 'admin');
             return false;
         }
 
@@ -34,12 +38,17 @@ var _menus=[
             return false;
         }
         var name=$("#name").html();
-        alert(name);
         $.post('setPwd' ,{
-        		passWord:$newpass.val(),
+        		passWord:pwd,//原密码
+        		pwd:$newpass.val(),//新密码
 	        	loginName:name
         	}, function(msg) {
-	            msgShow('系统提示', '恭喜，密码修改成功！', 'info');
+        		if(msg>0){
+        			 msgShow('系统提示', '恭喜，密码修改成功！', 'info');
+        		}else{
+        			 msgShow('系统提示', '原密码不正确！', 'info');
+        		}
+	           
 	             
 	            closePwd();
         })

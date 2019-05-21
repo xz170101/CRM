@@ -22,6 +22,7 @@ import com.dyz.entity.User;
 import com.dyz.entity.UserRole;
 import com.dyz.util.MD5Util;
 import com.dyz.util.Result;
+import com.dyz.util.SessionSave;
 import com.dyz.util.TreeModel;
 import com.dyz.util.TreeNode;
 
@@ -49,6 +50,9 @@ public class UserServiceImp implements UserService{
 		// TODO Auto-generated method stub
 		return usermapper.updatePsd(loginName);
 	}
+	/**
+	 * 添加用户
+	 */
 	@Override
 	public Integer inertUser(User user) {
 		// TODO Auto-generated method stub
@@ -192,10 +196,19 @@ public class UserServiceImp implements UserService{
          }//简单的来说，就是把数据库里所有数据查出来之后，然后一条一条的封装，扔进TreeModel里，作为一个个节点，然后放在ArrayList里
          return TreeNode.getTree(tree);
 	}
+	 /**
+	  * 修改用户密码【先判断原密码是否正确】
+	  */
 	@Override
-	public Integer UpdatePwd(User user) {
+	public Integer UpdatePwd(User user,String pwd) {
 		// TODO Auto-generated method stub
-		return usermapper.updateUserPwd(user);
+		User u = usermapper.selectUse(user);//查询用户密码是否正确
+		if(u!=null) {
+			user.setPassWord(MD5Util.MD5(pwd));
+			usermapper.updateUserPwd(user);
+			return 1;
+		}
+		return 0;
 	}
 	@Override
 	public Integer insertUser(User user) {
@@ -238,14 +251,21 @@ public class UserServiceImp implements UserService{
 					}
 					return Result.toClient(false, "密码不正确");
 				} else {
-					//判断是有设备登录uexit1int{1：有设备登录0：没有登录}
-					Integer uexit1int = usermapper.selectUexit1intByName(user.getLoginName());
-					if(uexit1int==0) { 
 						//判断该用户是否锁定
 						Integer lockout = usermapper.selectByNameLockout(user.getLoginName());
 						if (lockout != null) {
 							return Result.toClient(false, "该用户被锁定，请联系管理员解锁!");
 						} else {
+							// 登录成功,保存当前用户登录的sessionId
+								String sessionID = req.getRequestedSessionId();
+								System.out.println("当前用户登录的sessionId：：：：："+sessionID);
+								String userName = user.getLoginName();
+								if (!SessionSave.getSessionIdSave().containsKey(userName)) {
+									SessionSave.getSessionIdSave().put(userName, sessionID);
+								}else if(SessionSave.getSessionIdSave().containsKey(userName)&&!sessionID.equals(SessionSave.getSessionIdSave().get(userName))){
+									SessionSave.getSessionIdSave().remove(userName);
+									SessionSave.getSessionIdSave().put(userName, sessionID);
+								}
 							   if ("yes".equals(yes)) {
 								Cookie lname = new Cookie("loginName", u.getLoginName());
 								lname.setPath(req.getContextPath());////默认只对当前路径下的资源有效
@@ -267,18 +287,25 @@ public class UserServiceImp implements UserService{
 							session.setAttribute("user", u);
 							return Result.toClient(true, (u != null ? true : false) == true ? "crmIndex" : "登录失败!");
 						}
-					}
-					 return Result.toClient(false, "该账户正在其他设备登录！");
 				} 
 			}
 		 } 
 		 
 	}
+	/**
+	 * 根据手机号查询用户
+	 */
 	@Override
-	public Integer updateLoginStat(Integer user_Id) {
+	public Integer selectUserByTel(String protectMTel) {
 		// TODO Auto-generated method stub
-		return usermapper.updateLoginStatu(user_Id);
+ 		Integer i=usermapper.selectUserByTel(protectMTel);
+		if(i>0) {
+			return 1;
+		}else {
+			return 0;
+		}
 	}
+	 
  
 	
 	

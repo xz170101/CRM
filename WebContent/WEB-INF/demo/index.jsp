@@ -106,10 +106,7 @@
 <!-- 版权 -->
 <div data-options="region:'south',split:false,border:false" class="copyright">
     <div class="footer">
- 
         <span class="pull-left"> 新职170101版权所有 </a>  &copy; Copyright ©2019 ~ <font id="timeYear">2019</font> All Rights Reserved.</span>
-
- 
         <span class="pull-right">
             <a href="javascript:;"><i class="fa fa-download"></i> 下载管理</a>
             <a href="javascript:;"><i class="fa fa-volume-up"></i> 消息</a>
@@ -122,7 +119,6 @@
     <div id="nav" class="easyui-accordion" data-options="fit:true,border:false"></div>
 </div>
 <!-- // 左侧菜单 -->
-
 <!-- home -->
 <div data-options="region:'center'" id="mainPanle" class="home-panel">
 	<div id="layout_center_plan" class="easyui-panel"  data-options="fit:true,style:'{overflow:hidden}',closed:false,closable:true,
@@ -135,12 +131,15 @@
 
 </div>
 <!-- // home -->
-
 <!--修改密码窗口-->
 <div data-options="collapsible:false,minimizable:false,maximizable:false" id="updatePwd" class="easyui-window updatePwd" title="修改密码">
     <div class="row"> 
+      <label for="txtPass">原密码：</label>   
+      <input class="easyui-validatebox txt01" id="txtPass" type="Password" name="Password" />   
+    </div>  
+    <div class="row"> 
       <label for="txtNewPass">新密码：</label>   
-      <input class="easyui-validatebox txt01" id="txtNewPass" type="Password" name="name" />   
+      <input class="easyui-validatebox txt01" id="txtNewPass" type="Password" name="Password" />   
     </div>   
     <div class="row">   
       <label for="txtRePass">确认密码:</label>   
@@ -151,12 +150,7 @@
         <a id="btnCancel" class="easyui-linkbutton btnDefault" href="javascript:;">取消</a>
     </div>
 </div>
-
-
- 
 <script type="text/javascript">
-
-
 //绑定 div 的鼠标事件
 $('.navmenu-item a').click(function(){
   $('.navmenu-item a').removeClass("active");//清空已经选择的元素
@@ -164,9 +158,9 @@ $('.navmenu-item a').click(function(){
 });
 	//头部消息
     var marqueeContent= [];   //滚动主题
-    marqueeContent[0]='<a href="javascript:;" class="notice-item ellipsis" target="_blank">crm管理平台</a>';
-    marqueeContent[1]='<a href="javascript:;" class="notice-item ellipsis" target="_blank">由第一组全体成员分工完成</a>';
-    marqueeContent[2]='<a href="javascript:;" class="notice-item ellipsis" target="_blank">欢迎使用</a>';
+    marqueeContent[0]='<a href="javascript:;" class="notice-item ellipsis" target="_blank">欢迎使用crm管理平台</a>';
+    marqueeContent[1]='<a href="javascript:;" class="notice-item ellipsis" target="_blank">本次项目</a>';
+    marqueeContent[2]='<a href="javascript:;" class="notice-item ellipsis" target="_blank">由一个团队全体成员分工完成</a>';
   
  
     var marqueeInterval=[];  //定义一些常用而且要经常用到的变量

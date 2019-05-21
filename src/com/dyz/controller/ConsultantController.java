@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dyz.entity.Fenye;
-import com.dyz.entity.Student;
 import com.dyz.service.ConsultantService;
 
 @Controller
@@ -25,9 +24,8 @@ public class ConsultantController {
 	@RequestMapping(value="/updateStu",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer updateStu(Student student) {
-		System.out.println("进入Controller+=------------------------------------------------");
-		System.out.println("修改的学生信息：：：：：：：："+"修改的学生信息");
-		System.out.println("修改的学生信息：：：：：：：："+student);
+
 		return consultantService.updateStu(student);
 	}
+
 }

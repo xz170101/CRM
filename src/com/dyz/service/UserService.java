@@ -120,9 +120,10 @@ public interface UserService {
  	/**
  	 * 修改密码
  	 * @param user
+ 	 * @param pwd 
  	 * @return
  	 */
- 	Integer UpdatePwd(User user);
+ 	Integer UpdatePwd(User user, String pwd);
  	/**
  	 *注册用户
  	 * @param user
@@ -143,11 +144,12 @@ public interface UserService {
 	String getLogin(User user, String yes, String yzm, HttpSession session, HttpServletRequest req,
 			HttpServletResponse res, Model model);
 	/**
-	 * 退出时修改登录状态
-	 * @param user_Id
+	 * 根据手机号查询用户
+	 * @param protectMTel
 	 * @return
 	 */
-	Integer updateLoginStat(Integer user_Id);
+	Integer selectUserByTel(String protectMTel);
+ 
 	 
 	 
 	 

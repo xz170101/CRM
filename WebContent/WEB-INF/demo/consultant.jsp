@@ -34,6 +34,7 @@
 				//要发送的参数列表
 				text1:$("#sname").textbox("getValue"),	
 				text2:$("#phone").textbox("getValue"),	
+				text3:$("#zixunname").textbox("getValue"),
 				num1:$("#ispay").combobox("getValue"), 
 				num2:$("#isvalid").combobox("getValue"),	
 				num3:$("#isreturnvist").combobox("getValue"),
@@ -86,15 +87,6 @@
 			var row=data.rows[index];
 			$('#lookStuForm11').form("load",row);
 			$('#lookStuForm22').form("load",row);
-			/* $('#stu_Sex2').textbox('setValue',row.stu_Sex==0?'男':'女');//用三元表达式设置值
-			$('#stu_isBaoBei2').textbox('setValue',row.stu_isBaoBei==0?"是":"否");
-			$('#stu_isDel22').textbox('setValue',row.stu_isDel==0?"是":"否");
-			$('#stu_isInClass22').textbox('setValue',row.stu_isInClass==0?"是":"否");
-			$('#stu_isReturnMoney22').textbox('setValue',row.stu_isReturnMoney==0?"是":"否");
-			$('#stu_isPay22').textbox('setValue',row.stu_isPay==0?"是":"否");
-			$('#stu_isHome22').textbox('setValue',row.stu_isHome==0?"是":"否");
-			$('#stu_isReturnVist22').textbox('setValue',row.stu_isReturnVist==0?"是":"否");
-			$('#stu_isValid22').textbox('setValue',row.stu_isValid==0?"是":"否"); */
 			$('#lookStu').dialog('open');
 		}
 		//查看的关闭
@@ -286,6 +278,7 @@
 		function editStuclose(){
 			$('#editStu').dialog('close');
 		}
+
 	</script>
 </head>
 <body>
@@ -346,6 +339,7 @@
 		<form id="sousuofrm" class="easyui-form">
 			客户姓名:<input class="easyui-textbox" id="sname" style="width: 80px">
 			电话:<input class="easyui-textbox" id="phone" style="width: 80px">
+			咨询师:<input class="easyui-textbox" id="zixunname" style="width: 80px">
 			是否缴费:<select id="ispay" class="easyui-combobox" style="height: auto;">
 				<option value="0">否</option>
 				<option value="1">是</option>
@@ -373,6 +367,7 @@
 				data-options="iconCls:'icon-edit'" onclick="ExportForm()">导出表格</a>
 		</form>
 	</div>
+
 
 	<!-- 查看窗体 -->
 	<div id="lookStu" class="easyui-dialog" title="查看学生信息"

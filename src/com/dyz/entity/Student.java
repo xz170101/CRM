@@ -1,6 +1,6 @@
 package com.dyz.entity;
 
-import java.util.List;
+
 
 import org.springframework.stereotype.Component;
 
@@ -55,6 +55,9 @@ public class Student {
 	private NetFollows netFollows;
 	
 
+	public Student() {
+		super();
+	}
 	public NetFollows getNetFollows() {
 		return netFollows;
 	}

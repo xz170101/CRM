@@ -80,7 +80,7 @@
 				psdWrongTime=#{psdWrongTime},
 			</if>
 			<if test="loginTime !=null and loginTime!='' ">
-				loginTime=#{loginTime},uexit1int=1
+				loginTime=#{loginTime}
 			</if>
 		</set>
 		<where>
@@ -138,6 +138,10 @@
 	<select id="selectByName" parameterType="String" resultType="int" >
 		select user_Id from `user` where loginName = #{loginName}
 	</select>	
+	<!--selectUserByTel  -->
+	<select id="selectUserByTel" parameterType="String" resultType="int" >
+		select count(user_Id) from `user` where protectMTel = #{protectMTel}
+	</select>	
 	<!-- selectByNameLockout -->
 	<select id="selectByNameLockout" parameterType="String" resultType="int" >
 		select user_Id from `user` where loginName = #{loginName} and isLockout=1
@@ -149,9 +153,7 @@
 	
 	<!--selectRoleModuleByUser  -->
 	<select id="selectRoleModuleByUser" parameterType="int" resultType="module" >
- 
 		select DISTINCT m.modules_Id,m.modules_Name,m.parentId,m.modules_path,m.modules_weight,m.mexit1int 
- 
 		from `user` u
 		INNER JOIN userrole ur on u.user_Id =ur.userId
 		INNER JOIN roles r ON r.roles_Id=ur.roleId
@@ -177,18 +179,6 @@
 			 (loginName,passWord,protectEMail,protectMTel,createTime,isLockout,psdWrongTime) 
 			VALUES (#{loginName},#{passWord},#{protectEMail},#{protectMTel},NOW(),0,0)
 	</insert>
-	<!-- selectUexit1intByName -->
-	<select id="selectUexit1intByName" resultType="int" parameterType="String">
-		select uexit1int from `user` where loginName = #{loginName}
-	</select>
-	<!-- updateLoginStatu -->
-	<update id="updateLoginStatu" parameterType="int">
-		update `user`
-		<set>
-		uexit1int=0,
-		</set>
-		<where>
-			user_Id=#{user_Id}
-		</where> 
-	</update>
+	 
+	 
 </mapper>

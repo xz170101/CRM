@@ -30,14 +30,13 @@
 </head>
 <script type="text/javascript">
 	  $(function() {
-		/* alert(document.cookie.length);
-		   alert(getCookie('loginName')); */
 		//复选框对勾
 		if(getCookie('loginName')!=null && getCookie('loginName')!="" ){
 			document.getElementById("rembername").value = 'true';
 			$('#checked').attr("class","checked");
 			}
 		});  
+	  
 	  //遍历获取cookie中的值
 	  function getCookie(name){
 		  var strcookie = document.cookie;//获取cookie字符串
@@ -78,13 +77,13 @@
 							}
 			     		},"json");
 					 }else{
-						 $.messager.alert("提示","密码必须为6~12位之间的数字或字母！");
+						 $.messager.alert("提示","请输入四位验证码！");
 					 }
 				 }else{
-		     		$.messager.alert("提示","请输入用户名！");
+		     		$.messager.alert("提示","密码必须为6~12位之间的数字或字母！");
 		     	}
 			 }else{
-				 $.messager.alert("提示","请输入验证码！");
+				 $.messager.alert("提示","请输入用户名！");
      	}
 	}
 	//处理记住用户名
@@ -102,7 +101,6 @@
 	}
 </script>
 <body>
-
 <!--头部start-->	
 <div class="login-header">
 	<div id="login-header-nav" class="nobogder"> 
@@ -175,7 +173,7 @@
 				<label id="login_save" style="float:left;">记住用户名</label>
 				<div class="login-wjpw">
 					<a class="blue" href="javascript:;">忘记用户名？</a>&nbsp;|&nbsp;&nbsp;
-					<a href="javascript:;"><span class="blue">忘记密码？</span></a>
+					<a href="javascript:void(0);" onclick="fintPwd()"><span class="blue">忘记密码？</span></a>
 				</div>
 			</div>
 	    </div>
