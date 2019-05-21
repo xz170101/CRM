@@ -63,4 +63,10 @@ public class JspController {
 	 public ModelAndView userchecksjsp() {
 		 return new ModelAndView("/demo/userchecks"); 
 	 }
+	 
+	 @RequestMapping(value="/askersjsp",method=RequestMethod.GET)
+	 public ModelAndView askersjsp() {
+		 return new ModelAndView("/demo/askers"); 
+	 }
+	 
 }

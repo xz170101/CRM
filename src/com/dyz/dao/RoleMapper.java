@@ -50,5 +50,10 @@ public interface RoleMapper {
 	 * @return
 	 */
 	Integer insertRoleModule(@Param("module_Id")Integer module_Id,@Param("roles_Id")Integer roles_Id);
-	 
+	/**
+	 * 
+	 * @param roles_Id
+	 * @return根据角色id查询角色名称
+	 */
+	String selectbyRolesRid(int roles_Id);
 }

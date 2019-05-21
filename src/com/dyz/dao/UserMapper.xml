@@ -180,5 +180,7 @@
 			VALUES (#{loginName},#{passWord},#{protectEMail},#{protectMTel},NOW(),0,0)
 	</insert>
 	 
-	 
+	 <select id="selectLoginR_id" parameterType="int" resultType="int">
+		select max(roleId) from userrole where userId=#{userId}
+		</select>
 </mapper>

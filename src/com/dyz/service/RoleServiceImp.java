@@ -104,6 +104,11 @@ public class RoleServiceImp implements RoleService{
 		//roleMapper.insertRoleModule();
  		return 1;
 	}
+	@Override
+	public String selectbyRolesRid(Integer roles_Id) {
+		// TODO Auto-generated method stub
+		return roleMapper.selectbyRolesRid(roles_Id);
+	}
  
 
 }

@@ -150,6 +150,11 @@ public interface UserMapper {
 	 * @return
 	 */
 	Integer selectUserByTel(String protectMTel);
- 
+	/**
+	 * 返回角色id
+	 * @param userId
+	 * @return
+	 */
+	Integer selectLoginR_id(int userId);
 	 
 }
