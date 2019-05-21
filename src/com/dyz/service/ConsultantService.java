@@ -1,6 +1,7 @@
 package com.dyz.service;
 
 import com.dyz.entity.Fenye;
+import com.dyz.entity.Student;
 
 public interface ConsultantService {
 	/**
@@ -9,4 +10,10 @@ public interface ConsultantService {
 	 * @return
 	 */
 	Fenye selectStuAll(Fenye fenye);
+	/**
+	 * 修改客户信息
+	 * @param student
+	 * @return
+	 */
+	Integer updateStu(Student student);
 }
