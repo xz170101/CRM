@@ -1,4 +1,4 @@
-﻿var _menus_oneLeve=[{"menuid":"0","menuname":"首页","icon":"fa-home"}];
+﻿var _menus_oneLeve=[{"menuid":"0","menuname":" ","icon":" "}];
 var _menus=[
     {"menuid":"00","icon":"fa-trophy","menuname":"模块管理",parentMenu:'0',
         "menus":[{"menuid":"002","menuname":"管理模块","icon":"fa-delicious","url":"indexGL"},

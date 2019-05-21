@@ -29,6 +29,7 @@
  
 </head>
 <script type="text/javascript">
+		
 	  $(function() {
 		//复选框对勾
 		if(getCookie('loginName')!=null && getCookie('loginName')!="" ){
@@ -36,7 +37,12 @@
 			$('#checked').attr("class","checked");
 			}
 		});  
-	  
+		//回车键触发	
+		/* $(document).keyup(function(event){
+			 if(event.keyCode ==13){
+				 subLogin();
+			 }
+		}); */
 	  //遍历获取cookie中的值
 	  function getCookie(name){
 		  var strcookie = document.cookie;//获取cookie字符串
@@ -130,9 +136,7 @@
 	  <div class="loginCont_dk post05" style="right: -17px;">
 	  <div class="loginCont">
 	    <div class="login_th"><h4 class="lgCurr bd_r">用户登录</h4>
- 
 	    	<!-- <a href="javascript:void(0);" class="login_help" onclick="openNewUser()">注册新用户&gt;&gt;</a> -->
- 
 	    </div>
 	    <div class="login_text">
 			<!-- error start -->	 
@@ -145,15 +149,13 @@
 		        	<input name="username" id="username" value="${cookie.loginName.value }" tabindex="1"   type="text" class="usernameSty"   autocomplete="off">
 		    	</div>
 		  	</div>
- 
 		    <div class="user_paswd">
 				<div class="login_input user_bg pwd" name="pwdParent" id="pwdParent">
 			      	<div id="newPwd" class="keyboards-box">
-				 		<input id="keyboards" value="${cookie.loginPwd.value }" type="password" name="keyboards" tabindex="3" pa_ui_name="keyboard" pa_ui_keyboard_position="place" pa_ui_key_type="advance" class="styTextinput w162px" maxlength="20" >
+				 		<input id="keyboards" value="" type="password" name="keyboards" tabindex="3" pa_ui_name="keyboard" pa_ui_keyboard_position="place" pa_ui_key_type="advance" class="styTextinput w162px" maxlength="20" >
 				 	</div>
 			  	</div> 
 			</div>
-
  			<div class="user_code">
 				<div class="login_input user_bg vnc">
 		        	<input name="verification" id="verification" tabindex="1"   type="text" class="codeSty"   autocomplete="off">
@@ -161,7 +163,6 @@
 		        	<img class="" id="code" src="checkCode" alt="" width="100" height="25"   style="height:43px; cursor:pointer;" onclick="this.src=this.src+'?'">
 		    	</div>
 		  	</div> 
-		  
 			<div style="height:10px"></div>
 	      	<div class="remeber_name"> 
 				<!-- <input id="checked" type="checkbox" class="normal" onclick="changeCheckRembername();"> -->
@@ -187,7 +188,6 @@
 		  </div>
 	  </div>
 	  <!--用户名密码出错弹出层end-->
- 
 	  </div>
 	</div>
 	<!--登录end-->	
@@ -196,16 +196,18 @@
 <div data-options="collapsible:false,minimizable:false,maximizable:false" id="findPwd" class="easyui-window updatePwd" title="找回密码">
     <div class="row"> 
       <label for="txtPass">用户名：</label>   
-      <input class="easyui-validatebox txt01" id="fUserName" type="text" name="fUserName" />
+      <input onblur="vusername()" class="easyui-validatebox txt01" id="fUserName" type="text" name="fUserName" />
+      <span id="yzfUserName"> </span>
     </div>  
     <div class="row"> 
       <label for="txtNewPass">手机号：</label>   
-      <input class="easyui-validatebox txt01" id="fphone" type="text" name="fphone" />   
+      <input onblur="vphone()" class="easyui-validatebox txt01" id="fphone" type="text" name="fphone" /> 
+      <span id="yzfphone"> </span>  
     </div>   
     <div class="row"> 
       <label for="txtNewPass">验证码：</label>   
       <input class="easyui-validatebox txt01" id="fphoneCode" type="text" name="fphoneCode" /> 
-      <a id="btnEp" class="easyui-linkbutton " href="javascript:void(0);" >点击发送验证码</a>  
+      <a id="sendPhoneCode" class="easyui-linkbutton " href="javascript:void(0);" >点击发送验证码</a>  
     </div>   
     <div data-options="region:'south',border:false" class="pwdbtn">
         <a id="btnEp" class="easyui-linkbutton " href="javascript:;" >确定</a> 
@@ -216,16 +218,117 @@
 <div style="clear:both"></div>
 <!--底部end-->
  <script type="text/javascript">
+ //忘记密码【 a:先判断用户名是否存在 b：点击发送验证码判断手机号格式以及是否为该用户的手机号c:若为true就可以发送验证码】
 	$(function(){
 		 $('#findPwd').window({title: '找回密码', width: 400, modal: true, shadow: true, closed: true, height: 250, resizable:false }); 
-	})
+		// $('#btnEp').click(function(){findPassWord();});
+	});
 	 function fintPwd() {
 	 	 $('#findPwd').window("open"); 
 	 }
 	$("#btnCancel").click(function() {
 		$('#findPwd').window("close"); 
-	})
- 
+	});
+	var uId=0;
+	function vusername() {
+		var name=$("#fUserName").val().trim();
+		if(name!=null && name != ''){
+			$.ajax({
+				url:"selectUserByName",
+				method:'post',
+				data:{"loginName":name},
+				dataType:'json',
+				success:function(data){
+						if(data>0){
+							uId=data;
+ 							return true;
+						}else{
+							$("#yzfUserName").html('用户名不存在！');
+ 							document.getElementById('yzfUserName').style.color = 'red';
+							return false;
+						}
+					}
+				});
+		}else{
+			$("#yzfUserName").html('用户名不能为空！');
+ 			document.getElementById('yzfUserName').style.color = 'red';
+			return false;
+		} 
+	}
+	function vphone() {
+		var phone=$("#fphone").val().trim();
+		if(phone ==null || phone ==''){
+			$("#yzfphone").html('手机号码不能为空');
+			 document.getElementById('yzfphone').style.color = 'red';
+			return false;
+		}else if(!(/^1[34578]\d{9}$/.test(phone))){
+			$("#yzfphone").html('手机号格式错误');
+			 document.getElementById('yzfphone').style.color = 'red';
+			return false;
+		}else{
+			$("#yzfphone").html(' ');
+			$.ajax({
+				url:"selectUserByTel",
+				method:'post',
+				data:{"protectMTel":phone},
+				dataType:'json',
+				success:function(data){
+					 	if(data==uId){
+							return true;
+						}else{
+							$("#yzfphone").html('手机号不匹配');
+							document.getElementById('yzfphone').style.color = 'red';
+							return false;
+						}   
+					}
+				});
+		}
+	}
+	var phoneCode=0;
+	//发送验证码
+	$("#sendPhoneCode").click(function(){
+		var phone=$("#fphone").val().trim();
+		$.ajax({
+			url:"sendToPhoneCode",
+			method:'post',
+			data:{"protectMTel":phone},
+			dataType:'json',
+			success:function(data){
+				alert(data);
+				  phoneCode=data;
+				}
+			});
+	});	
+	//找回密码
+	$("#btnEp").click(function(){
+		var name=$("#fUserName").val();
+		var phone=$("#fphone").val();
+		var phoneCode=$("#fphoneCode").val();
+		alert(phoneCode==phoneCode);
+		/* 
+		if(vusername()){
+			if(vphone()){*/
+				if(phoneCode==phoneCode){
+				$.post("sendPwdToPhone", {    
+						 loginName:name,
+						 protectMTel:phone,
+						 phoneCode:phoneCode 
+		       		 }, function(res){
+		       			 if(res>0){
+		       				$('#findPwd').window("close"); 
+		       				$.messager.alert("提示","请登录！");
+		       			 }
+		    	 },"json");
+				}else{
+					$.messager.alert("提示","验证码不正确！");
+				}
+			/*}else{
+				$.messager.alert("提示","手机号格式不正确！");
+			}
+		}else{
+			 $.messager.alert("提示","请输入用户名！");
+		} */
+	})  
  </script>
 </body>
 </html>
