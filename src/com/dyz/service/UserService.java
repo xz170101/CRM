@@ -171,7 +171,12 @@ public interface UserService {
 	 */
 	Integer sendPwdToPhone(User user, HttpServletRequest request);
  
-	 
+	/**
+	 * 返回角色id
+	 * @param u_id
+	 * @return
+	 */
+	Integer selectLoginR_id(int userId);
 	 
 	 
 }

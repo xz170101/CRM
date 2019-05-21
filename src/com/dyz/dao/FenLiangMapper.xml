@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dyz.dao.FenLiangMapper">
+		<!-- 查询所有没有咨询师跟踪的学生 -->
+		<select id="selectStuByZiXunName" resultType="student">
+			select * from students where stu_ZiXunName is null
+		</select>
+		
+	<!-- 查询所有角色为咨询师的并且根据权重排序（手动分量） -->		
+	<select id="selectzixunname" resultType="askers">
+		SELECT * FROM askers where roleName='咨询师' order by weight desc;
+	</select>
+	<!-- 修改客户表里的咨询师id和咨询师姓名，就是分量 -->
+	<update id="updateFenliang" parameterType="student">
+		update students
+		<set>
+			<if test="askers_Id !=null and askers_Id !=''">
+				askers_Id=#{askers_Id},
+			</if>
+			<if test="stu_ZiXunName !=null and stu_ZiXunName !=''">
+				stu_ZiXunName=#{stu_ZiXunName}
+			</if>
+		</set>
+		<where>
+			<if test="stu_id !=null and stu_id !=''">
+				stu_id=#{stu_id}
+			</if>
+		</where>
+
+	</update>
+	<!-- 修改咨询师的数量 -->
+	<update id="updateAskersCount" parameterType="askers">
+		update askers
+		<set>
+				aexitInt = aexitInt+1
+		</set>
+		<where>
+			<if test="askers_Id !=null and askers_Id !=''">
+				askers_Id=#{askers_Id}
+			</if>
+		</where>
+	</update>
+	
+		
+</mapper>

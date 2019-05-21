@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dyz.dao.AskersMapper">
+	<!-- 分页多条件查询 -->
+	 <select id="selectAllAskers" resultType="askers" parameterType="fenye">
+		select * from askers  
+		 <where>
+			<if test="text1 !=null and text1 !=''">
+				and askers_Name like "%"#{text1}"%"
+			</if>
+			and roleName='咨询师'
+		</where> 
+		limit #{page},#{pageSize}
+	</select>
+	<!-- 查询咨询师总条数 -->
+	<select id="selectCountAskers" resultType="int"
+		parameterType="fenye">
+		select count(askers_Id) from askers 
+		 <where>
+			
+			<if test="text1 !=null and text1 !=''">
+				and askers_Name like "%"#{text1}"%"
+			</if>
+			and roleName='咨询师'
+		</where> 
+	</select> 
+
+	<!-- 修改员工状态 -->
+	<update id="updateAskers" parameterType="askers">
+		update askers
+		<set>
+			<if test="checkState !=null ">
+				checkState=#{checkState},
+			</if>
+			<if test="checkInTime !=null and checkInTime !=''">
+				checkInTime=now(),
+			</if>
+			<if test="roleName !=null and roleName !=''">
+				roleName=#{roleName}
+			</if>
+		</set>
+		<where>
+			<if test="usercheckid !=null and usercheckid !=''">
+				usercheckid=#{usercheckid}
+			</if>
+		</where>
+	</update>
+	<!-- 签退所有员工 -->
+	<update id="updateQuanasker">
+		update askers set
+		checkState=0,checkInTime=now() where
+		checkState!=0
+
+	</update>
+	
+	<!-- 添加签到信息 -->
+	<insert id="insertAskerUsers" parameterType="askers">
+		insert into askers
+		(askers_Name,usercheckid,checkState,checkInTime,weight,roleName)
+		values(#{askers_Name},#{usercheckid},#{checkState},now(),10,#{roleName})
+
+	</insert>
+	<!-- 查询是否有该员工 -->
+	<select id="selectByUsers" parameterType="int" resultType="int">
+		select userChecksId from askers where userChecksId=#{userChecksId}
+	</select>
+	<!-- 修改咨询师权重 -->
+	<update id="updateWeight" parameterType="askers">
+		update askers
+		<set>
+			<if test="weight!=null and weight!='' ">
+				weight=#{weight},
+			</if>
+			<if test="bakContent !=null and bakContent !=''">
+				bakContent=#{bakContent},
+			</if>
+		</set>
+		<where>
+			<if test="askers_Id !=null and askers_Id !=''">
+				askers_Id=#{askers_Id}
+			</if>
+		</where>
+	</update>
+	<!-- 
+	
+	<delete id="deleteAskers" parameterType="int">
+	delete FROM askers a WHERE a.userChecksId=#{userChecksId}
+	
+	</delete> -->
+</mapper>

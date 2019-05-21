@@ -306,6 +306,7 @@ public class UserServiceImp implements UserService{
 			return user.getUser_Id();
 		}
 	}
+ 
 	/**
 	 * 找回密码
 	 */
@@ -360,6 +361,18 @@ public class UserServiceImp implements UserService{
  		IndustrySMS.execute();//执行发送验证码方法
 		return 1;
 	}
+/*不知道谁写的，俺也不敢删*/
+  
+@Override
+	public Integer selectLoginR_id(int userId) {
+		// TODO Auto-generated method stub
+		return usermapper.selectLoginR_id(userId);
+	}
+	 
+ 
+	
+	
+ 
 
     /* int p= (int)((Math.random()*9+1)*100000);//获取6位随机验证码
  		IndustrySMS.setTo(phone);//发送到这个手机号

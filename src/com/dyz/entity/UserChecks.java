@@ -8,11 +8,13 @@ public class UserChecks {
 	private Integer user_Id;
 	private String userName;
 	private String checkInTime;
-	private String checkState;
-	private Integer isCancel;
+	private Boolean  checkState;
+	private Boolean  isCancel;
 	private String checkOutTime;
 	private Integer ucexit1int;
 	private String ucexit2String;
+	
+	
 	public Integer getChecks_Id() {
 		return checks_Id;
 	}
@@ -37,16 +39,18 @@ public class UserChecks {
 	public void setCheckInTime(String checkInTime) {
 		this.checkInTime = checkInTime;
 	}
-	public String getCheckState() {
+
+	
+	public Boolean getCheckState() {
 		return checkState;
 	}
-	public void setCheckState(String checkState) {
+	public void setCheckState(Boolean checkState) {
 		this.checkState = checkState;
 	}
-	public Integer getIsCancel() {
+	public Boolean getIsCancel() {
 		return isCancel;
 	}
-	public void setIsCancel(Integer isCancel) {
+	public void setIsCancel(Boolean isCancel) {
 		this.isCancel = isCancel;
 	}
 	public String getCheckOutTime() {

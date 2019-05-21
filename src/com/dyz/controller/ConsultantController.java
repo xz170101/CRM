@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dyz.entity.Fenye;
+import com.dyz.entity.Student;
 import com.dyz.service.ConsultantService;
 
 @Controller
@@ -20,4 +21,12 @@ public class ConsultantController {
 		fenye.setPageSize(rows);
 		return consultantService.selectStuAll(fenye);
 	}
+	
+	@RequestMapping(value="/updateStu",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer updateStu(Student student) {
+
+		return consultantService.updateStu(student);
+	}
+
 }

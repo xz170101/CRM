@@ -6,16 +6,23 @@ import org.springframework.stereotype.Component;
 public class Askers {
 	private Integer askers_Id;
 	private String askers_Name;
-	private String checkState;
+	private Boolean checkState;
 	private String checkInTime;
 	private String changeState;
 	private Integer weight;
 	private String roleName;
 	private String bakContent;
-	private Integer aexitInt;
+	private Integer aexitInt;//咨询师的学生数量
 	private String aexitString;
+	private Integer usercheckid;
 	
 	
+	public Integer getUsercheckid() {
+		return usercheckid;
+	}
+	public void setUsercheckid(Integer usercheckid) {
+		this.usercheckid = usercheckid;
+	}
 	public Integer getAskers_Id() {
 		return askers_Id;
 	}
@@ -29,10 +36,11 @@ public class Askers {
 	public void setAskers_Name(String askers_Name) {
 		this.askers_Name = askers_Name;
 	}
-	public String getCheckState() {
+	
+	public Boolean getCheckState() {
 		return checkState;
 	}
-	public void setCheckState(String checkState) {
+	public void setCheckState(Boolean checkState) {
 		this.checkState = checkState;
 	}
 	public String getCheckInTime() {
@@ -82,7 +90,8 @@ public class Askers {
 		return "Askers [askers_Id=" + askers_Id + ", askers_Name=" + askers_Name + ", checkState=" + checkState
 				+ ", checkInTime=" + checkInTime + ", changeState=" + changeState + ", weight=" + weight + ", roleName="
 				+ roleName + ", bakContent=" + bakContent + ", aexitInt=" + aexitInt + ", aexitString=" + aexitString
-				+ "]";
+				+ ", usercheckid=" + usercheckid + "]";
 	}
+	
 	
 }

@@ -1,16 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>网络咨询师</title>
-	<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/icon.css">
-  	<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/metro/easyui.css">
-   	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.min.js"></script>
-   	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
-   	<script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
-   	<script type="text/javascript">
+<link rel="stylesheet" type="text/css"
+	href="js/jquery-easyui-1.4.3/themes/icon.css">
+<link rel="stylesheet" type="text/css"
+	href="js/jquery-easyui-1.4.3/themes/metro/easyui.css">
+<script type="text/javascript"
+	src="js/jquery-easyui-1.4.3/jquery.min.js"></script>
+<script type="text/javascript"
+	src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
+<script type="text/javascript"
+	src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript">
    		$(function(){
    			init();
    		})
@@ -112,65 +117,49 @@
 			$("#chakanStuForm").form("clear");
 			$("#chakanStu").dialog("close");
 		}
-		//打开设置隐藏列对话框
-		 function selectColumn() {
-			$("#hiddenColumn_dialog").dialog("open");
-		}
-		 function saveColumn() {
-				var cbx = $("#hiddenColumn_form input[type='checkbox']"); //获取Form里面是checkbox的Object
-			    var checkedValue = "";
-			    var unCheckValue = "";
-			    for (var i = 0; i < cbx.length; i++) {
-			        if (cbx[i].checked) {//获取已经checked的Object
-			            if (checkedValue.length > 0) {
-			                checkedValue += "," + cbx[i].value; //获取已经checked的value
-			            }
-			            else {
-			                checkedValue = cbx[i].value;
-			            }
-			        }
-			        if (!cbx[i].checked) {//获取没有checked的Object
-			            if (unCheckValue.length > 0) {
-			                unCheckValue += "," + cbx[i].value; //获取没有checked的value
-			            }
-			            else {
-			                unCheckValue = cbx[i].value;
-			            }
-			        }
-			    }
-			    var checkeds = new Array();
-			    if (checkedValue != null && checkedValue != "") {
-			        checkeds = checkedValue.split(',');
-			        for (var i = 0; i < checkeds.length; i++) {
-			            $('#stuTab').datagrid('showColumn', checkeds[i]); //显示相应的列
-			        }
-			    }
-			    var unChecks = new Array();
-			    if (unCheckValue != null && unCheckValue != "") {
-			        unChecks = unCheckValue.split(',');
-			        for (var i = 0; i < unChecks.length; i++) {
-			            $('#stuTab').datagrid('hideColumn', unChecks[i]); //隐藏相应的列
-			        }
-			    } 
-			    $('#hiddenColumn_dialog').dialog('close');
+		 /*		
+			设置隐藏列
+			 */
+			//打开设置隐藏列对话框
+			function show() {
+			var datagridTitle = new Array();
+			var shuxing = new Array();
+			var fields = $("#stuTab").datagrid('getColumnFields');
+			var option;
+			for (var i = 0; i < fields.length; i++) {
+				option = $("#stuTab").datagrid('getColumnOption', fields[i]);
+				datagridTitle.push(option.title);
+				shuxing.push(option.field);
+				if (option.field != "checked" && option.hidden != true) {//如果不是选中状态的话
+					$("#lie_window").append(
+							"<input type='checkbox' value="+shuxing[i]+"  name='ch'>"
+									+ datagridTitle[i] + "</br>");
+					$("input[name='ch']").get(i).checked = true;
+				} else {//是选中状态
+					$("#lie_window").append(
+							"<input type='checkbox' value="+shuxing[i]+" name='ch' >"
+									+ datagridTitle[i] + "</br>");
+				}
 			}
-		//关闭设置隐藏列弹框
-		 function closed_hiddenColumn() {
-		 	$('#hiddenColumn_dialog').dialog('close');
-		 }
-		//全选按钮
-		 function ChooseAll() {
-		    
-		     var a=$("#isQuanXuan").text();//获取按钮的值
-		     if("全选"==a.trim()){
-		     	 $("#hiddenColumn_form input[type='checkbox']").prop("checked", true);//全选
-		     	$('#isQuanXuan').linkbutton({ text:'全不选' });
-		     }else{    	
-		     	 $("#hiddenColumn_form input[type='checkbox']").removeAttr("checked", "checked");//取消全选
-		     	 $('#isQuanXuan').linkbutton({ text:'全选' });
-		     }
-		     
-		 }
+			$("#lie_window").window("open");
+			$("input[name='ch']").click(function() {
+				if ($(this).is(":checked")) {
+					var p = $(this).val();
+					$("#stuTab").datagrid('showColumn', p);
+				} else {
+					var q = $(this).val();
+					$("#stuTab").datagrid('hideColumn', q);
+				}
+			})
+		}
+		$(document).ready(function() {
+			$('#lie_window').window({
+				onBeforeClose : function() {
+					$("#lie_window").dialog("clear");
+				}
+			});
+		});
+		//设置隐藏列结束
 		//Excel导出
 		function ExportForm(){
 			var header = $('#stuTab').datagrid('options').columns[0];//获取数据的第一行表头
@@ -216,52 +205,55 @@
 </head>
 <body>
 	<!-- 查看自己添加的所有学生信息 -->
-	<table id="stuTab" data-options="fitColumns:true">   
-	    <thead>   
-	        <tr> 
-	        	<th data-options="field:'checkbox',checkbox:true"></th>  
-	            <th data-options="field:'stu_id'">编号</th>   
-	            <th data-options="field:'stu_Name'">姓名</th>    
-	            <th data-options="field:'stu_Age'">年龄</th>   
-	        	<th data-options="field:'stu_Sex',formatter:formatterSex">性别</th>  
-	        	<th data-options="field:'stu_Phone'">手机号</th>
-	        	<th data-options="field:'stu_Status'">学历</th>   
-	            <th data-options="field:'stu_PerState'">状态</th>   
-	        	<th data-options="field:'stu_MsgSource'">客户信息</th>  
-	        	<th data-options="field:'stu_SourceUrl'">信息来源</th>	        	
-	        	<th data-options="field:'stu_SourceKeyWord'">来源关键字</th>   
-	            <th data-options="field:'stu_Address'">地址</th>   
-	            <th data-options="field:'stu_NetPusherld'">来源网站</th>   
-	        	<th data-options="field:'stu_qq'">QQ</th>  
-	        	<th data-options="field:'stu_WeiXin'">微信</th>
-	        	<th data-options="field:'stu_Content'">内容</th>   
-	            <th data-options="field:'stu_CreateTime'">创建日期</th>   	       
-	       		<th data-options="field:'stu_ZiXunName'">咨询师</th>   
-	            <th data-options="field:'stu_CreateUser'">创建人</th>             	
-	        	<th data-options="field:'setLo',align:'center',formatter:formatterStu">操作</th>            
-	        </tr>   
-	    </thead>   
+	<table id="stuTab" data-options="fitColumns:true">
+		<thead>
+			<tr>
+				<th data-options="field:'checkbox',checkbox:true"></th>
+				<th data-options="field:'stu_id'">编号</th>
+				<th data-options="field:'stu_Name'">姓名</th>
+				<th data-options="field:'stu_Age'">年龄</th>
+				<th data-options="field:'stu_Sex',formatter:formatterSex">性别</th>
+				<th data-options="field:'stu_Phone'">手机号</th>
+				<th data-options="field:'stu_Status'">学历</th>
+				<th data-options="field:'stu_PerState'">状态</th>
+				<th data-options="field:'stu_MsgSource'">客户信息</th>
+				<th data-options="field:'stu_SourceUrl'">信息来源</th>
+				<th data-options="field:'stu_SourceKeyWord'">来源关键字</th>
+				<th data-options="field:'stu_Address'">地址</th>
+				<th data-options="field:'stu_NetPusherld'">来源网站</th>
+				<th data-options="field:'stu_qq'">QQ</th>
+				<th data-options="field:'stu_WeiXin'">微信</th>
+				<th data-options="field:'stu_Content'">内容</th>
+				<th data-options="field:'stu_CreateTime'">创建日期</th>
+				<th data-options="field:'stu_ZiXunName'">咨询师</th>
+				<th data-options="field:'stu_CreateUser'">创建人</th>
+				<th
+					data-options="field:'setLo',align:'center',formatter:formatterStu">操作</th>
+			</tr>
+		</thead>
 	</table>
-	
+
 	<!--多条件查询  -->
-	 <div id="tb" style="padding: 5px; height: auto">
+	<div id="tb" style="padding: 5px; height: auto">
 		<form id="sousuofrm" class="easyui-form">
-			   客户姓名:<input class="easyui-textbox" id="sname"  style="width: 80px">
-			   电话:<input class="easyui-textbox" id="phone"  style="width: 80px">
-			   咨询师:<input class="easyui-textbox" id="zixunshi"  style="width: 80px">	 				
-			 QQ: <input class="easyui-textbox" id="qq"  style="width: 80px">			 
-			   创建时间:<input class="easyui-datebox" id="creattime"  style="width: 80px">
-			 <a href="javascript:void(0)" class="easyui-linkbutton"
-				iconCls="icon-search" onclick="init()">查找</a>
-			 <a href="javascript:void(0)" class="easyui-linkbutton"
-			    iconCls="icon-add" onclick="addStu()">添加</a>   
-			 <a href="javascript:void(0)" class="easyui-linkbutton" 
-			 data-options="iconCls:'icon-edit'" onclick="selectColumn()">设置隐藏列</a>
-			 <a href="javascript:viid(0)" onclick="ExportForm()" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">导出Excel</a>
+			客户姓名:<input class="easyui-textbox" id="sname" style="width: 80px">
+			电话:<input class="easyui-textbox" id="phone" style="width: 80px">
+			咨询师:<input class="easyui-textbox" id="zixunshi" style="width: 80px">
+			QQ: <input class="easyui-textbox" id="qq" style="width: 80px">
+			创建时间:<input class="easyui-datebox" id="creattime" style="width: 80px">
+			<a href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-search" onclick="init()">查找</a> <a
+				href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-add" onclick="addStu()">添加</a> <a
+				href="javascript:void(0)" class="easyui-linkbutton"
+				data-options="iconCls:'icon-edit'" onclick="show()">设置隐藏列</a> <a
+				href="javascript:viid(0)" onclick="ExportForm()"
+				class="easyui-linkbutton" data-options="iconCls:'icon-edit'">导出Excel</a>
 		</form>
 	</div>
 	<!-- 添加窗体 -->
-	<div id="insertStu" class="easyui-dialog" title="添加客户" style="width:400px;height:500px;" 
+	<div id="insertStu" class="easyui-dialog" title="添加客户"
+		style="width: 400px; height: 500px;"
 		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
 		buttons:[{
 				text:'保存',
@@ -271,301 +263,237 @@
 				handler:function(){insertclose()}
 			}]">
 
-	    <form id="insertStuForm" class="easyui-form">
-	    	<table cellpadding="5">
-	    		<tr>
-	    			<td>姓名:</td>
-	    			<td><input class="easyui-textbox" id="stu_Name1" ></td>
-	    		</tr>
-	    		<tr>
-	    			<td>性别:</td>
-	    			<td>
-	    			
-	    				<select id="stu_Sex1" class="easyui-combobox" style="width:100px;">   
-							  <option>--请选择--</option> 
-							  <option value="0">男</option> 
-							  <option value="1">女</option> 
-						</select> 
-	    			</td>
-	    		</tr>
-	    		<tr>
-	    			<td>年龄:</td>
-	    			<td><input class="easyui-textbox" id="stu_Age1" ></td>
-	    		</tr>
-	    		<tr>
-	    			<td>电话:</td>
-	    			<td><input class="easyui-textbox" id="stu_Phone1" ></td>
-	    		</tr>
-	    		<tr>
-	    			<td>学历:</td>
-	    			<td>
-	    			<select id="stu_Status1" class="easyui-combobox">
-	    				 <option>--请选择--</option> 
-					     <option value="大专">大专</option> 
-						 <option value="高中">高中</option>
-						 <option value="中专">中专</option>
-						 <option value="初中">初中</option>
-						 <option value="本科">本科</option>
-						 <option value="其它">其它</option>
-						 <option value="未知">未知</option>
-	    			</select>
-	    			</td>
-	    		</tr>
-	    		<tr>
-	    			<td>状态:</td>
-	    			<td>
-	    			<select id="stu_PerState1" class="easyui-combobox">
-	    				 <option>--请选择--</option> 
-					     <option value="待业">待业</option> 
-						 <option value="在职">在职</option>
-						 <option value="在读">在读</option>
-						 <option value="未知">未知</option>
-	    			</select>
-	    			</td>
-	    		</tr>
-	    		<tr>
-	    			<td>来源渠道:</td>
-	    			<td>
-	    			<select id="stu_SourceUrl1" class="easyui-combobox">
-	    				 <option>--请选择--</option> 
-					     <option value="百度">百度</option> 
-						 <option value="百度移动端">百度移动端</option>
-						 <option value="360">360</option>
-						 <option value="360移动端">360移动端</option>
-						 <option value="搜狗">搜狗</option>
-						 <option value="搜狗移动端">搜狗移动端</option>
-						 <option value="UC移动端">UC移动端</option>
-						 <option value="直接输入">直接输入</option>
-						 <option value="自然流量">自然流量</option>
-						 <option value="直电">直电</option>
-						 <option value="微信">微信</option>
-						 <option value="QQ">QQ</option>
-						 <option value="未知">未知</option>
-	    			</select>
-	    			</td>
-	    		</tr>
-	    		<tr>
-	    			<td>客户信息:</td>
-	    			<td><input class="easyui-textbox" id="stu_MsgSource1"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>地址:</td>
-	    			<td>
-	    			<select id="stu_Address1" class="easyui-combobox">
-	    				 <option>--请选择--</option> 
-					     <option value="郑州">郑州</option> 
-						 <option value="开封">开封</option>
-						 <option value="洛阳">洛阳</option>
-						 <option value="南阳">南阳</option>
-						 <option value="漯河">漯河</option>
-						 <option value="三门峡">三门峡</option>
-						 <option value="平顶山">平顶山</option>
-						 <option value="周口">周口</option>
-						 <option value="驻马店">驻马店</option>
-						 <option value="新乡">新乡</option>
-						 <option value="鹤壁">鹤壁</option>
-						 <option value="焦作">焦作</option>
-						 <option value="濮阳">濮阳</option>
-						 <option value="安阳">安阳</option>
-						 <option value="商丘">商丘</option>
-						 <option value="信阳">信阳</option>
-						 <option value="济源">济源</option>
-						 <option value="其它">其它</option>
-						 <option value="未知">未知</option>
-	    			</select>
-	    			</td>
-	    		</tr>
-	    		<tr>
-	    			<td>来源网站:</td>
-	    			<td>
-	    			<select id="stu_NetPusherld1" class="easyui-combobox">
-	    				 <option>--请选择--</option> 
-					     <option value="职英B站">职英B站</option> 
-						 <option value="高考站">高考站</option>
-						 <option value="职英A站">职英A站</option>
-						 <option value="其它">其它</option>
-	    			</select>
-	    			</td>
-	    		</tr>
-	    		<tr>
-	    			<td>内容:</td>
-	    			<td><input class="easyui-textbox" id="stu_Content1"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>来源关键字:</td>
-	    			<td><input class="easyui-textbox" id="stu_SourceKeyWord1"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>QQ:</td>
-	    			<td><input class="easyui-textbox" id="stu_qq1"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>微信号:</td>
-	    			<td><input class="easyui-textbox" id="stu_WeiXin1"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>在线备注:</td>
-	    			<td><input class="easyui-textbox" id="stu_inClassContent1"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>创建人:</td>
-	    			<td><input class="easyui-textbox" id="stu_CreateUser1"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>创建日期:</td>
-	    			<td><input class="easyui-datebox" id="stu_CreateTime1"></td>
-	    		</tr>
-	    	</table>
-	    </form>
+		<form id="insertStuForm" class="easyui-form">
+			<table cellpadding="5">
+				<tr>
+					<td>姓名:</td>
+					<td><input class="easyui-textbox" id="stu_Name1"></td>
+				</tr>
+				<tr>
+					<td>性别:</td>
+					<td><select id="stu_Sex1" class="easyui-combobox"
+						style="width: 100px;">
+							<option>--请选择--</option>
+							<option value="0">男</option>
+							<option value="1">女</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>年龄:</td>
+					<td><input class="easyui-textbox" id="stu_Age1"></td>
+				</tr>
+				<tr>
+					<td>电话:</td>
+					<td><input class="easyui-textbox" id="stu_Phone1"></td>
+				</tr>
+				<tr>
+					<td>学历:</td>
+					<td><select id="stu_Status1" class="easyui-combobox">
+							<option>--请选择--</option>
+							<option value="大专">大专</option>
+							<option value="高中">高中</option>
+							<option value="中专">中专</option>
+							<option value="初中">初中</option>
+							<option value="本科">本科</option>
+							<option value="其它">其它</option>
+							<option value="未知">未知</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>状态:</td>
+					<td><select id="stu_PerState1" class="easyui-combobox">
+							<option>--请选择--</option>
+							<option value="待业">待业</option>
+							<option value="在职">在职</option>
+							<option value="在读">在读</option>
+							<option value="未知">未知</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>来源渠道:</td>
+					<td><select id="stu_SourceUrl1" class="easyui-combobox">
+							<option>--请选择--</option>
+							<option value="百度">百度</option>
+							<option value="百度移动端">百度移动端</option>
+							<option value="360">360</option>
+							<option value="360移动端">360移动端</option>
+							<option value="搜狗">搜狗</option>
+							<option value="搜狗移动端">搜狗移动端</option>
+							<option value="UC移动端">UC移动端</option>
+							<option value="直接输入">直接输入</option>
+							<option value="自然流量">自然流量</option>
+							<option value="直电">直电</option>
+							<option value="微信">微信</option>
+							<option value="QQ">QQ</option>
+							<option value="未知">未知</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>客户信息:</td>
+					<td><input class="easyui-textbox" id="stu_MsgSource1"></td>
+				</tr>
+				<tr>
+					<td>地址:</td>
+					<td><select id="stu_Address1" class="easyui-combobox">
+							<option>--请选择--</option>
+							<option value="郑州">郑州</option>
+							<option value="开封">开封</option>
+							<option value="洛阳">洛阳</option>
+							<option value="南阳">南阳</option>
+							<option value="漯河">漯河</option>
+							<option value="三门峡">三门峡</option>
+							<option value="平顶山">平顶山</option>
+							<option value="周口">周口</option>
+							<option value="驻马店">驻马店</option>
+							<option value="新乡">新乡</option>
+							<option value="鹤壁">鹤壁</option>
+							<option value="焦作">焦作</option>
+							<option value="濮阳">濮阳</option>
+							<option value="安阳">安阳</option>
+							<option value="商丘">商丘</option>
+							<option value="信阳">信阳</option>
+							<option value="济源">济源</option>
+							<option value="其它">其它</option>
+							<option value="未知">未知</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>来源网站:</td>
+					<td><select id="stu_NetPusherld1" class="easyui-combobox">
+							<option>--请选择--</option>
+							<option value="职英B站">职英B站</option>
+							<option value="高考站">高考站</option>
+							<option value="职英A站">职英A站</option>
+							<option value="其它">其它</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>内容:</td>
+					<td><input class="easyui-textbox" id="stu_Content1"></td>
+				</tr>
+				<tr>
+					<td>来源关键字:</td>
+					<td><input class="easyui-textbox" id="stu_SourceKeyWord1"></td>
+				</tr>
+				<tr>
+					<td>QQ:</td>
+					<td><input class="easyui-textbox" id="stu_qq1"></td>
+				</tr>
+				<tr>
+					<td>微信号:</td>
+					<td><input class="easyui-textbox" id="stu_WeiXin1"></td>
+				</tr>
+				<tr>
+					<td>在线备注:</td>
+					<td><input class="easyui-textbox" id="stu_inClassContent1"></td>
+				</tr>
+				<tr>
+					<td>创建人:</td>
+					<td><input class="easyui-textbox" id="stu_CreateUser1"></td>
+				</tr>
+				<tr>
+					<td>创建日期:</td>
+					<td><input class="easyui-datebox" id="stu_CreateTime1"></td>
+				</tr>
+			</table>
+		</form>
 	</div>
 	<!-- 查看窗体 -->
-	<div id="chakanStu" class="easyui-dialog" title="客户详情" style="width:400px;height:500px;" 
+	<div id="chakanStu" class="easyui-dialog" title="客户详情"
+		style="width: 400px; height: 500px;"
 		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
 		buttons:[{
 				text:'关闭',
 				handler:function(){chakanclose()}
 			}]">
 
-	    <form id="chakanStuForm" class="easyui-form">
-	    	<table cellpadding="5">
-	    		<tr>
-	    			<td>姓名：</td>
-	    			<td><input class="easyui-textbox" id="stu_Name1" name="stu_Name"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>性别</td>
-	    			<td>
-	    				<input class="easyui-textbox" id="stu_sex1" name="stu_Sex">
-	    			</td>
-	    		</tr>
-	    		<tr>
-	    			<td>年龄：</td>
-	    			<td><input class="easyui-textbox" id="stu_Age1" name="stu_Age"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>电话：</td>
-	    			<td><input class="easyui-textbox" id="stu_Phone1" name="stu_Phone"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>学历：</td>
-	    			<td><input class="easyui-textbox" id="stu_Status1" name="stu_Status"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>状态：</td>
-	    			<td><input class="easyui-textbox" id="stu_PerState1" name="stu_PerState"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>来源渠道：</td>
-	    			<td><input class="easyui-textbox" id="stu_SourceUrl1" name="stu_SourceUrl"></td>
-	    		</tr>
-	    		
-	    		<tr>
-	    			<td>来源关键字：</td>
-	    			<td><input class="easyui-textbox" id="stu_SourceKeyWord1" name="stu_SourceKeyWord"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>来源网站:</td>
-	    			<td><input class="easyui-textbox" id="stu_NetPusherld1" name="stu_NetPusherld"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>客户信息:</td>
-	    			<td><input class="easyui-textbox" id="stu_MsgSource1" name="stu_MsgSource"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>地址:</td>
-	    			<td><input class="easyui-textbox" id="stu_Address1" name="stu_Address"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>QQ：</td>
-	    			<td><input class="easyui-textbox" id="stu_qq1" name="stu_qq"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>微信号：</td>
-	    			<td><input class="easyui-textbox" id="stu_WeiXin" name="stu_WeiXin"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>在线备注：</td>
-	    			<td><input class="easyui-textbox" id="stu_inClassContent1" name="stu_inClassContent"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>创建人:</td>
-	    			<td><input class="easyui-textbox" id="stu_CreateUser1" name="stu_CreateUser"></td>
-	    		</tr>
-	    		<tr>
-	    			<td>创建日期:</td>
-	    			<td><input class="easyui-textbox" id="stu_CreateTime1" name="stu_CreateTime"></td>
-	    		</tr>
-	    	</table>
-	    </form>
+		<form id="chakanStuForm" class="easyui-form">
+			<table cellpadding="5">
+				<tr>
+					<td>姓名：</td>
+					<td><input class="easyui-textbox" id="stu_Name1"
+						name="stu_Name"></td>
+				</tr>
+				<tr>
+					<td>性别</td>
+					<td><input class="easyui-textbox" id="stu_sex1" name="stu_Sex">
+					</td>
+				</tr>
+				<tr>
+					<td>年龄：</td>
+					<td><input class="easyui-textbox" id="stu_Age1" name="stu_Age"></td>
+				</tr>
+				<tr>
+					<td>电话：</td>
+					<td><input class="easyui-textbox" id="stu_Phone1"
+						name="stu_Phone"></td>
+				</tr>
+				<tr>
+					<td>学历：</td>
+					<td><input class="easyui-textbox" id="stu_Status1"
+						name="stu_Status"></td>
+				</tr>
+				<tr>
+					<td>状态：</td>
+					<td><input class="easyui-textbox" id="stu_PerState1"
+						name="stu_PerState"></td>
+				</tr>
+				<tr>
+					<td>来源渠道：</td>
+					<td><input class="easyui-textbox" id="stu_SourceUrl1"
+						name="stu_SourceUrl"></td>
+				</tr>
+
+				<tr>
+					<td>来源关键字：</td>
+					<td><input class="easyui-textbox" id="stu_SourceKeyWord1"
+						name="stu_SourceKeyWord"></td>
+				</tr>
+				<tr>
+					<td>来源网站:</td>
+					<td><input class="easyui-textbox" id="stu_NetPusherld1"
+						name="stu_NetPusherld"></td>
+				</tr>
+				<tr>
+					<td>客户信息:</td>
+					<td><input class="easyui-textbox" id="stu_MsgSource1"
+						name="stu_MsgSource"></td>
+				</tr>
+				<tr>
+					<td>地址:</td>
+					<td><input class="easyui-textbox" id="stu_Address1"
+						name="stu_Address"></td>
+				</tr>
+				<tr>
+					<td>QQ：</td>
+					<td><input class="easyui-textbox" id="stu_qq1" name="stu_qq"></td>
+				</tr>
+				<tr>
+					<td>微信号：</td>
+					<td><input class="easyui-textbox" id="stu_WeiXin"
+						name="stu_WeiXin"></td>
+				</tr>
+				<tr>
+					<td>在线备注：</td>
+					<td><input class="easyui-textbox" id="stu_inClassContent1"
+						name="stu_inClassContent"></td>
+				</tr>
+				<tr>
+					<td>创建人:</td>
+					<td><input class="easyui-textbox" id="stu_CreateUser1"
+						name="stu_CreateUser"></td>
+				</tr>
+				<tr>
+					<td>创建日期:</td>
+					<td><input class="easyui-textbox" id="stu_CreateTime1"
+						name="stu_CreateTime"></td>
+				</tr>
+			</table>
+		</form>
 	</div>
 	<!-- 设置隐藏列 -->
-	<div id="hiddenColumn_dialog" class="easyui-dialog" data-options="title:'设置隐藏列',modal:true,closed:'true',
-			buttons:[{
-				text:'保存',
-				handler:function(){
-				saveColumn();<!-- 保存 -->
-				init();<!-- 刷新 -->
-				closed_hiddenColumn();<!-- 关闭弹窗 -->
-				}
-			},{
-				text:'关闭',
-				handler:function(){
-				closed_hiddenColumn();
-				}
-			}]">
-		<form id="hiddenColumn_form" class="easyui-form">
-		<a href="javascript:void()"  class="easyui-linkbutton" id="isQuanXuan" onclick="ChooseAll()" data-options="iconCls:'icon-edit'">全选</a>
-			<table>
-				<tr>
-					<td><input type="checkbox" value="stu_id"/>编号</td>
-				
-					<td><input type="checkbox" value="stu_Name"/>姓名</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" value="stu_Age"/>年龄</td>
-						
-					<td><input type="checkbox" value="stu_Sex"/>性别</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" value="stu_Status"/>学历</td>
-			
-					<td><input type="checkbox" value="stu_Phone"/>电话</td>
-				</tr>
-				
-				
-				
-				<tr>
-					<td><input type="checkbox" value="stu_PerState"/>客户状态</td>
-				
-					<td><input type="checkbox" value="stu_MsgSource"/>客户信息</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" value="stu_SourceUrl"/>信息来源</td>
-				
-					<td><input type="checkbox" value="stu_SourceKeyWord"/>来源关键字</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" value="stu_Address"/>地址</td>
-				
-					<td><input type="checkbox" value="stu_NetPusherld"/>来源网站</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" value="stu_qq"/>QQ</td>
-				
-					<td><input type="checkbox" value="stu_WeiXin"/>微信</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" value="stu_Content"/>内容</td>
-				
-					<td><input type="checkbox" value="stu_CreateTime"/>创建日期</td>
-				</tr>
-				<tr>
-				<td><input type="checkbox" value="stu_ZiXunName"/>咨询师备注</td>
-			
-				<td><input type="checkbox" value="stu_CreateUser"/>录入人</td>
-			</tr>
-			</table>
-		</form> 
-	</div> 
+	<div id="lie_window" class="easyui-dialog"
+		data-options="title:'设置显示列',modal:true,closed:'true'"
+		style="width: 200px"></div>
 </body>
 </html>
