@@ -20,4 +20,12 @@ public class ConsultantController {
 		fenye.setPageSize(rows);
 		return consultantService.selectStuAll(fenye);
 	}
+	
+	@RequestMapping(value="/updateStu",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer updateStu(Student student) {
+
+		return consultantService.updateStu(student);
+	}
+
 }
