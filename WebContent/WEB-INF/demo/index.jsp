@@ -63,11 +63,8 @@
         <div class="user-photo">
             <i class="fa fa-user-circle-o"></i>
         </div>
- 
         <h4 class="user-name ellipsis" id="name">${user.loginName }</h4>
- 
         <i class="fa fa-angle-down xiala"></i>
-
         <div class="viewui-userdrop-down">
             <ul class="user-opt">
               <li>
@@ -151,6 +148,7 @@
     </div>
 </div>
 <script type="text/javascript">
+ 
 //绑定 div 的鼠标事件
 $('.navmenu-item a').click(function(){
   $('.navmenu-item a').removeClass("active");//清空已经选择的元素
