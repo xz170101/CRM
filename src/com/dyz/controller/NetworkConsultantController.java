@@ -24,6 +24,7 @@ public class NetworkConsultantController {
 	@RequestMapping(value="/insertStu",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer insert(Student student) {
+		System.out.println(student.toString());
 		return networkConsultantService.insertStu(student);
 	}
 }

@@ -20,6 +20,7 @@
    			init();
    		})
    		function init(){
+   		 	var userName  ='<%=session.getAttribute("userName")%>';  
    			$("#stuTab").datagrid({
    				url:"selectStu",
    				method:"post",			
@@ -29,13 +30,15 @@
    		        toolbar:"#tb", 
    		        queryParams:{				
    					//要发送的参数列表
+   					UserName:userName,
    					text1:$("#sname").textbox("getValue"),	
    					text2:$("#phone").textbox("getValue"),	
    					text4:$("#qq").textbox("getValue"),	
    					text5:$("#creattime").datebox("getValue"),
    					text10:$("#zixunshi").textbox("getValue")
    				}
-   			})			
+   			})	
+   			$("#sousuofrm").form("reset");
    		}
    		function formatterStu(value, row, index){
    			return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='chakan(" + index + ")'>查看</a>  <a href='javascript:void(0)' style='cursor: pointer;' onclick='updateStu(" + index + ")'>设置</a>";
@@ -51,6 +54,7 @@
    		//添加窗口的保存
    		 function insertsave(){	
    				//获取id参数
+   				var UserName ='<%= session.getAttribute("userName")%>';
    				var stu_Name1= $("#stu_Name1").textbox("getValue");
    				var stu_Sex1 = $("#stu_Sex1").combobox("getValue");
    				var stu_Age1= $("#stu_Age1").textbox("getValue");
@@ -66,10 +70,10 @@
    				var stu_qq1= $("#stu_qq1").textbox("getValue");
    				var stu_WeiXin1= $("#stu_WeiXin1").textbox("getValue");
    				var stu_inClassContent1= $("#stu_inClassContent1").textbox("getValue");
-   				var stu_CreateUser1= $("#stu_CreateUser1").textbox("getValue");
    				var stu_CreateTime1= $("#stu_CreateTime1").datebox("getValue");
    				//提交到添加的controller
    					$.post("insertStu", {
+   						stu_CreateUser:UserName,
    						stu_Name:stu_Name1,
    						stu_Sex:stu_Sex1,
    						stu_Age:stu_Age1,
@@ -85,11 +89,10 @@
    						stu_qq:stu_qq1,
    						stu_WeiXin:stu_WeiXin1,
    						stu_inClassContent:stu_inClassContent1,
-   						stu_CreateUser:stu_CreateUser1,
-   						stu_CreateTime:stu_CreateTime1
+   						stu_CreateTime:stu_CreateTime1,
+   						sexitString:UserName
    							},
    							function(res) {
-   								var res=eval("("+res+")");
    								if(res>0) {
    									$("#stuTab").datagrid("reload"); //通过调用reload方法，让datagrid刷新显示数据
    									$("#insertStu").dialog("close");
@@ -386,10 +389,6 @@
 				<tr>
 					<td>在线备注:</td>
 					<td><input class="easyui-textbox" id="stu_inClassContent1"></td>
-				</tr>
-				<tr>
-					<td>创建人:</td>
-					<td><input class="easyui-textbox" id="stu_CreateUser1"></td>
 				</tr>
 				<tr>
 					<td>创建日期:</td>
