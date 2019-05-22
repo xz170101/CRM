@@ -198,8 +198,9 @@
 	</select>
 	
 	 <!-- 查询咨询师 -->
-	<select id="selectzixunname" resultType="askers">
-		SELECT * FROM askers where roleName='咨询师' order by weight desc;
+	<select id="selectzixunname" resultType="askers">				 
+		 select askers_Id,askers_Name,weight,aexit1Int 
+		 from askers where roleName='咨询师' order by weight desc; 
 	</select> 
 	
 		<!-- 删除学生 -->

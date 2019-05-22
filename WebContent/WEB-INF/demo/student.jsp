@@ -11,32 +11,49 @@
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
 	<script>
-	$(function(){	
-		
+	$(function(){		
 		init();
-		
-		/* $('#s_zixunnamem').combobox({
-			url:'/CRM/selectAskers',  
+		kaiqi();
+		$("#zixunname").combobox({
+			url:'selectzixunname',
 			method:'post',
-		    valueField:'askername',    
-		    textField:'askername'
-		}); */
-		$('#sb').switchbutton({
-			checked: false,
-			onChange: function(checked){
-				if (checked == true){
-					$.ajax({
-						url:'fenliang',
-						method:'post',
-						dataType:'json'
-					})
-				}else{
-					alert("请选择是否自动分量!");
-				}
+			valueField:'askers_Name',
+			textField:'askers_Name'
+		});			
+	})
+	//开启分量
+	function kaiqi() {
+		var kaiguan = $("#fen").val();	
+		if (kaiguan ==true || kaiguan != ""||kaiguan ==false) {
+			if (kaiguan==true) {
+				kaiguan=true;
+			} else {
+				kaiguan = false;
+			}
+		} else {
+			kaiguan = false;
+		} 
+		$('#fenliang').switchbutton({
+			checked : kaiguan,
+			onChange : function(checked) {
+				$.messager.confirm("提示", "你确定开启自动分量吗？", function(r) {
+					if (r) {
+						$.ajax({
+							url : "fenliang",
+							type : "post",
+							dataType : "json",
+							data : {
+								checked : checked
+							},
+							success : function(res) {
+								alert("开启成功");
+							}
+						})
+					}
+				})				//
 			}
 		})
-	})
-	
+	}
 	//查看日志的打开
 	function looklogf(index){
 		var data = $("#stuTab").datagrid("getData");
@@ -235,22 +252,22 @@
 				method:'post',
 				valueField:'askers_Name',
 				textField:'askers_Name'
-			})
-			/* var row=$("#dg").datagrid("getSelections");
+			});
+			var row=$("#stuTab").datagrid("getSelections");
 			if(row==false){//判断如果没有选中的行则提示
 			alert("请选中要修改的行的复选框");
 		}else{//如果有选中的行就弹出弹框
-			if($("#dg").datagrid("getSelected").s_zixunname!=null){
+			if($("#stuTab").datagrid("getSelected").stu_ZiXunName!=null){
 				alert('该客户已经有咨询师进行跟踪！');
 			}else{
 				$('#updateziXunName').dialog('open');
 			}
-		} */
-			$('#updateziXunNameForm').dialog('open');
+		} 
+			
 		}
 		//修改咨询师名字弹框的关闭
 		function updateziXunNameclose() {
-			$('#updateziXunNameForm').dialog('close');
+			$('#updateziXunName').dialog('close');
 		}
 		
 		
@@ -562,6 +579,7 @@
 	</script>
 </head>
 <body>
+		<input type="hidden" value="${fenliang}" id="fen">
 		<table id="stuTab" data-options="fitColumns:true">   
 	     <thead>   
 	        <tr>  
@@ -614,6 +632,7 @@
 	
 	<!--多条件查询  -->
 	 <div id="tb" style="padding: 5px; height: auto">
+	 自动分量: <input class="easyui-switchbutton" id="fenliang" data-options="onText:'Yes',offText:'No'"><br/>
 		<form id="sousuofrm" class="easyui-form">
 			 客户姓名:<input class="easyui-textbox" id="sname"  style="width: 80px">
 			 电话:<input class="easyui-textbox" id="phone"  style="width: 80px">
@@ -643,8 +662,8 @@
 			 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" onclick="selectColumn()">设置隐藏列</a>
 			 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" onclick="ExportForm()">导出表格</a>	 
  			 <!-- <a href="javascript:void(0)" class="easyui-switchbutton" >分量开关</a> -->
- 			 <div>自动分量:<input class="easyui-switchbutton" onText="开" offText="关" id="sb"></div>	 
- 			
+ 			<!--  <div>自动分量:<input class="easyui-switchbutton" onText="开" offText="关" id="sb"></div>	 
+ 			 -->
 		</form>
 	</div>
 	<!-- 日志log -->
@@ -795,7 +814,7 @@
 	    </form>
 	</div> 	
 	<!-- 批量修改咨询师 -->
-	<div id="updateziXunName" class="easyui-dialog" title="修改咨询师" style="width:400px;height:300px;" 
+	<div id="updateziXunName" class="easyui-dialog" title="手动分量" style="width:400px;height:300px;" 
 		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
 		buttons:[{
 				text:'保存',
@@ -807,17 +826,16 @@
 
 	    <form id="updateziXunNameForm" class="easyui-form">
 	    	<table cellpadding="5">
-	    		<tr>
+	    		<!-- <tr>
 	    			<td>编号：</td>
 	    			<td><input class="easyui-textbox" disabled="disabled" id="sid" name="stu_id"/></td>
-	    		</tr>
+	    		</tr> -->
 	    		<tr>
 	    			<td>咨询师姓名：</td>
 	    			<td>	    				
 	    			<select id="zixunname" class="easyui-combobox">
-	    				 <option>--请选择--</option> 					     
-	    			</select>
-	    				
+	    				 <option value="">--请选择--</option>  				     
+	    			</select>	    				
 	    			</td>
 	    		</tr>
 	    	</table>

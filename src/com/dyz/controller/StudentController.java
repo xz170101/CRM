@@ -53,6 +53,7 @@ public class StudentController {
 	@RequestMapping(value="/selectzixunname",method=RequestMethod.POST)
 	@ResponseBody
 	public List<Askers> selectzixunname() {
+		System.out.println(studentService.selectzixunname()+"jinjin=========================");
 		return studentService.selectzixunname();
 	}
 	

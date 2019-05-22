@@ -1,29 +1,37 @@
 package com.dyz.controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dyz.entity.Askers;
-import com.dyz.entity.Student;
+import com.dyz.service.AskersService;
 import com.dyz.service.FenLiangService;
-import com.dyz.service.StudentService;
 
 @Controller
 public class FenLiangController {
 	@Autowired
 	private FenLiangService fenLiangService;
 	
-	@RequestMapping(value="/fenliang",method=RequestMethod.POST)
+	@Autowired
+	private AskersService askersService;
+	
+	@RequestMapping(value = "/fenliang", method = RequestMethod.POST)
+	@ResponseBody
+	public String editWEight(Boolean checked, HttpSession session) {
+		session.setAttribute("fenliang", checked);
+		if (checked == true) {
+			fenLiangService.fenliang(session);
+		}
+		return null;
+	}
+	
+	
+	/*@RequestMapping(value="/fenliang",method=RequestMethod.POST)
 	public void fenliang() {
 		// TODO Auto-generated method stub
 		 List<Student> stuByZiXunName = fenLiangService.selectStuByZiXunName();//所有没有分配的学生
@@ -56,7 +64,7 @@ public class FenLiangController {
 					break;
 				}
 			}
-			askers.get(i).setAexitInt(askers.get(i).getAexitInt() + count);;//更新每个任务执行者的任务数
+			askers.get(i).setAexit1Int(askers.get(i).getAexit1Int() + count);;//更新每个任务执行者的任务数
 		 }
 		 System.out.println("stuByZiXunName大小：" + stuByZiXunName.size() + ", 余数为：" + rest);
 		 if(stuByZiXunName.size()>0) {
@@ -110,7 +118,7 @@ public class FenLiangController {
 						chatDTO.setAskers_Id(dto.getAskers_Id());//分配人的id
 						chatDTO.setStu_ZiXunName(dto.getAskers_Name());;//分配人的名字
 						System.out.println("将咨询师的id输入到客户表中："+chatDTO);
-						dto.setAexitInt(dto.getAexitInt() + 1);;//更新任务执行者所包含的任务数
+						dto.setAexit1Int0000(dto.getAexit1Int() + 1);;//更新任务执行者所包含的任务数
 						resultList.add(chatDTO);
 						stuByZiXunName.remove(index);
 						if(stuByZiXunName.size() == 0) 
@@ -119,5 +127,5 @@ public class FenLiangController {
 				}
 			}
 			return resultList;
-	}
+	}*/
 }
