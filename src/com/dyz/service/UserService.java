@@ -30,7 +30,7 @@ public interface UserService {
 	 * @param loginName
 	 * @return
 	 */
-	Integer updatePassword(String loginName);
+	Integer updatePassword(User user);
 	/**
 	 * 添加用户
 	 * @param user
@@ -66,7 +66,7 @@ public interface UserService {
 	 * @param loginName
 	 * @return
 	 */
-	User selectUser(String loginName);
+	//User selectUser(String loginName);
 	/**
 	 * 查询所有的角色
 	 * @return
@@ -84,7 +84,11 @@ public interface UserService {
 	 * @return
 	 */
 	Integer delUserRole(UserRole userRole);
-	  
+	  /**
+	   * 根据提供的用户名拿密码
+	   * @param username
+	   * @return
+	   */
 	String getPasswordByUsername(String username);
 	/**
 	 * 根据名字查询数据
@@ -93,17 +97,11 @@ public interface UserService {
 	 */
 	 Integer selectByName(String loginName);
 	/**
-	 * 用户登录
-	 * @param user
-	 * @return
-	 */
-	//User selectLogin(User user);
-	/**
 	 * 修改用户的锁定状态
 	 * @param user
 	 * @return
 	 */
-	Integer updateLockUser(User user);
+	/*Integer updateLockUser(User user);*/
 	
 	/**
 	 * 根据名字查询是否锁定
@@ -131,7 +129,7 @@ public interface UserService {
  	 */
 	Integer insertUser(User user);
 	 /**
-	  * 登录时的判断
+	  * 登录 
 	  * @param user
 	  * @param yes
 	  * @param yzm
@@ -142,35 +140,20 @@ public interface UserService {
 	  * @return
 	  */
 	String getLogin(User user, String yes, String yzm, HttpSession session, HttpServletRequest req,
-			HttpServletResponse res, Model model);
+			HttpServletResponse response, Model model);
 	/**
 	 * 根据手机号查询用户
 	 * @param protectMTel
 	 * @return
 	 */
 	Integer selectUserByTel(String protectMTel);
-	/**
-	 * 找回密码
-	 * @param user
-	 * @param phoneCode
-	 * @param request 
-	 * @return
-	 */
-	//String findPassWord(User user, String phoneCode, HttpServletRequest request);
-	/**
+	 /**
 	 * 发送验证码
 	 * @param user
 	 * @return
 	 */
 	Integer sendToPhoneCode(User user,HttpServletRequest request);
-	/**
-	 * 发送密码到手机号
-	 * @param user
-	 * @param request
-	 * @return
-	 */
-	Integer sendPwdToPhone(User user, HttpServletRequest request);
- 
+	 
 	/**
 	 * 返回角色id
 	 * @param u_id

@@ -48,9 +48,11 @@ public class UserServiceImp implements UserService{
 	 * 重置密码
 	 */
 	@Override
-	public Integer updatePassword(String loginName) {
-		// TODO Auto-generated method stub
-		return usermapper.updatePsd(loginName);
+	public Integer updatePassword(User user) {
+ 			String pwd="ysd123";
+			user.setPassWord(MD5Util.MD5(pwd));
+			System.out.println("重置后的密码：：：：：："+user.getPassWord());
+		return usermapper.updatePsd(user);
 	}
 	/**
 	 * 添加用户
@@ -60,6 +62,9 @@ public class UserServiceImp implements UserService{
 		// TODO Auto-generated method stub
 		return usermapper.inertUse(user);
 	}
+	/**
+	 * 修改用户信息
+	 */
 	@Override
 	public Integer updateUser(User user) {
 		// TODO Auto-generated method stub
@@ -72,36 +77,56 @@ public class UserServiceImp implements UserService{
 	public Integer delUser(Integer user_Id) {
 		// TODO Auto-generated method stub
 		List<Role> i=usermapper.selectUserRole(user_Id);
-		if(i==null) {
+ 		if(i != null && i.size() != 0  ) {
+			return 0;
+		}else {
 			return usermapper.delUse(user_Id);
 		}
-		return 0;
 	}
+	/**
+	 * 锁定用户
+	 */
 	@Override
 	public Integer lockUser(Integer user_Id) {
 		// TODO Auto-generated method stub
 		return usermapper.lockUse(user_Id);
 	}
+	/**
+	 * 解锁用户
+	 */
 	@Override
 	public Integer unLockUser(Integer user_Id) {
 		// TODO Auto-generated method stub
 		return usermapper.unLockUse(user_Id);
 	}
-	@Override
+	/**
+	 * 根据登录名查询用户
+	 */
+	/*@Override
 	public User selectUser(String loginName) {
 		// TODO Auto-generated method stub
 		return usermapper.selectUser(loginName);
-	}
+	}*/
+	/**
+	 * 根据用户id查询所有角色
+	 */
 	@Override
 	public List<Role> selectUserRoles(Integer user_Id) {
 		// TODO Auto-generated method stub
 		return usermapper.selectUserRole(user_Id);
 	}
+	 /**
+	  * 查询所有的角色
+	  */
 	@Override
 	public List<Role> selectRoles() {
 		// TODO Auto-generated method stub
 		return usermapper.selectRole();
 	}
+	/**
+	 * 添加角色
+	 * 0：已存在该角色
+	 */
 	@Override
 	public Integer insertUserRole(UserRole userRole) {
 		// TODO Auto-generated method stub
@@ -130,55 +155,31 @@ public class UserServiceImp implements UserService{
 		// TODO Auto-generated method stub
 		return usermapper.delUserRol(userRole);
 	}
-	 
-	////////////////////
-	
-	
-	/*public boolean isUserExist(String username) {
-		if (usermapper.findByloginName(username) == null) {
-			return false;
-		} else {
-			return true;
-		}
-	}*/
- 
-	//根据提供的用户名拿密码
+	/**
+	 * 根据提供的用户名拿密码
+	 */
 	public String getPasswordByUsername(String username) {
 		return usermapper.findByloginName(username).getPassWord();
 	}
+	/**
+	 * 根据登录名查询用户
+	 */
 	@Override
 	public Integer selectByName(String loginName) {
 		// TODO Auto-generated method stub
 		//Integer i=userService.selectByName(loginName);
-		Integer i=usermapper.selectByName(loginName);
+		Integer i=usermapper.selectByName(loginName);//返回值为user_id
 		if(i==null) {
 			return 0;
 		}else {
 			return i;
 		}
 	}
-	/**
-	 * 根据用户名和密码查询用户信息
-	 */
-	/*@Override
-	public User selectLogin(User user) {
-		// TODO Auto-generated method stub
-		return usermapper.selectUse(user);
-	}*/
-	@Override
+ 
+/*	@Override
 	public Integer updateLockUser(User user) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-	/*@Override
-	public Integer updateUsers(User user) {
-		// TODO Auto-generated method stub
-		return usermapper.updateUse(user);
-	}*/
-	/*@Override
-	public Integer selectByNameLockout(String loginName) {
-		// TODO Auto-generated method stub
-		return usermapper.selectByNameLockout(loginName);
 	}*/
 	/**
 	 * 根据角色查询所有模块
@@ -212,21 +213,27 @@ public class UserServiceImp implements UserService{
 		}
 		return 0;
 	}
+	/**
+	 * 添加用户
+	 */
 	@Override
 	public Integer insertUser(User user) {
 		// TODO Auto-generated method stub
 		return usermapper.insertNewUser(user);
 	}
+	/**
+	 * 登录
+	 */
 	int psdWrongTime=0;
 	@Override
 	public String getLogin(User user, String yes, String yzm, HttpSession session, HttpServletRequest req,
-			HttpServletResponse res, Model model) {
+			HttpServletResponse response, Model model) {
 		// TODO Auto-generated method stub
-		 String passWord = user.getPassWord();
+		 //String passWord = user.getPassWord();
 		 user.setPassWord(MD5Util.MD5(user.getPassWord()));
 		 String code =(String) session.getAttribute("randomcode_key");
 		 if (!code.equalsIgnoreCase(yzm)) {
-			return Result.toClient(false, "验证码不对");
+			return Result.toClient(false, "验证码不正确！");
 		} else { 
 			//根句登录名查询用户id判断是否存在该用户
 			Integer nameId = usermapper.selectByName(user.getLoginName());//返回的是用户id
@@ -250,12 +257,12 @@ public class UserServiceImp implements UserService{
 							//锁定用户
 							usermapper.lockUse(nameId);
 							return Result.toClient(false, "该用户已被锁定，请联系管理员解锁！");
-					}
+						}
 					return Result.toClient(false, "密码不正确");
 				} else {
 						//判断该用户是否锁定
-						Integer lockout = usermapper.selectByNameLockout(user.getLoginName());
-						if (lockout != null) {
+						Integer lockoutID = usermapper.selectByNameLockout(user.getLoginName());
+						if (lockoutID != null) {
 							return Result.toClient(false, "该用户被锁定，请联系管理员解锁!");
 						} else {
 							// 登录成功,保存当前用户登录的sessionId
@@ -272,12 +279,14 @@ public class UserServiceImp implements UserService{
 								Cookie lname = new Cookie("loginName", u.getLoginName());
 								lname.setPath(req.getContextPath());////默认只对当前路径下的资源有效
 								lname.setMaxAge(60*60*24*7);//cookie.setMaxAge();单位为秒
-								res.addCookie(lname);
-							    /*Cookie pwd = new Cookie("loginPwd", passWord);
-								pwd.setPath(req.getContextPath());
-								pwd.setMaxAge(60*60*24*7);
-								res.addCookie(pwd);  */
-							}  
+								response.addCookie(lname);
+								} else {//删除存在cookie中的loginName
+									Cookie newCookie=new Cookie("loginName",null); // 要删除名称为loginName的Cookie
+									newCookie.setMaxAge(0); //立即删除型
+									newCookie.setPath("/"); //项目所有目录均有效，这句很关键，否则不敢保证删除
+									newCookie.setPath(req.getContextPath()); //默认只对当前路径下的资源有效
+									response.addCookie(newCookie); //重新写入，将覆盖之前的
+								}
 							//该登录时间
 							User us=new User();
 							SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -301,43 +310,17 @@ public class UserServiceImp implements UserService{
 	public Integer selectUserByTel(String protectMTel) {
 		// TODO Auto-generated method stub
  		User user=usermapper.selectUserByTel(protectMTel);
-		if(user==null) {
+ 		//System.out.println("用户：：：："+user);
+ 		//System.out.println("用户Id:::"+user.getUser_Id());
+		if(user==null){
 			return 0;
 		}else {
 			return user.getUser_Id();
 		}
 	}
- 
 	/**
-	 * 找回密码
+	 * 获取（发送）手机验证码
 	 */
-	/*@Override
-	public String findPassWord(User user, String phoneCode, HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		String userName=user.getLoginName();
-		Integer phoCode=Integer.parseInt(phoneCode);
-		Integer nameId = usermapper.selectByName(userName);//根据用户名查询用户id
-		if (nameId == null) {
-			return Result.toClient(false, "1用户名不存在");
-		} else {
-			Integer uId=usermapper.selectUserByTel(user.getProtectMTel());//根据是手机号查询用户id
-			if(nameId==uId) {
-				int p= (int)((Math.random()*9+1)*100000);//获取6位随机验证码
-		 		IndustrySMS.setTo(user.getProtectMTel());//发送到这个手机号
-		 		String smsContent = "【CRM管理平台】您的验证码为"+p+"，请于30分钟内正确输入，如非本人操作，请忽略此短信。";//发送的内容
-		 		IndustrySMS.setSmsContent(smsContent);//把发送的信息内容存到这个对象类中
-		 		IndustrySMS.execute();//执行发送验证码方法
-		 		request.getSession().setAttribute("pCode", p);//把验证码存入到键值并存在session中
-		 		if(phoCode==p) {
-		 			return Result.toClient(false, "4验证码正确");
-		 		}else {
-		 			return Result.toClient(false, "3验证码不正确");
-		 		}
-			}else {
-				return Result.toClient(false, "2手机号不匹配");
-			}
-		}
- 	}*/
 	@Override
 	public Integer sendToPhoneCode(User user, HttpServletRequest request) {
 		// TODO Auto-generated method stub
@@ -349,35 +332,10 @@ public class UserServiceImp implements UserService{
  		request.getSession().setAttribute("phoneCode", p);//把验证码存入到键值并存在session中
 		return p;
 	}
-	/**
-	 * 发送密码到手机号
-	 */
+	/*不知道谁写的，俺也不敢删*/
 	@Override
-	public Integer sendPwdToPhone(User user, HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		User use=usermapper.selectUserByTel(user.getProtectMTel());
-		IndustrySMS.setTo(user.getProtectMTel());//发送到这个手机号
- 		String smsContent = "【CRM管理平台】尊敬的"+use.getLoginName()+"用户，您的密码为"+MD5Util.JM(use.getPassWord())+"，请确认是本人操作。";//发送的内容
- 		IndustrySMS.setSmsContent(smsContent);//把发送的信息内容存到这个对象类中
- 		IndustrySMS.execute();//执行发送验证码方法
-		return 1;
-	}
-/*不知道谁写的，俺也不敢删*/
-  
-@Override
-	public Integer selectLoginR_id(int userId) {
-		// TODO Auto-generated method stub
-		return usermapper.selectLoginR_id(userId);
-	}
-	 
- 
- 
-
-    /* int p= (int)((Math.random()*9+1)*100000);//获取6位随机验证码
- 		IndustrySMS.setTo(phone);//发送到这个手机号
- 		String smsContent = "【CRM管理平台】您的验证码为"+p+"，请于30分钟内正确输入，如非本人操作，请忽略此短信。";//发送的内容
- 		IndustrySMS.setSmsContent(smsContent);//把发送的信息内容存到这个对象类中
- 		IndustrySMS.execute();//执行发送验证码方法
- 		request.getSession().setAttribute("p", p);//把验证码存入到键值并存在session中
- 	 */
+		public Integer selectLoginR_id(int userId) {
+			// TODO Auto-generated method stub
+			return usermapper.selectLoginR_id(userId);
+		}
 }

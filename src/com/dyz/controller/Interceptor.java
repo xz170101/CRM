@@ -54,7 +54,7 @@ public class Interceptor implements HandlerInterceptor {
 				return true;
 			}
 			//如果cookie中存的有值也放行
-			Cookie[] cookies = request.getCookies();
+			/*Cookie[] cookies = request.getCookies();
 			if(cookies!=null) {
 			    for(Cookie cookie : cookies){
 			        if("loginName".equals(cookie.getName())){
@@ -68,12 +68,12 @@ public class Interceptor implements HandlerInterceptor {
 			        		return false;
 			        	}
 			        
-			        }/*else {
+			        }else {
 			        	request.getRequestDispatcher("/WEB-INF/demo/login.jsp").forward(request, response);
 			        	return false;
-			        }*/
+			        }
 			     } 
-			} 
+			} */
 			//用户没有登录跳转到登录页面
 			request.getRequestDispatcher("/WEB-INF/demo/login.jsp").forward(request, response);
 			

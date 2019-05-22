@@ -2,9 +2,6 @@ package com.dyz.controller;
 
 
 import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.dyz.entity.Fenye;
 import com.dyz.entity.Role;
-import com.dyz.entity.RoleModules;
 import com.dyz.service.RoleService;
 import com.dyz.util.TreeModel;
 
@@ -45,11 +41,21 @@ public class RoleController {
 	public Integer updateRole(Role role) {
 		return  roleService.updateRole(role);
 	}
+	/**
+	 * 添加角色
+	 * @param role
+	 * @return
+	 */
 	@RequestMapping(value="/insertRole",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer insertRole(Role role) {
 		return  roleService.insertRole(role);
 	}
+	/**
+	 * 删除角色
+	 * @param roles_Id
+	 * @return
+	 */
 	@RequestMapping(value="/delRole",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer delRole(Integer roles_Id) {
@@ -65,7 +71,12 @@ public class RoleController {
 	public ArrayList<TreeModel> selectRoleMod(Integer roles_Id) {
 		return  roleService.selectRoleModules(roles_Id);
 	}
-	
+	/**
+	 * 保存该角色的 模块
+	 * @param modules_Ids
+	 * @param roles_Id
+	 * @return
+	 */
 	@RequestMapping(value="/saveRoleMod",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer saveRoleMod(String modules_Ids,Integer roles_Id) {

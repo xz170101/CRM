@@ -17,28 +17,24 @@ public class ModuleServiceImp implements ModuleService {
 	private ModuleMapper moduleMapper;
 	@Override
 	public ArrayList<TreeModel> selectModu() {
-		// TODO Auto-generated method stub
-		//ArrayList<TreeModel> root = new ArrayList<>();
-		ArrayList<Module> list = moduleMapper.selectModules();
+ 		ArrayList<Module> list = moduleMapper.selectModules();
 		   ArrayList<TreeModel> tree = new ArrayList<>();
            for (Module module : list) {
                TreeModel node = new TreeModel();
                node.setId(module.getModules_Id());
                node.setText(module.getModules_Name());
-               //node.setState(module.getIs_open());
-             //  node.setLevel_id(module.getLevel_id());
                node.setParent_id(module.getParentId());
                tree.add(node);
            }//简单的来说，就是把数据库里所有数据查出来之后，然后一条一条的封装，扔进TreeModel里，作为一个个节点，然后放在ArrayList里
            // 构造树
           // root = TreeNode.getTree(tree);
        return TreeNode.getTree(tree);
-	//	return moduleMapper.selectModules();
-	}
+ 	}
 
 	@Override
 	public Integer updateModu(Module module) {
 		// TODO Auto-generated method stub
+		System.out.println("将要修改的数据：："+module);
 		return moduleMapper.updateModule(module);
 	}
 
@@ -52,7 +48,7 @@ public class ModuleServiceImp implements ModuleService {
 	public Integer delModu(Integer modules_Id) {
 		// TODO Auto-generated method stub
 		List<Role> i=moduleMapper.selectRoleByModuleId(modules_Id);
-		if(i==null) {
+		if(i.isEmpty()) {
 			return moduleMapper.delModule(modules_Id);
 		}
 		return 0;

@@ -81,8 +81,8 @@ public class UserController {
 	 */
 	@RequestMapping(value="/resetPassword",method=RequestMethod.POST)
 	@ResponseBody
-	public Integer resetPassword(String loginName) {
-		return userService.updatePassword(loginName);
+	public Integer resetPassword(User user) {
+		return userService.updatePassword(user);
 	} 
 	/**
 	 * 添加用户
@@ -138,64 +138,62 @@ public class UserController {
 	@RequestMapping(value ="/login", method = RequestMethod.POST)
 	@ResponseBody
 	public String login( User user,String yes, String yzm,
-			HttpSession session,HttpServletRequest req,HttpServletResponse res,Model model) {
-		return userService.getLogin(user,yes, yzm, session, req, res, model);
+			HttpSession session,HttpServletRequest req,HttpServletResponse response,Model model) {
+		return userService.getLogin(user,yes, yzm, session, req, response, model);
 	}
-		/**
-		 * 管理首页树
-		 * @param s
-		 * @return
-		 */
-		@RequestMapping(value ="/getSysRightsHtmlTree", method = RequestMethod.POST)
-		@ResponseBody
-		public ArrayList<TreeModel> getModules(HttpSession session) {
-			User users = (User) session.getAttribute("user");
-			return userService.selectUsersByroles(users.getUser_Id());
-		}
-		/**
-		 * 修改密码
-		 * @param session
-		 * @return
-		 */
-		@RequestMapping(value ="/setPwd", method = RequestMethod.POST)
-		@ResponseBody
-		public Integer setPwd(User user,String pwd) {
-			user.setPassWord(MD5Util.MD5(user.getPassWord()));
-			return userService.UpdatePwd(user,pwd );
-		}
-		@RequestMapping(value ="/newUser", method = RequestMethod.POST)
-		@ResponseBody
-		public Integer newUser(User user) {
-			 user.setPassWord(MD5Util.MD5(user.getPassWord()));
-			return userService.insertUser(user);
-		}
-		/**
-		 * 根据用户名查询用户
-		 * @param user
-		 * @return
-		 */
-		@RequestMapping(value ="/selectUserByName", method = RequestMethod.POST)
-		@ResponseBody
-		public Integer selectUserByName(String loginName) {
- 		 return userService.selectByName(loginName);
-		}
-		/**
-		 * 根据手机号查询用户 
-		 * @param loginName
-		 * @return
-		 */
-		@RequestMapping(value ="/selectUserByTel", method = RequestMethod.POST)
-		@ResponseBody
-		public Integer selectUserByTel(String protectMTel) {
-			System.out.println("开始查询手机号咯+++++++++++++++++");
-			return userService.selectUserByTel(protectMTel);
-		}
-	   //注销方法
+	/**
+	 * 管理首页树
+	 * @param s
+	 * @return
+	 */
+	@RequestMapping(value ="/getSysRightsHtmlTree", method = RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<TreeModel> getModules(HttpSession session) {
+		User users = (User) session.getAttribute("user");
+		return userService.selectUsersByroles(users.getUser_Id());
+	}
+	/**
+	 * 修改密码
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value ="/setPwd", method = RequestMethod.POST)
+	@ResponseBody
+	public Integer setPwd(User user,String pwd) {
+		user.setPassWord(MD5Util.MD5(user.getPassWord()));
+		return userService.UpdatePwd(user,pwd );
+	}
+	@RequestMapping(value ="/newUser", method = RequestMethod.POST)
+	@ResponseBody
+	public Integer newUser(User user) {
+		 user.setPassWord(MD5Util.MD5(user.getPassWord()));
+		return userService.insertUser(user);
+	}
+	/**
+	 * 根据用户名查询用户
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value ="/selectUserByName", method = RequestMethod.POST)
+	@ResponseBody
+	public Integer selectUserByName(String loginName) {
+	 return userService.selectByName(loginName);
+	}
+	/**
+	 * 根据手机号查询用户 
+	 * @param loginName
+	 * @return
+	 */
+	@RequestMapping(value ="/selectUserByTel", method = RequestMethod.POST)
+	@ResponseBody
+	public Integer selectUserByTel(String protectMTel) {
+ 		return userService.selectUserByTel(protectMTel);
+	}
+   //注销方法
     @RequestMapping(value="/outLogin", method = RequestMethod.POST)
     @ResponseBody
     public Integer outLogin(HttpSession session){
         //通过session.invalidata()方法来注销当前的session
-    	//User users = (User) session.getAttribute("user");
     	session.removeAttribute("user");
         session.invalidate();
         return  1;
@@ -211,26 +209,6 @@ public class UserController {
     public Integer sendToPhoneCode(User user, HttpServletRequest request){
         return  userService.sendToPhoneCode(user,request);
     } 
-    /**
-        * 发送密码到手机号
-     * @param user
-     * @param request
-     * @return
-     */
-    @RequestMapping(value="/sendPwdToPhone", method = RequestMethod.POST)
-    @ResponseBody
-    public Integer sendPwdToPhone(User user, HttpServletRequest request){
-        return  userService.sendPwdToPhone(user,request);
-    } 
-    /**
-     * 找回密码
-     * @return
-     */
-   /* @RequestMapping(value="/findPassWord", method = RequestMethod.POST)
-    @ResponseBody
-    public String findPwd(User user ,String phoneCode, HttpServletRequest request){
-    	
-    	
-        return  userService.findPassWord(user,phoneCode,request);
-    } */
+   
+     
 }

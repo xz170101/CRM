@@ -44,14 +44,14 @@
 		limit #{page},#{pageSize}
 	</select>
 	<!-- 验证用户名是否重复 -->
-	<select id="selectUser" parameterType="string" resultType="user">
+	<!-- <select id="selectUser" parameterType="string" resultType="user">
 		select * from user where loginName=#{loginName}
-	</select>
+	</select> -->
 	<!-- 重置密码 -->
-	<update id="updatePsd" parameterType="string">
+	<update id="updatePsd" parameterType="user">
 		update user 
 		<set>
-			 passWord='ysd123' 
+			 passWord=#{passWord} 
 		</set>
 		<where>
 			loginName=#{loginName}		
@@ -60,8 +60,8 @@
 	<!-- 添加用户 -->
 	<insert id="inertUse" parameterType="user">
 		INSERT INTO 
-			user (loginName,passWord,protectEMail,protectMTel,createTime,isLockout) 
-			VALUES (#{loginName},#{passWord},#{protectEMail},#{protectMTel},curdate(),0)
+			user (loginName,passWord,protectEMail,protectMTel,createTime,isLockout,uexit2String) 
+			VALUES (#{loginName},#{passWord},#{protectEMail},#{protectMTel},curdate(),0,'01.jpg')
 	</insert>
 	<!--修改用户  -->
 	<update id="updateUse" parameterType="user">
