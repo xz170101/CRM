@@ -12,8 +12,8 @@ public class Askers {
 	private Integer weight;
 	private String roleName;
 	private String bakContent;
-	private Integer aexitInt;//咨询师的学生数量
-	private String aexitString;
+	private Integer aexit1Int;//咨询师的学生数量
+	private String aexit2String;
 	private Integer usercheckid;
 	
 	
@@ -73,25 +73,27 @@ public class Askers {
 	public void setBakContent(String bakContent) {
 		this.bakContent = bakContent;
 	}
-	public Integer getAexitInt() {
-		return aexitInt;
+	
+	public Integer getAexit1Int() {
+		return aexit1Int;
 	}
-	public void setAexitInt(Integer aexitInt) {
-		this.aexitInt = aexitInt;
+	public void setAexit1Int(Integer aexit1Int) {
+		this.aexit1Int = aexit1Int;
 	}
-	public String getAexitString() {
-		return aexitString;
+	public String getAexit2String() {
+		return aexit2String;
 	}
-	public void setAexitString(String aexitString) {
-		this.aexitString = aexitString;
+	public void setAexit2String(String aexit2String) {
+		this.aexit2String = aexit2String;
 	}
 	@Override
 	public String toString() {
 		return "Askers [askers_Id=" + askers_Id + ", askers_Name=" + askers_Name + ", checkState=" + checkState
 				+ ", checkInTime=" + checkInTime + ", changeState=" + changeState + ", weight=" + weight + ", roleName="
-				+ roleName + ", bakContent=" + bakContent + ", aexitInt=" + aexitInt + ", aexitString=" + aexitString
-				+ ", usercheckid=" + usercheckid + "]";
+				+ roleName + ", bakContent=" + bakContent + ", aexit1Int=" + aexit1Int + ", aexit2String="
+				+ aexit2String + ", usercheckid=" + usercheckid + "]";
 	}
+	
 	
 	
 }

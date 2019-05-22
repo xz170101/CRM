@@ -2,6 +2,8 @@ package com.dyz.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.dyz.entity.Askers;
 import com.dyz.entity.Student;
 
@@ -16,5 +18,15 @@ public interface FenLiangService {
 	 * @return
 	 */
 	List<Student> selectStuByZiXunName();
+	
+	
+	
+	void fenliang(HttpSession session) ;
+	/**
+	 * 
+	 * @param userChecksId
+	 * @return查询手里的学生数
+	 */
+	Integer selectAskerStu_count(int userChecksId);
 	
 }
