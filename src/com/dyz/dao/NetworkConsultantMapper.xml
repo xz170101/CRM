@@ -5,8 +5,15 @@
 <mapper namespace="com.dyz.dao.NetworkConsultantMapper">
 	<!-- 分页多条件查询 -->
 	<select id="selectStu" parameterType="fenye" resultType="student">
-		select * FROM students 
+		select stu_Id,user_Id,roles_Id,stu_Name,stu_Age,stu_Sex,stu_Phone,stu_Status,stu_PerState,stu_MsgSource,
+		stu_SourceUrl,stu_SourceKeyWord,stu_Address,stu_NetPusherld,askers_Id,stu_qq,stu_WeiXin,stu_Content,
+		stu_CreateTime,stu_LearnForward,stu_isValid,stu_Record,stu_isReturnVist,stu_isHome,stu_firstVisitTime,
+		stu_HomeTime,stu_LostValid,stu_isPay,stu_PayTime,stu_Money,stu_isReturnMoney,stu_isInClass,stu_inClassTime,
+		stu_inClassContent,stu_AskerContent,stu_isDel,stu_FromPart,stu_stuConcern,stu_isBaoBei,stu_ZiXunName,stu_CreateUser,
+		stu_ReturnMoneyReason,stu_preMoney,stu_preMoneyTime
+		FROM students 
 		<where>			
+			stu_CreateUser=#{UserName}
 			<if test="text1 !=null and text1!=''">
 				and stu_Name like "%"#{text1}"%"
 			</if>
@@ -104,6 +111,6 @@
   	  #{stu_Status},#{stu_PerState},#{stu_SourceUrl},
   	  #{stu_MsgSource}, #{stu_Address},#{stu_NetPusherld},
   	   #{stu_Content},#{stu_SourceKeyWord},#{stu_qq},#{stu_WeiXin},#{stu_inClassContent},
-  	   #{stu_CreateUser},#{stu_CreateTime})
+  	   #{sexitString},#{stu_CreateTime})
   	</insert>
 </mapper>

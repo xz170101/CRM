@@ -6,7 +6,8 @@
 	<!-- 分页多条件查询 -->
 	<select id="selectStuAll" parameterType="fenye" resultType="student">
 		select * FROM students 
-		<where>			
+		<where>		
+			stu_ZiXunName=#{UserName}	
 			<if test="text1 !=null and text1!=''">
 				and stu_Name like "%"#{text1}"%"
 			</if>
