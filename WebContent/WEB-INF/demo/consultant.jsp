@@ -11,8 +11,6 @@
 	href="js/jquery-easyui-1.4.3/themes/metro/easyui.css">
 <script type="text/javascript"
 	src="js/jquery-easyui-1.4.3/jquery.min.js"></script>
-<!-- <script type="text/javascript" 
-		src="js/jquery-easyui-1.4.3/datagrid-export.js"></script> -->
 
 <script type="text/javascript"
 	src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
@@ -50,7 +48,7 @@
 		$("#sousuofrm").form("reset");
 		}
 		function formatterStu(value, row, index){ 
-			return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='lookStu(" + index + ")'>查看</a>   <a href='javascript:void(0)' style='cursor: pointer;' onclick='genzong(" + index + ")'>跟踪</a>    <a href='javascript:void(0)' style='cursor: pointer;' onclick='updateStu(" + index + ")'>编辑</a>";
+			return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='lookStu(" + index + ")'>查看</a>   <a href='javascript:void(0)' style='cursor: pointer;' onclick='genzong(" + index + ")'>跟踪</a>    <a href='javascript:void(0)' style='cursor: pointer;' onclick='updateStu(" + index + ")'>编辑</a>       <a href='javascript:void(0)' style='cursor: pointer;' onclick='sturizhi(" + index + ")'>跟踪日志</a>";
 		}	
 	 
 		function formatterSex(value, row, index){
@@ -328,7 +326,49 @@
 		function insertFollowclose(){
 			$("#insertFollow").dialog("close");
 		}
-
+		
+		function formatterfollowTime(value, row, index){
+			return row.netFollows.followTime;
+		}
+		function formatterContent(value, row, index){
+			return row.netFollows.conTent;
+		}
+		function formatternextTime(value, row, index){
+			return row.netFollows.nextFollowTime;
+		}
+		function formattercaozuo(value, row, index){ 
+			return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='lookcontent(" + index + ")'>查看</a>";
+		}
+		//查看日志的打开
+		function sturizhi(index){
+			var data = $("#stuTab").datagrid("getData");
+			var row = data.rows[index];
+				$("#dg").datagrid({
+					url:"selectlog",
+					method:"post",
+					pagination:true,
+					queryParams:{
+						stu_id:row.stu_id
+					}
+				})			
+			$("#looklog").dialog("open");
+		}
+		//查看日志的关闭
+		function logclose(){
+			$("#looklog").dialog("close");
+		}  
+		//跟踪日志的查看
+		function lookcontent(index){
+			var data=$('#dg').datagrid('getData');
+			var row=data.rows[index];
+			$('#lookFollowForm').form('load',row);
+			$('#lookFollows').window('open');		
+		} 
+		
+		//跟踪日志的查看的关闭
+		function Followclose(){
+			$('#lookFollows').dialog('close');
+		}
 	</script>
 </head>
 <body>
@@ -877,6 +917,43 @@
 
 			</table>
 		</form>
+	</div>
+	<!-- 日志log -->
+	<div id="looklog" class="easyui-dialog" title="查看跟踪日志"  
+		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
+		buttons:[{
+				text:'关闭',
+				handler:function(){logclose()}
+			}]">
+			<table id="dg" class="easyui-datagrid" style="width:400px;height:250px" data-options="fitColumns:true">   
+			    <thead>   
+			        <tr>   
+			            <th data-options="field:'stu_id'">编码</th>   
+			            <th data-options="field:'stu_Name'">姓名</th>   
+			            <th data-options="field:'followTime',formatter:formatterfollowTime">追踪时间</th>
+				        <th data-options="field:'nextFollowTime',formatter:formatternextTime">下次追踪时间</th>  
+				        <th data-options="field:'conTent',formatter:formatterContent">内容</th>
+						<th data-options="field:'caozuo',formatter:formattercaozuo">操作</th> 
+			        </tr>   
+			    </thead>   
+			</table>			
+	</div>
+	<!-- 对学生进行跟踪 -->
+	<div id="lookFollows" class="easyui-dialog" title="查看跟踪信息" style="width:400px;height:300px;" 
+		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
+		buttons:[{
+				text:'关闭',
+				handler:function(){Followclose()}
+			}]">
+		
+	    <form id="lookFollowForm" class="easyui-form">
+	    	<table cellpadding="5">	    		
+	    		<tr>
+	    			<td>内容：</td>
+	    			<td><input class="easyui-textbox" name="conTent"></td>
+	    		</tr>	    		
+	    	</table>
+	    </form>
 	</div>
 </body>
 </html>
