@@ -73,7 +73,6 @@
 	var parentId;
 	function updataModuledg(){
 		var nodes = $('#treemenu').tree('getSelected');
- 			alert("开始编辑"+nodes.id);
 			$.ajax({
 				type:"post",
 				dataType:'json',
@@ -92,7 +91,7 @@
 		var upweight=$("#upweight").val(); 
 		var upurl=$("#upurl").val();
 		var upname=$("#upname").val();
-		$.ajax({
+ 		$.ajax({
 			type:"post",
 			url:"updateModule",
 			dataType:'json',
@@ -101,9 +100,7 @@
 				if(res>0){
 					myTree();
 					clearModuleForm();
-					//$("#updataModule_window").dialog("close");
-					
-					 window.parent.location.href = "indexGL";
+					// window.parent.location.href = "indexGL";
 					$.messager.alert("提示","修改成功");
 				}else
 				$.messager.alert("错误提示","修改失败");

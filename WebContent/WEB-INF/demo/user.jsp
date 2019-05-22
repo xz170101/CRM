@@ -34,6 +34,10 @@
 					   }  
 			   });
 	}
+	//头像
+	function formatterImg(value,row,index){
+		return "<img src='img/"+value+"' style='width:25px; height: 25px;'> ";
+	}
 	//操作列
 	function formatterCaoZuo(value,row,index){
 		return "<a href='javascript:void(0);'  onclick='updateInfo(" + index + ")'>编辑</a>  <a href='javascript:void(0);' onclick='delInfo(" + index + ")'>删除</a> "
@@ -221,6 +225,7 @@
 	            $.post("delUser", {
                         user_Id:row.user_Id,
                     },function(res){
+                    	alert(res);
                         if(res>0){
                         	$("#userDG").datagrid("reload");
 	                        $.messager.alert("提示！","删除成功");
@@ -239,6 +244,7 @@
 	        <tr>
              	<th data-options="field:'user_Id',hidden:true">用户ID</th>
 	             <th data-options="field:'loginName'">用户名</th>
+	             <th data-options="field:'uexit2String',formatter:formatterImg">头像</th>
 	             <th data-options="field:'protectEMail'">邮箱</th>
 	             <th data-options="field:'protectMTel'">手机号</th>
 	             <th data-options="field:'isLockout',formatter:formatterisLockout">是否锁定</th>
@@ -288,8 +294,7 @@
 							return false;
 						}else{
 							$("#yznewusername").html('ok');
-						//	document.getElementById('yznewusername').innerHTML = 'ok！';
-							document.getElementById('yznewusername').style.color = 'green';
+ 							document.getElementById('yznewusername').style.color = 'green';
 							return true;
 						}
 					}
@@ -376,8 +381,8 @@
  		 var tel=$("#usertel").val().trim();
 		 var email=$("#useremail").val().trim();
 		 var flag=$("#adduserForm").form("validate");
-			 if(vnewusername()){
-				 if(vusertel()){
+ 			//if(vnewusername()){
+				// if(vusertel()){
 					 $.post("newUser", {    
 			        		loginName:name,
 			                passWord:pwd,
@@ -390,12 +395,12 @@
 			               		$.messager.alert("提示!","新增成功！");
 			                }
 			        },"json");
-				 }else{
-					 $.messager.alert("提示!","一个手机号只能绑定一个用户！");
-				 }
-		 }else{
-			 $.messager.alert("提示!","用户名已存在！");
-		 }
+				// }else{
+				//	 $.messager.alert("提示!","一个手机号只能绑定一个用户！");
+				// }
+		/// }else{
+		//	 $.messager.alert("提示!","用户名已存在！");
+		 //}
 	}
 </script>
 		<!-- 新增面板 -->

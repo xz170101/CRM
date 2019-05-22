@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.dyz.entity.Fenye;
 import com.dyz.entity.Module;
 import com.dyz.entity.Role;
-import com.dyz.entity.RoleModules;
+
 
 public interface RoleMapper {
 	/**
@@ -51,7 +51,7 @@ public interface RoleMapper {
 	 */
 	Integer insertRoleModule(@Param("module_Id")Integer module_Id,@Param("roles_Id")Integer roles_Id);
 	/**
-	 * 
+	 * 根据角色id查询角色名称
 	 * @param roles_Id
 	 * @return根据角色id查询角色名称
 	 */

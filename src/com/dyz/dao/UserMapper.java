@@ -28,11 +28,12 @@ public interface UserMapper {
 	 * @param loginName
 	 * @return
 	 */
-	User selectUser(String loginName);
+	//User selectUser(String loginName);
 	/**
 	 * 重置密码
+	 * @param passWord 
 	 */
-	Integer updatePsd(String loginName);
+	Integer updatePsd(User user);
 	/**
 	 * 添加用户
 	 * @param user

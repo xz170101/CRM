@@ -269,6 +269,7 @@
 				dataType:'json',
 				success:function(data){
 					 	if(data==uId){
+					 		alert("手机号查到的id:"+data)
 							return true;
 						}else{
 							$("#yzfphone").html('手机号不匹配');
@@ -294,7 +295,7 @@
 				}
 			});
 	});	
-	//找回密码
+	//进行重置密码
 	$("#btnEp").click(function(){
 		var name=$("#fUserName").val();
 		var phone=$("#fphone").val();
@@ -304,19 +305,17 @@
 		if(vusername()){
 			if(vphone()){*/
 				if(phoneCode==phoneCode){
-				$.post("sendPwdToPhone", {    
-						 loginName:name,
-						 protectMTel:phone,
-						 phoneCode:phoneCode 
-		       		 }, function(res){
+				$.post("resetPassword", {    
+						 loginName:name
+ 		       		 }, function(res){
 		       			 if(res>0){
 		       				$('#findPwd').window("close"); 
-		       				$.messager.alert("提示","请登录！");
+		       				$.messager.alert("提示","密码已重置,请登录！");
 		       			 }
 		    	 },"json");
 				}else{
-					$.messager.alert("提示","验证码不正确！");
-				}
+				$.messager.alert("提示","验证码不正确！");
+			}
 			/*}else{
 				$.messager.alert("提示","手机号格式不正确！");
 			}

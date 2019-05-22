@@ -37,7 +37,7 @@
               <mvc:exclude-mapping path="/selectUserByName"/> 
               <mvc:exclude-mapping path="/selectUserByTel"/> 
               <mvc:exclude-mapping path="/sendToPhoneCode"/> 
-              <mvc:exclude-mapping path="/sendPwdToPhone"/> 
+              <mvc:exclude-mapping path="/resetPassword"/> 
                 <mvc:exclude-mapping path="/js/**"/>
            		<mvc:exclude-mapping path="/img/**"/>
                 <bean id="commonInterceptor" class="com.dyz.controller.Interceptor"></bean> <!--这个类就是我们自定义的Interceptor -->

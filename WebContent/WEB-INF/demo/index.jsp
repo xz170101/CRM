@@ -57,11 +57,24 @@
 		<a class="line"></a>
 		<a href="javascript:;" class="e">logo副标题</a>
 	</div>
+	<style>
+            img{
+                border: #000 solid 2px;
+                display: block;
+                width:40px; 
+                height:40px;
+                border-radius: 50%;
+                transition: all 2.0s;
+            }
+            img:hover{
+                transform: rotate(360deg);
+            }
+     </style>
 	<!-- 菜单横栏 -->
 	<ul class="viewui-navmenu"></ul>
 	<div class="viewui-user">
-        <div class="user-photo">
-            <i class="fa fa-user-circle-o"></i>
+        <div class="user-photo"> 
+            <i class="fa"><img src="img/${user.uexit2String }" /></i>
         </div>
         <h4 class="user-name ellipsis" id="name">${user.loginName }</h4>
         <i class="fa fa-angle-down xiala"></i>

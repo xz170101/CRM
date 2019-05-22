@@ -5,7 +5,7 @@
 <mapper namespace="com.dyz.dao.ModuleMapper">
 	<!-- 查询 -->
 	<select id="selectModules" resultType="module">
-		select * from modules order by modules_path asc
+		select * from modules order by modules_weight asc
 	</select>
 	<!--  selectModuleByMId-->
 	<select id="selectModuleByMId" resultType="module">
@@ -16,13 +16,13 @@
 		update modules 
 		<set>
 			<if  test="modules_Name != null and modules_Name != '' ">
-			 modules_Name=#{modules_Name} ,
+				 modules_Name = #{modules_Name} ,
 			</if>
 			<if  test="modules_path != null and modules_path != '' ">
-			 modules_path=#{modules_path} ,
+				 modules_path = #{modules_path} ,
 			</if>
-			<if  test="modules_weight != null and modules_weight != '' ">
-			 modules_weight=#{modules_weight} ,
+			<if  test=" modules_weight >= 0 ">
+				 modules_weight = #{modules_weight} ,
 			</if>
 		</set>
 		<where>
