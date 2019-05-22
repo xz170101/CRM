@@ -16,10 +16,28 @@ public class UserChecksServiceImpl implements UserChecksService {
 	public Fenye selectUserChecks(Fenye fenye) {
 		// TODO Auto-generated method stub
 		Integer total=userchecksMapper.selectCount(fenye);
+		System.out.println(total);
 		List<UserChecks> rows=userchecksMapper.selectUserChecks(fenye);
+		System.out.println(rows);
 		fenye.setTotal(total);
 		fenye.setRows(rows);
+		System.out.println(fenye);
 		return fenye;
+	}
+	@Override
+	public Integer updateQuanTui() {
+		// TODO Auto-generated method stub
+		return userchecksMapper.updateQuanTui();
+	}
+	@Override
+	public Integer updateUserchecks(UserChecks userchecks) {
+		// TODO Auto-generated method stub
+		return userchecksMapper.updateUserchecks(userchecks);
+	}
+	@Override
+	public Integer selectcheckstate(int user_Id) {
+		// TODO Auto-generated method stub
+		return userchecksMapper.selectcheckstate(user_Id);
 	}
 
 }

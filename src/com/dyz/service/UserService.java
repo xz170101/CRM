@@ -149,8 +149,34 @@ public interface UserService {
 	 * @return
 	 */
 	Integer selectUserByTel(String protectMTel);
+	/**
+	 * 找回密码
+	 * @param user
+	 * @param phoneCode
+	 * @param request 
+	 * @return
+	 */
+	//String findPassWord(User user, String phoneCode, HttpServletRequest request);
+	/**
+	 * 发送验证码
+	 * @param user
+	 * @return
+	 */
+	Integer sendToPhoneCode(User user,HttpServletRequest request);
+	/**
+	 * 发送密码到手机号
+	 * @param user
+	 * @param request
+	 * @return
+	 */
+	Integer sendPwdToPhone(User user, HttpServletRequest request);
  
-	 
+	/**
+	 * 返回角色id
+	 * @param u_id
+	 * @return
+	 */
+	Integer selectLoginR_id(int userId);
 	 
 	 
 }

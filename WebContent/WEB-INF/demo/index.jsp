@@ -63,19 +63,16 @@
         <div class="user-photo">
             <i class="fa fa-user-circle-o"></i>
         </div>
- 
         <h4 class="user-name ellipsis" id="name">${user.loginName }</h4>
- 
         <i class="fa fa-angle-down xiala"></i>
-
         <div class="viewui-userdrop-down">
             <ul class="user-opt">
-              <li>
-                <a href="javascript:;">
+           <!--   <li>
+                 <a href="javascript:;">
                     <i class="fa fa-user"></i>
                     <span class="opt-name">用户信息</span>
                 </a>
-              </li>
+              </li> -->
               <li class="modify-pwd">
                     <a href="javascript:;" id="editpass">
                         <i class="fa fa-edit"></i>
@@ -96,8 +93,8 @@
 		<div class="notice-box ellipsis" onmouseout="marqueeInterval[0]=setInterval('startMarquee()',marqueeDelay)" onmouseover="clearInterval(marqueeInterval[0])">
 		</div>
 		<div class="notice-opt">
-			<a href="javascript:;" class="fa fa-caret-up"></a>
-			<a href="javascript:;" class="fa fa-caret-down"></a>
+			<!-- <a href="javascript:;" class="fa fa-caret-up"></a>
+			<a href="javascript:;" class="fa fa-caret-down"></a> -->
 		</div>
     </div>
 </div>
@@ -151,6 +148,7 @@
     </div>
 </div>
 <script type="text/javascript">
+ 
 //绑定 div 的鼠标事件
 $('.navmenu-item a').click(function(){
   $('.navmenu-item a').removeClass("active");//清空已经选择的元素

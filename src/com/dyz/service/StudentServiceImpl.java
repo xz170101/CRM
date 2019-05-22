@@ -62,10 +62,4 @@ public class StudentServiceImpl implements StudentService {
 		return fenye;
 	}
 
-	@Override
-	public List<Student> selectStuByZiXunName() {
-		// TODO Auto-generated method stub
-		return studentMapper.selectStuByZiXunName();
-	}
-
 }

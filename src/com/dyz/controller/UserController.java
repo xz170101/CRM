@@ -196,26 +196,41 @@ public class UserController {
     public Integer outLogin(HttpSession session){
         //通过session.invalidata()方法来注销当前的session
     	//User users = (User) session.getAttribute("user");
+    	session.removeAttribute("user");
         session.invalidate();
         return  1;
     } 
-    
-    /* int p= (int)((Math.random()*9+1)*100000);//获取6位随机验证码
- 		IndustrySMS.setTo(phone);//发送到这个手机号
- 		String smsContent = "【CRM管理平台】您的验证码为"+p+"，请于30分钟内正确输入，如非本人操作，请忽略此短信。";//发送的内容
- 		IndustrySMS.setSmsContent(smsContent);//把发送的信息内容存到这个对象类中
- 		IndustrySMS.execute();//执行发送验证码方法
- 		request.getSession().setAttribute("p", p);//把验证码存入到键值并存在session中
- 		 */
-    
-    
-    /***
-           * 找回密码
+    /**
+     * 验证手机号
+     * @param user
+     * @param request
      * @return
      */
-    @RequestMapping(value="/findPwd", method = RequestMethod.POST)
+    @RequestMapping(value="/sendToPhoneCode", method = RequestMethod.POST)
     @ResponseBody
-    public Integer findPwd(){
-        return  null  ;
+    public Integer sendToPhoneCode(User user, HttpServletRequest request){
+        return  userService.sendToPhoneCode(user,request);
     } 
+    /**
+        * 发送密码到手机号
+     * @param user
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/sendPwdToPhone", method = RequestMethod.POST)
+    @ResponseBody
+    public Integer sendPwdToPhone(User user, HttpServletRequest request){
+        return  userService.sendPwdToPhone(user,request);
+    } 
+    /**
+     * 找回密码
+     * @return
+     */
+   /* @RequestMapping(value="/findPassWord", method = RequestMethod.POST)
+    @ResponseBody
+    public String findPwd(User user ,String phoneCode, HttpServletRequest request){
+    	
+    	
+        return  userService.findPassWord(user,phoneCode,request);
+    } */
 }

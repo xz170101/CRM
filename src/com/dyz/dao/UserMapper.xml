@@ -44,7 +44,7 @@
 		limit #{page},#{pageSize}
 	</select>
 	<!-- 验证用户名是否重复 -->
-	<select id="selectUser" parameterType="user" resultType="String">
+	<select id="selectUser" parameterType="string" resultType="user">
 		select * from user where loginName=#{loginName}
 	</select>
 	<!-- 重置密码 -->
@@ -105,7 +105,7 @@
 	<update id="unLockUse" parameterType="int">
 		update `user`
 		<set>
-			 isLockout=0 ,lockTime=null
+			 isLockout=0 ,lockTime=null,psdWrongTime=0
 		</set>
 		<where>
 			user_Id=#{user_Id}	
@@ -139,8 +139,9 @@
 		select user_Id from `user` where loginName = #{loginName}
 	</select>	
 	<!--selectUserByTel  -->
-	<select id="selectUserByTel" parameterType="String" resultType="int" >
-		select count(user_Id) from `user` where protectMTel = #{protectMTel}
+	<select id="selectUserByTel" parameterType="String" resultType="user" >
+		select u.user_Id,u.loginName,u.protectMTel,u.`passWord` 
+		from `user` u where protectMTel = #{protectMTel}
 	</select>	
 	<!-- selectByNameLockout -->
 	<select id="selectByNameLockout" parameterType="String" resultType="int" >
@@ -180,5 +181,8 @@
 			VALUES (#{loginName},#{passWord},#{protectEMail},#{protectMTel},NOW(),0,0)
 	</insert>
 	 
-	 
+	 <!-- 签到 -->
+	 <select id="selectLoginR_id" parameterType="int" resultType="int">
+		select max(roleId) from userrole where userId=#{userId}
+		</select>
 </mapper>

@@ -5,15 +5,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dyz.dao.UserMapper;
 import com.dyz.entity.User;
 import com.dyz.util.Result;
 import com.dyz.util.SessionSave;
 
 public class Interceptor implements HandlerInterceptor {
- 
+			@Autowired
+			private UserMapper usermapper;
 		//controller执行后且视图返回后调用此方法
 		 public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
 				throws Exception {
@@ -36,6 +39,7 @@ public class Interceptor implements HandlerInterceptor {
 			}
 			HttpSession session = request.getSession();
 			User user= (User) session.getAttribute("user");
+			System.out.println("session中取到的"+user);
 			//如果用户已登录也放行
 			if(user!=null){
 				//request.getRequestDispatcher("/WEB-INF/demo/index.jsp").forward(request, response);
@@ -54,7 +58,16 @@ public class Interceptor implements HandlerInterceptor {
 			if(cookies!=null) {
 			    for(Cookie cookie : cookies){
 			        if("loginName".equals(cookie.getName())){
-			        	return true;
+			        	String loginName=(String)cookie.getValue();	
+			        	User luser=usermapper.selectUser(loginName);
+			        	System.out.println("s:"+luser);
+			        	if(luser!=null) {
+				        	session.setAttribute("user", luser);
+				        	return true;
+			        	}else {
+			        		return false;
+			        	}
+			        
 			        }/*else {
 			        	request.getRequestDispatcher("/WEB-INF/demo/login.jsp").forward(request, response);
 			        	return false;

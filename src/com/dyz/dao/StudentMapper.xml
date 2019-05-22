@@ -115,8 +115,8 @@
 			<if test="text2 !=null and text2!=''">
 				and stu_Phone like "%"#{text2}"%"
 			</if>
-			<if test="text3 !=null and text2!=''">
-				and stu_ZiXunName like "%"#{text2}"%"
+			<if test="text3 !=null and text3!=''">
+				and stu_ZiXunName like "%"#{text3}"%"
 			</if>		
 			
 			<!--integer  -->
@@ -197,10 +197,10 @@
 		</where>
 	</select>
 	
-	<!-- 查询咨询师 -->
+	 <!-- 查询咨询师 -->
 	<select id="selectzixunname" resultType="askers">
 		SELECT * FROM askers where roleName='咨询师' order by weight desc;
-	</select>
+	</select> 
 	
 		<!-- 删除学生 -->
   	<delete id="delectStudent" parameterType="int">
@@ -227,10 +227,7 @@
 			where stu_id=#{stu_id}	
   	</update>
   	
-  	<!-- 查询所有没有咨询师跟踪的学生 -->
-		<select id="selectStuByZiXunName" resultType="student">
-			select * from students where stu_ZiXunName is null
-		</select>
+  
   	<!-- 修改客户信息 -->
   	<update id="updateStudent" parameterType="student">
 		update students

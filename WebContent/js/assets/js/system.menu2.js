@@ -1,4 +1,4 @@
-﻿var _menus_oneLeve=[{"menuid":"0","menuname":"首页","icon":"fa-home"}];
+﻿var _menus_oneLeve=[{"menuid":"0","menuname":" ","icon":" "}];
 var _menus=[
     {"menuid":"00","icon":"fa-trophy","menuname":"模块管理",parentMenu:'0',
         "menus":[{"menuid":"002","menuname":"管理模块","icon":"fa-delicious","url":"indexGL"},
@@ -20,6 +20,7 @@ var _menus=[
         var $newpass = $('#txtNewPass');
         var $rePass = $('#txtRePass');
         var pwd= $("#txtPass").val();
+        var RegPwd=/^[a-z0-9]{6,12}$/;
         if (pwd == '') {
             msgShow('系统提示', '请输入原密码！', 'admin');
             return false;
@@ -37,6 +38,10 @@ var _menus=[
             msgShow('系统提示', '两次密码不一致！请重新输入', 'admin');
             return false;
         }
+        if(!(RegPwd.test(pwd)) && !(RegPwd.test($newpass.val())) ){
+        	msgShow('系统提示', '密码必须为6~12位的数字或字母！', 'admin');
+   		 		return false;
+   	 	}
         var name=$("#name").html();
         $.post('setPwd' ,{
         		passWord:pwd,//原密码
@@ -45,15 +50,12 @@ var _menus=[
         	}, function(msg) {
         		if(msg>0){
         			 msgShow('系统提示', '恭喜，密码修改成功！', 'info');
+        			   closePwd();
         		}else{
         			 msgShow('系统提示', '原密码不正确！', 'info');
         		}
-	           
-	             
-	            closePwd();
-        })
-        
-    }
+	        })
+	    }
 
     $(function() {
         openPwd();

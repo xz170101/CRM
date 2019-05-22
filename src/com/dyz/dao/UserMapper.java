@@ -149,7 +149,15 @@ public interface UserMapper {
 	 * @param protectMTel
 	 * @return
 	 */
-	Integer selectUserByTel(String protectMTel);
  
+	User selectUserByTel(String protectMTel);
+ 
+	/**
+	 * 返回角色id
+	 * @param u_id
+	 * @return
+	 */
+	Integer selectLoginR_id(int userId);
+	 
 	 
 }
