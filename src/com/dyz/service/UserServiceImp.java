@@ -1,3 +1,4 @@
+
 package com.dyz.service;
 
 import java.text.SimpleDateFormat;
@@ -216,7 +217,7 @@ public class UserServiceImp implements UserService{
 		// TODO Auto-generated method stub
 		return usermapper.insertNewUser(user);
 	}
-	int count=0;
+	int psdWrongTime=0;
 	@Override
 	public String getLogin(User user, String yes, String yzm, HttpSession session, HttpServletRequest req,
 			HttpServletResponse res, Model model) {
@@ -235,20 +236,20 @@ public class UserServiceImp implements UserService{
 				//根据用户名和密码查询用户信息 判断密码是否正确
 				User u = usermapper.selectUse(user);
 				if (u == null) {
-					count++;
+					psdWrongTime++;
 						User use=new User();
 						use.setUser_Id(nameId);
-						use.setPsdWrongTime(count);
+						use.setPsdWrongTime(psdWrongTime);
 						//修改用户密码错误次数
 						usermapper.updateUse(use);
-						if(count>3) {
+						if(psdWrongTime>3) {
 							SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 							String time = s.format(new Date());
 							use.setLockTime(time);
 							use.setIsLockout(1);
 							//锁定用户
 							usermapper.lockUse(nameId);
-							return Result.toClient(false, "错误次数大于三次，该用户已被锁定，请联系管理员解锁！");
+							return Result.toClient(false, "该用户已被锁定，请联系管理员解锁！");
 					}
 					return Result.toClient(false, "密码不正确");
 				} else {
@@ -370,8 +371,6 @@ public class UserServiceImp implements UserService{
 	}
 	 
  
-	
-	
  
 
     /* int p= (int)((Math.random()*9+1)*100000);//获取6位随机验证码

@@ -158,5 +158,6 @@ public interface UserMapper {
 	 * @return
 	 */
 	Integer selectLoginR_id(int userId);
+
 	 
 }

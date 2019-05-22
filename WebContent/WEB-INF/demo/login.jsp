@@ -37,12 +37,7 @@
 			$('#checked').attr("class","checked");
 			}
 		});  
-		//回车键触发	
-		/* $(document).keyup(function(event){
-			 if(event.keyCode ==13){
-				 subLogin();
-			 }
-		}); */
+		 
 	  //遍历获取cookie中的值
 	  function getCookie(name){
 		  var strcookie = document.cookie;//获取cookie字符串

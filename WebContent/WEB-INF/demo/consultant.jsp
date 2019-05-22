@@ -23,6 +23,7 @@
 			init();
 		})
 		function init(){
+		var userName  ='<%=session.getAttribute("userName")%>';
 		$("#stuTab").datagrid({
 			url:"selectCon",
 			method:"post",			
@@ -32,9 +33,9 @@
 	        toolbar:"#tb",
 	        queryParams:{				
 				//要发送的参数列表
+				UserName:userName,
 				text1:$("#sname").textbox("getValue"),	
 				text2:$("#phone").textbox("getValue"),	
-				text3:$("#zixunname").textbox("getValue"),
 				num1:$("#ispay").combobox("getValue"), 
 				num2:$("#isvalid").combobox("getValue"),	
 				num3:$("#isreturnvist").combobox("getValue"),
@@ -65,7 +66,7 @@
 				valid='是';
 			}else if(row.stu_isValid==2){
 				valid='待定';
-			}
+			}	
 			return valid;
 		}
 		//回访情况
@@ -375,7 +376,7 @@
 				<th data-options="field:'stu_stuConcern'">学员关注</th>
 				<th data-options="field:'stu_isBaoBei',formatter:formatterIsBaoBei">是否报备</th>
 				<th data-options="field:'sexitInte'">打分</th>
-				<th data-options="field:'stu_ZiXunName'">咨询师备注</th>
+				<th data-options="field:'stu_ZiXunName'">咨询师</th>
 				<th data-options="field:'stu_CreateUser'">录入人</th>
 				<th data-options="field:'stu_ReturnMoneyReason'">退费时间</th>
 				<th
@@ -388,7 +389,6 @@
 		<form id="sousuofrm" class="easyui-form">
 			客户姓名:<input class="easyui-textbox" id="sname" style="width: 80px">
 			电话:<input class="easyui-textbox" id="phone" style="width: 80px">
-			咨询师:<input class="easyui-textbox" id="zixunname" style="width: 80px">
 			是否缴费:<select id="ispay" class="easyui-combobox" style="height: auto;">
 				<option value="0">否</option>
 				<option value="1">是</option>
