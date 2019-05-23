@@ -11,6 +11,8 @@
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.min.js"></script>
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
+ 		<link rel="stylesheet" type="text/css" href="js/assets/css/jquery.range.css">
+ 		<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.range.js"></script>
  	<script type="text/javascript">
 	$(function() {
 		$("#treemenu").tree({
@@ -20,13 +22,32 @@
 				e.preventDefault();
 				// 查找节点
 				$('#treemenu').tree('select', node.target);
+				var nodes = $('#treemenu').tree('getSelected'); // get checked nodes
 				// 显示快捷菜单
-				$('#mm').menu('show', {
+				//alert(JSON.stringify(nodes));
+				if(nodes.parent_id==0){
+					$('#mn').menu('show', {
 						left: e.pageX,
 						top: e.pageY
 					});
+				}else{$('#mm').menu('show', {
+					left: e.pageX,
+					top: e.pageY
+				});}
+				
 			}
 		})
+		//滑动选择权重
+		$('.slider-input').jRange({
+		    from: 0.0,
+		    to: 100.0,
+		    step: 1.0,
+		    scale: [0.0,20.0,40.0,60.0,80.0,100.0],
+		    format: '%s',
+		    width: 180,
+		    showLabels: true,
+		    snap: true
+		});
 	});
 	function myTree(){
 		$("#treemenu").tree({
@@ -66,8 +87,16 @@
 		}else
 		$.messager.alert("错误信息","请填写完整！","info");
 	}
+ 
+	$('#updataModule_window').dialog({
+        onBeforeClose: function () { 
+        	clearModuleForm();
+        }
+	})
 	function clearModuleForm(){
+		$("#addModuleForm").form("clear");
 		$("#addModule_window").dialog("close");
+		$("#updateModuleForm").form("clear");
 		$("#updataModule_window").dialog("close");
 	}
 	var parentId;
@@ -79,8 +108,8 @@
 				url:"selectModuleById",
 				data:{"modules_Id":nodes.id },
 				success:function(res){
-						parentId=res.parentId;
-						$("#updateModuleForm").form("load",res);
+						 parentId=res.parentId;
+ 						$("#updateModuleForm").form("load",res);
 						$("#updataModule_window").dialog("open");
 				}
 			});
@@ -134,8 +163,7 @@
 	}
 </script>
  <body>
-		
-	<table name="center1" class="easyui-datagrid" id="Moduledg" title="模块信息" style="width: 100%; height:auto;" data-options="method:'post'">
+ 	<table name="center1" class="easyui-datagrid" id="Moduledg" title="模块信息" style="width: 100%; height:auto;" data-options="method:'post'">
 	</table>
 	<!-- <div style="margin-bottom: 5px;">
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" onclick="addModuleInfo()">添加</a>
@@ -163,8 +191,9 @@
 				</tr>
 				<tr>
 					<td>权重</td>
-					<td><input class="easyui-numberbox" type="text" id="weight"  name="weight" data-options="required:true"></input>
-					</td>
+					<td>
+					<input id="weight"  type="hidden" class="slider-input"  />
+				  	</td>
 				</tr>
 				<tr>
 					<td>URL:</td>
@@ -192,7 +221,9 @@
 			<table cellpadding="5">
 				<tr>
 					<td>权重</td>
-					<td><input class="easyui-textbox" type="text" name="modules_weight"  id="upweight" data-options="required:true"></input>
+					<td>
+					<input id="upweight" name="modules_weight" type="hidden" class="slider-input"  />
+					<!-- <input class="easyui-textbox" type="text" name="modules_weight"  id="upweight" data-options="required:true"></input> -->
 					</td>
 				</tr>
 				<tr>
@@ -209,8 +240,13 @@
 		</form>
 	</div>
 	
-	<div id="mm" class="easyui-menu" style="width:120px;">
+	<div id="mn" class="easyui-menu" style="width:120px;">
 		<div onclick="addModuleInfo()" data-options="iconCls:'icon-add'">追加</div>
+		<div onclick="updataModuledg()" data-options="iconCls:'icon-edit'">编辑</div>
+		<div onclick="deleteModuledg()" data-options="iconCls:'icon-remove'">移除</div>
+	</div>
+	<div id="mm" class="easyui-menu" style="width:120px;">
+<!-- 		<div onclick="addModuleInfo()" data-options="iconCls:'icon-add'">追加</div> -->
 		<div onclick="updataModuledg()" data-options="iconCls:'icon-edit'">编辑</div>
 		<div onclick="deleteModuledg()" data-options="iconCls:'icon-remove'">移除</div>
 	</div>

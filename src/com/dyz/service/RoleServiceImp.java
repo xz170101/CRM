@@ -44,7 +44,7 @@ public class RoleServiceImp implements RoleService{
 	@Override
 	public Integer insertRole(Role role) {
 		// TODO Auto-generated method stub
-		return roleMapper.insertRole(role);
+		return  roleMapper.insertRole(role);
 	}
 	/**
 	 * 删除角色

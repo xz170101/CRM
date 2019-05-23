@@ -73,7 +73,6 @@
 						$("#SetRight").dialog("close"); 
 						$("#dg").datagrid("reload");
 						$.messager.alert("提示","保存权限成功");
-						
 						 //window.top.loadTree();
 	 				}else{
 	 					$("#SetRight").dialog("close"); 
@@ -99,6 +98,10 @@
                             $("#addRolse_window").dialog("close");//关闭添加窗口
                             $("#dg").datagrid("reload"); //通过调用reload方法，让datagrid刷新显示数据
                         	$.messager.alert("提示！","新增成功！");//提示
+                        }else{
+                        	$("#addRolse_window").dialog("close");//关闭添加窗口
+                            $("#dg").datagrid("reload"); //通过调用reload方法，让datagrid刷新显示数据
+                        	$.messager.alert("提示！","已存在！");//提示
                         }
                 },"json");
             }    
@@ -114,8 +117,8 @@
 		 function submitUpdateRolseForm(){
             var rname=$("#rName_exit").val();
             var rid=$("#rId_exit").val();
-            alert(rname);
-            alert(rid);
+           // alert(rname);
+            //alert(rid);
              $.post("updateRole",{
             	 roles_Name:rname,
 					roles_Id:rid,
@@ -134,23 +137,27 @@
 		  }
 		//删除角色
 		function delInfo(index){
-			$.messager.confirm('确认','您确认想要删除角色吗？',function(r){   
-    		if (r){ // 用户点击了确认按钮 执行删除    
- 				var data = $("#dg").datagrid("getData"); //获取datagrid对应的json对象集合  
-	            var row = data.rows[index]; //获取第index行对应的json对象
-	            $.post("delRole",
-                    {
-                        roles_Id:row.roles_Id,
-                    },function(res){
-                        if(res>0){
-                        	$("#dg").datagrid("load");
-	                        $.messager.alert("提示！","删除成功");
-                        }else{
-                        	$.messager.alert("提示！","该角色具有模块不可删除!");
-                        }
-                    });   
- 				 }   
-			});
+			var data = $("#dg").datagrid("getData"); //获取datagrid对应的json对象集合  
+            var row = data.rows[index]; //获取第index行对应的json对象
+			if(row.roles_Name == "管理员"){
+				$.messager.alert("提示！","你怎么会删除管理员呢!");
+			}else{
+				$.messager.confirm('确认','您确认想要删除角色吗？',function(r){   
+		    		if (r){ // 用户点击了确认按钮 执行删除    
+			            $.post("delRole",
+		                    {
+		                        roles_Id:row.roles_Id,
+		                    },function(res){
+		                        if(res>0){
+		                        	$("#dg").datagrid("load");
+			                        $.messager.alert("提示！","删除成功");
+		                        }else{
+		                        	$.messager.alert("提示！","该角色具有模块不可删除!");
+		                        }
+		                    });   
+		 				 }   
+					});
+			}
 		}
 	</script>
 	<body>

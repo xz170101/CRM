@@ -7,7 +7,7 @@ var _menus=[
             ]} 
 ];
 
-    //设置登录窗口
+    //设置修改密码窗口
     function openPwd() {
     	$('#updatePwd').window({title: '修改密码', width: 300, modal: true, shadow: true, closed: true, height: 200, resizable:false }); 
     }
