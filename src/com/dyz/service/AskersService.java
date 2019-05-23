@@ -1,5 +1,7 @@
 package com.dyz.service;
 
+import java.util.List;
+
 import com.dyz.entity.Askers;
 import com.dyz.entity.Fenye;
 
@@ -43,4 +45,9 @@ public interface AskersService {
 	 * @return
 	 */
 	Integer selectByUsers(int userChecksId);
+	/**
+	 * 查询已签到的咨询师	
+	 * @return
+	 */
+	List<Askers> selectqiandao();
 }

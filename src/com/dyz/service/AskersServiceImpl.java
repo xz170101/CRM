@@ -46,5 +46,10 @@ public class AskersServiceImpl implements AskersService {
 		// TODO Auto-generated method stub
 		return askersMapper.updateWeight(askers);
 	}
+	@Override
+	public List<Askers> selectqiandao() {
+		// TODO Auto-generated method stub
+		return askersMapper.selectqiandao();
+	}
 
 }

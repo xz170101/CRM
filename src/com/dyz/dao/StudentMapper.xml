@@ -217,13 +217,15 @@
   	  #{stu_SourceKeyWord}, #{stu_qq},#{stu_WeiXin},
   	   #{stu_isBaoBei},#{stu_inClassContent})
   	</insert>
-  	<!-- 修改咨询师姓名 -->
+  	<!-- 修改咨询师姓名,手动分量 -->
   	<update id="updatezixunname" parameterType="student">
   			update students
 		<set>
-			<if test="stu_ZiXunName!=null and stu_ZiXunName!=''">
-				stu_ZiXunName=#{stu_ZiXunName}
-			</if>			
+			<!-- <if test="stu_ZiXunName!=null and stu_ZiXunName!=''"> -->
+				stu_ZiXunName=#{stu_ZiXunName},
+				
+				askers_Id=#{askers_Id}
+			<!-- </if>	 -->		
 		</set>		
 			where stu_id=#{stu_id}	
   	</update>
@@ -233,7 +235,7 @@
   	<update id="updateStudent" parameterType="student">
 		update students
 		<set>
-			<!-- <if test="stu_Name!=null and stu_Name!=''">
+			 <if test="stu_Name!=null and stu_Name!=''">
 				stu_Name=#{stu_Name},
 			</if>
 			<if test="stu_Sex!=null and stu_Sex!=''">
@@ -278,7 +280,9 @@
 			<if test="stu_isBaoBei!=null and stu_isBaoBei!=''">
 				stu_isBaoBei=#{stu_isBaoBei},
 			</if>	
-			
+			<if test="stu_ZiXunName !=null and stu_ZiXunName !=''">
+				stu_ZiXunName=#{stu_ZiXunName},
+			</if>
 			<if test="stu_CreateUser!=null and stu_CreateUser!=''">
 				stu_CreateUser=#{stu_CreateUser},
 			</if>
@@ -317,7 +321,7 @@
 			</if>			
 			<if test="stu_isPay!=null and stu_isPay!=''">
 				stu_isPay=#{stu_isPay},
-			</if>-->			
+			</if>			
 			<if test="stu_PayTime!=null and stu_PayTime!=''">
 				stu_PayTime=#{stu_PayTime},
 			</if>

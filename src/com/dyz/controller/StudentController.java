@@ -45,8 +45,7 @@ public class StudentController {
 	
 	@RequestMapping(value="/updateStudent",method=RequestMethod.POST)
 	@ResponseBody
-	public Integer update(Student student) {
-		System.out.println("ssfdgfhfgjghkhjk");
+	public Integer update(Student student) {		
 		return studentService.updateStudent(student);
 	}
 	

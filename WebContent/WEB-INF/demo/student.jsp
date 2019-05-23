@@ -12,47 +12,39 @@
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
 	<script>
 	$(function(){		
-		init();
-		kaiqi();
-		$("#zixunname").combobox({
+		init();		
+		$("#zixunname1").combobox({
 			url:'selectzixunname',
 			method:'post',
 			valueField:'askers_Name',
 			textField:'askers_Name'
 		});			
 	})
-	//开启分量
-	function kaiqi() {
-		var kaiguan = $("#fen").val();	
-		if (kaiguan ==true || kaiguan != ""||kaiguan ==false) {
-			if (kaiguan==true) {
-				kaiguan=true;
-			} else {
-				kaiguan = false;
-			}
-		} else {
-			kaiguan = false;
-		} 
-		$('#fenliang').switchbutton({
-			checked : kaiguan,
-			onChange : function(checked) {
-				$.messager.confirm("提示", "你确定开启自动分量吗？", function(r) {
-					if (r) {
-						$.ajax({
-							url : "fenliang",
-							type : "post",
-							dataType : "json",
-							data : {
-								checked : checked
-							},
-							success : function(res) {
-								alert("开启成功");
-							}
-						})
-					}
-				})				//
-			}
+	function init(){
+		$("#stuTab").datagrid({
+			url:"selectStudent",
+			method:"post",			
+			fitColumns:true,
+	        pagination:true,
+	        rownumbers:true, 
+	        toolbar:"#tb",
+	        queryParams:{				
+				//要发送的参数列表
+				text1:$("#sname").textbox("getValue"),	
+				text2:$("#phone").textbox("getValue"),	
+				text3:$("#zixunname1").combobox("getValue"),
+				num1:$("#ispay").combobox("getValue"), 
+				num2:$("#isvalid").combobox("getValue"),	
+				num3:$("#isreturnvist").combobox("getValue"),
+				text4:$("#qq").textbox("getValue"),	
+				text5:$("#creattime").datebox("getValue"),	
+				text6:$("#hometime").datebox("getValue"),
+				text7:$("#firstvisittime").datebox("getValue"), 
+				text8:$("#paytime").datebox("getValue"),	
+				text9:$("#inclasstime").datebox("getValue")
+				}
 		})
+		$("#sousuofrm").form("reset");
 	}
 	//查看日志的打开
 	function looklogf(index){
@@ -84,35 +76,6 @@
 		function Followclose(){
 			$('#lookFollows').dialog('close');
 		}
-	
-	
-	
-	function init(){
-		$("#stuTab").datagrid({
-			url:"selectStudent",
-			method:"post",			
-			fitColumns:true,
-	        pagination:true,
-	        rownumbers:true, 
-	        toolbar:"#tb",
-	        queryParams:{				
-				//要发送的参数列表
-				text1:$("#sname").textbox("getValue"),	
-				text2:$("#phone").textbox("getValue"),	
-				text3:$("#zixunname").textbox("getValue"),
-				num1:$("#ispay").combobox("getValue"), 
-				num2:$("#isvalid").combobox("getValue"),	
-				num3:$("#isreturnvist").combobox("getValue"),
-				text4:$("#qq").textbox("getValue"),	
-				text5:$("#creattime").datebox("getValue"),	
-				text6:$("#hometime").datebox("getValue"),
-				text7:$("#firstvisittime").datebox("getValue"), 
-				text8:$("#paytime").datebox("getValue"),	
-				text9:$("#inclasstime").datebox("getValue")
-				}
-		})
-		$("#sousuofrm").form("reset");
-	}
 	
 	function formatterfollowTime(value, row, index){
 		alert(row.netFollows);
@@ -243,61 +206,7 @@
 		$("#insertStuForm").form("clear");
 		$("#insertStu").dialog("close");
 	}
-	
-	 
-	//批量操作，对咨询师名字的修改
-		function piliang(){	
-			$("#zixunname").combobox({
-				url:'selectzixunname',
-				method:'post',
-				valueField:'askers_Name',
-				textField:'askers_Name'
-			});
-			var row=$("#stuTab").datagrid("getSelections");
-			if(row==false){//判断如果没有选中的行则提示
-			alert("请选中要修改的行的复选框");
-		}else{//如果有选中的行就弹出弹框
-			if($("#stuTab").datagrid("getSelected").stu_ZiXunName!=null){
-				alert('该客户已经有咨询师进行跟踪！');
-			}else{
-				$('#updateziXunName').dialog('open');
-			}
-		} 
-			
-		}
-		//修改咨询师名字弹框的关闭
-		function updateziXunNameclose() {
-			$('#updateziXunName').dialog('close');
-		}
 		
-		
-		//咨询师名字修改后的数据的提交
-		function updatezixunnamesave() {						
-			var stu_id=[];
-			var rows = $("#stuTab").datagrid("getSelections"); // 获取所有选中的行
-			 $(rows).each(function(){
-				 stu_id.push(this.stu_id);    
-		     });
-			$.ajax({
-				url:'updatezixunname',
-				method:'post',
-				dataType:'json',
-				data:{
-					stu_id:stu_id.toString(),
-					stu_ZiXunName:$('#zixunanme').combobox('getValue')
-				},
-				success:function(res){
-					if(res>0){
-						$.messager.alert('提示','修改成功');
-						$('#stuTab').datagrid('reload');
-						$('#updateziXunName').dialog('close');
-					}else{
-						$.messager.alert('提示','修改失败');
-					}
-				}
-			})
-
-		}
  		//查看
 		function lookStu(index){
 			var data=$('#stuTab').datagrid('getData');
@@ -335,23 +244,23 @@
 			$('#stu_isHome33').textbox('setValue',row.stu_isHome==1?"是":"否");
 			$('#stu_isReturnVist33').textbox('setValue',row.stu_isReturnVist==1?"已回访":"未回访");
 			$('#stu_isValid33').textbox('setValue',row.stu_isValid==0?row.stu_isValid==1?"是":"否":'待定');
-			/* $('#s_idu').next().hide();//隐藏编号的字段
-	$('#s_stustatusu').combobox('select',row.s_stustatus);//显示选中的学历
-	$('#s_perstatusu').combobox('select',row.s_perstatus);//显示选中的状态
-	$('#s_sourceurlu').combobox('select',row.s_sourceurl);//显示选中的来源渠道
-	$('#s_netpusheridu').combobox('select',row.s_netpusherid);//显示选中的来源网站
-	$('#s_frompartu').combobox('select',row.s_frompart);//显示选中的来源部门
-	$('#s_addressu').combobox('select',row.s_address);//显示选中的地址
-	$('#s_learnforwardu').combobox('select',row.s_learnforward);//显示选中的课程方向
-	$('#s_gradeu').combobox('select',row.s_grade);//显示选中的打分
-	$('#s_stuconcernu').combobox('select',row.s_stuconcern);//显示选中的学员关注
-	$('#s_zixunnameu').combobox({//动态获取咨询师下拉框的 值
-		url:'/CRM/selectAskers',  
-		method:'post',
-	    valueField:'askername',    
-	    textField:'askername'   
-	})
-	$('#s_zixunnameu').combobox('select',row.s_zixunname);//显示选中的咨询师 */
+			$('#stusid').next().hide();//隐藏编号的字段
+			$('#stu_Status3').combobox('select',row.stu_Status);//显示选中的学历
+			$('#stu_PerState3').combobox('select',row.stu_PerState);//显示选中的状态
+			$('#stu_SourceUrl3').combobox('select',row.stu_SourceUrl);//显示选中的来源渠道
+			$('#stu_NetPusherld3').combobox('select',row.stu_NetPusherld);//显示选中的来源网站
+			$('#stu_FromPart3').combobox('select',row.stu_FromPart);//显示选中的来源部门
+			$('#stu_Address3').combobox('select',row.stu_Address);//显示选中的地址
+			$('#stu_LearnForward33').combobox('select',row.stu_LearnForward);//显示选中的课程方向
+			$('#sexitInte33').combobox('select',row.sexitInte);//显示选中的打分
+			$('#stu_stuConcern3').combobox('select',row.stu_stuConcern);//显示选中的学员关注
+			$('#zixunname33').combobox({//动态获取咨询师下拉框的 值
+				url:'selectzixunname',
+				method:'post',
+				valueField:'askers_Name',
+				textField:'askers_Name'   
+			})
+			$('#zixunname33').combobox('select',row.stu_ZiXunName);//显示选中的咨询师 
 			
 			$('#editStu').dialog('open');
 		}
@@ -367,16 +276,15 @@
 			}else if(valid=='待定'){
 				valid=2;
 			}
-			alert($("#stusid").textbox("getValue"));
-			alert($("#stu_isInClass33").combobox("getValue")); 
+			var zixunname=$('#zixunname33').combobox('getValue');//获取咨询师的值，并对其进行判断 
 			$.ajax({
 				url:'updateStudent',
 				method:'post',
 				dataType:'json',
 				data:{
-					stu_id:$("#stusid").textbox("getValue"),
-					/* stu_Name:$("#stu_Name3").textbox("getValue"),
-					stu_Sex:($("#stu_Sex3").combobox("getValue")=='男'?1:0),
+					 stu_id:$("#stusid").textbox("getValue"),
+					 stu_Name:$("#stu_Name3").textbox("getValue"),
+					 stu_Sex:($("#stu_Sex3").combobox("getValue")=='男'?0:1),
 					 stu_Age:$("#stu_Age3").numberbox("getValue"),
 					 stu_Phone:$("#stu_Phone3").textbox("getValue"),					
 					 stu_Status:$("#stu_Status3").combobox("getValue"), 
@@ -389,29 +297,28 @@
 					 stu_FromPart:$("#stu_FromPart3").combobox("getValue"),
 					stu_qq:$("#stu_qq3").textbox("getValue"),
 					stu_WeiXin:$("#stu_WeiXin3").textbox("getValue"),			
-					stu_isBaoBei:$("#stu_isBaoBei3").combobox("getValue"),
-					//stu_ZiXunName:$("#stu_ZiXunName3").textbox("getValue"),
+					stu_isBaoBei:($("#stu_isBaoBei3").combobox("getValue")=='是'?1:0),
+					stu_ZiXunName:zixunname,
 					stu_CreateUser:$("#stu_CreateUser3").textbox("getValue"),										
 					stu_LearnForward:$("#stu_LearnForward33").combobox("getValue"),
 					sexitInte:$("#sexitInte33").combobox("getValue"),
 					stu_isValid:valid,
 					stu_LostValid:$("#stu_LostValid33").textbox("getValue"),					
-					stu_isReturnVist:$("#stu_isReturnVist33").combobox("getValue"),
-					stu_isHome:$("#stu_isHome33").combobox("getValue"),
+					stu_isReturnVist:($("#stu_isReturnVist33").combobox("getValue")=='已回访'?1:0),
+					stu_isHome:($("#stu_isHome33").combobox("getValue")=='是'?1:0),
 					stu_HomeTime:$("#stu_HomeTime33").datebox("getValue"),
 					stu_firstVisitTime:$("#stu_firstVisitTime33").datebox("getValue"),
 					stu_preMoney:$("#stu_preMoney33").numberbox("getValue"),
 					stu_preMoneyTime:$("#stu_preMoneyTime33").datebox("getValue"),
 					stu_ReturnMoneyReason:$("#stu_ReturnMoneyReason33").textbox("getValue"),					
-					stu_isPay:$("#stu_isPay33").combobox("getValue"),*/
+					stu_isPay:($("#stu_isPay33").combobox("getValue")=='已缴费'?1:0),
 					stu_PayTime:$("#stu_PayTime33").datebox("getValue"),
 					stu_Money:$("#stu_Money33").numberbox("getValue"),		
-					stu_isReturnMoney:$("#stu_isReturnMoney33").combobox("getValue"),			
-					stu_isInClass:$("#stu_isInClass33").combobox("getValue"),	
+					stu_isReturnMoney:($("#stu_isReturnMoney33").combobox("getValue")=='是'?1:0),			
+					stu_isInClass:($("#stu_isInClass33").combobox("getValue")=='是'?1:0),	
 					stu_inClassTime:$("#stu_inClassTime33").datebox("getValue"),			
 					stu_inClassContent:$("#stu_inClassContent33").textbox("getValue"), 
-					stu_AskerContent:$("#stu_AskerContent33").textbox("getValue") 			
-									
+					stu_AskerContent:$("#stu_AskerContent33").textbox("getValue")									
 				},
 				success:function(res){
 					if(res>0){
@@ -462,8 +369,7 @@
 				}
 			})
 		}
- 
-		
+ 		
 		/*		
 		设置隐藏列
 		 */
@@ -527,9 +433,6 @@
 		}
 		//设置隐藏列结束
 		
-		
-		
-		
 		//导出excel表格
 		function ExportForm() {
 			var header = $('#stuTab').datagrid('options').columns[0];//获取数据的第一行表头
@@ -578,8 +481,7 @@
 		
 	</script>
 </head>
-<body>
-		<input type="hidden" value="${fenliang}" id="fen">
+<body>		
 		<table id="stuTab" data-options="fitColumns:true">   
 	     <thead>   
 	        <tr>  
@@ -631,12 +533,11 @@
 	</table>
 	
 	<!--多条件查询  -->
-	 <div id="tb" style="padding: 5px; height: auto">
-	 自动分量: <input class="easyui-switchbutton" id="fenliang" data-options="onText:'Yes',offText:'No'"><br/>
+	 <div id="tb" style="padding: 5px; height: auto">	
 		<form id="sousuofrm" class="easyui-form">
 			 客户姓名:<input class="easyui-textbox" id="sname"  style="width: 80px">
 			 电话:<input class="easyui-textbox" id="phone"  style="width: 80px">
-			 咨询师:<input class="easyui-textbox" id="zixunname"  style="width: 80px">			 				
+			 咨询师:<input class="easyui-combobox" id="zixunname1"  style="width: 80px">			 				
 			是否缴费:<select id="ispay" class="easyui-combobox" style="height: auto;">
 						<option value="0">未缴费</option>
 						<option value="1">已缴费</option>				
@@ -658,12 +559,10 @@
 			 进班时间:<input class="easyui-datebox" id="inclasstime"  style="width: 80px">				
 			 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="init()">查找</a>
 			 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" onclick="addStu()">添加</a>
-			 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" onclick="piliang()">批量操作</a> 
+			<!--  <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" onclick="piliang()">批量操作</a>  -->
 			 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" onclick="selectColumn()">设置隐藏列</a>
 			 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" onclick="ExportForm()">导出表格</a>	 
- 			 <!-- <a href="javascript:void(0)" class="easyui-switchbutton" >分量开关</a> -->
- 			<!--  <div>自动分量:<input class="easyui-switchbutton" onText="开" offText="关" id="sb"></div>	 
- 			 -->
+ 			
 		</form>
 	</div>
 	<!-- 日志log -->
@@ -813,36 +712,7 @@
 	    	</table>
 	    </form>
 	</div> 	
-	<!-- 批量修改咨询师 -->
-	<div id="updateziXunName" class="easyui-dialog" title="手动分量" style="width:400px;height:300px;" 
-		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
-		buttons:[{
-				text:'保存',
-				handler:function(){updatezixunnamesave()}
-			},{
-				text:'关闭',
-				handler:function(){updateziXunNameclose()}
-			}]">
-
-	    <form id="updateziXunNameForm" class="easyui-form">
-	    	<table cellpadding="5">
-	    		<!-- <tr>
-	    			<td>编号：</td>
-	    			<td><input class="easyui-textbox" disabled="disabled" id="sid" name="stu_id"/></td>
-	    		</tr> -->
-	    		<tr>
-	    			<td>咨询师姓名：</td>
-	    			<td>	    				
-	    			<select id="zixunname" class="easyui-combobox">
-	    				 <option value="">--请选择--</option>  				     
-	    			</select>	    				
-	    			</td>
-	    		</tr>
-	    	</table>
-	    </form>
-	</div>
-	
- 
+	 
 	<!-- 对学生进行跟踪 -->
 	<div id="insertFollow" class="easyui-dialog" title="添加跟踪信息" style="width:400px;height:300px;" 
 		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
@@ -1068,15 +938,14 @@
 			},{
 			text:'关闭',
 			handler:function(){editStuclose()}
-		}]">
-		
+		}]">		
 		<div id="cc" class="easyui-layout" style="width:600px;height:600px;">   
 	    <div data-options="region:'west',title:'在线录入',split:true"  style="width:300px;padding:5px;background:#eee;">
 	    <form id="editStuForm11" class="easyui-form">
 	    	<table cellpadding="5">
 	    		<tr>
-	    			<td>编号：</td>
-	    			<td><input class="easyui-textbox" disabled="disabled" id="stusid" name="stu_id"/></td>
+	    			
+	    			<td><input class="easyui-textbox" id="stusid" name="stu_id"/></td>
 	    		</tr>
 	    		<tr>
 	    			<td>姓名:</td>
@@ -1232,10 +1101,10 @@
 	    			</select>
 	    			</td>
 	    		</tr>
-	    		<tr>	
+	    		<!-- <tr>	
 	    			<td>咨询师:</td>	    			
-	    			<td><input class="easyui-textbox" disabled="disabled" name="stu_ZiXunName" ></td>
-	    		</tr>
+	    			<td><input class="easyui-textbox" id="zixunname3" name="stu_ZiXunName" ></td>
+	    		</tr> -->
 	    		<tr>
 	    			<td>录入人:</td>
 	    			<td><input class="easyui-textbox" id="stu_CreateUser3" name="stu_CreateUser" ></td>	    			
@@ -1249,7 +1118,10 @@
 		    	<table cellpadding="5">
 		    		<tr>
 	    				<td>咨询师：</td>
-		    			<td><input class="easyui-textbox" disabled="disabled" name="stu_ZiXunName"></td>
+		    			<td>
+		    			<select class="easyui-combobox" id="zixunname33" name="stu_ZiXunName" style="width:100px">
+		    				</select>
+		    			</td>
 		    		</tr>
 		    		<tr>
 		    			<td>课程方向：</td>
@@ -1408,112 +1280,78 @@
 	<a href="javascript:void()"  class="easyui-linkbutton" id="isQuanXuan" onclick="ChooseAll()" data-options="iconCls:'icon-edit'">全选</a> 
 		<table>
 			<tr>
-				<td><input type="checkbox" value="stu_id"/>编号</td>
-			
-				<td><input type="checkbox" value="stu_Name"/>姓名</td>
-			</tr>
-			<tr>
+				<td><input type="checkbox" value="stu_id"/>编号</td>			
+				<td><input type="checkbox" value="stu_Name"/>姓名</td>				
 				<td><input type="checkbox" value="stu_Age"/>年龄</td>
-					
-				<td><input type="checkbox" value="stu_Sex"/>性别</td>
 			</tr>
-			<tr>
-				<td><input type="checkbox" value="stu_Status"/>学历</td>
-		
+			<tr>				
+				<td><input type="checkbox" value="stu_Sex"/>性别</td>				
+				<td><input type="checkbox" value="stu_Status"/>学历</td>		
 				<td><input type="checkbox" value="stu_Phone"/>电话</td>
 			</tr>
-			
-			
-			
-			<tr>
-				<td><input type="checkbox" value="stu_PerState"/>客户状态</td>
-			
-				<td><input type="checkbox" value="stu_MsgSource"/>客户信息</td>
-			</tr>
-			<tr>
+			<tr>			
+				<td><input type="checkbox" value="stu_PerState"/>客户状态</td>			
+				<td><input type="checkbox" value="stu_MsgSource"/>客户信息</td>				
 				<td><input type="checkbox" value="stu_SourceUrl"/>信息来源</td>
-			
-				<td><input type="checkbox" value="stu_SourceKeyWord"/>来源关键字</td>
 			</tr>
-			<tr>
-				<td><input type="checkbox" value="stu_Address"/>地址</td>
-			
+			<tr>		
+				<td><input type="checkbox" value="stu_SourceKeyWord"/>来源关键字</td>
+				<td><input type="checkbox" value="stu_Address"/>地址</td>			
 				<td><input type="checkbox" value="stu_NetPusherld"/>来源网站</td>
 			</tr>
-			<tr>
-				<td><input type="checkbox" value="stu_qq"/>QQ</td>
 			
+			<tr>
+				<td><input type="checkbox" value="stu_qq"/>QQ</td>			
 				<td><input type="checkbox" value="stu_WeiXin"/>微信</td>
-			</tr>
-			<tr>
 				<td><input type="checkbox" value="stu_Content"/>内容</td>
-			
-				<td><input type="checkbox" value="stu_CreateTime"/>创建日期</td>
 			</tr>
-			
-			<tr>
-				<td><input type="checkbox" value="stu_LearnForward"/>课程方向</td>
-			
+			<tr>			
+				<td><input type="checkbox" value="stu_CreateTime"/>创建日期</td>
+				<td><input type="checkbox" value="stu_LearnForward"/>课程方向</td>			
 				<td><input type="checkbox" value="stu_isValid"/>是否有效</td>
 			</tr>
-			<tr>
-				<td><input type="checkbox" value="stu_Record"/>客户记录</td>
 			
+			<tr>
+				<td><input type="checkbox" value="stu_Record"/>客户记录</td>			
 				<td><input type="checkbox" value="stu_isReturnVist"/>是否要回访</td>
-			</tr>
-			<tr>
 				<td><input type="checkbox" value="stu_isHome"/>是否上门</td>
-			
-				<td><input type="checkbox" value="stu_firstVisitTime"/>回访时间</td>
 			</tr>
-			<tr>
-				<td><input type="checkbox" value="stu_HomeTime"/>上门时间</td>
-			
+			<tr>			
+				<td><input type="checkbox" value="stu_firstVisitTime"/>回访时间</td>
+				<td><input type="checkbox" value="stu_HomeTime"/>上门时间</td>			
 				<td><input type="checkbox" value="stu_LostValid"/>无效原因</td>
 			</tr>
-			<tr>
-				<td><input type="checkbox" value="stu_isPay"/>是否缴费</td>
 			
+			<tr>
+				<td><input type="checkbox" value="stu_isPay"/>是否缴费</td>			
 				<td><input type="checkbox" value="stu_PayTime"/>缴费时间</td>
-			</tr>
-			<tr>
 				<td><input type="checkbox" value="stu_Money"/>缴费金额</td>
-			
+			</tr>
+			<tr>			
 				<td><input type="checkbox" value="stu_isReturnMoney"/>是否退费</td>
-			</tr>
-			<tr>
-				<td><input type="checkbox" value="stu_isInClass"/>是否进班</td>
-			
+				<td><input type="checkbox" value="stu_isInClass"/>是否进班</td>			
 				<td><input type="checkbox" value="stu_inClassTime"/>进班日期</td>
-			</tr>
+			</tr>			
 			<tr>
-				<td><input type="checkbox" value="stu_inClassContent"/>进班备注</td>
-			
+				<td><input type="checkbox" value="stu_inClassContent"/>进班备注</td>			
 				<td><input type="checkbox" value="stu_AskerContent"/>咨询内容</td>
-			</tr>
-			<tr>
 				<td><input type="checkbox" value="stu_isDel"/>是否删除</td>
-			
+			</tr>
+			<tr>			
 				<td><input type="checkbox" value="stu_FromPart"/>来源部门</td>
-			</tr>
-			<tr>
-				<td><input type="checkbox" value="stu_stuConcern"/>学员关注</td>
-			
+				<td><input type="checkbox" value="stu_stuConcern"/>学员关注</td>			
 				<td><input type="checkbox" value="stu_isBaoBei"/>是否报备</td>
-			</tr>
+			</tr>			
 			<tr>
-				<td><input type="checkbox" value="stu_ZiXunName"/>咨询师备注</td>
-			
+				<td><input type="checkbox" value="stu_ZiXunName"/>咨询师备注</td>			
 				<td><input type="checkbox" value="stu_CreateUser"/>录入人</td>
-			</tr>
-			<tr>
 				<td><input type="checkbox" value="stu_ReturnMoneyReason"/>退费时间</td>
-			
-				<td><input type="checkbox" value="stu_preMoney"/>定金金额</td>
 			</tr>
-			<tr>
+			<tr>			
+				<td><input type="checkbox" value="stu_preMoney"/>定金金额</td>
 				<td><input type="checkbox" value="stu_preMoneyTime"/>交定金时间</td>
-			</tr> 
+			</tr>
+			
 		</table>
 	</form>
 </div>

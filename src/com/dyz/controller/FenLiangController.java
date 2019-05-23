@@ -1,6 +1,8 @@
 package com.dyz.controller;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dyz.entity.Student;
 import com.dyz.service.AskersService;
 import com.dyz.service.FenLiangService;
 
@@ -28,6 +31,16 @@ public class FenLiangController {
 			fenLiangService.fenliang(session);
 		}
 		return null;
+	}
+	
+	/**
+	 * 查询所有未被跟踪的咨询师
+	 */
+	@RequestMapping(value = "/selectstunull", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Student> selectstunul() {
+		
+		return fenLiangService.selectStuByZiXunName();
 	}
 	
 	

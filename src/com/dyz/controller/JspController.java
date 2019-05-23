@@ -69,4 +69,9 @@ public class JspController {
 		 return new ModelAndView("/demo/askers"); 
 	 }
 	 
+	 @RequestMapping(value="/fenliangjsp",method=RequestMethod.GET)
+	 public ModelAndView fenliangjsp() {
+		 return new ModelAndView("/demo/fenliang"); 
+	 }
+	 
 }
