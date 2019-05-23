@@ -20,8 +20,6 @@
     	<property name="prefix" value="/WEB-INF/"></property>
     	<property name="suffix" value=".jsp"></property>
     </bean>
-    
-    
     <!-- 拦截器 -->
      <mvc:interceptors> 
            <mvc:interceptor>
@@ -44,6 +42,16 @@
           </mvc:interceptor> 
           <!-- 当设置多个拦截器时，先按顺序调用preHandle方法，然后逆序调用每个拦截器的postHandle和afterCompletion方法  -->
       </mvc:interceptors>
-    
-    
+    	<!-- 图片上传【控制图片上传的大小】 -->
+	<!--  <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        设置上传文件的最大尺寸为5MB
+        <property name="maxUploadSize" value="5242880"/>
+     </bean> -->
+      <!-- 定义文件上传解析器 --> 
+    <bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 设定默认编码 -->
+        <property name="defaultEncoding" value="UTF-8"></property>
+        <!-- 设定文件上传的最大值5MB，5*1024*1024 -->
+        <property name="maxUploadSize" value="5242880"></property>
+    </bean>
 </beans>

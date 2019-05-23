@@ -6,9 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>用户列表</title>
-<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/icon.css">
-    <link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/metro/easyui.css">
+		<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/icon.css">
+   		<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/metro/easyui.css">
+   		<link rel="stylesheet" type="text/css" href="js/assets/css/jquery.range.css">
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.min.js"></script>
+    	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.range.js"></script>
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
  <script type="text/javascript">
@@ -175,7 +177,9 @@
     }
     //取消新增
     function closeUserForm(){
+    	$("#adduserForm").form("clear");
     	$("#adduser_window").dialog("close");
+    	$("#edituserForm").form("clear");
     	$("#edituser_window").dialog("close");
     }
    //修改用户信息
@@ -225,8 +229,7 @@
 	            $.post("delUser", {
                         user_Id:row.user_Id,
                     },function(res){
-                    	alert(res);
-                        if(res>0){
+                         if(res>0){
                         	$("#userDG").datagrid("reload");
 	                        $.messager.alert("提示！","删除成功");
                         }else{
@@ -264,12 +267,12 @@
 		        	用户名: <input class="easyui-textbox" id="userName" style="width:80px">
 		        	起止时间：<input class="easyui-datetimebox" id="startdate" style="width:100px">-
 		        			<input class="easyui-datetimebox" id="enddate" style="width:100px">
-		        	是否锁定：<select id="lock" class="easyui-combobox" name="lock" data-options="panelHeight:'auto'" >
+		        	是否锁定：<select id="lock" class="easyui-combobox" name="lock" data-options="panelHeight:'auto'" editable="false">
 							    <option value="">-请选择-</option>
 							    <option value="1"> 已锁定</option>
 							    <option value="0"> 未锁定</option>
 							  </select>
-		        	排   序：<select id="ord" class="easyui-combobox" name="orderBy" data-options="panelHeight:'auto'" >
+		        	排   序：<select id="ord" class="easyui-combobox" name="orderBy" data-options="panelHeight:'auto'"  editable="false" >
 						    <option value="">-请选择-</option>
 						    <option value="createTime">创建时间</option>
 						    <option value="loginTime">最后登录时间</option>
@@ -289,8 +292,8 @@
 				dataType:'json',
 				success:function(data){
 						if(data>0){
-							document.getElementById('yznewusername').innerHTML = '用户名已存在！';
-	 						document.getElementById('yznewusername').style.color = 'red';
+							$("#yznewusername").html('用户名已存在！');
+ 	 						document.getElementById('yznewusername').style.color = 'red';
 							return false;
 						}else{
 							$("#yznewusername").html('ok');
@@ -300,8 +303,8 @@
 					}
 				});
 			}else{
-				document.getElementById('yznewusername').innerHTML = '用户名不能为空！';
-				document.getElementById('yznewusername').style.color = 'red';
+				$("#yznewusername").html('用户名不能为空！');
+ 				document.getElementById('yznewusername').style.color = 'red';
 			}
 	}
 	function vuserpwd() {
@@ -311,8 +314,8 @@
  		 var pwd=$("#userpwd").val().trim();
 		 var repwd=$("#reuserpwd").val().trim();
 		if(pwd!=repwd){
-			document.getElementById('yzreuserpwd').innerHTML = '两次密码不一致！';
-			document.getElementById('yznewusername').style.color = 'red';
+			$("#yzreuserpwd").html('两次密码不一致！');
+ 			document.getElementById('yznewusername').style.color = 'red';
 			return false;
 		}
 		return vRegexp('reuserpwd',/^[a-z0-9]{6,12}$/);
@@ -321,6 +324,7 @@
 		var tel=$("#usertel").val();
 		var telRegexp= /^1[34578]\d{9}$/.test(tel) ;
 		  if(telRegexp){
+			  $("#yzusertel").html('');
 			$.ajax({
 				url:"selectUserByTel",
 				method:'post',
@@ -328,19 +332,19 @@
 				dataType:'json',
 				success:function(data){
 					 	if(data>0){
-							document.getElementById('yzusertel').innerHTML = '一个手机号只能绑定一个用户！';
-	 						document.getElementById('yzusertel').style.color = 'red';
+					 		$("#yzusertel").html('一个手机号只能绑定一个用户！');
+ 	 						document.getElementById('yzusertel').style.color = 'red';
 							return false;
 						}else{
-							document.getElementById('yzusertel').innerHTML = 'ok！';
-							document.getElementById('yzusertel').style.color = 'green';
+							$("#yzusertel").html('ok！');
+ 							document.getElementById('yzusertel').style.color = 'green';
 							return true;
 						}   
 					}
 				});
 		  	}else{
-				document.getElementById('yzusertel').innerHTML = '您的输入不合法！';
-				document.getElementById('yzusertel').style.color = 'red';
+		  		$("#yzusertel").html('您的输入不合法！');
+ 				document.getElementById('yzusertel').style.color = 'red';
 			}
 		} 
  
@@ -381,9 +385,10 @@
  		 var tel=$("#usertel").val().trim();
 		 var email=$("#useremail").val().trim();
 		 var flag=$("#adduserForm").form("validate");
- 			//if(vnewusername()){
-				// if(vusertel()){
-					 $.post("newUser", {    
+		 if(pwd !=null && pwd !=""){
+			 if(tel !=null && tel !=""){
+				 if(email !=null && email !=""){
+					   $.post("newUser", {    
 			        		loginName:name,
 			                passWord:pwd,
 			                protectEMail:email,
@@ -394,7 +399,19 @@
 			                    $("#userDG").datagrid("reload"); //通过调用reload方法，让datagrid刷新显示数据
 			               		$.messager.alert("提示!","新增成功！");
 			                }
-			        },"json");
+			        },"json");  
+				 }else{
+					 $.messager.alert("提示!","密保邮箱不能为空！");
+				 }
+			 }else{
+				 $.messager.alert("提示!","密保手机号不能为空！");
+			 }
+		 }else{
+			 $.messager.alert("提示!","密码不能为空！");
+		 }
+ 			//if(vnewusername()){
+				// if(vusertel()){
+					 
 				// }else{
 				//	 $.messager.alert("提示!","一个手机号只能绑定一个用户！");
 				// }
@@ -410,36 +427,39 @@
 							},{
 								text:'关闭',
 								handler:function(){ closeUserForm();}
-							}]" style="width:400px;height:300px;padding:10px;">
+							}]" style="width:600px;height:350px;padding:10px;">
          	<form id="adduserForm">
                 <table cellpadding="5">
                     <tr>
                         <td>用户名:</td>
                         <td><input onblur="vnewusername()" type="text" name="name"  id="newusername" data-options="required:true"></input></td>
                     	<td><span id="yznewusername"></span></td>
+                    	<td></td>
                     </tr>
                     <tr>
                         <td>密码:</td>
                         <td><input onkeyup="vuserpwd()" type="password" id="userpwd" name="pwd" data-options="required:true"></input></td>
                    		<td><span id="yzuserpwd">由6-12位数字或字母组成</span></td>
+                   		<td> </td>
                     </tr>
                     <tr>
                         <td>确认密码:</td>
                         <td><input onkeyup="vreuserpwd()"   type="password" id="reuserpwd" name="pwd" data-options="required:true"></input></td>
                    		<td><span id="yzreuserpwd"></span></td>
+                   		<td></td>
                     </tr>
                     <tr>
                         <td>手机号:</td>
                         <td><input onkeyup="vusertel()" type="text"   id="usertel"  name="protectMTel" data-options="required:true"></td>
                     	<td><span id="yzusertel"></span></td>
+                    	<td></td>
                     </tr>       
                     <tr>
                         <td>Email:</td>
                         <td><input onkeyup="vuseremail()"   type="text" id="useremail" name="email" data-options="required:true,validType:'email'"></input></td>
                     	<td><span id="yzuseremail"></span></td>
+                    	<td></td>
                     </tr>
-               
-                                 
                 </table>
         	 </form>
     	</div>

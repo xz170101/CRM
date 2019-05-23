@@ -30,6 +30,7 @@
 <script src="js/assets/js/jquery.easyui.min.js" type="text/javascript"></script>
 <script src='js/assets/js/index2.js' type="text/javascript"></script>
 <script src='js/assets/js/system.menu2.js' type="text/javascript"></script>
+<script src='js/assets/js/jquery.form.js' type="text/javascript"></script>
 <script type="text/javascript">
 //yufangsession失效
 <%-- 	  $(function(){
@@ -84,10 +85,90 @@
 	}
 </script>
  
-
+<script type="text/javascript">
+	$(function() {
+		$('#uploadPicWin').window({title: '修改头像', width: 400, modal: true, shadow: true, closed: true, height: 250, resizable:false }); 
+	})
+	function editPic() {
+	 	 $('#uploadPicWin').window("open"); 
+	 }
+	function closeEditPic() {
+	 	 $('#p').form("clear"); 
+	 	 $('#uploadPicWin').window("close"); 
+	 }
+	function change_photo(){
+        PreviewImage($("input[name='myfiles']")[0], 'Img', 'Imgdiv');
+    }
+	 //焦点图片预览
+	function PreviewImage(fileObj,imgPreviewId,divPreviewId) {
+	        var allowExtention = ".jpg,.bmp,.gif,.jpeg,.png";//允许上传文件的后缀名document.getElementById("hfAllowPicSuffix").value;
+	        var extention = fileObj.value.substring(fileObj.value.lastIndexOf(".") + 1).toLowerCase();
+	        if (allowExtention.indexOf(extention) > -1) {
+	            if (fileObj.files) {//HTML5实现预览，兼容chrome、火狐7+等
+	                if (window.FileReader) {
+	                    var reader = new FileReader();
+	                    reader.onload = function (e) {
+	                        var tempDivPreview=document.getElementById(divPreviewId);
+	                        tempDivPreview.style.display="block";
+	                        document.getElementById(imgPreviewId).setAttribute("src", e.target.result);
+	                    }
+	                    if(fileObj.files[0]) {
+	                        reader.readAsDataURL(fileObj.files[0]);
+	                    }
+	                }
+	            } else {
+	                document.getElementById(imgPreviewId).setAttribute("src", fileObj.value);
+	            }
+	        } else {
+	        	$.messager.alert("仅支持" + allowExtention + "为后缀名的文件!");
+	            fileObj.value = "";//清空选中文件
+	            fileObj.outerHTML = fileObj.outerHTML;
+	        }
+	}
+	//上传图片
+	 function uploadPic(){
+		//alert($("#file").textbox('getValue'));
+ 		if($("#file").textbox('getValue')==""){
+ 			$.messager.alert("提示","请选择一张图片");
+ 			return false;
+ 		}
+ 		//提交form表单
+		$("#p").ajaxSubmit({  
+            type:"post",  //提交方式  
+            url:"${pageContext.request.contextPath}/filesUpload", //请求url  
+            success:function(data){ //提交成功的回调函数  
+ 					if(data>0){
+ 						closeEditPic();
+ 						window.location.href = "crmIndex";
+ 						$.messager.alert("提示","修改成功！");
+ 						
+ 					}
+            }  
+        });  
+	}  
+</script>
 
 </head>
 <body class="easyui-layout vui-easyui" scroll="no">
+	<!-- 上传图片窗口 -->
+	<div class="easyui-window updatePwd" data-options="collapsible:false,minimizable:false,maximizable:false" id="uploadPicWin"  title="修改头像">
+	   旧头像： <img  src="img/${user.uexit2String }" />
+	    <!-- accept:接收文件的范围 -->
+	    <form  id="p" method="POST" enctype="multipart/form-data" accept="image/gif, image/jpeg,image/jpg, image/png"> 
+	        <div style="width: 100%;height: 100%">
+	        	<div style="text-align: center;margin-top: 20px">
+	        	   选择头像: <input class="easyui-filebox"  name="myfiles" id="file" data-options='onChange:change_photo'/><br/> 
+ 	           	 </div>
+ 	           	  <div id="Imgdiv">
+ 	           	  	新头像：<img id="Img" width="200px" height="200px"/>
+ 	           	  </div>
+	        </div>
+	   </form> 
+	   <div data-options="region:'south',border:false"  class="pwdbtn">
+	   	 	 <a id="uploadPic" onclick="uploadPic()" class="easyui-linkbutton " href="javascript:;" >确定</a> 
+	         <a id="closeEditPic" onclick="closeEditPic()" class="easyui-linkbutton btnDefault" href="javascript:;">关闭</a>
+	    </div>
+	</div>
 <noscript>
     <div class="bowerPrompt" class="bowerPrompt">
         <img src="assets/images/noscript.gif" alt='抱歉，请开启脚本支持！' />
@@ -134,7 +215,7 @@
                 transition: all 2.0s;
             }
             img:hover{
-                transform: rotate(360deg);
+                transform: rotate(720deg);
             }
      </style>
 	<!-- 菜单横栏 -->
@@ -168,12 +249,12 @@
         <i class="fa fa-angle-down xiala"></i>
         <div class="viewui-userdrop-down">
             <ul class="user-opt">
-           <!--   <li>
-                 <a href="javascript:;">
+             <li>
+                 <a href="javascript:;" onclick="editPic()">
                     <i class="fa fa-user"></i>
-                    <span class="opt-name">用户信息</span>
+                    <span class="opt-name" >修改头像</span>
                 </a>
-              </li> -->
+              </li>  
               <li class="modify-pwd">
                     <a href="javascript:;" id="editpass">
                         <i class="fa fa-edit"></i>
@@ -229,6 +310,7 @@
 
 </div>
 <!-- // home -->
+
 <!--修改密码窗口-->
 <div data-options="collapsible:false,minimizable:false,maximizable:false" id="updatePwd" class="easyui-window updatePwd" title="修改密码">
     <div class="row"> 

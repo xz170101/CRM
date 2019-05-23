@@ -32,9 +32,8 @@
 	</delete>
 	<!-- 添加角色 -->
 	<insert id="insertRole" parameterType="role">
-		insert  into 
-			roles (roles_Name )
-			values (#{roles_Name})
+	 INSERT INTO roles(roles_Name) select #{roles_Name}
+ 	 WHERE NOT EXISTS (SELECT * FROM roles WHERE roles_Name = #{roles_Name});
 	</insert>
 	<!-- 查询角色模块 -->
  	<select id="selectRoleModu" parameterType="int" resultType="module">

@@ -1,6 +1,7 @@
 package com.dyz.controller;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.dyz.entity.Fenye;
 import com.dyz.entity.Role;
 import com.dyz.entity.User;
@@ -163,6 +167,11 @@ public class UserController {
 		user.setPassWord(MD5Util.MD5(user.getPassWord()));
 		return userService.UpdatePwd(user,pwd );
 	}
+	/**
+	 * 添加用户
+	 * @param user
+	 * @return
+	 */
 	@RequestMapping(value ="/newUser", method = RequestMethod.POST)
 	@ResponseBody
 	public Integer newUser(User user) {
@@ -209,6 +218,67 @@ public class UserController {
     public Integer sendToPhoneCode(User user, HttpServletRequest request){
         return  userService.sendToPhoneCode(user,request);
     } 
-   
-     
+    /***
+     * 保存文件
+     *
+     * @param file
+     * @return
+     */
+    private boolean saveFile(HttpServletRequest request, MultipartFile file) {
+        // 判断文件是否为空
+        if (!file.isEmpty()) {
+            try {
+                // 保存的文件路径(如果用的是Tomcat服务器，文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\upload\\文件夹中  )
+                String filePath = request.getSession().getServletContext()
+                    .getRealPath("/") + "img\\" + file.getOriginalFilename();
+                String filePath0 =  "C:\\Users\\DELL\\Desktop\\GitHub\\CRM\\WebContent\\img\\" + file.getOriginalFilename();//上传到项目的绝对路径
+                System.err.println("servlet路径:"+filePath);
+                 System.out.println("项目路径："+filePath0);
+                File saveDir = new File(filePath);
+                 if (!saveDir.getParentFile().exists())
+                    saveDir.getParentFile().mkdirs();
+                 System.err.println("servlet路径:"+filePath);
+                // 转存文件
+                file.transferTo(saveDir);
+                File saveDir0 = new File(filePath0);
+                if (!saveDir0.getParentFile().exists())
+                	saveDir0.getParentFile().mkdirs();
+                System.err.println("项目路径："+filePath0);
+                // 转存文件
+                file.transferTo(saveDir0);
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+    /**
+     * 上传图片
+     * @param files
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="/filesUpload",method=RequestMethod.POST )
+    public String filesUpload(@RequestParam("myfiles") MultipartFile[] files, HttpServletRequest request,HttpSession session,User user) {
+    //	String result =OperatorEnum.OperatorFailure.getName();
+         if (files != null && files.length > 0) {
+            for (int i = 0; i < files.length; i++) {
+                MultipartFile file = files[i];
+                // 保存文件
+                System.out.println("文件名：：：：：：："+file.getOriginalFilename());
+                boolean a = saveFile(request, file);
+                if(a){
+              //  	result = OperatorEnum.OperatorSuccess.getName();
+                	User users = (User) session.getAttribute("user");
+                	user.setUser_Id(users.getUser_Id());
+                	user.setUexit2String(file.getOriginalFilename());
+                	userService.updateUser(user);
+                }
+            }
+        }
+        // 重定向
+        return "1";
+    } 
 }

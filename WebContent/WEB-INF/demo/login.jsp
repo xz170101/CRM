@@ -100,6 +100,16 @@
 			return "no";
 		}
 	}
+	//被挤掉的提示
+	function checkForm(){
+	     var flag=true;
+	     var message=$("#messageXX").val();
+	     if(message!=null && message!=""){
+	      alert(message);
+	      flag=false;
+	     }
+	     return flag;
+	    }
 </script>
 <body>
 <!--头部start-->	
@@ -109,7 +119,9 @@
 			<div class="l mt10px">
 				<!-- <a href="javascript:;" class="logoicon">logo图标</a>
 				<a href="javascript:;" class="logo_title">log名称</a> -->
-				<a class="line"></a>
+				<a class="line"> 
+				<input type="hidden" id="messageXX" onload="checkForm()" name="messageXX" value="<%=request.getAttribute("messageXX") %>">
+				</a>
 				<a href="javascript:;" class="e">logo副标题</a>
 			</div>
 		</div>
@@ -117,13 +129,13 @@
 </div>
 <!--头部end-->
 	
+	
 <form id="loginForm" name="loginForm"  action="" class="fm-v clearfix" method="post">
 	<input type="hidden" name="lt">
 	<input type="hidden" name="execution" value="e1s1">
 	<input type="hidden" name="_eventId" value="submit">
     <input type="hidden" name="userType" value="0">
     <input id="rembername" name="rembername" type="hidden" class="fr" data-cacheval="false" value="false">
-    
 	<!--登录start-->	
 	<div class="ordinaryLogin">
 	  <div class="login_ad">
@@ -187,7 +199,7 @@
 	</div>
 	<!--登录end-->	
 </form>
-<!--修改密码窗口-->
+<!--zhaohui密码窗口-->
 <div data-options="collapsible:false,minimizable:false,maximizable:false" id="findPwd" class="easyui-window updatePwd" title="找回密码">
     <div class="row"> 
       <label for="txtPass">用户名：</label>   
@@ -211,6 +223,20 @@
 </div>
 <!--底部start-->	
 <div style="clear:both"></div>
+<div class="footBorder_t01">
+	<div class="ce_about_foot">
+		<p class="ce_about_copyright">
+			<a href="javascript:void(0);">一个团队提供技术支持</a>
+			<span class="">|</span>
+			<span class="" style="">一个团队®版权所有&nbsp;</span>
+ 			<span class="">|</span>
+			<a href="javascript:void(0);">联系邮箱：dyz@163.com</a>
+		</p>
+		<!-- <span class="esc"><img src="assets/login/images/logo-1sc.png" /></span> -->
+		
+		<span class="">备案/许可证编号：豫ICP备19014690号-1</span>
+	</div>
+</div>
 <!--底部end-->
  <script type="text/javascript">
  //忘记密码【 a:先判断用户名是否存在 b：点击发送验证码判断手机号格式以及是否为该用户的手机号c:若为true就可以发送验证码】
@@ -269,7 +295,7 @@
 				dataType:'json',
 				success:function(data){
 					 	if(data==uId){
-					 		alert("手机号查到的id:"+data)
+					 		//alert("手机号查到的id:"+data)
 							return true;
 						}else{
 							$("#yzfphone").html('手机号不匹配');
@@ -290,7 +316,7 @@
 			data:{"protectMTel":phone},
 			dataType:'json',
 			success:function(data){
-				alert(data);
+				//alert(data);
 				  phoneCode=data;
 				}
 			});
@@ -300,7 +326,7 @@
 		var name=$("#fUserName").val();
 		var phone=$("#fphone").val();
 		var phoneCode=$("#fphoneCode").val();
-		alert(phoneCode==phoneCode);
+		//alert(phoneCode==phoneCode);
 		/* 
 		if(vusername()){
 			if(vphone()){*/

@@ -1,6 +1,5 @@
 package com.dyz.controller;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -49,7 +48,7 @@ public class Interceptor implements HandlerInterceptor {
 				System.out.println("当前的sessionId::::"+currentSessionId);
 				if (!currentSessionId.equals(sessionId)) {//如果两个sessionId不等，则当前账户强制下线，需要重新登录
 					System.out.println("我是被挤下线的！！！！！！！！！！");
-					response.sendRedirect(request.getContextPath() + "/crm");
+ 					response.sendRedirect(request.getContextPath() + "/crm");
 				}
 				return true;
 			}
