@@ -95,8 +95,8 @@ public class UserChecksController {
 		}
 	}
 
-	// 自己签退
-	@RequestMapping(value = "/shoueditCheck", method = RequestMethod.POST)
+	// 员工自己签退
+	@RequestMapping(value = "/yuaneditCheck", method = RequestMethod.POST)
 	@ResponseBody
 	public String renQiantui(UserChecks userchecks, HttpSession session) {
 
@@ -133,39 +133,39 @@ public class UserChecksController {
 			}
 		}
 	}
-
+	//员工签到
 	@RequestMapping(value = "/qiandao", method = RequestMethod.POST)
 	@ResponseBody
 	public String qiandao(UserChecks userchecks, HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		userchecks.setUser_Id(user.getUser_Id());
-		Integer userid = askersService.selectByUsers(user.getUser_Id());
-		Integer r_id = userService.selectLoginR_id(user.getUser_Id());
-		String r_name = roleService.selectbyRolesRid(r_id);
-		if (userid == null) {
-			// 添加操作
-			
+		Integer userid = askersService.selectByUsers(user.getUser_Id());//先查询是否有该员工
+		Integer r_id = userService.selectLoginR_id(user.getUser_Id());//查询员工的id
+		String r_name = roleService.selectbyRolesRid(r_id);//查询角色id
+		if (userid == null) {//如果查询的员工不存在
+			// 就执行添加操作			
 			Askers askers = new Askers();
-			askers.setCheckState(true);
-			askers.setRoleName(r_name);
+			askers.setCheckState(true);//把签到状态改成已签到存在asers表中
+			askers.setRoleName(r_name);//把角色名称存进去
 			askers.setUsercheckid(user.getUser_Id());
 			askers.setAskers_Name(user.getLoginName());
 			askers.setCheckInTime("1");
-			askersService.insertAskerUsers(askers);
-		} else {
-			// 修改操作
+			askersService.insertAskerUsers(askers);//执行添加员工的签到信息的方法
+		} else {//如果这个员工存在
+			//就执行修改操作
 			Askers askers = new Askers();
 			askers.setCheckState(true);
 			askers.setUsercheckid(user.getUser_Id());
 			askers.setAskers_Name("r_name");
 			askers.setCheckInTime("1");
-			askersService.updateAskers(askers);
+			askersService.updateAskers(askers);//执行修改员工的签到信息的方法
 		}
-		session.setAttribute("state", 1);
-		Integer i = userchecksService.updateUserchecks(userchecks);
-		if (i > 0) {
-			return Result.toClient(true, "签到成功");
-		} else {return Result.toClient(false, "签到失败");
+		session.setAttribute("state", 1);//把签到的状态存在session中
+		Integer i = userchecksService.updateUserchecks(userchecks);//执行修改签到的信息
+		if (i > 0) {//如果大于0
+			return Result.toClient(true, "签到成功");//返回签到成功
+		} else {
+			return Result.toClient(false, "签到失败");//否则签到失败
 		}
 	}
 }

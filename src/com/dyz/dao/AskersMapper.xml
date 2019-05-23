@@ -12,10 +12,11 @@
 			</if>
 			and roleName='咨询师'
 		</where> 
+		order by weight desc
 		limit #{page},#{pageSize}
 	</select>
 	<!-- 查询咨询师总条数 -->
-	<select id="selectCountAskers" resultType="int"
+	<select id="selectCountAskers" resultType="int">
 		parameterType="fenye">
 		select count(askers_Id) from askers 
 		 <where>
@@ -26,7 +27,9 @@
 			and roleName='咨询师'
 		</where> 
 	</select> 
-
+	 <select id="selectqiandao" resultType="askers">
+	 select * from askers where checkState=1
+	 </select> 
 	<!-- 修改员工状态 -->
 	<update id="updateAskers" parameterType="askers">
 		update askers
@@ -83,6 +86,7 @@
 			</if>
 		</where>
 	</update>
+		
 	<!-- 
 	
 	<delete id="deleteAskers" parameterType="int">

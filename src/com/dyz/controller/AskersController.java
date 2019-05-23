@@ -1,5 +1,7 @@
 package com.dyz.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +21,17 @@ public class AskersController {
 	
 	@RequestMapping(value="/selectAllAskers",method=RequestMethod.POST)
 	@ResponseBody
-	public Fenye select(Fenye fenye,Integer page,Integer rows) {
-				
+	public Fenye select(Fenye fenye,Integer page,Integer rows) {				
 		fenye.setPage((page-1)*rows);
 		fenye.setPageSize(rows);
 		return askersService.selectAllAskers(fenye);
+	}
+	
+	@RequestMapping(value="/selectqiandao",method=RequestMethod.POST)
+	@ResponseBody
+	public List<Askers> selectqiandao() {				
+		
+		return askersService.selectqiandao();
 	}
 	
 	

@@ -17,6 +17,11 @@ public interface AskersMapper {
 	 */
 	Integer selectCountAskers(Fenye fenye);
 	/**
+	 * 查询已签到的咨询师	
+	 * @return
+	 */
+	List<Askers> selectqiandao();
+	/**
 	 * 修改咨询师权重
 	 * @param askers
 	 * @return

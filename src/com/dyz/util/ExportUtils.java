@@ -44,6 +44,9 @@ public class ExportUtils {
  
 			for (int j = 0; j < headersInfo.length; j++) {
 				Object value=getFieldValueByName(headersInfo[j],obj);
+				 if(value==null) {
+					continue;
+				 }
 				row.createCell(j).setCellValue(value.toString());
 			}
 			

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="en">
 <head id="Head1">
@@ -36,6 +38,50 @@
 			window.location.href="crm";	
 		}
 	});   --%>
+	
+	function qiandao() {
+		$.ajax({
+			url : "qiandao",
+			type : "post",
+			dataType : "json",
+			data : {
+				checkState : 1,
+				checkInTime : 1
+			},
+			success : function(res) {
+				if (res.success) {
+					alert(res.message);
+					//设置按钮为禁用
+					location.reload();
+					//$("#btn1").attr("disabled",true).css("pointer-events","none");  
+				} else {
+					alert(res.message);
+				}
+			}
+		})
+	}
+
+	function qiantui() {
+		$.ajax({
+			url : "yuaneditCheck",
+			type : "post",
+			dataType : "json",
+			data : {
+				checkState : 0,
+				checkOutTime : 1
+			},
+			success : function(res) {
+				if (res.success) {
+					alert(res.message);
+					//设置按钮为禁用
+					location.reload();
+					//$("#btn3").attr("disabled", true).css("pointer-events","none");
+				} else {
+					alert(res.message);
+				}
+			}
+		})
+	}
 </script>
  
 
@@ -49,14 +95,35 @@
 </noscript>
 <!-- 头部 -->
 <div data-options="region:'north',split:false,border:false,border:false" class="viewui-navheader">
-	<!-- header start -->
+	<!-- header start -->	
 	<!--头部logo-->
 	<div class="sys-logo">
 		<a href="javascript:;" class="logoicon">logo图标</a>
 		<a href="javascript:;" class="logo_title">logo名称</a>
 		<a class="line"></a>
 		<a href="javascript:;" class="e">logo副标题</a>
+			
 	</div>
+	
+	   <%--  <%
+		     Integer state = (Integer) session.getAttribute("state");
+					if (state == 1) {
+					%>
+
+					<a id="btn3" href="javascript:void" onclick="qiantui()"
+						style="cursor: pointer">签退</a>
+
+					<%
+						} else if (state == 0) {
+					%>
+					<a id="btn1" href="javascript:void" onclick="qiandao()"
+						style="cursor: pointer">签到</a>
+					<%
+						} else {
+					%>
+					<%
+						}
+					%>  --%>
 	<style>
             img{
                 border: #000 solid 2px;
@@ -73,9 +140,30 @@
 	<!-- 菜单横栏 -->
 	<ul class="viewui-navmenu"></ul>
 	<div class="viewui-user">
+	
+	     <%--  <%
+		     Integer state = (Integer) session.getAttribute("state");
+					if (state == 1) {
+					%>
+
+					<a id="btn3" href="javascript:void" onclick="qiantui()"
+						style="cursor: pointer">签退</a>
+
+					<%
+						} else if (state == 0) {
+					%>
+					<a id="btn1" href="javascript:void" onclick="qiandao()"
+						style="cursor: pointer">签到</a>
+					<%
+						} else {
+					%>
+					<%
+						}
+					%> --%>
         <div class="user-photo"> 
             <i class="fa"><img src="img/${user.uexit2String }" /></i>
         </div>
+        
         <h4 class="user-name ellipsis" id="name">${user.loginName }</h4>
         <i class="fa fa-angle-down xiala"></i>
         <div class="viewui-userdrop-down">
