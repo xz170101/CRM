@@ -69,7 +69,6 @@
 			<if test="text3 !=null and text2!=''">
 				and stu_ZiXunName like "%"#{text2}"%"
 			</if>		
-			
 			<!--integer  -->
 			<if test="num1!=null and num1!=''">
 				and stu_isPay=#{num1}
@@ -111,6 +110,6 @@
   	  #{stu_Status},#{stu_PerState},#{stu_SourceUrl},
   	  #{stu_MsgSource}, #{stu_Address},#{stu_NetPusherld},
   	   #{stu_Content},#{stu_SourceKeyWord},#{stu_qq},#{stu_WeiXin},#{stu_inClassContent},
-  	   #{sexitString},#{stu_CreateTime})
+  	   #{sexitString},now())
   	</insert>
 </mapper>
