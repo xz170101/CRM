@@ -60,6 +60,7 @@ public class UserServiceImp implements UserService{
 	@Override
 	public Integer inertUser(User user) {
 		// TODO Auto-generated method stub
+		user.setUexit2String("1.jpg");
 		return usermapper.inertUse(user);
 	}
 	/**

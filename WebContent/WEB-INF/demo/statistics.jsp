@@ -7,12 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>后台管理系统【统计】</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
- 
- 
     <link rel="stylesheet" href="js/assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="js/assets/css/dashboard.css">
- 
- 
     
 </head>
 <body>
@@ -128,68 +124,6 @@
                 
             </div>
         </div>
-
-        <div class="rows" style="overflow: hidden;">
-            <div style="float: left; width: 33.8%; margin-right: 0.8%;">
-                <div class="panel-box" style="height: 240px;">
-                    <div class="panel panel-default">
-                        <div class="panel-heading"><i class="fa fa-send fa-lg" style="padding-right: 5px;"></i>企业文化</div>
-                        <div class="panel-body">
-                            <ul>
-                                <li><a href="javascript:;" target="_blank">
-                                一流企业需要文化基因</a><span class="time"><i class="Years">2017-4</i>-02</span></li>
-                                <li><a href="javascript:;" target="_blank">文化企业要有担当 做大做强体育产业</a><span class="time"><i class="Years">2017-4</i>-18</span></li>
-                                <li><a href="javascript:;" target="_blank">《中央文化企业国有资产监督管理暂行办法》印发</a><span class="time"><i class="Years">2017-4</i>-26</span></li>
-                                <li><a href="javascript:;" target="_blank">打造文化精品 提升员工向心力</a><span class="time"><i class="Years">2017-4</i>-20</span></li>
-                                <li><a href="javascript:;" target="_blank">加大国有文化企业海外并购扶持力度</a><span class="time"><i class="Years">2017-4</i>-08</span></li>
-                                <li><a href="javascript:;" target="_blank">完美公司:搭建侨商公益平台 促进侨胞文化交流</a><span class="time"><i class="Years">2017-4</i>-22</span></li>
-                                <li><a href="javascript:;" target="_blank">科学发展作指导 诚信文化促进会举行年度表彰大会 邀企业做诚信承诺</a><span class="time"><i class="Years">2017-4</i>-15</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div style="float: left; width: 34.6%; margin-right: 0.8%;">
-                <div class="panel-box" style="height: 240px;">
-                    <div class="panel panel-default">
-                        <div class="panel-heading"><i class="fa fa-volume-up fa-lg" style="padding-right: 5px;"></i>通知公告</div>
-                        <div class="panel-body">
-                            <ul>
-                                <li><a href="javascript:;" target="_blank">【通知】新版员工守则，即日执行</a><span class="time"><i class="Years">2017-4</i>-21</span></li>
-                                <li><a href="javascript:;" target="_blank">【公告】BCM银行演练使用指南</a><span class="time"><i class="Years">2017-4</i>-21</span></li>
-                                <li><a href="javascript:;" target="_blank">【公告】劳动节集体出游指南</a><span class="time"><i class="Years">2017-4</i>-21</span></li>
-                                <li><a href="javascript:;" target="_blank">【通知】关于“天中记忆”老照片征集活动的通知</a><span class="time"><i class="Years">2017-4</i>-21</span></li>
-                                <li><a href="javascript:;" target="_blank">【通知】关于董事会会议通知的公告</a><span class="time"><i class="Years">2017-4</i>-21</span></li>
-                                <li><a href="javascript:;" target="_blank">【通知】国土资源部办公厅关于印发《国土资源新闻宣传要点》的通知/a><span class="time"><i class="Years">2017-4</i>-21</span></li>
-                                <li><a href="javascript:;" target="_blank">【公告】创建文明窗口单位工作通知</a><span class="time"><i class="Years">2017-4</i>-21</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div style="float: right; width: 30%;">
-                <div class="panel-box" style="height: 240px;">
-                    <div class="panel panel-default">
-                        <div class="panel-heading"><i class="fa fa-newspaper-o fa-lg" style="padding-right: 5px;"></i>行业资讯</div>
-                        <div class="panel-body">
-                            <ul>
-                                <li><a href="javascript:;" target="_blank">国内外业务连续性管理标准及实践</a><span class="time"><i class="Years">2017-4</i>-21</span></li>
-                                <li><a href="javascript:;" target="_blank">DRI BJ大会会议议程</a><span class="time"><i class="Years">2017-4</i>-20</span></li>
-                                <li><a href="javascript:;" target="_blank">国家网络安全宣传周——“信息安全灾备技术论坛”成功举办</a><span class="time"><i class="Years">2017-4</i>-19</span></li>
-                                <li><a href="javascript:;" target="_blank">商业银行内部控制专题研讨培训班</a><span class="time"><i class="Years">2017-4</i>-17</span></li>
-                                <li><a href="javascript:;" target="_blank">大象无形，十年磨剑——业务连续性及灾备论坛纪实</a><span class="time"><i class="Years">2017-4</i>-17</span></li>
-                                <li><a href="javascript:;" target="_blank">国营长空精密机械制造公司</a><span class="time"><i class="Years">2017-4</i>-13</span></li>
-                                <li><a href="javascript:;" target="_blank">业务连续性管理国标发布暨技术交流会</a><span class="time"><i class="Years">2017-4</i>-12</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
- 
  
 <script src="js/assets/js/jquery2.1.1.js" type="text/javascript"></script>
 <script src="js/assets/js/echarts.min.js"></script>

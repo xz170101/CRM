@@ -228,9 +228,11 @@ public class UserController {
         // 判断文件是否为空
         if (!file.isEmpty()) {
             try {
-                // 保存的文件路径(如果用的是Tomcat服务器，文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\upload\\文件夹中  )
-                String filePath = request.getSession().getServletContext()
-                    .getRealPath("/") + "img\\" + file.getOriginalFilename();
+                // 保存的文件路径(如果用的是Tomcat服务器，/   \文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\upload\\文件夹中  )
+               /*String contextPath = request.getContextPath();
+               String path=contextPath+"/img/";*/
+            	String filePath = request.getSession().getServletContext()
+                    .getRealPath("/") + "img"+File.separator + file.getOriginalFilename();
                  System.err.println("filePath:"+filePath);
                  File saveDir = new File(filePath);
                  if (!saveDir.getParentFile().exists())
