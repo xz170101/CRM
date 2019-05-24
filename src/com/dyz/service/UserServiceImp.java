@@ -295,6 +295,7 @@ public class UserServiceImp implements UserService{
 							us.setUser_Id(u.getUser_Id());
 							//登陆成功修改用户最后登录时间
 							usermapper.updateUse(us);
+							session.setAttribute("userImg", u.getUexit2String());
 							session.setAttribute("user", u);
 							session.setAttribute("userName", u.getLoginName());
 							return Result.toClient(true, (u != null ? true : false) == true ? "crmIndex" : "登录失败!");
