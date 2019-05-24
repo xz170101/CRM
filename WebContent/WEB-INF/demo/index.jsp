@@ -155,7 +155,7 @@
 	<ul class="viewui-navmenu"></ul>
 	<div class="viewui-user">
         <div class="user-photo"> 
-            <i class="fa"><img src="img/${user.uexit2String }" /></i>
+            <i class="fa"><img src="img/${userImg }" /></i>
         </div>
         <h4 class="user-name ellipsis" id="name">${user.loginName }</h4>
         <i class="fa fa-angle-down xiala"></i>

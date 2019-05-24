@@ -231,21 +231,25 @@ public class UserController {
                 // 保存的文件路径(如果用的是Tomcat服务器，文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\upload\\文件夹中  )
                 String filePath = request.getSession().getServletContext()
                     .getRealPath("/") + "img\\" + file.getOriginalFilename();
-                String filePath0 =  "C:\\Users\\DELL\\Desktop\\GitHub\\CRM\\WebContent\\img\\" + file.getOriginalFilename();//上传到项目的绝对路径
-                System.err.println("servlet路径:"+filePath);
-                 System.out.println("项目路径："+filePath0);
-                File saveDir = new File(filePath);
+                 System.err.println("filePath:"+filePath);
+                 File saveDir = new File(filePath);
                  if (!saveDir.getParentFile().exists())
                     saveDir.getParentFile().mkdirs();
-                 System.err.println("servlet路径:"+filePath);
+                 System.err.println("filePath:"+filePath);
                 // 转存文件
                 file.transferTo(saveDir);
-                File saveDir0 = new File(filePath0);
-                if (!saveDir0.getParentFile().exists())
-                	saveDir0.getParentFile().mkdirs();
-                System.err.println("项目路径："+filePath0);
+                //上传到本地
+                
+                //  String t=Thread.currentThread().getContextClassLoader().getResource("").getPath();
+                //  int num=t.indexOf(".metadata");
+                //  String path=t.substring(1,num).replace('/', '\\')+"C\\WebContent\\img\\" + file.getOriginalFilename();
+                //  System.out.println("路径：：：：：：：："+path);
+                //   File saveDir0 = new File(path);
+                //   if (!saveDir0.getParentFile().exists())
+                // 	saveDir0.getParentFile().mkdirs();
+                //  System.err.println("项目路径："+path);
                 // 转存文件
-                file.transferTo(saveDir0);
+                // file.transferTo(saveDir0);
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -274,6 +278,7 @@ public class UserController {
                 	User users = (User) session.getAttribute("user");
                 	user.setUser_Id(users.getUser_Id());
                 	user.setUexit2String(file.getOriginalFilename());
+                	session.setAttribute("userImg",file.getOriginalFilename());
                 	userService.updateUser(user);
                 }
             }
