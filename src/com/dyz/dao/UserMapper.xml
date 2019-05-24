@@ -61,7 +61,7 @@
 	<insert id="inertUse" parameterType="user">
 		INSERT INTO 
 			user (loginName,passWord,protectEMail,protectMTel,createTime,isLockout,uexit2String) 
-			VALUES (#{loginName},#{passWord},#{protectEMail},#{protectMTel},curdate(),0,'1.jpg')
+			VALUES (#{loginName},#{passWord},#{protectEMail},#{protectMTel},curdate(),0,#{uexit2String})
 	</insert>
 	<!--修改用户  -->
 	<update id="updateUse" parameterType="user">
