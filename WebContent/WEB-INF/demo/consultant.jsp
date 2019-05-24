@@ -476,67 +476,67 @@
 					<table cellpadding="5">
 						<tr>
 							<td>姓名:</td>
-							<td><input class="easyui-textbox" name="stu_Name"></td>
+							<td><input readonly class="easyui-textbox" name="stu_Name"></td>
 						</tr>
 						<tr>
 							<td>性别:</td>
-							<td><input class="easyui-textbox" name="stu_Sex"></td>
+							<td><input readonly class="easyui-textbox" name="stu_Sex"></td>
 						</tr>
 						<tr>
 							<td>年龄:</td>
-							<td><input class="easyui-textbox" name="stu_Age"></td>
+							<td><input readonly class="easyui-textbox" name="stu_Age"></td>
 						</tr>
 						<tr>
 							<td>电话:</td>
-							<td><input class="easyui-textbox" name="stu_Phone"></td>
+							<td><input readonly class="easyui-textbox" name="stu_Phone"></td>
 						</tr>
 						<tr>
 							<td>学历:</td>
-							<td><input class="easyui-textbox" name="stu_Status"></td>
+							<td><input readonly class="easyui-textbox" name="stu_Status"></td>
 						</tr>
 						<tr>
 							<td>状态:</td>
-							<td><input class="easyui-textbox" name="stu_PerState"></td>
+							<td><input readonly class="easyui-textbox" name="stu_PerState"></td>
 						</tr>
 						<tr>
 							<td>来源渠道:</td>
-							<td><input class="easyui-textbox" name="stu_SourceUrl"></td>
+							<td><input readonly class="easyui-textbox" name="stu_SourceUrl"></td>
 						</tr>
 						<tr>
 							<td>来源网站:</td>
-							<td><input class="easyui-textbox" name="stu_NetPusherld"></td>
+							<td><input readonly class="easyui-textbox" name="stu_NetPusherld"></td>
 						</tr>
 						<tr>
 							<td>来源关键字:</td>
-							<td><input class="easyui-textbox" name="stu_SourceKeyWord"></td>
+							<td><input readonly class="easyui-textbox" name="stu_SourceKeyWord"></td>
 						</tr>
 						<tr>
 							<td>所在区域:</td>
-							<td><input class="easyui-textbox" name="stu_Address"></td>
+							<td><input readonly class="easyui-textbox" name="stu_Address"></td>
 						</tr>
 						<tr>
 							<td>学员关注:</td>
-							<td><input class="easyui-textbox" name="stu_stuConcern"></td>
+							<td><input readonly class="easyui-textbox" name="stu_stuConcern"></td>
 						</tr>
 						<tr>
 							<td>来源部门:</td>
-							<td><input class="easyui-textbox" name="stu_FromPart"></td>
+							<td><input readonly class="easyui-textbox" name="stu_FromPart"></td>
 						</tr>
 						<tr>
 							<td>qq:</td>
-							<td><input class="easyui-textbox" name="stu_qq"></td>
+							<td><input readonly class="easyui-textbox" name="stu_qq"></td>
 						</tr>
 						<tr>
 							<td>微信:</td>
-							<td><input class="easyui-textbox" name="stu_WeiXin"></td>
+							<td><input readonly class="easyui-textbox" name="stu_WeiXin"></td>
 						</tr>
 						<tr>
 							<td>是否报备:</td>
-							<td><input class="easyui-textbox" name="stu_isBaoBei"></td>
+							<td><input readonly class="easyui-textbox" name="stu_isBaoBei"></td>
 						</tr>
 						<tr>
 							<td>录入人:</td>
-							<td><input class="easyui-textbox" name="stu_CreateUser"></td>
+							<td><input readonly class="easyui-textbox" name="stu_CreateUser"></td>
 						</tr>
 					</table>
 				</form>
@@ -548,89 +548,89 @@
 					<table cellpadding="5">
 						<tr>
 							<td>咨询师：</td>
-							<td><input class="easyui-textbox" name="stu_ZiXunName"></td>
+							<td><input readonly class="easyui-textbox" name="stu_ZiXunName"></td>
 						</tr>
 						<tr>
 							<td>课程方向：</td>
-							<td><input class="easyui-textbox" name="stu_LearnForward"></td>
+							<td><input readonly class="easyui-textbox" name="stu_LearnForward"></td>
 						</tr>
 						<tr>
 							<td>打分：</td>
-							<td><input class="easyui-textbox" name="sexitInte"></td>
+							<td><input readonly class="easyui-textbox" name="sexitInte"></td>
 						</tr>
 						<tr>
 							<td>是否有效：</td>
-							<td><input class="easyui-textbox" name="stu_isValid"></td>
+							<td><input readonly class="easyui-textbox" name="stu_isValid"></td>
 						</tr>
 						<tr>
 							<td>是否回访：</td>
-							<td><input class="easyui-textbox" name="stu_isReturnVist"></td>
+							<td><input readonly class="easyui-textbox" name="stu_isReturnVist"></td>
 						</tr>
 						<tr>
 							<td>是否上门：</td>
-							<td><input class="easyui-textbox" name="stu_isHome"></td>
+							<td><input readonly class="easyui-textbox" name="stu_isHome"></td>
 						</tr>
 						<tr>
 							<td>上门时间：</td>
-							<td><input class="easyui-textbox" name="stu_HomeTime"></td>
+							<td><input readonly class="easyui-textbox" name="stu_HomeTime"></td>
 						</tr>
 						<tr>
 							<td>无效原因：</td>
-							<td><input class="easyui-textbox" name="stu_LostValid"></td>
+							<td><input readonly class="easyui-textbox" name="stu_LostValid"></td>
 						</tr>
 						<tr>
 							<td>是否缴费：</td>
-							<td><input class="easyui-textbox" name="stu_isPay"></td>
+							<td><input readonly class="easyui-textbox" name="stu_isPay"></td>
 						</tr>
 						<tr>
 							<td>缴费时间：</td>
-							<td><input class="easyui-textbox" name="stu_PayTime"></td>
+							<td><input readonly class="easyui-textbox" name="stu_PayTime"></td>
 						</tr>
 						<tr>
 							<td>缴费金额：</td>
-							<td><input class="easyui-textbox" name="stu_Money"></td>
+							<td><input readonly class="easyui-textbox" name="stu_Money"></td>
 						</tr>
 						<tr>
 							<td>是否退费：</td>
-							<td><input class="easyui-textbox" name="stu_isReturnMoney"></td>
+							<td><input readonly class="easyui-textbox" name="stu_isReturnMoney"></td>
 						</tr>
 						<tr>
 							<td>是否进班：</td>
-							<td><input class="easyui-textbox" name="stu_isInClass"></td>
+							<td><input readonly class="easyui-textbox" name="stu_isInClass"></td>
 						</tr>
 						<tr>
 							<td>进班时间：</td>
-							<td><input class="easyui-textbox" name="stu_inClassTime"></td>
+							<td><input readonly class="easyui-textbox" name="stu_inClassTime"></td>
 						</tr>
 						<tr>
 							<td>进班备注：</td>
-							<td><input class="easyui-textbox" name="stu_inClassContent"></td>
+							<td><input readonly class="easyui-textbox" name="stu_inClassContent"></td>
 						</tr>
 						<tr>
 							<td>咨询内容：</td>
-							<td><input class="easyui-textbox" name="stu_AskerContent"></td>
+							<td><input readonly class="easyui-textbox" name="stu_AskerContent"></td>
 						</tr>
 						<tr>
 							<td>是否删除：</td>
-							<td><input class="easyui-textbox" name="stu_isDel"></td>
+							<td><input readonly class="easyui-textbox" name="stu_isDel"></td>
 						</tr>
 
 						<tr>
 							<td>咨询师：</td>
-							<td><input class="easyui-textbox" name="stu_ZiXunName"></td>
+							<td><input readonly class="easyui-textbox" name="stu_ZiXunName"></td>
 						</tr>
 						<tr>
 							<td>退费时间：</td>
-							<td><input class="easyui-textbox"
+							<td><input readonly class="easyui-textbox"
 								name="stu_ReturnMoneyReason"></td>
 						</tr>
 						<tr>
 							<td>定金金额：</td>
-							<td><input class="easyui-textbox" name="stu_preMoney"></td>
+							<td><input readonly class="easyui-textbox" name="stu_preMoney"></td>
 						</tr>
 						<tr>
 							<td>定金时间：</td>
-							<td><input class="easyui-textbox" name="stu_preMoneyTime"></td>
+							<td><input readonly class="easyui-textbox" name="stu_preMoneyTime"></td>
 						</tr>
 					</table>
 				</form>
