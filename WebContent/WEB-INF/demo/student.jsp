@@ -28,6 +28,7 @@
 	        pagination:true,
 	        rownumbers:true, 
 	        toolbar:"#tb",
+	        idField:'stu_id',
 	        queryParams:{				
 				//要发送的参数列表
 				text1:$("#sname").textbox("getValue"),	
@@ -245,35 +246,35 @@
 			$('#stu_isReturnVist33').textbox('setValue',row.stu_isReturnVist==1?"已回访":"未回访");
 			$('#stu_isValid33').textbox('setValue',row.stu_isValid==0?row.stu_isValid==1?"是":"否":'待定');
 			$('#stusid').next().hide();//隐藏编号的字段
-			$('#stu_Status3').combobox('select',row.stu_Status);//显示选中的学历
-			$('#stu_PerState3').combobox('select',row.stu_PerState);//显示选中的状态
-			$('#stu_SourceUrl3').combobox('select',row.stu_SourceUrl);//显示选中的来源渠道
-			$('#stu_NetPusherld3').combobox('select',row.stu_NetPusherld);//显示选中的来源网站
-			$('#stu_FromPart3').combobox('select',row.stu_FromPart);//显示选中的来源部门
-			$('#stu_Address3').combobox('select',row.stu_Address);//显示选中的地址
-			$('#stu_LearnForward33').combobox('select',row.stu_LearnForward);//显示选中的课程方向
-			$('#sexitInte33').combobox('select',row.sexitInte);//显示选中的打分
-			$('#stu_stuConcern3').combobox('select',row.stu_stuConcern);//显示选中的学员关注
+			$('#stu_Status3').combobox('setValue',row.stu_Status);//显示选中的学历
+			$('#stu_PerState3').combobox('setValue',row.stu_PerState);//显示选中的状态
+			$('#stu_SourceUrl3').combobox('setValue',row.stu_SourceUrl);//显示选中的来源渠道
+			$('#stu_NetPusherld3').combobox('setValue',row.stu_NetPusherld);//显示选中的来源网站
+			$('#stu_FromPart3').combobox('setValue',row.stu_FromPart);//显示选中的来源部门
+			$('#stu_Address3').combobox('setValue',row.stu_Address);//显示选中的地址
+			$('#stu_LearnForward33').combobox('setValue',row.stu_LearnForward);//显示选中的课程方向
+			$('#sexitInte33').combobox('setValue',row.sexitInte);//显示选中的打分
+			$('#stu_stuConcern3').combobox('setValue',row.stu_stuConcern);//显示选中的学员关注
 			$('#zixunname33').combobox({//动态获取咨询师下拉框的 值
 				url:'selectzixunname',
 				method:'post',
 				valueField:'askers_Name',
 				textField:'askers_Name'   
 			})
-			$('#zixunname33').combobox('select',row.stu_ZiXunName);//显示选中的咨询师 
+			$('#zixunname33').combobox('setValue',row.stu_ZiXunName);//显示选中的咨询师 
 			
 			$('#editStu').dialog('open');
 		}
 		
 		//修改后的数据的提交
-		function editsave() {			
-		/* 	var rows = $("#stuTab").datagrid("getSelections");  */// 获取所有选中的行
+		function editsave() {	
+		
 			var valid=$("#stu_isValid33").combobox("getValue");
 			if(valid=='否'){
 				valid=0;
-			}else if(valid=='是'){
+			}if(valid=='是'){
 				valid=1;
-			}else if(valid=='待定'){
+			}if(valid=='待定'){
 				valid=2;
 			}
 			var zixunname=$('#zixunname33').combobox('getValue');//获取咨询师的值，并对其进行判断 
@@ -537,17 +538,20 @@
 		<form id="sousuofrm" class="easyui-form">
 			 客户姓名:<input class="easyui-textbox" id="sname"  style="width: 80px">
 			 电话:<input class="easyui-textbox" id="phone"  style="width: 80px">
-			 咨询师:<input class="easyui-combobox" id="zixunname1"  style="width: 80px">			 				
+			 咨询师:<input class="easyui-combobox" id="zixunname1" style="width: 80px">			 				
 			是否缴费:<select id="ispay" class="easyui-combobox" style="height: auto;">
+						<option value="">--请选择--</option>
 						<option value="0">未缴费</option>
 						<option value="1">已缴费</option>				
 					</select> 
 			是否有效:<select id="isvalid" class="easyui-combobox" style="height: auto;">
+						<option value="">--请选择--</option>
 						<option value="0">否</option>
 						<option value="1">是</option>
 						<option value="2">待定</option>					
 					</select> 
 			是否回访:<select id="isreturnvist" class="easyui-combobox" style="height: auto;">
+						<option value="">--请选择--</option>
 						<option value="0">未回访</option>
 						<option value="1">已回访</option>					
 					</select> 
@@ -1151,7 +1155,8 @@
 		    			<select id="stu_isValid33" name="stu_isValid" class="easyui-combobox">
 	    				 <option>--请选择--</option> 
 					     <option value="0">否</option> 
-						<option value="1">是</option>
+						 <option value="1">是</option>
+					     <option value="2">待定</option>
 	    			</select>
 		    			</td>
 		    		</tr>
@@ -1164,8 +1169,8 @@
 		    			<td>
 		    			<select id="stu_isReturnVist33" name="stu_isReturnVist33" class="easyui-combobox">
 	    				 <option>--请选择--</option> 
-					     <option value="0">否</option> 
-						<option value="1">是</option>
+					     <option value="0">未回访</option> 
+						<option value="1">已回访</option>
 	    			</select>
 		    			</td>
 		    		</tr>
@@ -1199,10 +1204,9 @@
 		    		<tr>
 		    			<td>是否缴费：</td>
 		    			<td>		    			
-		    			<select id="stu_isPay33" name="stu_isPay" class="easyui-combobox">
-	    				
-					     <option value="0">否</option> 
-						<option value="1">是</option>
+		    			<select id="stu_isPay33" name="stu_isPay" class="easyui-combobox">	    				
+					     <option value="0">未缴费</option> 
+						<option value="1">已缴费</option>
 						</select>
 		    			</td>
 		    		</tr>

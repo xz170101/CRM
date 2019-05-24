@@ -23,9 +23,7 @@
 			<if test="num1!=null and num1!=''">
 				and checkState=#{num1}
 			</if>
-		 </where>
-		 ORDER BY checkInTime desc
-		 
+		 </where>				 
 		 limit #{page},#{pageSize}
 	</select>
 	<!-- 查询总条数 -->
@@ -40,7 +38,7 @@
 			</if>
 			<if test="text3 !=null and text3!=''">
 				and checkInTime &lt; #{text3}
-			</if>		
+			</if>	
 			
 			<!--integer  -->
 			<if test="num1!=null and num1!=''">

@@ -67,7 +67,7 @@
 	</insert>
 	<!-- 查询是否有该员工 -->
 	<select id="selectByUsers" parameterType="int" resultType="int">
-		select userChecksId from askers where userChecksId=#{userChecksId}
+		select usercheckid from askers where usercheckid=#{usercheckid}
 	</select>
 	<!-- 修改咨询师权重 -->
 	<update id="updateWeight" parameterType="askers">
