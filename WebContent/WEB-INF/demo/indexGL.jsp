@@ -1,6 +1,7 @@
  
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -40,11 +41,11 @@
 					   } 
 				}); 
 			});
-		   
+		
 		</script>
 	</head>
 	<body>
-		<div style="margin:20px 0;"></div>
+		<div style="margin:20px 0;"></div>			
 	    <div class="easyui-layout" style="width:100%;height:700px;">
 	       <!--  <div data-options="region:'north'" style="height:50px">
 	        	CRM系统&nbsp;&nbsp;欢迎您：<span id="spName"></span>&nbsp;&nbsp;

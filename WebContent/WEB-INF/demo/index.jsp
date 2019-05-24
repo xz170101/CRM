@@ -54,7 +54,7 @@
 					alert(res.message);
 					//设置按钮为禁用
 					location.reload();
-					//$("#btn1").attr("disabled",true).css("pointer-events","none");  
+					
 				} else {
 					alert(res.message);
 				}
@@ -76,7 +76,7 @@
 					alert(res.message);
 					//设置按钮为禁用
 					location.reload();
-					//$("#btn3").attr("disabled", true).css("pointer-events","none");
+					
 				} else {
 					alert(res.message);
 				}
@@ -183,11 +183,16 @@
 		<a href="javascript:;" class="logo_title">logo名称</a>
 		<a class="line"></a>
 		<a href="javascript:;" class="e">logo副标题</a>
-			
+		<a href="javascript:void" onclick="qiantui()"
+						style="cursor: pointer">签退</a>
+		<a href="javascript:void" onclick="qiandao()"
+						style="cursor: pointer">签到</a>	
 	</div>
 	
-	   <%--  <%
-		     Integer state = (Integer) session.getAttribute("state");
+	   <%-- 员工签到 签退按钮判断  --%>
+	
+		<%-- <% 			Integer state = (Integer) session.getAttribute("state");%>
+					<% 
 					if (state == 1) {
 					%>
 
@@ -205,6 +210,7 @@
 					<%
 						}
 					%>  --%>
+		
 	<style>
             img{
                 border: #000 solid 2px;
@@ -220,27 +226,7 @@
      </style>
 	<!-- 菜单横栏 -->
 	<ul class="viewui-navmenu"></ul>
-	<div class="viewui-user">
-	
-	     <%--  <%
-		     Integer state = (Integer) session.getAttribute("state");
-					if (state == 1) {
-					%>
-
-					<a id="btn3" href="javascript:void" onclick="qiantui()"
-						style="cursor: pointer">签退</a>
-
-					<%
-						} else if (state == 0) {
-					%>
-					<a id="btn1" href="javascript:void" onclick="qiandao()"
-						style="cursor: pointer">签到</a>
-					<%
-						} else {
-					%>
-					<%
-						}
-					%> --%>
+	<div class="viewui-user">	
         <div class="user-photo"> 
             <i class="fa"><img src="img/${userImg }" /></i>
         </div>

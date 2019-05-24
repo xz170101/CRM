@@ -53,7 +53,7 @@ public interface RoleMapper {
 	/**
 	 * 根据角色id查询角色名称
 	 * @param roles_Id
-	 * @return根据角色id查询角色名称
+	 * @return
 	 */
 	String selectbyRolesRid(int roles_Id);
 }

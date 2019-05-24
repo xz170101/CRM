@@ -98,8 +98,7 @@ public class UserChecksController {
 	// 员工自己签退
 	@RequestMapping(value = "/yuaneditCheck", method = RequestMethod.POST)
 	@ResponseBody
-	public String renQiantui(UserChecks userchecks, HttpSession session) {
-
+	public String userqiantui(UserChecks userchecks, HttpSession session) {
 		Date now = new Date();
 		SimpleDateFormat s = new SimpleDateFormat("HH:mm:ss");
 		String time = s.format(now);
@@ -109,7 +108,7 @@ public class UserChecksController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		String aa = "21:00:00";
+		String aa = "9:00:00";
 		Date date = null;
 		try {
 			date = s.parse(aa);
@@ -117,7 +116,7 @@ public class UserChecksController {
 			e.printStackTrace();
 		}
 		if (date1.getTime() < date.getTime()) {
-			return Result.toClient(false, "不到下班时间，不能提前签退");
+			return Result.toClient(false, "下班时间未到，暂时不能签退！");
 		} else {
 			userchecks.setCheckOutTime("1");
 			int j = userchecksService.updateUserchecks(userchecks);
