@@ -20,8 +20,8 @@
 			<if test="text2 !=null and text2!=''">
 				and stu_Phone like "%"#{text2}"%"
 			</if>
-			<if test="text3 !=null and text2!=''">
-				and stu_ZiXunName like "%"#{text2}"%"
+			<if test="text3 !=null and text3!=''">
+				and stu_ZiXunName like "%"#{text3}"%"
 			</if>		
 			
 			<!--integer  -->
@@ -59,7 +59,8 @@
 	<!-- 查询总条数 -->
 	<select id="selectCountStu" parameterType="fenye" resultType="int">
 		select count(1) from students 
-		<where>			
+		<where>		
+			stu_CreateUser=#{UserName}	
 			<if test="text1 !=null and text1!=''">
 				and stu_Name like "%"#{text1}"%"
 			</if>
