@@ -53,7 +53,8 @@
 	<!-- 查询总条数 -->
 	<select id="selectCountStu" parameterType="fenye" resultType="int">
 		select count(1) from students 
-		<where>			
+		<where>		
+			stu_ZiXunName=#{UserName}		
 			<if test="text1 !=null and text1!=''">
 				and stu_Name like "%"#{text1}"%"
 			</if>

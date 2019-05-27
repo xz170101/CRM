@@ -146,6 +146,15 @@
             }  
         });  
 	}  
+	//即时通讯
+		var userName  ='<%=session.getAttribute("userName")%>';
+		var webscoket=new WebSocket("ws:localhost:8080/CRM/NetworkConsultant/"+userName);
+		webscoket.onopen=function(){
+			alert("连接建立");
+		}
+		webscoket.onmessage=function(event){
+			alert(event.data);
+		}
 </script>
 
 </head>

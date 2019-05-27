@@ -369,6 +369,16 @@
 		function Followclose(){
 			$('#lookFollows').dialog('close');
 		}
+		
+		//即时通讯
+		var userName  ='<%=session.getAttribute("userName")%>';
+		var webscoket=new WebSocket("ws:localhost:8080/CRM/NetworkConsultant/"+userName);
+		webscoket.onopen=function(){
+			alert("连接建立");
+		}
+		webscoket.onmessage=function(event){
+			alert(event.data);
+		}
 	</script>
 </head>
 <body>
@@ -496,31 +506,38 @@
 						</tr>
 						<tr>
 							<td>状态:</td>
-							<td><input readonly class="easyui-textbox" name="stu_PerState"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_PerState"></td>
 						</tr>
 						<tr>
 							<td>来源渠道:</td>
-							<td><input readonly class="easyui-textbox" name="stu_SourceUrl"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_SourceUrl"></td>
 						</tr>
 						<tr>
 							<td>来源网站:</td>
-							<td><input readonly class="easyui-textbox" name="stu_NetPusherld"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_NetPusherld"></td>
 						</tr>
 						<tr>
 							<td>来源关键字:</td>
-							<td><input readonly class="easyui-textbox" name="stu_SourceKeyWord"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_SourceKeyWord"></td>
 						</tr>
 						<tr>
 							<td>所在区域:</td>
-							<td><input readonly class="easyui-textbox" name="stu_Address"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_Address"></td>
 						</tr>
 						<tr>
 							<td>学员关注:</td>
-							<td><input readonly class="easyui-textbox" name="stu_stuConcern"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_stuConcern"></td>
 						</tr>
 						<tr>
 							<td>来源部门:</td>
-							<td><input readonly class="easyui-textbox" name="stu_FromPart"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_FromPart"></td>
 						</tr>
 						<tr>
 							<td>qq:</td>
@@ -532,11 +549,13 @@
 						</tr>
 						<tr>
 							<td>是否报备:</td>
-							<td><input readonly class="easyui-textbox" name="stu_isBaoBei"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_isBaoBei"></td>
 						</tr>
 						<tr>
 							<td>录入人:</td>
-							<td><input readonly class="easyui-textbox" name="stu_CreateUser"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_CreateUser"></td>
 						</tr>
 					</table>
 				</form>
@@ -548,11 +567,13 @@
 					<table cellpadding="5">
 						<tr>
 							<td>咨询师：</td>
-							<td><input readonly class="easyui-textbox" name="stu_ZiXunName"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_ZiXunName"></td>
 						</tr>
 						<tr>
 							<td>课程方向：</td>
-							<td><input readonly class="easyui-textbox" name="stu_LearnForward"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_LearnForward"></td>
 						</tr>
 						<tr>
 							<td>打分：</td>
@@ -560,11 +581,13 @@
 						</tr>
 						<tr>
 							<td>是否有效：</td>
-							<td><input readonly class="easyui-textbox" name="stu_isValid"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_isValid"></td>
 						</tr>
 						<tr>
 							<td>是否回访：</td>
-							<td><input readonly class="easyui-textbox" name="stu_isReturnVist"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_isReturnVist"></td>
 						</tr>
 						<tr>
 							<td>是否上门：</td>
@@ -572,11 +595,13 @@
 						</tr>
 						<tr>
 							<td>上门时间：</td>
-							<td><input readonly class="easyui-textbox" name="stu_HomeTime"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_HomeTime"></td>
 						</tr>
 						<tr>
 							<td>无效原因：</td>
-							<td><input readonly class="easyui-textbox" name="stu_LostValid"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_LostValid"></td>
 						</tr>
 						<tr>
 							<td>是否缴费：</td>
@@ -584,7 +609,8 @@
 						</tr>
 						<tr>
 							<td>缴费时间：</td>
-							<td><input readonly class="easyui-textbox" name="stu_PayTime"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_PayTime"></td>
 						</tr>
 						<tr>
 							<td>缴费金额：</td>
@@ -592,23 +618,28 @@
 						</tr>
 						<tr>
 							<td>是否退费：</td>
-							<td><input readonly class="easyui-textbox" name="stu_isReturnMoney"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_isReturnMoney"></td>
 						</tr>
 						<tr>
 							<td>是否进班：</td>
-							<td><input readonly class="easyui-textbox" name="stu_isInClass"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_isInClass"></td>
 						</tr>
 						<tr>
 							<td>进班时间：</td>
-							<td><input readonly class="easyui-textbox" name="stu_inClassTime"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_inClassTime"></td>
 						</tr>
 						<tr>
 							<td>进班备注：</td>
-							<td><input readonly class="easyui-textbox" name="stu_inClassContent"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_inClassContent"></td>
 						</tr>
 						<tr>
 							<td>咨询内容：</td>
-							<td><input readonly class="easyui-textbox" name="stu_AskerContent"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_AskerContent"></td>
 						</tr>
 						<tr>
 							<td>是否删除：</td>
@@ -617,7 +648,8 @@
 
 						<tr>
 							<td>咨询师：</td>
-							<td><input readonly class="easyui-textbox" name="stu_ZiXunName"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_ZiXunName"></td>
 						</tr>
 						<tr>
 							<td>退费时间：</td>
@@ -626,11 +658,13 @@
 						</tr>
 						<tr>
 							<td>定金金额：</td>
-							<td><input readonly class="easyui-textbox" name="stu_preMoney"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_preMoney"></td>
 						</tr>
 						<tr>
 							<td>定金时间：</td>
-							<td><input readonly class="easyui-textbox" name="stu_preMoneyTime"></td>
+							<td><input readonly class="easyui-textbox"
+								name="stu_preMoneyTime"></td>
 						</tr>
 					</table>
 				</form>
@@ -919,41 +953,44 @@
 		</form>
 	</div>
 	<!-- 日志log -->
-	<div id="looklog" class="easyui-dialog" title="查看跟踪日志"  
+	<div id="looklog" class="easyui-dialog" title="查看跟踪日志"
 		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
 		buttons:[{
 				text:'关闭',
 				handler:function(){logclose()}
 			}]">
-			<table id="dg" class="easyui-datagrid" style="width:400px;height:250px" data-options="fitColumns:true">   
-			    <thead>   
-			        <tr>   
-			            <th data-options="field:'stu_id'">编码</th>   
-			            <th data-options="field:'stu_Name'">姓名</th>   
-			            <th data-options="field:'followTime',formatter:formatterfollowTime">追踪时间</th>
-				        <th data-options="field:'nextFollowTime',formatter:formatternextTime">下次追踪时间</th>  
-				        <th data-options="field:'conTent',formatter:formatterContent">内容</th>
-						<th data-options="field:'caozuo',formatter:formattercaozuo">操作</th> 
-			        </tr>   
-			    </thead>   
-			</table>			
+		<table id="dg" class="easyui-datagrid"
+			style="width: 400px; height: 250px" data-options="fitColumns:true">
+			<thead>
+				<tr>
+					<th data-options="field:'stu_id'">编码</th>
+					<th data-options="field:'stu_Name'">姓名</th>
+					<th data-options="field:'followTime',formatter:formatterfollowTime">追踪时间</th>
+					<th
+						data-options="field:'nextFollowTime',formatter:formatternextTime">下次追踪时间</th>
+					<th data-options="field:'conTent',formatter:formatterContent">内容</th>
+					<th data-options="field:'caozuo',formatter:formattercaozuo">操作</th>
+				</tr>
+			</thead>
+		</table>
 	</div>
 	<!-- 对学生进行跟踪 -->
-	<div id="lookFollows" class="easyui-dialog" title="查看跟踪信息" style="width:400px;height:300px;" 
+	<div id="lookFollows" class="easyui-dialog" title="查看跟踪信息"
+		style="width: 400px; height: 300px;"
 		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
 		buttons:[{
 				text:'关闭',
 				handler:function(){Followclose()}
 			}]">
-		
-	    <form id="lookFollowForm" class="easyui-form">
-	    	<table cellpadding="5">	    		
-	    		<tr>
-	    			<td>内容：</td>
-	    			<td><input class="easyui-textbox" name="conTent"></td>
-	    		</tr>	    		
-	    	</table>
-	    </form>
+
+		<form id="lookFollowForm" class="easyui-form">
+			<table cellpadding="5">
+				<tr>
+					<td>内容：</td>
+					<td><input class="easyui-textbox" name="conTent"></td>
+				</tr>
+			</table>
+		</form>
 	</div>
 </body>
 </html>

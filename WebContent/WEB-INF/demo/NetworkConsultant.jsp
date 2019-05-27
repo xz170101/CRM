@@ -35,6 +35,7 @@
    					text1:$("#sname").textbox("getValue"),	
    					text2:$("#phone").textbox("getValue"),	
    					text4:$("#qq").textbox("getValue"),	
+   					text3:$("#zixunshi").textbox("getValue"),
    					text5:$("#creattime").datebox("getValue"),
    					text10:$("#zixunshi").textbox("getValue")
    				}
@@ -42,7 +43,7 @@
    			$("#sousuofrm").form("reset");
    		}
    		function formatterStu(value, row, index){
-   			return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='chakan(" + index + ")'>查看</a>  <a href='javascript:void(0)' style='cursor: pointer;' onclick='updateStu(" + index + ")'>消息</a>";
+   			return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='chakan(" + index + ")'>查看</a>  <a href='javascript:void(0)' style='cursor: pointer;' onclick='tongxun(" + index + ")'>消息</a>";
    		}
    		//添加客户
    		//打开添加窗口
@@ -77,52 +78,46 @@
    					return false;
    				}
    				if(stu_Sex1 == null || stu_Sex1==""){
-   					$.messager.alert("提示","stu_Sex1不能为空");
+   					$.messager.alert("提示","性别不能为空");
    					return false;
    				}
    				if(stu_Age1 == null || stu_Age1==""){
-   					$.messager.alert("提示","stu_Age1不能为空");
+   					$.messager.alert("提示","年龄不能为空");
    					return false;
    				}
    				if(stu_Phone1 == null || stu_Phone1==""){
-   					$.messager.alert("提示","stu_Phone1不能为空");
+   					$.messager.alert("提示","手机号不能为空");
    					return false;
    				}
    				if(stu_Status1 == null || stu_Status1==""){
-   					$.messager.alert("提示","stu_Status1不能为空");
+   					$.messager.alert("提示","状态不能为空");
    					return false;
    				}
    				if(stu_SourceUrl1 == null || stu_SourceUrl1==""){
-   					$.messager.alert("提示","stu_SourceUrl1不能为空");
+   					$.messager.alert("提示","信息来源不能为空");
    					return false;
    				}
    				if(stu_MsgSource1 == null || stu_MsgSource1==""){
-   					$.messager.alert("提示","名字不能为空");
+   					$.messager.alert("提示","客户信息不能为空");
    					return false;
    				}
    				if(stu_Address1 == null || stu_Address1==""){
-   					$.messager.alert("提示","名字不能为空");
+   					$.messager.alert("提示","地址不能为空");
    					return false;
    				}
    				if(stu_NetPusherld1 == null || stu_NetPusherld1==""){
-   					$.messager.alert("提示","名字不能为空");
+   					$.messager.alert("提示","来源网站不能为空");
    					return false;
    				}
    				if(stu_Content1 == null || stu_Content1==""){
-   					$.messager.alert("提示","名字不能为空");
+   					$.messager.alert("提示","客户详细内容不能为空");
    					return false;
    				}
    				if(stu_SourceKeyWord1 == null || stu_SourceKeyWord1==""){
-   					$.messager.alert("提示","名字不能为空");
+   					$.messager.alert("提示","来源关键字不能为空");
    					return false;
    				}
-   				/* if(stu_CreateTime1 == null || stu_CreateTime1==""){
-   					$.messager.alert("提示","名字不能为空");
-    					return false;
-   				} */
-   				 
-   				
-   				
+
    				//提交到添加的controller
    					$.post("insertStu", {
    						stu_CreateUser:UserName,
@@ -254,6 +249,32 @@
 			form.append(input);
 			form.append(input2);
 			form.submit();
+		}
+		//即时通讯页面打开
+		function tongxun(index){
+			var data=$("#stuTab").datagrid("getData");
+   			var row=data.rows[index];
+   			//$('#studentId').next().hide();//让学生编号的文本框进行隐藏
+   			$("#win_tongxun").dialog("open");
+		}
+		//通讯消息的发送
+		var UserName ='<%= session.getAttribute("userName")%>';
+		var webscoket=new WebSocket("ws:localhost:8080/CRM/NetworkConsultant/"+UserName);
+		webscoket.onopen=function(){
+			alert("连接建立");
+		}
+		webscoket.onclose=function(){
+			alert("连接关闭了");
+		}
+		function send(){
+			var tongxun_xiaoxi=$("#tongxun_xiaoxi").textbox("getValue");
+			webscoket.send("UserName,userName,"+tongxun_xiaoxi.value);
+			tongxun_close();
+		}
+		//即时通讯的关闭
+		function tongxun_close(){
+			$("#tongxun_tab").form("clear");
+			$("#win_tongxun").dialog("close");
 		}
    	</script>
 </head>
@@ -466,12 +487,13 @@
 				</tr>
 				<tr>
 					<td>性别</td>
-					<td><input readonly class="easyui-textbox" id="stu_sex1" name="stu_Sex">
-					</td>
+					<td><input readonly class="easyui-textbox" id="stu_sex1"
+						name="stu_Sex"></td>
 				</tr>
 				<tr>
 					<td>年龄：</td>
-					<td><input readonly class="easyui-textbox" id="stu_Age1" name="stu_Age"></td>
+					<td><input readonly class="easyui-textbox" id="stu_Age1"
+						name="stu_Age"></td>
 				</tr>
 				<tr>
 					<td>电话：</td>
@@ -496,13 +518,13 @@
 
 				<tr>
 					<td>来源关键字：</td>
-					<td><input readonly class="easyui-textbox" id="stu_SourceKeyWord1"
-						name="stu_SourceKeyWord"></td>
+					<td><input readonly class="easyui-textbox"
+						id="stu_SourceKeyWord1" name="stu_SourceKeyWord"></td>
 				</tr>
 				<tr>
 					<td>来源网站:</td>
-					<td><input readonly class="easyui-textbox" id="stu_NetPusherld1"
-						name="stu_NetPusherld"></td>
+					<td><input readonly class="easyui-textbox"
+						id="stu_NetPusherld1" name="stu_NetPusherld"></td>
 				</tr>
 				<tr>
 					<td>客户信息:</td>
@@ -516,7 +538,8 @@
 				</tr>
 				<tr>
 					<td>QQ：</td>
-					<td><input readonly class="easyui-textbox" id="stu_qq1" name="stu_qq"></td>
+					<td><input readonly class="easyui-textbox" id="stu_qq1"
+						name="stu_qq"></td>
 				</tr>
 				<tr>
 					<td>微信号：</td>
@@ -525,25 +548,44 @@
 				</tr>
 				<tr>
 					<td>在线备注：</td>
-					<td><input readonly class="easyui-textbox" id="stu_inClassContent1"
-						name="stu_inClassContent"></td>
+					<td><input readonly class="easyui-textbox"
+						id="stu_inClassContent1" name="stu_inClassContent"></td>
 				</tr>
 				<tr>
 					<td>创建人:</td>
-					<td><input readonly class="easyui-textbox" id="stu_CreateUser1"
-						name="stu_CreateUser"></td>
+					<td><input readonly class="easyui-textbox"
+						id="stu_CreateUser1" name="stu_CreateUser"></td>
 				</tr>
 				<tr>
 					<td>创建日期:</td>
-					<td><input readonly class="easyui-textbox" id="stu_CreateTime1"
-						name="stu_CreateTime"></td>
+					<td><input readonly class="easyui-textbox"
+						id="stu_CreateTime1" name="stu_CreateTime"></td>
 				</tr>
 			</table>
 		</form>
 	</div>
-	<!-- 设置隐藏列 -->
-	<div id="lie_window" class="easyui-dialog"
-		data-options="title:'设置显示列',modal:true,closed:'true'"
-		style="width: 200px"></div>
+	<!-- 即时通讯websocket -->
+	<div id="win_tongxun" class="easyui-dialog" title="即时通讯"
+		style="width: 400px; height: 200px;"
+		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
+		buttons:[{
+				text:'发送',
+				handler:function(){send()}
+			},{
+				text:'关闭',
+				handler:function(){tongxun_close()}
+			}]">
+		<form id="tongxun_tab" class="easyui-form">
+			<table cellpadding="5">
+				<!-- <input class="easyui-textbox" id="studentId" name="stu_id" /> -->
+				<tr>
+					<td>消息内容:</td>
+					<br />
+					<td><input class="easyui-textbox" id="tongxun_xiaoxi"
+						name="tongxun_xiaoxi" style="width: 280px; height: 100px"></td>
+				</tr>
+			</table>
+		</form>
+	</div>
 </body>
 </html>
