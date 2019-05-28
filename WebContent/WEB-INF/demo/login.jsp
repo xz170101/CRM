@@ -74,7 +74,7 @@
 			        	 if (res.success) {
 						     window.location.href = "crmIndex";
 							} else {
-								$.messager.alert("提示！",res.message);
+							 	$.messager.alert("提示！",res.message);
 							}
 			     		},"json");
 					 }else{

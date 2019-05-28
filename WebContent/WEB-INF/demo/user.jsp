@@ -60,62 +60,65 @@
 		// return  row.isLockout==0?'未锁定':'已锁定' ;
 		if(row.isLockout == 0){ return '未锁定'; }else{return '已锁定';}  
 	}
+
 	//设置角色
+	var row=null;
 	function SetRole(index){
 		$("#setRolse_window").window('open');
 		var data=$("#userDG").datagrid("getData");
-		var row=data.rows[index];
+		 row=data.rows[index];
 		$("#setRolse_window").dialog("setTitle","您正在设置"+row.loginName+"的角色信息");
+		//查询所有角色
 		$("#allRole").datagrid({
 				url:"selectRole_user",  
 		        rownumbers:true,
 		        singleSelect:true 
 	   });
-	    $("#myRole").datagrid({ 
+		//查询该用户具有的角色
+		 $("#myRole").datagrid({ 
 	    		url:"selectUserRole",   
 		        rownumbers:true,
 		        singleSelect:true,
 		        queryParams: {  
-		        	user_Id: row.user_Id,
+		        	user_Id: row.user_Id
 	        }
-	   });
-	    //添加角色
-	   $("#addRole").click(function(){
-	   	var RoleRow=$("#allRole").datagrid("getSelected");
-	   	if(RoleRow){
-		        $.post("addUserRole",{
-		      		userId: row.user_Id,
-		      		roleId: RoleRow.roles_Id 
+		   });
+		}
+	  //添加用户角色
+ 	   function SetRoleAdd(){
+		   	var RoleRow=$("#allRole").datagrid("getSelected");
+		   	if(RoleRow){
+			        $.post("addUserRole",{
+			      		userId: row.user_Id,
+			      		roleId: RoleRow.roles_Id 
+			   		},function(res){
+			   			if(res>0){
+			   				$("#myRole").datagrid("reload");
+			   			}else{
+			   				$.messager.alert("提示","已存在");
+			   			}
+			   		},"json");
+	   		}else{
+	   			$.messager.alert("提示","请先选择对象!");
+	   		}
+	   }
+	 //移除用户角色
+ 	 function SetRoleRemove(){
+ 		var RoleRow=$("#myRole").datagrid("getSelected");
+ 		if(RoleRow){
+	      	 $.post("delUserRole",{
+	      		userId: row.user_Id,
+	      		roleId: RoleRow.roles_Id 
 		   		},function(res){
 		   			if(res>0){
 		   				$("#myRole").datagrid("reload");
-		   			}else{
-		   				$.messager.alert("提示","已存在");
 		   			}
 		   		},"json");
 	   		}else{
 	   			$.messager.alert("提示","请先选择对象!");
 	   		}
-	   }); 
-	   //移除角色
-	  $("#removeRole").click(function(){
-   		var RoleRow=$("#myRole").datagrid("getSelected");
-   		if(RoleRow){
-	      	 $.post("delUserRole",{
-	      		userId: row.user_Id,
-	      		roleId: RoleRow.roles_Id 
-	   		},function(res){
-	   			if(res>0){
-	   				$("#myRole").datagrid("reload");
-	   			}
-	   		},"json");
-	   		}else{
-	   			$.messager.alert("提示","请先选择对象!");
-	   		}
-	   	
-	   });
-	}
-	//锁定用户
+		 }
+ 	//锁定用户
 	function LockUser(index){
 		$.messager.confirm('确认','您确认想要锁定用户吗？',function(r){   
     		if (r){ // 用户点击了确认按钮 执行删除    
@@ -509,8 +512,8 @@
 						</table>
 					</td>
 					<td>
-						<input id="addRole" type="button"   value=">>" />
-						<input id="removeRole" type="button"  value="<<\" />
+						<input id="addRole" type="button" onclick="SetRoleAdd()"  value="》》" /><br/>
+						<input id="removeRole" type="button" onclick="SetRoleRemove()" value="《《" />
 					</td>
 					<td>
 						<table id="myRole" title="当前用户的角色" class="easyui-datagrid">

@@ -86,9 +86,9 @@
 </script>
  
 <script type="text/javascript">
-	$(function() {
-		$('#uploadPicWin').window({title: '修改头像', width: 400, modal: true, shadow: true, closed: true, height: 250, resizable:false }); 
-	})
+	/*$(function() {
+	 	$('#uploadPicWin').window({title: '修改头像', width: 400, modal: true, shadow: true, closed: true, height: 250, resizable:false }); 
+	})*/
 	function editPic() {
 	 	 $('#uploadPicWin').window("open"); 
 	 }
@@ -151,7 +151,7 @@
 </head>
 <body class="easyui-layout vui-easyui" scroll="no">
 	<!-- 上传图片窗口 -->
-	<div class="easyui-window updatePwd" data-options="collapsible:false,minimizable:false,maximizable:false" id="uploadPicWin"  title="修改头像">
+	<div class="easyui-window updatePwd" data-options="collapsible:false,minimizable:false,maximizable:false,title: '修改头像', width: 400, modal: true, shadow: true, closed: true, height: 250, resizable:false " id="uploadPicWin"  title="修改头像">
 	   旧头像： <img  src="img/${user.uexit2String }" />
 	    <!-- accept:接收文件的范围 -->
 	    <form  id="p" method="POST" enctype="multipart/form-data" accept="image/gif, image/jpeg,image/jpg, image/png"> 
