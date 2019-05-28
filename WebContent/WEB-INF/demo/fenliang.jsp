@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,23 +39,29 @@
 			kaiguan = false;
 		} 
 		$('#fenliang').switchbutton({
-			checked : kaiguan,
-			onChange : function(checked) {
-				$.messager.confirm("提示", "你确定开启自动分量吗？", function(r) {
-					if (r) {
-						$.ajax({
-							url : "fenliang",
-							type : "post",
-							dataType : "json",
-							data : {
-								checked : checked
-							},
-							success : function(res) {
-								alert("开启成功");
+			checked : kaiguan,			
+			onChange : function(checked) {	
+				var list = $("#cha").val();										
+				if(list.length<=1){
+					alert("只有一个人签到，不能自动分量！");
+				}else{
+					$.messager.confirm("提示", "你确定开启自动分量吗？", function(r) {
+						if (r) {					
+								$.ajax({
+									url : "fenliang",
+									type : "post",
+									dataType : "json",
+									data : {
+										checked : checked
+									},
+									success : function(res) {
+										$.messager.alert("开启成功");
+										$("#stuTab").datagrid("load");
+									}
+								})
 							}
 						})
-					}
-				})				
+					}			
 			}
 		})
 	}	 
@@ -121,7 +129,7 @@
 	</script>
 </head>
 <body>
- 
+ 		<input type="hidden" value="${list}" id="cha">
 		<input type="hidden" value="${fenliang}" id="fen">
 		自动分量: <input class="easyui-switchbutton" id="fenliang" data-options="onText:'Yes',offText:'No'">
 		 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" onclick="piliang()">手动分量</a> 
@@ -149,6 +157,9 @@
 	        </tr>   
 	    </thead>   
 	</table>
+	 	
+
+	
 	<!-- 批量修改咨询师 -->
 	<div id="updateziXunName" class="easyui-dialog" title="手动分量" style="width:400px;height:300px;" 
 		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,

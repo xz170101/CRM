@@ -11,14 +11,12 @@
 		</select>
 		<!-- 查询学生最少，并且咨询师权重最高 -->
 		<select id="selectMaxZiXunShi" resultType="askers">
-		SELECT  * FROM askers WHERE roleName='咨询师' and checkState=1  ORDER BY  aexit1Int ASC, weight desc  
+		SELECT * FROM askers WHERE roleName='咨询师'  and checkState=1  ORDER BY  aexit1Int ASC, weight desc  
 	   </select>
 		
 		<!-- 查询手里的学生数 -->
-		<select id="selectAskerStu_count" resultType="int" parameterType="int">
-	
-	select aexit1Int FROM askers   where  usercheckid=#{usercheckid}
-	
+		<select id="selectAskerStu_count" resultType="int" parameterType="int">	
+		select aexit1Int FROM askers where  usercheckid=#{usercheckid}	
 		</select>
 		
 		<!-- 修改咨询师的学生数量 -->
@@ -50,8 +48,7 @@
 			</if>
 		</where>
 	</update>
-	
-		
+			
 		
 	<!-- 查询所有角色为咨询师的并且根据权重排序（手动分量） -->		
 	<select id="selectzixunname" resultType="askers">

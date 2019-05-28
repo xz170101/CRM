@@ -20,7 +20,11 @@ public interface FenLiangService {
 	 */
 	List<Student> selectStuByZiXunName();
 	
-	
+	/**
+	 * 查询已签到的咨询师
+	 * @return 查询学生最少，并且咨询师权重最高
+	 */
+	List<Askers> selectMaxZiXunShi();
 	
 	void fenliang(HttpSession session) ;
 	/**

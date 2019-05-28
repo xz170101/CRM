@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dyz.entity.Askers;
 import com.dyz.entity.Student;
 import com.dyz.service.AskersService;
 import com.dyz.service.FenLiangService;
@@ -41,6 +42,17 @@ public class FenLiangController {
 	public List<Student> selectstunul() {
 		
 		return fenLiangService.selectStuByZiXunName();
+	}
+	
+	/**
+	 * 查询所有未被跟踪的咨询师
+	 */
+	@RequestMapping(value = "/selectzixuncount", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Askers> selectzixuncount(HttpSession session) {	
+		List<Askers> list=fenLiangService.selectMaxZiXunShi();
+		 session.setAttribute("list", list);
+		return fenLiangService.selectMaxZiXunShi();
 	}
 	
 	
