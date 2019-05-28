@@ -252,7 +252,7 @@
 		}
 		
 		var UserName ='<%= session.getAttribute("userName")%>';
-		var webscoket=new WebSocket("ws:localhost:8080/CRM/NetworkConsultant/"+UserName);
+		var webscoket=new WebSocket("ws:47.102.125.51:8080/CRM/NetworkConsultant/"+UserName);
 		webscoket.onopen=function(){
 			console.log("连接建立");
 		}
