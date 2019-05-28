@@ -36,7 +36,13 @@ public interface UserService {
 	 * @param user
 	 * @return
 	 */
-	Integer inertUser(User user);
+	/*Integer inertUser(User user);*/
+	/**
+ 	 *新建用户
+ 	 * @param user
+ 	 * @return
+ 	 */
+	Integer insertUser(User user);
 	/**
 	 * 修改用户新息
 	 * @param user
@@ -122,12 +128,7 @@ public interface UserService {
  	 * @return
  	 */
  	Integer UpdatePwd(User user, String pwd);
- 	/**
- 	 *注册用户
- 	 * @param user
- 	 * @return
- 	 */
-	Integer insertUser(User user);
+ 	
 	 /**
 	  * 登录 
 	  * @param user

@@ -124,7 +124,7 @@
                 
             </div>
         </div>
- 
+ </div>
 <script src="js/assets/js/jquery2.1.1.js" type="text/javascript"></script>
 <script src="js/assets/js/echarts.min.js"></script>
 <script src="js/assets/js/charts/Chart.js"></script>

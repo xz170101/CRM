@@ -51,17 +51,15 @@
 	        	CRM系统&nbsp;&nbsp;欢迎您：<span id="spName"></span>&nbsp;&nbsp;
 	        	<a id="btn" href="javascript:void" onclick="tuichu()" style="cursor:pointer">安全退出</a>
 	        </div> -->
-	        <div data-options="region:'south',split:true" style="height:50px;"></div>
-	        <div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:150px;padding:10px;">东部区域</div>
-		        <div data-options="region:'west',split:true" title="导航应用" style="width:150px;">
+<!-- 	        <div data-options="region:'south',split:true" style="height:50px;"></div>-->
+<!-- 	        <div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:150px;padding:10px;">东部区域</div>-->		       
+				 <div data-options="region:'west',split:true" title="导航应用" style="width:150px;">
 		           <div id="menuTree" ><!--这个地方显示树状结构-->
 		           		
 		           </div>
 		        </div>
-	        
 	        <div id="center_1" data-options="region:'center',iconCls:'icon-ok' ">
 	            <div id="tt" class="easyui-tabs" data-options="fit:true"> <!--这个地方采用tabs控件进行布局-->
-	             	
 	            </div>
 	        </div>
 	    </div>

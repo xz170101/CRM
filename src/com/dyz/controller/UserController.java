@@ -92,12 +92,12 @@ public class UserController {
 	 * 添加用户
 	 * @return
 	 */
-	@RequestMapping(value="/addUser",method=RequestMethod.POST)
+	/*@RequestMapping(value="/addUser",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer addUser(User user) {
 		 user.setPassWord(MD5Util.MD5(user.getPassWord()));
 		return  userService.inertUser(user);
-	}
+	}*/
 	/**
 	 * 修改用户信息
 	 * @param user

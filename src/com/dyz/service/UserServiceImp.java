@@ -57,11 +57,19 @@ public class UserServiceImp implements UserService{
 	/**
 	 * 添加用户
 	 */
-	@Override
+	/*@Override
 	public Integer inertUser(User user) {
 		// TODO Auto-generated method stub
-		user.setUexit2String("1.jpg");
+	//	user.setUexit2String("1.jpg");
 		return usermapper.inertUse(user);
+	}*/
+	/**
+	 * 添加用户
+	 */
+	@Override
+	public Integer insertUser(User user) {
+		// TODO Auto-generated method stub
+		return usermapper.insertNewUser(user);
 	}
 	/**
 	 * 修改用户信息
@@ -214,14 +222,7 @@ public class UserServiceImp implements UserService{
 		}
 		return 0;
 	}
-	/**
-	 * 添加用户
-	 */
-	@Override
-	public Integer insertUser(User user) {
-		// TODO Auto-generated method stub
-		return usermapper.insertNewUser(user);
-	}
+	
 	/**
 	 * 登录
 	 */
