@@ -150,7 +150,7 @@
 		var userName  ='<%=session.getAttribute("userName")%>';
 		var webscoket=new WebSocket("ws:localhost:8080/CRM/NetworkConsultant/"+userName);
 		webscoket.onopen=function(){
-			alert("连接建立");
+			console.log("连接建立");
 		}
 		webscoket.onmessage=function(event){
 			alert(event.data);

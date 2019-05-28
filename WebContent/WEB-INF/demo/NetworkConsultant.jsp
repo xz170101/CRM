@@ -250,25 +250,31 @@
 			form.append(input2);
 			form.submit();
 		}
-		//即时通讯页面打开
-		function tongxun(index){
-			var data=$("#stuTab").datagrid("getData");
-   			var row=data.rows[index];
-   			//$('#studentId').next().hide();//让学生编号的文本框进行隐藏
-   			$("#win_tongxun").dialog("open");
-		}
-		//通讯消息的发送
+		
 		var UserName ='<%= session.getAttribute("userName")%>';
 		var webscoket=new WebSocket("ws:localhost:8080/CRM/NetworkConsultant/"+UserName);
 		webscoket.onopen=function(){
-			alert("连接建立");
+			console.log("连接建立");
 		}
 		webscoket.onclose=function(){
-			alert("连接关闭了");
+			console.log("连接关闭了");
 		}
+		//即时通讯页面打开
+		var rowc;
+		function tongxun(index){
+			var data=$("#stuTab").datagrid("getData");
+   			rowc=data.rows[index].stu_ZiXunName;
+   			$("#win_tongxun").dialog("open");
+		}
+		//通讯消息的发送
 		function send(){
-			var tongxun_xiaoxi=$("#tongxun_xiaoxi").textbox("getValue");
-			webscoket.send("UserName,userName,"+tongxun_xiaoxi.value);
+			$.post("jishitongxun",{
+				rowc:rowc,
+				name:UserName,
+				mess:$("#tongxun_xiaoxi").val()
+			},function(res){
+				
+			},"json");
 			tongxun_close();
 		}
 		//即时通讯的关闭

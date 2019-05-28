@@ -27,4 +27,9 @@ public class NetworkConsultantController {
 		System.out.println(student.toString());
 		return networkConsultantService.insertStu(student);
 	}
+	@RequestMapping(value="/jishitongxun",method=RequestMethod.POST)
+	@ResponseBody
+	public void jishitongxun(String rowc,String name,String mess) {
+		networkConsultantService.jishitongxun(rowc, name, mess);
+	}
 }
