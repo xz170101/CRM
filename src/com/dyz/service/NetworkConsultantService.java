@@ -16,4 +16,12 @@ public interface NetworkConsultantService {
 	 * @return
 	 */
 	Integer insertStu(Student student);
+	/**
+	 * 即时通讯
+	 * @param rowc	发给谁
+	 * @param name	谁发的 			
+	 * @param mess	发的是什么
+	 * @return
+	 */
+	String jishitongxun(String rowc, String name, String mess);
 }

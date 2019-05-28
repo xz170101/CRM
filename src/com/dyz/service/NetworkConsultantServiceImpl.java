@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dyz.controller.MyWebsocket;
 import com.dyz.dao.NetworkConsultantMapper;
 import com.dyz.entity.Fenye;
 import com.dyz.entity.Student;
@@ -28,5 +29,11 @@ public class NetworkConsultantServiceImpl implements NetworkConsultantService {
 		// TODO Auto-generated method stub
 		return networkConsultantMapper.insertStu(student);
 	}
-
+	@Override
+	public String jishitongxun(String rowc,String name,String mess) {
+		String p=name+","+rowc+","+mess;
+		MyWebsocket websocket=new MyWebsocket();
+		websocket.onmessage(p);
+		return p;
+	}
 }
