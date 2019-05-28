@@ -155,7 +155,30 @@
 			}
 		});
 	}
-	
+	/* function vusertel() {
+		
+		var tel=$("#usertel").val();
+		var telRegexp= /^1[34578]\d{9}$/.test(tel) ;
+		  if(telRegexp){
+			  $("#editTel").html('');
+			$.ajax({
+				url:"selectUserByTel",
+				method:'post',
+				data:{"protectMTel":tel},
+				dataType:'json',
+				success:function(data){
+					 	if(data<0){
+					 		$("#yzusertel").html('ok！');
+ 							document.getElementById('yzusertel').style.color = 'green';
+							return true;
+						}  
+					}
+				});
+		  	}else{
+		  		$("#yzusertel").html('您的输入不合法！');
+ 				document.getElementById('yzusertel').style.color = 'red';
+			}		  
+		}  */
 	//添加客户
 	//打开添加窗口
 	 function addStu(){		
@@ -167,7 +190,7 @@
 			var stu_Name1= $("#stu_Name1").textbox("getValue");
 			var stu_Sex1 = $("#stu_Sex1").combobox("getValue");
 			var stu_Age1= $("#stu_Age1").textbox("getValue");
-			var stu_Phone1= $("#stu_Phone1").textbox("getValue");					
+			var stu_Phone1= $("#stu_Phone1").val();//$("#stu_Phone1").numberbox("getValue");					
 			var stu_Status1= $("#stu_Status1").combobox("getValue");//学历
 			var stu_PerState1= $("#stu_PerState1").combobox("getValue");
 			var stu_SourceUrl1= $("#stu_SourceUrl1").combobox("getValue");
@@ -176,6 +199,12 @@
 			var stu_WeiXin= $("#stu_WeiXin").textbox("getValue");					
 			var stu_isBaoBei1= $("#stu_isBaoBei1").combobox("getValue");
 			var stu_inClassContent1= $("#stu_inClassContent1").textbox("getValue");	
+		/* 	
+			if(!(/^(13|14|15|17|18)\d{9}$/.test(stu_Phone1))){
+				 $.messager.alert("提示","手机号码格式有误，请重新输入！");
+	                return false;
+	            } */
+							
 			//提交到添加的controller
 				$.post("insertstu", {
 					stu_Name:stu_Name1,
@@ -278,6 +307,11 @@
 				valid=2;
 			}
 			var zixunname=$('#zixunname33').combobox('getValue');//获取咨询师的值，并对其进行判断 
+			if(!(/^(13|14|15|17|18)\d{9}$/.test(stu_Phone3))){
+				 $.messager.alert("提示","手机号码格式有误，请重新输入！");
+	                return false;
+	            }
+			
 			$.ajax({
 				url:'updateStudent',
 				method:'post',
@@ -448,7 +482,7 @@
 		
 			}
 			
-			var row = $("#stuTab").datagrid("getSelections"); // 获取所有选中的行
+			var row = $("#stuTab").datagrid("getSelections"); //获取所有选中的行
 			var stulist='';
 			if(row==null || row==''){
 				var data = $("#stuTab").datagrid('getData');//获取所有的数据
@@ -640,7 +674,8 @@
 	    		</tr>
 	    		<tr>
 	    			<td>电话：</td>
-	    			<td><input class="easyui-textbox" id="stu_Phone1" ></td>
+	    			<td><input onkeyup="vusertel()" class="easyui-numberbox" id="stu_Phone1" ></td>
+	    			<td><span id="editTel"></span></td>
 	    		</tr>
 	    		<tr>
 	    			<td>学历：</td>
