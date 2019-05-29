@@ -39,7 +39,18 @@
 			window.location.href="crm";	
 		}
 	});   --%>
-	
+	$(function(){
+		<%-- var user="<%=session.getAttribute("user")%>"; --%>
+		var uid=${sessionScope.user.user_Id}; 
+		
+		$.post("dangtian",{			
+			user_Id:uid
+		},function(res){
+			if(res>0){
+				$("#qd").attr("style","display:none");				
+			}
+		},"json")		
+	});
 	function qiandao() {
 		$.ajax({
 			url : "qiandao",
@@ -53,8 +64,9 @@
 				if (res.success) {
 					alert(res.message);
 					//设置按钮为禁用
-					location.reload();
-					
+					//location.reload();
+					$("#qd").attr("style","display:none");
+					//$("qd").css("background-color","#DCDCDC");
 				} else {
 					alert(res.message);
 				}
@@ -73,10 +85,8 @@
 			},
 			success : function(res) {
 				if (res.success) {
-					alert(res.message);
-					//设置按钮为禁用
-					location.reload();
-					
+					alert(res.message);					
+					$("#qt").attr("style","display:none");					
 				} else {
 					alert(res.message);
 				}
@@ -192,10 +202,8 @@
 		<a href="javascript:;" class="logo_title">logo名称</a>
 		<a class="line"></a>
 		<a href="javascript:;" class="e">logo副标题</a>
-		<a href="javascript:void" onclick="qiantui()"
-						style="cursor: pointer">签退</a>
-		<a href="javascript:void" onclick="qiandao()"
-						style="cursor: pointer">签到</a>	
+		<a href="javascript:qiantui()" id="qt" >签退</a>
+		<a href="javascript:qiandao()" id="qd" >签到</a>	
 	</div>
 	
 	   <%-- 员工签到 签退按钮判断  --%>

@@ -28,4 +28,10 @@ public interface UserChecksService {
 	 * @return
 	 */
 	Integer selectcheckstate(int user_Id);
+	/**
+	 * 查询当天已签到的员工
+	 * @param checkid
+	 * @return
+	 */
+	Integer selectdangtian(Integer user_Id);
 }

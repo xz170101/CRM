@@ -36,4 +36,10 @@ public interface UserChecksMapper {
 	 * @return
 	 */
 	Integer updateQuanTui();
+	/**
+	 * 查询当天已签到的员工
+	 * @param checkid
+	 * @return
+	 */
+	Integer selectdangtian(Integer user_Id);
 }

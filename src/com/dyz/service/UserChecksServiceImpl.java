@@ -39,5 +39,10 @@ public class UserChecksServiceImpl implements UserChecksService {
 		// TODO Auto-generated method stub
 		return userchecksMapper.selectcheckstate(user_Id);
 	}
+	@Override
+	public Integer selectdangtian(Integer user_Id) {
+		// TODO Auto-generated method stub
+		return userchecksMapper.selectdangtian(user_Id);
+	}
 
 }

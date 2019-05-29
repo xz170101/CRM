@@ -47,6 +47,18 @@
 		 </where>
 	</select>
 	
+	<!-- 查询当天签到的员工 -->
+	<select id="selectdangtian" parameterType="int" resultType="int">
+	 select
+	 count(checkInTime)
+	 from
+	 userchecks
+	 where 
+	 date(checkInTime)=curdate()
+	 and checkState=1
+	 and user_Id=#{user_Id}
+	</select>
+	
 	<update id="updateUserchecks" parameterType="userChecks">
 		update userchecks
 		<set>
