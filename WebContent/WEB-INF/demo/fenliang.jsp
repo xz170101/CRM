@@ -27,17 +27,19 @@
 		})		
 	}
 	//开启分量
-	 function kaiqi() {
-		var kaiguan = $("#fen").val();	
-		if (kaiguan ==true || kaiguan != ""||kaiguan ==false) {
-			if (kaiguan==true) {
-				kaiguan=true;
-			} else {
-				kaiguan = false;
+	 function kaiqi() {		
+		var kaiguan = $("#fen").val();
+		if (kaiguan !=null) {
+			if(kaiguan=="true"){
+				kaiguan =true;
+			}
+			if(kaiguan=="false"){
+				kaiguan= false;
 			}
 		} else {
 			kaiguan = false;
-		} 
+		}
+
 		$('#fenliang').switchbutton({
 			checked : kaiguan,			
 			onChange : function(checked) {	

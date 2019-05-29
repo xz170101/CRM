@@ -159,10 +159,13 @@
 	//添加客户
 	//打开添加窗口
 	 function addStu(){		
+		
 		$("#insertStu").dialog("open");			
 	} 
 	//添加窗口的保存
-	 function insertsave(){	
+	 function insertsave(){
+		    
+		    
 			//获取id参数
 			var stu_Name1= $("#stu_Name1").textbox("getValue");
 			var stu_Sex1 = $("#stu_Sex1").combobox("getValue");
@@ -176,9 +179,10 @@
 			var stu_WeiXin= $("#stu_WeiXin").textbox("getValue");					
 			var stu_isBaoBei1= $("#stu_isBaoBei1").combobox("getValue");
 			var stu_inClassContent1= $("#stu_inClassContent1").textbox("getValue");	
-									
+			var fenliang=<%=session.getAttribute("fenliang")%>;					
 			//提交到添加的controller
 				$.post("insertstu", {
+					fenliang:fenliang,
 					stu_Name:stu_Name1,
 					stu_Sex:stu_Sex1,
 					stu_Age:stu_Age1,
@@ -191,6 +195,7 @@
 					stu_WeiXin:stu_WeiXin,
 					stu_isBaoBei:stu_isBaoBei1,
 					stu_inClassContent:stu_inClassContent1
+					
 						},
 						function(res) {
 							var res=eval("("+res+")");
