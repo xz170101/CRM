@@ -238,7 +238,7 @@
 			 <if test="stu_Name!=null and stu_Name!=''">
 				stu_Name=#{stu_Name},
 			</if>
-			<if test="stu_Sex!=null and stu_Sex!=''">
+			<if test="stu_Sex!=null">
 				stu_Sex=#{stu_Sex},
 			</if>
 			<if test="stu_Age!=null and stu_Age!=''">
@@ -277,12 +277,12 @@
 			<if test="stu_WeiXin!=null and stu_WeiXin!=''">
 				stu_WeiXin=#{stu_WeiXin},
 			</if>
-			<if test="stu_isBaoBei!=null and stu_isBaoBei!=''">
+			<if test="stu_isBaoBei!=null">
 				stu_isBaoBei=#{stu_isBaoBei},
 			</if>	
-			<if test="stu_ZiXunName !=null and stu_ZiXunName !=''">
+			<!-- <if test="stu_ZiXunName !=null and stu_ZiXunName !=''">
 				stu_ZiXunName=#{stu_ZiXunName},
-			</if>
+			</if> -->
 			<if test="stu_CreateUser!=null and stu_CreateUser!=''">
 				stu_CreateUser=#{stu_CreateUser},
 			</if>
@@ -292,7 +292,7 @@
 			<if test="sexitInte!=null and sexitInte!=''">
 				sexitInte=#{sexitInte},
 			</if>
-			<if test="stu_isValid!=null and stu_isValid!=''">
+			<if test="stu_isValid!=null">
 				stu_isValid=#{stu_isValid},
 			</if>	
 			<if test="stu_LostValid!=null and stu_LostValid!=''">
@@ -301,7 +301,7 @@
 			<if test="stu_isReturnVist!=null and stu_isReturnVist!=''">
 				stu_isReturnVist=#{stu_isReturnVist},
 			</if>
-			<if test="stu_isHome!=null and stu_isHome!=''">
+			<if test="stu_isHome!=null">
 				stu_isHome=#{stu_isHome},
 			</if>
 			<if test="stu_HomeTime!=null and stu_HomeTime!=''">
@@ -314,12 +314,12 @@
 				stu_preMoney=#{stu_preMoney},
 			</if>
 			<if test="stu_preMoneyTime!=null and stu_preMoneyTime!=''">
-				stu_preMoneyTime=#{stu_preMoneyTime}
+				stu_preMoneyTime=#{stu_preMoneyTime},
 			</if>
 			<if test="stu_ReturnMoneyReason!=null and stu_ReturnMoneyReason!=''">
 				stu_ReturnMoneyReason=#{stu_ReturnMoneyReason},
 			</if>			
-			<if test="stu_isPay!=null and stu_isPay!=''">
+			<if test="stu_isPay!=null">
 				stu_isPay=#{stu_isPay},
 			</if>			
 			<if test="stu_PayTime!=null and stu_PayTime!=''">
@@ -328,10 +328,10 @@
 			<if test="stu_Money !=null and stu_Money!=''">
 				stu_Money=#{stu_Money},
 			</if>
-			<if test="stu_isReturnMoney!=null and stu_isReturnMoney!=''">
+			<if test="stu_isReturnMoney!=null">
 				stu_isReturnMoney=#{stu_isReturnMoney},
 			</if>
-			<if test="stu_isInClass!=null and stu_isInClass!=''">
+			<if test="stu_isInClass!=null">
 				stu_isInClass=#{stu_isInClass},
 			</if>
 			<if test="stu_inClassTime!=null and stu_inClassTime!=''">
