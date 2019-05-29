@@ -75,12 +75,11 @@
 	</script>
 </head>
 <body>
-<table class="easyui-datagrid" id="db" title="签到列表"
+<table class="easyui-datagrid" id="db" title="咨询师列表"
 		style="width: 300; height: 400"
 		data-options="fitColumns:true">
 		<thead>
-			<tr>
-				
+			<tr>				
 				<th data-options="field:'askers_Name'">咨询师名字</th>
 				<th data-options="field:'checkState',formatter:formatterqiandao">签到状态</th>
 				<th data-options="field:'checkInTime'">签到时间</th>

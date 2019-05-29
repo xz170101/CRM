@@ -41,10 +41,10 @@
 		$('#fenliang').switchbutton({
 			checked : kaiguan,			
 			onChange : function(checked) {	
-				var list = $("#cha").val();										
-				if(list.length<=1){
+				/* var list = $("#cha").val();										
+				if(list.length<1){
 					alert("只有一个人签到，不能自动分量！");
-				}else{
+				}else{ */
 					$.messager.confirm("提示", "你确定开启自动分量吗？", function(r) {
 						if (r) {					
 								$.ajax({
@@ -61,7 +61,7 @@
 								})
 							}
 						})
-					}			
+					//}			
 			}
 		})
 	}	 

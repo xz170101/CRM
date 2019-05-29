@@ -45,14 +45,15 @@ public class StudentController {
 	
 	@RequestMapping(value="/updateStudent",method=RequestMethod.POST)
 	@ResponseBody
-	public Integer update(Student student) {		
+	public Integer update(Student student) {
+		System.out.println("sjsdjgsdj"+student+"      heng");
 		return studentService.updateStudent(student);
 	}
 	
 	@RequestMapping(value="/selectzixunname",method=RequestMethod.POST)
 	@ResponseBody
 	public List<Askers> selectzixunname() {
-		System.out.println(studentService.selectzixunname()+"jinjin=========================");
+		
 		return studentService.selectzixunname();
 	}
 	
