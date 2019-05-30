@@ -1,47 +1,20 @@
-﻿$(function(){function show(){var mydate = new Date(); var str = "" + mydate.getFullYear() + "-"; str += (mydate.getMonth()+1); return str; } $(".Years").text(show()); });
-var myChart1 = echarts.init(document.getElementById('chart-panel'));
-option1 = {
-    tooltip : {
-        trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
-    },
-    legend: {
-        orient: 'vertical',
-        left: 'left',
-        data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
-    },
-    series : [
-        {
-            name: '访问来源',
-            type: 'pie',
-            radius : '55%',
-            center: ['50%', '60%'],
-            data:[
-                {value:335, name:'直接访问'},
-                {value:310, name:'邮件营销'},
-                {value:234, name:'联盟广告'},
-                {value:135, name:'视频广告'},
-                {value:1548, name:'搜索引擎'}
-            ],
-            itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-            }
-        }
-    ]
-};
-myChart1.setOption(option1);
+﻿$(function(){
+	function show(){
+		var mydate = new Date(); 
+		var str = "" + mydate.getFullYear() + "-"; 
+		str += (mydate.getMonth()+1); 
+		return str; 
+		} 
+	$(".Years").text(show()); 
+	});
+	 
 var myChart2 = echarts.init(document.getElementById('Canvas2'));
 option2 = {
     tooltip: {
         trigger: 'axis'
     },
     legend: {
-        // data:['Step Start', 'Step Middle', 'Step End']
-        data:['华东区', '华南区', '中原区']
+         data:['华东区', '华南区', '中原区']
     },
     grid: {
         left: '3%',

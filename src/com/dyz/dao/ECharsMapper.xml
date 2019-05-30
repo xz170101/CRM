@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dyz.dao.ECharsMapper">
+	
+	<!-- 查询所有的用户 -->
+	<select id="selectUserCount"  resultType="int">
+		select count(1) from user
+	</select>
+	<!-- 查询所有的客户 -->
+	<select id="selectStudentCount"  resultType="int">
+		select count(1) from students
+	</select>
+	<!-- 查询成交的数量 -->
+	<select id="selectTransactionCount"  resultType="int">
+		select count(1) from students where stu_isPay=1
+	</select>
+	<!-- 查询今日上班的人数 -->
+	<select id="selectUserCheckCount"  resultType="int">
+		SELECT COUNT(checkInTime) FROM userchecks WHERE date(checkInTime) = curdate(); 
+	</select>
+	<!-- 各角色 的人数 -->
+	<select id="selectRoseCount"  resultType="map">
+		select count(ur.ur_Id) as value, r.roles_Name as name
+		from userrole ur INNER JOIN roles r on ur.roleId= r.roles_Id  
+		GROUP BY ur.roleId 
+		ORDER BY  ur.roleId
+	</select>
+	<!-- 饼图查看客户来源 -->
+	<select id="selectStuSourceUrl"  resultType="map">
+		SELECT count(stu_Id) AS value,stu_SourceUrl as name from students GROUP BY stu_SourceUrl ORDER BY  stu_SourceUrl
+	</select>
+	
+	 
+
+
+
+</mapper>

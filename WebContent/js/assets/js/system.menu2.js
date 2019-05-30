@@ -2,9 +2,9 @@
 var _menus=[
     {"menuid":"00","icon":"fa-trophy","menuname":"模块管理",parentMenu:'0',
         "menus":[{"menuid":"002","menuname":"管理模块","icon":"fa-delicious","url":"indexGL"},
-        		{"menuid":"000","menuname":"统计模块1","icon":"fa-dashboard","url":"statistics"}/* ,
-               {"menuid":"001","menuname":"统计模块","icon":"fa-delicious","url":"statistics01"}
-*/            ]} 
+        		{"menuid":"000","menuname":"统计模块","icon":"fa-dashboard","url":"statistics"}/*,
+               {"menuid":"001","menuname":"统计模块","icon":"fa-delicious","url":"statistics01"}*/
+           ]} 
 ];
 
     //设置修改密码窗口
@@ -13,7 +13,8 @@ var _menus=[
     }
     //关闭登录窗口
     function closePwd() {
-    	$('#updatePwd').window('close');}
+    	$('#updatePwd').window('close');
+    	}
 
     //修改密码
     function serverLogin() {
