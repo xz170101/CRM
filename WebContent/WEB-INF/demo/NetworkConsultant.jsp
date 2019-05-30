@@ -159,6 +159,7 @@
    			var data=$("#stuTab").datagrid("getData");
    			var row=data.rows[index];
    			$("#chakanStuForm").form("load",row);
+   			$('#stu_sex1').textbox('setValue',row.stu_Sex==1?'男':'女');
    			$("#chakanStu").dialog("open");
    		}
    		//查看页面的关闭
