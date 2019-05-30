@@ -163,7 +163,7 @@
 	}
 </script>
  <body>
- 	<table name="center1" class="easyui-datagrid" id="Moduledg" title="模块信息【右击选择模块】" style="width: 100%; height:auto;" data-options="method:'post'">
+ 	<table name="center1" class="easyui-datagrid" id="Moduledg" title="模块信息【右击管理模块】" style="width: 100%; height:auto;" data-options="method:'post'">
 	</table>
 	<!-- <div style="margin-bottom: 5px;">
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" onclick="addModuleInfo()">添加</a>
