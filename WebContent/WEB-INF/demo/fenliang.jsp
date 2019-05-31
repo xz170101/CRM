@@ -36,11 +36,12 @@
 			if(kaiguan=="false"){
 				kaiguan= false;
 			}
-		} else {
+		} if(kaiguan ==null || kaiguan =="") {
 			kaiguan = false;
 		}
 
 		$('#fenliang').switchbutton({
+		<%--  var user="<%=session.getAttribute("user")%>"; --%>		 
 			checked : kaiguan,			
 			onChange : function(checked) {	
 				/* var list = $("#cha").val();										

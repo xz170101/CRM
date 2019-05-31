@@ -79,7 +79,7 @@
 		}
 	
 	function formatterfollowTime(value, row, index){
-		alert(row.netFollows);
+		
 		return row.netFollows.followTime;
 	}
 	function formatterContent(value, row, index){
@@ -155,7 +155,7 @@
 			}
 		});
 	}
-	//验证手机号
+	 //验证手机号
 	function vphone() {
 		var phone=$("#stu_Phone1").val().trim();
 		if(phone ==null || phone ==''){
@@ -167,7 +167,21 @@
 			 document.getElementById('yzfphone').style.color = 'red';
 			return false;
 		}
-	}
+	} 
+	 
+	//验证手机号
+	function xphone() {
+		var phone=$("#stu_Phone3").val().trim();
+		if(phone ==null || phone ==''){
+			$("#xgphone").html('手机号码不能为空');
+			 document.getElementById('xgphone').style.color = 'red';
+			return false;
+		}else if(!(/^1[34578]\d{9}$/.test(phone))){
+			$("#xgphone").html('手机号格式错误');
+			 document.getElementById('xgphone').style.color = 'red';
+			return false;
+		}
+	} 
 	//添加客户
 	//打开添加窗口
 	 function addStu(){		
@@ -180,7 +194,7 @@
 			var stu_Name1= $("#stu_Name1").textbox("getValue");
 			var stu_Sex1 = $("#stu_Sex1").combobox("getValue");
 			var stu_Age1= $("#stu_Age1").textbox("getValue");
-			var stu_Phone1=$("#stu_Phone1").validatebox("getValue"); /* $("#stu_Phone1").val(); *///$("#stu_Phone1").validatebox("getValue");					
+			var stu_Phone1=$("#stu_Phone1").textbox("getValue"); 				
 			var stu_Status1= $("#stu_Status1").combobox("getValue");//学历
 			var stu_PerState1= $("#stu_PerState1").combobox("getValue");
 			var stu_SourceUrl1= $("#stu_SourceUrl1").combobox("getValue");
@@ -188,8 +202,9 @@
 			var stu_qq1= $("#stu_qq1").textbox("getValue");
 			var stu_WeiXin= $("#stu_WeiXin").textbox("getValue");					
 			var stu_isBaoBei1= $("#stu_isBaoBei1").combobox("getValue");
-			var stu_inClassContent1= $("#stu_inClassContent1").textbox("getValue");	
-			var fenliang=<%=session.getAttribute("fenliang")%>;					
+			var stu_inClassContent1= $("#stu_inClassContent1").textbox("getValue");				
+			var fenliang =<%=session.getAttribute("fenliang")%>; 
+			
 			//提交到添加的controller
 				$.post("insertstu", {
 					fenliang:fenliang,
@@ -369,7 +384,7 @@
 					stu_Id:$('#studentId').textbox('getValue'),
 					followTime:$('#followtime').datetimebox('getValue'),
 					followState:$('#followstate').textbox('getValue'),
-					followType:$('#followtype').combobox('getValue'),
+					followType:$('#followtype').textbox('getValue'),
 					nextFollowTime:$('#nextfollowtime').datetimebox('getValue'),
 					conTent:$('#content').textbox('getValue')
 				},
@@ -519,6 +534,7 @@
 	</script>
 </head>
 <body>		
+		<input type="hidden" value="${fenliang}" id="fen">
 		<table id="stuTab" data-options="fitColumns:true">   
 	     <thead>   
 	        <tr>  
@@ -676,7 +692,7 @@
 	    		</tr>
 	    		<tr>
 	    			<td>电话：</td>
-	    			<td><input onblur="vphone()" class="easyui-validatebox" id="stu_Phone1" ><!-- data-options="required:true,validType;'phone'" --></td>
+	    			<td><input onblur="vphone()" class="easyui-textbox" id="stu_Phone1" ></td>
 	    			<td><span id="yzfphone"></span></td>
 	    		</tr>
 	    		<tr>
@@ -779,13 +795,14 @@
 	    		<tr>
 	    			<td>跟踪方式：</td>
 	    			<td>
-	    			<select class="easyui-combobox" id="followtype">
+	    			<input class="easyui-textbox" id="followtype" >
+	    			<!-- <select class="easyui-combobox" id="followtype">
 	    				<option value="上门">上门</option>
 	    				<option value="电话">电话</option>
 	    				<option value="短信">短信</option>
 	    				<option value="qq">qq</option>
 	    				<option value="微信">微信</option>
-	    			</select>
+	    			</select> -->
 	    			</td>
 	    		</tr>
 	    		<tr>
@@ -1016,7 +1033,9 @@
 	    		
 	    		<tr>	
 	    			<td>电话:</td>	    			
-	    			<td><input class="easyui-textbox" id="stu_Phone3" name="stu_Phone"></td>
+	    			<td><input onblur="xphone()" class="easyui-textbox" id="stu_Phone3" name="stu_Phone"></td>	    		
+	    			<td><span id="xgphone"></span></td>
+	    		
 	    		</tr>
 	    		<tr>
 	    			<td>学历:</td>
