@@ -289,6 +289,10 @@ public class UserServiceImp implements UserService{
 									newCookie.setPath(req.getContextPath()); //默认只对当前路径下的资源有效
 									response.addCookie(newCookie); //重新写入，将覆盖之前的
 								}
+							   if(session.getAttribute("fenliang")==null||session.getAttribute("fenliang").equals("")) {
+									session.setAttribute("fenliang", false);
+								}
+
 							//该登录时间
 							User us=new User();
 							SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

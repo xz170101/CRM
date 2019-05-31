@@ -48,7 +48,7 @@
 				if(list.length<1){
 					alert("只有一个人签到，不能自动分量！");
 				}else{ */
-					$.messager.confirm("提示", "你确定开启自动分量吗？", function(r) {
+					//$.messager.confirm("提示", "你确定开启自动分量吗？", function(r) {
 						if (r) {					
 								$.ajax({
 									url : "fenliang",
@@ -63,7 +63,7 @@
 									}
 								})
 							}
-						})
+						//})
 					//}			
 			}
 		})
@@ -102,7 +102,7 @@
 		if(all != null && all != ""){
 			var aid=all[0].askers_Id;
 			var namezixun=all[0].askers_Name;			
-		}
+		}		
 		$.ajax({
 			url:'updatezixunname',
 			method:'post',
@@ -119,7 +119,7 @@
 					$('#allasker').datalist('reload');
 					$('#updateziXunName').dialog('close');
 				}else{
-					$.messager.alert('提示','修改失败');
+					$.messager.alert('提示','分量失败');
 				}
 			}
 		})

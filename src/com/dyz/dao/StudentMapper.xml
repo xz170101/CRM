@@ -225,11 +225,12 @@
   	<update id="updatezixunname" parameterType="student">
   			update students
 		<set>
-			<!-- <if test="stu_ZiXunName!=null and stu_ZiXunName!=''"> -->
+			<if test="stu_ZiXunName!=null and stu_ZiXunName!=''">
 				stu_ZiXunName=#{stu_ZiXunName},
-				
+				</if>
+				<if test="askers_Id !=null and askers_Id !=''">	
 				askers_Id=#{askers_Id}
-			<!-- </if>	 -->		
+				</if>
 		</set>		
 			where stu_id=#{stu_id}	
   	</update>
