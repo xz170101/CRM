@@ -45,7 +45,7 @@
 			var data = $("#db").datagrid("getSelections");
 			if (data == "" || data == null) {
 				alert("请选择要签退的员工");
-				$("#db").datagrid("reload");
+				
 				return;
 			}
 			//var ids = "";
@@ -56,11 +56,10 @@
 					return;
 				}
 				if (userids == "") {
-					/* ids += data[i].id; */
+					
 					userids += data[i].user_Id;
 				} else {
-				/* 	ids += ",";
-					ids += data[i].id; */
+				
 					userids += ",";
 					userids += data[i].user_Id;
 				}
@@ -75,7 +74,7 @@
 							//ids : ids,
 							checkState : 0,
 							isCancel : 1,
-							user_Id:userids
+							userids:userids
 						},
 						success : function(res) {
 							if (res.success) {

@@ -49,7 +49,7 @@ public interface AskersMapper {
 	Integer insertAskerUsers(Askers askers);
 	
 	/**
-	 * 查询是否有该员工
+	 * 查询是否有该咨询师
 	 * @param userChecksId
 	 * @return
 	 */

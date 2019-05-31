@@ -101,7 +101,7 @@
   	<update id="updateStu" parameterType="student">
 		update students
 		<set>
-			<if test="stu_Name!=null and stu_Name!=''">
+			 <if test="stu_Name!=null and stu_Name!=''">
 				stu_Name=#{stu_Name},
 			</if>
 			<if test="stu_Sex!=null and stu_Sex!=''">
@@ -113,12 +113,12 @@
 			<if test="stu_Phone !=null and stu_Phone!=''">
 				stu_Phone=#{stu_Phone},
 			</if>
-			<if test="stu_Status !=null and stu_Status!=''">
+			 <if test="stu_Status !=null and stu_Status!=''">
 				stu_Status=#{stu_Status},
 			</if>
 			<if test="stu_PerState!=null and stu_PerState!=''">
 				stu_PerState=#{stu_PerState},
-			</if>
+			</if> 
 			<if test="stu_SourceUrl!=null and stu_SourceUrl!=''">
 				stu_SourceUrl=#{stu_SourceUrl},
 			</if>
@@ -146,9 +146,6 @@
 			<if test="stu_isBaoBei!=null and stu_isBaoBei!=''">
 				stu_isBaoBei=#{stu_isBaoBei},
 			</if>	
-			<if test="stu_CreateUser!=null and stu_CreateUser!=''">
-				stu_CreateUser=#{stu_CreateUser},
-			</if>
 			<if test="stu_LearnForward!=null and stu_LearnForward!=''">
 				stu_LearnForward=#{stu_LearnForward},
 			</if>
@@ -157,7 +154,10 @@
 			</if>
 			<if test="stu_isValid!=null and stu_isValid!=''">
 				stu_isValid=#{stu_isValid},
-			</if>			
+			</if>	
+			<if test="stu_LostValid!=null and stu_LostValid!=''">
+				stu_LostValid=#{stu_LostValid},
+			</if>		
 			<if test="stu_isReturnVist!=null and stu_isReturnVist!=''">
 				stu_isReturnVist=#{stu_isReturnVist},
 			</if>
@@ -166,17 +166,26 @@
 			</if>
 			<if test="stu_HomeTime!=null and stu_HomeTime!=''">
 				stu_HomeTime=#{stu_HomeTime},
+			</if>			
+			<if test="stu_firstVisitTime!=null and stu_firstVisitTime!=''">
+				stu_firstVisitTime=#{stu_firstVisitTime},
 			</if>
-			<if test="stu_LostValid!=null and stu_LostValid!=''">
-				stu_LostValid=#{stu_LostValid},
+			<if test="stu_preMoney !=null and stu_preMoney!=''">
+				stu_preMoney=#{stu_preMoney},
 			</if>
+			<if test="stu_preMoneyTime!=null and stu_preMoneyTime!=''">
+				stu_preMoneyTime=#{stu_preMoneyTime}
+			</if>
+			<if test="stu_ReturnMoneyReason!=null and stu_ReturnMoneyReason!=''">
+				stu_ReturnMoneyReason=#{stu_ReturnMoneyReason},
+			</if>			
 			<if test="stu_isPay!=null and stu_isPay!=''">
 				stu_isPay=#{stu_isPay},
 			</if>			
 			<if test="stu_PayTime!=null and stu_PayTime!=''">
 				stu_PayTime=#{stu_PayTime},
-			</if>	
-			<if test="stu_Money!=null and stu_Money!=''">
+			</if>
+			<if test="stu_Money !=null and stu_Money!=''">
 				stu_Money=#{stu_Money},
 			</if>
 			<if test="stu_isReturnMoney!=null and stu_isReturnMoney!=''">
@@ -187,27 +196,15 @@
 			</if>
 			<if test="stu_inClassTime!=null and stu_inClassTime!=''">
 				stu_inClassTime=#{stu_inClassTime},
-			</if>
+			</if> 
 			<if test="stu_inClassContent!=null and stu_inClassContent!=''">
 				stu_inClassContent=#{stu_inClassContent},
 			</if>			
 			<if test="stu_AskerContent!=null and stu_AskerContent!=''">
-				stu_AskerContent=#{stu_AskerContent},
-			</if>
-			<if test="stu_isDel!=null and stu_isDel!=''">
-				stu_isDel=#{stu_isDel},
-			</if>
-			<if test="stu_ReturnMoneyReason!=null and stu_ReturnMoneyReason!=''">
-				stu_ReturnMoneyReason=#{stu_ReturnMoneyReason},
-			</if>
-			<if test="stu_preMoney!=null and stu_preMoney!=''">
-				stu_preMoney=#{stu_preMoney},
-			</if>
-			<if test="stu_preMoneyTime!=null and stu_preMoneyTime!=''">
-				stu_preMoneyTime=#{stu_preMoneyTime}
-			</if>			
+				stu_AskerContent=#{stu_AskerContent}
+			</if>			 			
 		</set>		
-			where stu_id=#{stu_id}				
+			where stu_id=#{stu_id}		
 	</update>
 
 </mapper>

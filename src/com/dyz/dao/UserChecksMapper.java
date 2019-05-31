@@ -42,4 +42,16 @@ public interface UserChecksMapper {
 	 * @return
 	 */
 	Integer selectdangtian(Integer user_Id);
+	/**
+	 * 查询签到表是否有该员工
+	 * @param user_Id
+	 * @return
+	 */
+	Integer selectByUserCheck(Integer user_Id);
+	/**
+	 * 添加员工签到信息
+	 * @param usercheck
+	 * @return
+	 */
+	Integer insertUserChecks(UserChecks usercheck);
 }

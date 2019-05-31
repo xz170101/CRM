@@ -151,6 +151,10 @@
 		</where>				
 		limit #{page},#{pageSize}
 	</select>
+	<!-- poi查询所有学生 -->
+	<select id="selectpoi" resultType="student">
+		select * from students
+	</select>
 	<!-- 查询总条数 -->
 	<select id="selectCount" parameterType="fenye" resultType="int">
 		select count(1) from students 
@@ -221,11 +225,12 @@
   	<update id="updatezixunname" parameterType="student">
   			update students
 		<set>
-			<!-- <if test="stu_ZiXunName!=null and stu_ZiXunName!=''"> -->
+			<if test="stu_ZiXunName!=null and stu_ZiXunName!=''">
 				stu_ZiXunName=#{stu_ZiXunName},
-				
+				</if>
+				<if test="askers_Id !=null and askers_Id !=''">	
 				askers_Id=#{askers_Id}
-			<!-- </if>	 -->		
+				</if>
 		</set>		
 			where stu_id=#{stu_id}	
   	</update>

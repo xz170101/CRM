@@ -47,6 +47,34 @@
 		})
 		$("#sousuofrm").form("reset");
 	}
+	
+	//双击查看
+	$(function () {
+     $("#stuTab").datagrid({
+         //双击事件
+         onDblClickRow: function (index, row) {
+          
+ 			$('#lookStuForm11').form("load",row);
+ 			$('#lookStuForm22').form("load",row);
+ 			$('#stu_Sex2').textbox('setValue',row.stu_Sex==1?'男':'女');//用三元表达式设置值
+ 			$('#stu_isBaoBei2').textbox('setValue',row.stu_isBaoBei==1?"是":"否");
+ 			$('#stu_isDel22').textbox('setValue',row.stu_isDel==1?"是":"否");
+ 			$('#stu_isInClass22').textbox('setValue',row.stu_isInClass==1?"是":"否");
+ 			$('#stu_isReturnMoney22').textbox('setValue',row.stu_isReturnMoney==1?"是":"否");
+ 			$('#stu_isPay22').textbox('setValue',row.stu_isPay==1?"是":"否");
+ 			$('#stu_isHome22').textbox('setValue',row.stu_isHome==1?"是":"否");
+ 			$('#stu_isReturnVist22').textbox('setValue',row.stu_isReturnVist==1?"是":"否");
+ 			$('#stu_isValid22').textbox('setValue',row.stu_isValid==0?row.stu_isValid==1?"是":"否":'待定');
+ 			$('#lookStu').dialog('open');
+        	
+         }
+     });
+ })
+//查看的关闭
+	function setStuclose(){
+		$('#lookStu').dialog('close');
+	}	
+	
 	//查看日志的打开
 	function looklogf(index){
 		var data = $("#stuTab").datagrid("getData");
@@ -79,7 +107,7 @@
 		}
 	
 	function formatterfollowTime(value, row, index){
-		alert(row.netFollows);
+		
 		return row.netFollows.followTime;
 	}
 	function formatterContent(value, row, index){
@@ -93,7 +121,7 @@
 	}
 	
 	function formatterStu(value, row, index){ 
-		return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='lookStu(" + index + ")'>查看</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='genzongStu(" + index + ")'>跟踪</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='updateStu(" + index + ")'>编辑</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='deleteStu(" + index + ")'>删除</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='looklogf(" + index + ")'>跟踪日志</a>";
+		return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='genzongStu(" + index + ")'>跟踪</a> <a href='javascript:void(0)' style='cursor: pointer;' onclick='updateStu(" + index + ")'>编辑</a> <a href='javascript:void(0)' style='cursor: pointer;' onclick='deleteStu(" + index + ")'>删除</a> <a href='javascript:void(0)' style='cursor: pointer;' onclick='looklogf(" + index + ")'>跟踪日志</a>";
 	}	
  
 	function formatterSex(value, row, index){
@@ -155,7 +183,33 @@
 			}
 		});
 	}
-	
+	 //验证手机号
+	function vphone() {
+		var phone=$("#stu_Phone1").val().trim();
+		if(phone ==null || phone ==''){
+			$("#yzfphone").html('手机号码不能为空');
+			 document.getElementById('yzfphone').style.color = 'red';
+			return false;
+		}else if(!(/^1[34578]\d{9}$/.test(phone))){
+			$("#yzfphone").html('手机号格式错误');
+			 document.getElementById('yzfphone').style.color = 'red';
+			return false;
+		}
+	} 
+	 
+	//验证手机号
+	function xphone() {
+		var phone=$("#stu_Phone3").val().trim();
+		if(phone ==null || phone ==''){
+			$("#xgphone").html('手机号码不能为空');
+			 document.getElementById('xgphone').style.color = 'red';
+			return false;
+		}else if(!(/^1[34578]\d{9}$/.test(phone))){
+			$("#xgphone").html('手机号格式错误');
+			 document.getElementById('xgphone').style.color = 'red';
+			return false;
+		}
+	} 
 	//添加客户
 	//打开添加窗口
 	 function addStu(){		
@@ -164,13 +218,11 @@
 	} 
 	//添加窗口的保存
 	 function insertsave(){
-		    
-		    
 			//获取id参数
 			var stu_Name1= $("#stu_Name1").textbox("getValue");
 			var stu_Sex1 = $("#stu_Sex1").combobox("getValue");
 			var stu_Age1= $("#stu_Age1").textbox("getValue");
-			var stu_Phone1= $("#stu_Phone1").val();//$("#stu_Phone1").numberbox("getValue");					
+			var stu_Phone1=$("#stu_Phone1").textbox("getValue"); 				
 			var stu_Status1= $("#stu_Status1").combobox("getValue");//学历
 			var stu_PerState1= $("#stu_PerState1").combobox("getValue");
 			var stu_SourceUrl1= $("#stu_SourceUrl1").combobox("getValue");
@@ -178,8 +230,9 @@
 			var stu_qq1= $("#stu_qq1").textbox("getValue");
 			var stu_WeiXin= $("#stu_WeiXin").textbox("getValue");					
 			var stu_isBaoBei1= $("#stu_isBaoBei1").combobox("getValue");
-			var stu_inClassContent1= $("#stu_inClassContent1").textbox("getValue");	
-			var fenliang=<%=session.getAttribute("fenliang")%>;					
+			var stu_inClassContent1= $("#stu_inClassContent1").textbox("getValue");				
+			var fenliang =<%=session.getAttribute("fenliang")%>; 
+			
 			//提交到添加的controller
 				$.post("insertstu", {
 					fenliang:fenliang,
@@ -194,8 +247,7 @@
 					stu_qq:stu_qq1,
 					stu_WeiXin:stu_WeiXin,
 					stu_isBaoBei:stu_isBaoBei1,
-					stu_inClassContent:stu_inClassContent1
-					
+					stu_inClassContent:stu_inClassContent1					
 						},
 						function(res) {
 							var res=eval("("+res+")");
@@ -214,7 +266,7 @@
 		$("#insertStu").dialog("close");
 	}
 		
- 		//查看
+ 		/* //查看
 		function lookStu(index){
 			var data=$('#stuTab').datagrid('getData');
 			var row=data.rows[index];
@@ -230,11 +282,8 @@
 			$('#stu_isReturnVist22').textbox('setValue',row.stu_isReturnVist==1?"是":"否");
 			$('#stu_isValid22').textbox('setValue',row.stu_isValid==0?row.stu_isValid==1?"是":"否":'待定');
 			$('#lookStu').dialog('open');
-		}
-		//查看的关闭
-		function setStuclose(){
-			$('#lookStu').dialog('close');
-		}		
+		} */
+			
 		
 		//修改打开
 		function updateStu(index){
@@ -360,7 +409,7 @@
 					stu_Id:$('#studentId').textbox('getValue'),
 					followTime:$('#followtime').datetimebox('getValue'),
 					followState:$('#followstate').textbox('getValue'),
-					followType:$('#followtype').combobox('getValue'),
+					followType:$('#followtype').textbox('getValue'),
 					nextFollowTime:$('#nextfollowtime').datetimebox('getValue'),
 					conTent:$('#content').textbox('getValue')
 				},
@@ -440,7 +489,29 @@
 		//设置隐藏列结束
 		
 		//导出excel表格
+		var poilist='';
+
 		function ExportForm() {
+			
+			$.ajaxSetup({async : false}); //取消ajax的异步提交，变成同步
+			$.ajax({
+				url:'selectpoi',
+				method:'post',
+				dataType:'json',
+				success:function(r){
+					var poi=JSON.stringify(r);//将返回的所有客户的数据转成string类型
+					poilist=poi;
+				}
+			})			
+			var row = $("#stuTab").datagrid("getSelections"); // 获取所有选中的行
+			var stulist='';
+			if(row==null || row==''){
+				stulist=poilist;
+				//stulist=JSON.stringify(poi);
+			}else{
+				stulist=JSON.stringify(row);
+			}
+
 			var header = $('#stuTab').datagrid('options').columns[0];//获取数据的第一行表头
 			var fields="";
 			for (var i = 1; i < header.length-1; i++) {
@@ -452,7 +523,7 @@
 				}
 		
 			}
-			
+			/* 
 			var row = $("#stuTab").datagrid("getSelections"); //获取所有选中的行
 			var stulist='';
 			if(row==null || row==''){
@@ -460,7 +531,7 @@
 				stulist=JSON.stringify(data.rows);
 			}else{
 				stulist=JSON.stringify(row);
-			}
+			} */
 			
 			//window.location.href="/CRM/exportForm?stulist="+stulist+"&fields="+fields;
 			var form=$("<form>");
@@ -488,6 +559,7 @@
 	</script>
 </head>
 <body>		
+		<input type="hidden" value="${fenliang}" id="fen">
 		<table id="stuTab" data-options="fitColumns:true">   
 	     <thead>   
 	        <tr>  
@@ -645,8 +717,8 @@
 	    		</tr>
 	    		<tr>
 	    			<td>电话：</td>
-	    			<td><input onkeyup="vusertel()" class="easyui-numberbox" id="stu_Phone1" ></td>
-	    			<td><span id="editTel"></span></td>
+	    			<td><input onblur="vphone()" class="easyui-textbox" id="stu_Phone1" ></td>
+	    			<td><span id="yzfphone"></span></td>
 	    		</tr>
 	    		<tr>
 	    			<td>学历：</td>
@@ -748,13 +820,14 @@
 	    		<tr>
 	    			<td>跟踪方式：</td>
 	    			<td>
-	    			<select class="easyui-combobox" id="followtype">
+	    			<input class="easyui-textbox" id="followtype" >
+	    			<!-- <select class="easyui-combobox" id="followtype">
 	    				<option value="上门">上门</option>
 	    				<option value="电话">电话</option>
 	    				<option value="短信">短信</option>
 	    				<option value="qq">qq</option>
 	    				<option value="微信">微信</option>
-	    			</select>
+	    			</select> -->
 	    			</td>
 	    		</tr>
 	    		<tr>
@@ -779,7 +852,7 @@
 		}]">
 		
 		<div id="cc" class="easyui-layout" style="width:450px;height:600px;">   
-	    <div data-options="region:'north',title:'在线录入',split:true"  style="height:300px;padding:5px;background:#eee;">
+	    <div data-options="region:'west',title:'在线录入',split:true"  style="height:300px;padding:5px;background:#eee;">
 		
 	    <form id="lookStuForm11" class="easyui-form">
 	    	<table cellpadding="5">
@@ -985,7 +1058,9 @@
 	    		
 	    		<tr>	
 	    			<td>电话:</td>	    			
-	    			<td><input class="easyui-textbox" id="stu_Phone3" name="stu_Phone"></td>
+	    			<td><input onblur="xphone()" class="easyui-textbox" id="stu_Phone3" name="stu_Phone"></td>	    		
+	    			<td><span id="xgphone"></span></td>
+	    		
 	    		</tr>
 	    		<tr>
 	    			<td>学历:</td>

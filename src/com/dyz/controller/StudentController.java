@@ -59,7 +59,7 @@ public class StudentController {
 	@ResponseBody
 	public Integer insert(Student student, HttpSession session,Boolean fenliang) {
 		Integer i=null;
-		session.setAttribute("fenliang", fenliang);
+		session.setAttribute("fenliang", fenliang);			
 		if(fenliang==true) {
 			User user=(User)session.getAttribute("user");
 			String crestuser=user.getLoginName();

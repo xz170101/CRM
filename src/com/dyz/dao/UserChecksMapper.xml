@@ -58,7 +58,17 @@
 	 and checkState=1
 	 and user_Id=#{user_Id}
 	</select>
-	
+	<!-- 查询签到表是否有该员工 -->
+	<select id="selectByUserCheck" parameterType="int" resultType="int">
+		select user_Id from userchecks where user_Id=#{user_Id}
+	</select>
+	<!-- 添加员工签到信息 -->
+	<insert id="insertUserChecks" parameterType="userChecks">
+		insert into userchecks
+		(user_Id,userName,checkState,checkInTime)
+		values(#{user_Id},#{userName},#{checkState},now())
+
+	</insert>
 	<update id="updateUserchecks" parameterType="userChecks">
 		update userchecks
 		<set>

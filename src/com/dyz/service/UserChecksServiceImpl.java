@@ -44,5 +44,15 @@ public class UserChecksServiceImpl implements UserChecksService {
 		// TODO Auto-generated method stub
 		return userchecksMapper.selectdangtian(user_Id);
 	}
+	@Override
+	public Integer selectByUserCheck(Integer user_Id) {
+		// TODO Auto-generated method stub
+		return userchecksMapper.selectByUserCheck(user_Id);
+	}
+	@Override
+	public Integer insertUserChecks(UserChecks usercheck) {
+		// TODO Auto-generated method stub
+		return userchecksMapper.insertUserChecks(usercheck);
+	}
 
 }
