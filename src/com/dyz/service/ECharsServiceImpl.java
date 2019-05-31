@@ -51,8 +51,7 @@ public class ECharsServiceImpl implements ECharsService {
 	@Override
 	public List<Map<Integer, String>> selectRoseCount() {
 		// TODO Auto-generated method stub
-		System.out.println("*************"+eCharsMapper.selectRoseCount());
-		return eCharsMapper.selectRoseCount();
+ 		return eCharsMapper.selectRoseCount();
 	}
 	/**
 	 * 饼图查看客户来源
@@ -61,6 +60,22 @@ public class ECharsServiceImpl implements ECharsService {
 	public List<Map<Integer, String>> selectStuSourceUrl() {
 		// TODO Auto-generated method stub
 		return eCharsMapper.selectStuSourceUrl();
+	}
+	/**
+	 * 查询本周成交数据
+	 */
+	@Override
+	public List<Map<Integer, String>> selectWeekCount() {
+		// TODO Auto-generated method stub
+		return eCharsMapper.selectWeekCount();
+	}
+	/**
+	 * 查询上周成交数据
+	 */
+	@Override
+	public List<Map<Integer, String>> selectUpWeekCount() {
+		// TODO Auto-generated method stub
+		return eCharsMapper.selectUpWeekCount();
 	}
 	
 

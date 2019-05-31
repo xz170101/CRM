@@ -36,4 +36,14 @@ public interface ECharsService {
 	 * @return
 	 */
 	List<Map<Integer, String>> selectStuSourceUrl();
+	/**
+	 * 查询本周成交数据
+	 * @return
+	 */
+	List<Map<Integer, String>> selectWeekCount();
+	/**
+	 * 查询上周成交数据
+	 * @return
+	 */
+	List<Map<Integer, String>> selectUpWeekCount();
 }

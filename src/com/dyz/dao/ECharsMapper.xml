@@ -22,18 +22,31 @@
 	</select>
 	<!-- 各角色 的人数 -->
 	<select id="selectRoseCount"  resultType="map">
-		select count(ur.ur_Id) as value, r.roles_Name as name
+		select count(ur.ur_Id) as `value`, r.roles_Name as `name`
 		from userrole ur INNER JOIN roles r on ur.roleId= r.roles_Id  
 		GROUP BY ur.roleId 
 		ORDER BY  ur.roleId
 	</select>
 	<!-- 饼图查看客户来源 -->
 	<select id="selectStuSourceUrl"  resultType="map">
-		SELECT count(stu_Id) AS value,stu_SourceUrl as name from students GROUP BY stu_SourceUrl ORDER BY  stu_SourceUrl
+		SELECT count(stu_Id) AS `value`,stu_SourceUrl as `name` from students GROUP BY stu_SourceUrl ORDER BY  stu_SourceUrl
 	</select>
-	
-	 
-
-
+ 	<!--查询本成交量 -->
+	<select id="selectWeekCount"  resultType="map">
+		select count(1) as `value`,dayname(stu_PayTime) as `name` from students 
+		WHERE YEARWEEK(date_format(stu_PayTime,'%Y-%m-%d'),1) = YEARWEEK(now(),1)
+		GROUP BY stu_PayTime
+		ORDER BY stu_PayTime
+		 
+	<!-- 	ORDER BY field(dayname(stu_PayTime),'monday','tuesday','wednesday','thursday','friday','saturday','sunday') -->
+	</select>
+ 	<!--查询上周成交量 -->
+	<select id="selectUpWeekCount"  resultType="map">
+		SELECT count(1) as `value`,dayname(stu_PayTime) as `name` FROM students
+		WHERE YEARWEEK(date_format(stu_PayTime,'%Y-%m-%d'), 1) = YEARWEEK(now(), 1)-1
+		GROUP BY stu_PayTime 
+		ORDER BY stu_PayTime
+		<!-- ORDER BY field(dayname(stu_PayTime),'monday','tuesday','wednesday','thursday','friday','saturday','sunday') -->
+	</select>
 
 </mapper>

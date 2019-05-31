@@ -1,5 +1,6 @@
 package com.dyz.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +44,6 @@ public class ECharsController {
 	@RequestMapping(value="/selectUserCheckCount",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer selectUserCheckCount() {
-		
 		return eCharsService.selectUserCheckCount();
 	}
 	/**
@@ -63,6 +63,24 @@ public class ECharsController {
 	@ResponseBody
 	public List<Map<Integer, String>> selectStuSourceUrl() {
 		return eCharsService.selectStuSourceUrl();
+	}
+	/**
+	 *成交数据对比
+	 * @return
+	 */
+	@RequestMapping(value="/selectIsPay",method=RequestMethod.POST)
+	@ResponseBody
+	public List<Object> selectWeekCount() {
+		List<Object> list=new ArrayList<>();
+		//List<Map<Integer, String>> nn=new ArrayList<Map<Integer, String>>(); 
+		List<Map<Integer, String>> selectWeekCount = eCharsService.selectWeekCount();
+		List<Map<Integer, String>> selectUpWeekCount = eCharsService.selectUpWeekCount();
+		//nn.addAll(selectWeekCount);
+		//nn.addAll(selectUpWeekCount);
+		list.add(selectWeekCount);
+		list.add(selectUpWeekCount);
+		//return nn;
+		return list;
 	}
 	
 

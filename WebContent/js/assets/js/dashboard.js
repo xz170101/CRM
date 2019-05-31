@@ -8,7 +8,7 @@
 	$(".Years").text(show()); 
 	});
 	 
-var myChart2 = echarts.init(document.getElementById('Canvas2'));
+/*var myChart2 = echarts.init(document.getElementById('Canvas2'));
 option2 = {
     tooltip: {
         trigger: 'axis'
@@ -51,7 +51,7 @@ option2 = {
     ]
 };
 myChart2.setOption(option2);
-
+*/
 var myChart3 = echarts.init(document.getElementById('Canvas3'));
 option3 = {
 tooltip : {
