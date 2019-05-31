@@ -34,14 +34,37 @@ public class ModuleServiceImp implements ModuleService {
 	@Override
 	public Integer updateModu(Module module) {
 		// TODO Auto-generated method stub
-		System.out.println("将要修改的数据：："+module);
+ 		Integer parentId = module.getParentId();
+		String modules_Name = module.getModules_Name();
+ 		List<Module> modules=moduleMapper.selectModulesByParentId(parentId);//查询该模块下的所有节点
+ 		if(modules!=null && modules.size() !=0) {
+			for(Module m:modules) {
+				if(m.getModules_Name().equals(modules_Name)) {
+ 					return 0;
+				} else {
+					return moduleMapper.updateModule(module);
+				}
+			}
+		} 
 		return moduleMapper.updateModule(module);
 	}
 
 	@Override
 	public Integer insertModu(Module module) {
 		// TODO Auto-generated method stub
-		return moduleMapper.insertModule(module);
+		Integer parentId = module.getParentId();
+		String modules_Name = module.getModules_Name();
+ 		List<Module> modules=moduleMapper.selectModulesByParentId(parentId);
+ 		if(modules!=null && modules.size() !=0) {
+			for(Module m:modules) {
+				if(m.getModules_Name().equals(modules_Name)) {
+ 					return 0;
+				} else {
+					return moduleMapper.insertModule(module);
+				}
+			}
+		} 
+			return moduleMapper.insertModule(module);
 	}
 
 	@Override

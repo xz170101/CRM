@@ -176,8 +176,8 @@
 				<b id="checked" class="normal" onclick="changeCheckRembername();" ></b>
 				<label id="login_save" style="float:left;">记住用户名</label>
 				<div class="login-wjpw">
-					<a class="blue" href="javascript:;">忘记用户名？</a>&nbsp;|&nbsp;&nbsp;
-					<a href="javascript:void(0);" onclick="fintPwd()"><span class="blue">忘记密码？</span></a>
+<!-- 					<a class="blue" href="javascript:;">忘记用户名？</a>&nbsp;|&nbsp;&nbsp;
+ -->					<a href="javascript:void(0);" onclick="fintPwd()"><span class="blue">忘记密码？</span></a>
 				</div>
 			</div>
 	    </div>

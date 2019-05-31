@@ -97,14 +97,11 @@ public class RoleServiceImp implements RoleService{
 		// TODO Auto-generated method stub
 		 int nn=roleMapper.deleteRoleModuleByRoleId(roles_Id);
 		 System.out.println("本次删除角色模块：："+nn);
-		 System.out.println("角色id::::::::::::"+roles_Id);
-		 String[] arr=modules_Ids.split(",");
-		 System.out.println("数组长度+++++++："+arr.length);
-		 Integer module_Id;
+ 		 String[] arr=modules_Ids.split(",");
+ 		 Integer module_Id;
 		if(modules_Ids!="" && modules_Ids!=null) {
 			for(int i=0;i<arr.length;i++) {
-				 System.out.println("第"+i+"次添加");
-				module_Id=Integer.parseInt(arr[i]);
+ 				module_Id=Integer.parseInt(arr[i]);
  				roleMapper.insertRoleModule(module_Id,roles_Id);
 			}
 		}else {

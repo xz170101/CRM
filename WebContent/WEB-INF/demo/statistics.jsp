@@ -78,7 +78,7 @@
     		        dataType:"json",
     		        success:function(data){
     		        	 var length=Object.keys(data).length;//获取返回的map集合的长度
-    		        	 for(var i=0;i<=length;i++){
+    		        	 for(var i=0;i<=length-1;i++){
     		        		 if(data[i].name=="管理员"){
     	    		        		$("#gly").html(data[i].value+'人');
     	    		        	}else if(data[i].name=="项目经理"){
