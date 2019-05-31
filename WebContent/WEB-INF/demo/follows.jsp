@@ -71,7 +71,7 @@
 				<th data-options="field:'stu_ZiXunName',formatter:formatteruname">咨询师姓名</th>
 				<th data-options="field:'followTime'">追踪时间</th>
 				<th data-options="field:'nextFollowTime'">下次追踪时间</th>
-				<th data-options="field:'followType'">追踪类型</th>
+				<th data-options="field:'followType'">追踪方式</th>
 				<th data-options="field:'createTime'">创建时间</th>
 				<th data-options="field:'followState'">追踪状态</th>
 				<th data-options="field:'conTent'">内容</th>
