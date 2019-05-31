@@ -306,6 +306,8 @@
 				});
 		}
 	}
+	
+	
 	var phoneCode=0;
 	//发送验证码
 	$("#sendPhoneCode").click(function(){

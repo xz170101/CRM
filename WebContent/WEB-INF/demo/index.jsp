@@ -39,6 +39,9 @@
 			window.location.href="crm";	
 		}
 	});   --%>
+	/* 登陆上先查询登陆的用户今天是否已经签到
+		如果今天已经签到了就隐藏签到的按钮
+	*/
 	$(function(){
 		<%-- var user="<%=session.getAttribute("user")%>"; --%>
 		var uid=${sessionScope.user.user_Id}; 
@@ -206,28 +209,6 @@
 		<a href="javascript:qiandao()" id="qd" >签到</a>	
 	</div>
 	
-	   <%-- 员工签到 签退按钮判断  --%>
-	
-		<%-- <% 			Integer state = (Integer) session.getAttribute("state");%>
-					<% 
-					if (state == 1) {
-					%>
-
-					<a id="btn3" href="javascript:void" onclick="qiantui()"
-						style="cursor: pointer">签退</a>
-
-					<%
-						} else if (state == 0) {
-					%>
-					<a id="btn1" href="javascript:void" onclick="qiandao()"
-						style="cursor: pointer">签到</a>
-					<%
-						} else {
-					%>
-					<%
-						}
-					%>  --%>
-		
 	<style>
             img{
                 border: #000 solid 2px;

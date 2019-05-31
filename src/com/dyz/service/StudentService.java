@@ -55,4 +55,9 @@ public interface StudentService {
 	 * @return
 	 */
 	Fenye selectLog(Fenye fenye);
+	/**
+	 * poi查询所有学生
+	 * @return
+	 */
+	List<Student>  selectpoi();
 }

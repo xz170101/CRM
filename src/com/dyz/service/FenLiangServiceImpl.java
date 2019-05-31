@@ -32,8 +32,7 @@ public class FenLiangServiceImpl implements FenLiangService {
 		List<Student> students = fenliangMapper.selectStuByZiXunName();
 		// 所有签到的咨询师，并按咨询师的价值排序
 		List<Askers> askers = fenliangMapper.selectMaxZiXunShi();
-		Boolean state = (Boolean) session.getAttribute("fenliang");
-		
+		Boolean state = (Boolean) session.getAttribute("fenliang");		
 		if (state) {
 			if (students.size() > 0 && askers.size() > 1) {
 				Integer count = 0;
