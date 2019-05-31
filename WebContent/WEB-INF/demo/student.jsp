@@ -47,6 +47,34 @@
 		})
 		$("#sousuofrm").form("reset");
 	}
+	
+	//双击查看
+	$(function () {
+     $("#stuTab").datagrid({
+         //双击事件
+         onDblClickRow: function (index, row) {
+          
+ 			$('#lookStuForm11').form("load",row);
+ 			$('#lookStuForm22').form("load",row);
+ 			$('#stu_Sex2').textbox('setValue',row.stu_Sex==1?'男':'女');//用三元表达式设置值
+ 			$('#stu_isBaoBei2').textbox('setValue',row.stu_isBaoBei==1?"是":"否");
+ 			$('#stu_isDel22').textbox('setValue',row.stu_isDel==1?"是":"否");
+ 			$('#stu_isInClass22').textbox('setValue',row.stu_isInClass==1?"是":"否");
+ 			$('#stu_isReturnMoney22').textbox('setValue',row.stu_isReturnMoney==1?"是":"否");
+ 			$('#stu_isPay22').textbox('setValue',row.stu_isPay==1?"是":"否");
+ 			$('#stu_isHome22').textbox('setValue',row.stu_isHome==1?"是":"否");
+ 			$('#stu_isReturnVist22').textbox('setValue',row.stu_isReturnVist==1?"是":"否");
+ 			$('#stu_isValid22').textbox('setValue',row.stu_isValid==0?row.stu_isValid==1?"是":"否":'待定');
+ 			$('#lookStu').dialog('open');
+        	
+         }
+     });
+ })
+//查看的关闭
+	function setStuclose(){
+		$('#lookStu').dialog('close');
+	}	
+	
 	//查看日志的打开
 	function looklogf(index){
 		var data = $("#stuTab").datagrid("getData");
@@ -93,7 +121,7 @@
 	}
 	
 	function formatterStu(value, row, index){ 
-		return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='lookStu(" + index + ")'>查看</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='genzongStu(" + index + ")'>跟踪</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='updateStu(" + index + ")'>编辑</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='deleteStu(" + index + ")'>删除</a><a href='javascript:void(0)' style='cursor: pointer;' onclick='looklogf(" + index + ")'>跟踪日志</a>";
+		return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='genzongStu(" + index + ")'>跟踪</a> <a href='javascript:void(0)' style='cursor: pointer;' onclick='updateStu(" + index + ")'>编辑</a> <a href='javascript:void(0)' style='cursor: pointer;' onclick='deleteStu(" + index + ")'>删除</a> <a href='javascript:void(0)' style='cursor: pointer;' onclick='looklogf(" + index + ")'>跟踪日志</a>";
 	}	
  
 	function formatterSex(value, row, index){
@@ -238,7 +266,7 @@
 		$("#insertStu").dialog("close");
 	}
 		
- 		//查看
+ 		/* //查看
 		function lookStu(index){
 			var data=$('#stuTab').datagrid('getData');
 			var row=data.rows[index];
@@ -254,11 +282,8 @@
 			$('#stu_isReturnVist22').textbox('setValue',row.stu_isReturnVist==1?"是":"否");
 			$('#stu_isValid22').textbox('setValue',row.stu_isValid==0?row.stu_isValid==1?"是":"否":'待定');
 			$('#lookStu').dialog('open');
-		}
-		//查看的关闭
-		function setStuclose(){
-			$('#lookStu').dialog('close');
-		}		
+		} */
+			
 		
 		//修改打开
 		function updateStu(index){
@@ -827,7 +852,7 @@
 		}]">
 		
 		<div id="cc" class="easyui-layout" style="width:450px;height:600px;">   
-	    <div data-options="region:'north',title:'在线录入',split:true"  style="height:300px;padding:5px;background:#eee;">
+	    <div data-options="region:'west',title:'在线录入',split:true"  style="height:300px;padding:5px;background:#eee;">
 		
 	    <form id="lookStuForm11" class="easyui-form">
 	    	<table cellpadding="5">

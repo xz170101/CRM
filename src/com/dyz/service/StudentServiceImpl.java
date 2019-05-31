@@ -40,6 +40,14 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public Integer updatezixunname(Student student) {
 		// TODO Auto-generated method stub
+						
+		return studentMapper.updatezixunname(student);
+	}
+
+	@Override
+	public Integer updateStudent(Student student) {
+		// TODO Auto-generated method stub
+		
 		Date date = new Date(); 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		
@@ -98,13 +106,6 @@ public class StudentServiceImpl implements StudentService {
 		}else {
 			student.setStu_preMoneyTime(null);
 		}
-				
-		return studentMapper.updatezixunname(student);
-	}
-
-	@Override
-	public Integer updateStudent(Student student) {
-		// TODO Auto-generated method stub
 		return studentMapper.updateStudent(student);
 	}
 
