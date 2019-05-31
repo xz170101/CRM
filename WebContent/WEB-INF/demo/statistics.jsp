@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="js/assets/css/dashboard.css">
     <script type="text/javascript" src="js/assets/js/jquery2.1.1.js"></script>
     <script type="text/javascript" src="js/assets/js/echarts.min.js"></script>
+    <script type="text/javascript" src="js/assets/echars/config.js"></script>
+    <script type="text/javascript" src="js/assets/echars/esl.js"></script>
+    <script type="text/javascript" src="js/assets/echars/facePrint.js"></script>
     
     <script type="text/javascript">
     	$(function() {
@@ -21,6 +24,7 @@
     		UserCheckCount();
     		RoseCount();
     		SourceUrl();
+    		selectWeekCount();
 		});
     	//用户数量
     	function UserCount() {
@@ -73,7 +77,6 @@
     		        type:"post",
     		        dataType:"json",
     		        success:function(data){
-    		        	 console.log(data);
     		        	 var length=Object.keys(data).length;//获取返回的map集合的长度
     		        	 for(var i=0;i<=length;i++){
     		        		 if(data[i].name=="管理员"){
@@ -96,40 +99,125 @@
  		        type:"post",
  		        dataType:"json",
  		        success:function(data){
- 		        	var myChart1 = echarts.init(document.getElementById('chart-panel'));
- 		        	option1 = {
- 		        	    tooltip : {
- 		        	        trigger: 'item',
- 		        	        formatter: "{a} <br/>{b} : {c} ({d}%)"
- 		        	    },
- 		        	    legend: {
- 		        	        orient: 'vertical',
- 		        	        left: 'left',
- 		        	        data: data.name
- 		        	    },
- 		        	    series : [
- 		        	        {
- 		        	            name: '客户来源',
- 		        	            type: 'pie',
- 		        	            radius : '55%',
- 		        	            center: ['50%', '60%'],
- 		        	            data:data ,
- 		        	            itemStyle: {
- 		        	                emphasis: {
- 		        	                    shadowBlur: 10,
- 		        	                    shadowOffsetX: 0,
- 		        	                    shadowColor: 'rgba(0, 0, 0, 0.5)'
- 		        	               		 }
- 		        	            		}
- 		        	       		 }
- 		        	  		 ]
- 		        			};
- 		        	myChart1.setOption(option1);
+ 		            var chart = echarts.init(document.getElementById('chart-panel'));
+ 		            chart.setOption({
+ 		                legend: {
+ 		                    type: 'scroll',
+ 		                    right: 0,
+ 		                    orient: 'vertical',
+ 		                    data:  data.name
+ 		                },
+ 		                toolbox: {
+ 		                    left: 'left',
+ 		                    feature: {
+ 		                        dataView: {},
+ 		                        saveAsImage: {}
+ 		                    }
+ 		                },
+ 		                tooltip: {
+ 		                    confine: true
+ 		                },
+ 		                series: [{
+ 		                    name: '客户来源',
+ 		                    type: 'pie',
+ 		                    data: data,
+ 		                }]
+ 		            });
+ 		        	 
  		       		 }
  		 			});
 				}
     
-    
+    function selectWeekCount() {
+   	 $.ajax({
+	        url:"selectIsPay",
+	        type:"post",
+	        dataType:"json",
+	        success:function(data){
+				console.log(data);
+				var aa=[0,0,0,0,0,0,0];
+				var ab=[0,0,0,0,0,0,0];
+ 					//'monday','tuesday','wednesday','thursday','friday','saturday','sunday'
+				if(data[0].length!=0 && data[0].length!=""){
+						for(var j=0;j<=(data[0].length)-1;j++){
+						  if(data[0][j].name=='Monday'){
+							  aa.splice(0,1,data[0][j].value)
+							}else if(data[0][j].name=='Tuesday'){
+								aa.splice(1, 1,data[0][j].value)
+							}else if(data[0][j].name=='Wednesday'){
+								aa.splice(2, 1,data[0][j].value)
+							}else if(data[0][j].name=='Thursday'){
+								aa.splice(3,1,data[0][j].value)
+							}else if(data[0][j].name=='Friday'){
+								aa.splice(4,1,data[0][j].value)
+							}else if(data[0][j].name=='Saturday'){
+								aa.splice(5, 1,data[0][j].value)
+							}else if(data[0][j].name=='Sunday'){
+								aa.splice(6,1,data[0][j].value)
+							}  
+			 			}
+					} 
+				if(data[1].length!=0 && data[1].length!=""){
+					for(var j=0;j<=(data[1].length)-1;j++){
+					  if(data[1][j].name=='Monday'){
+						  	ab.splice(0,1,data[1][j].value)//从第0个位置，删1个，插入data[1][j].value
+						}else if(data[0][j].name=='Tuesday'){
+							ab.splice(1, 1,data[1][j].value)
+						}else if(data[0][j].name=='Wednesday'){
+							ab.splice(2, 1,data[1][j].value)
+						}else if(data[0][j].name=='Thursday'){
+							ab.splice(3,1,data[1][j].value)
+						}else if(data[0][j].name=='Friday'){
+							ab.splice(4,1,data[1][j].value)
+						}else if(data[0][j].name=='Saturday'){
+							ab.splice(5, 1,data[1][j].value)
+						}else if(data[0][j].name=='Sunday'){
+							ab.splice(6,1,data[1][j].value)
+						}  
+		 			}
+				} 
+					 
+ 		    	var myChart2 = echarts.init(document.getElementById('selectWeekCount'));
+		    	option2 = {
+		    	    tooltip: {
+		    	        trigger: 'axis'
+		    	    },
+		    	    legend: {
+		    	         data:['本周', '上周']
+		    	    },
+		    	    grid: {
+		    	        left: '3%',
+		    	        right: '4%',
+		    	        bottom: '3%',
+		    	        containLabel: true
+		    	    },
+		    	    xAxis: {
+		    	        type: 'category',
+		    	        data: ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六","星期日"]
+		    	    },
+		    	    yAxis: {
+		    	        type: 'value'
+		    	    },
+		    	    series: [
+		    	        {
+		    	            name:'本周',
+		    	            type:'line',
+		    	            step: 'start',
+		    	            data:aa/* [data[0][0].value,data[0][1].value,data[0][2].value, 4, 9, 3, 1] */
+		    	        },
+		    	        {
+		    	            name:'上周',
+		    	            type:'line',
+		    	            step: 'middle',
+		    	            data:ab
+		    	        } 
+		    	    ]
+		    	};
+		    	myChart2.setOption(option2);
+	        }
+   	 	})
+   	 }
+   
     </script>
 </head>
 <body>
@@ -212,19 +300,19 @@
                     </div>
                 </div>
             </div>
-            <div style="float: right; width: 39%;">
+             <div style="float: right; width: 39%;">
                 <div class="panel-box" style="height:260px;">
                     <div class="panel panel-default">
-                        <div class="panel-heading"><i class="fa fa-area-chart fa-lg" style="padding-right: 5px;"></i>成交订单</div>
+                        <div class="panel-heading"><i class="fa fa-area-chart fa-lg" style="padding-right: 5px;"></i>成交对比</div>
                         <div class="panel-body">
-                            <div id="Canvas2" style="height: 200px; width: 100%;"></div>
+                            <div id="selectWeekCount" style="height: 200px; width: 100%;"></div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>  
         </div>
-        <div class="rows" style="margin-bottom: 0.8%; overflow: hidden;">
-            <div style="float: left; width: 69.2%;">
+        <!-- <div class="rows" style="margin-bottom: 0.8%; overflow: hidden;"> -->
+           <div style="float: left; width: 60%;">
                 <div class="panel-box" style="height:360px;">
                     <div class="panel panel-default">
                         <div class="panel-heading"><i class="fa fa-bar-chart fa-lg" style="padding-right: 5px;"></i>柱状图</div>
@@ -233,9 +321,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div style="float: right; width: 30%;">
-                <div class="panel-box" style="height:360px;">
+            </div>  
+            <div style="float: right; width: 40%;">
+                <div class="panel-box" style="height:360px;margin-top:0 ;">
                     <div class="panel panel-default">
                         <div class="panel-heading"><i class="fa fa-pie-chart fa-lg" style="padding-right: 5px;"></i>客户来源统计</div>
                         <div class="panel-body">
@@ -243,10 +331,9 @@
                         </div>
                     </div>
                 </div>
-                
             </div>
-        </div>
- </div>
+        <!-- </div> -->
+ </div>  
 <script src="js/assets/js/jquery2.1.1.js" type="text/javascript"></script>
 <script src="js/assets/js/echarts.min.js"></script>
 <script src="js/assets/js/charts/Chart.js"></script>
