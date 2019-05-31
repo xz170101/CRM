@@ -38,5 +38,11 @@ public interface ModuleMapper {
 	 * @return
 	 */
 	List<Role> selectRoleByModuleId(Integer modules_Id);
+	/**
+	 * 根据模块id查询该模块下的所有节点数据
+	 * @param parentId
+	 * @return
+	 */
+	List<Module> selectModulesByParentId(Integer parentId);
 
 }

@@ -44,12 +44,16 @@
 		insert  into 
 			rolemodules (roles_Id,modules_Id)
 			values (#{roles_Id},#{modules_Id})
-	
 	</insert>
-	
-	
 	<!-- selectRoleByModuleId -->
 	<select id="selectRoleByModuleId" parameterType="int" resultType="role">
-		select * from rolemodules where  modules_Id=#{modules_Id}
+		select * from rolemodules 
+		where  modules_Id=#{modules_Id}
+	</select>
+	<!-- 根据模块id查询该模块下的所有节点数据 -->
+	<select id="selectModulesByParentId" parameterType="int" resultType="module">
+		SELECT modules_Id,modules_Name,parentId,modules_path,modules_weight 
+		FROM modules
+		where parentId=#{parentId}
 	</select>
 </mapper>

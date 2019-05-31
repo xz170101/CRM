@@ -8,12 +8,14 @@
 <title>模块</title>
 		<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/icon.css">
    		<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.3/themes/metro/easyui.css">
+   		<link rel="stylesheet" type="text/css" href="js/assets/css/jquery.mobile-1.4.5.css">
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.min.js"></script>
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
  		<link rel="stylesheet" type="text/css" href="js/assets/css/jquery.range.css">
- 		<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.range.js"></script>
- 	<script type="text/javascript">
+ 		<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.range.js"></script> 
+<!--  		<script type="text/javascript" src="js/assets/js/jquery.mobile-1.4.5.js"></script>
+ --> 	<script type="text/javascript">
 	$(function() {
 		$("#treemenu").tree({
 			url:"selectModule",
@@ -60,20 +62,27 @@
 		if(nodes != null) {
 			$("#parentModulename").text(nodes.text);
 			$("#addModule_window").dialog("open");
-		} else {
-			$.messager.alert("提示信息","请选择父节点！","info");
-		}
+		  } else {
+			//$.messager.alert("提示信息","请选择父节点！","info");
+			$("#addModule_window").dialog("open");
+		} 
 	}
 	function submitModuleForms(){
 		if($("#addModuleForm").form("validate")){
 			var nodes = $('#treemenu').tree('getSelected');
+			var parentId;
+			if(nodes==null){
+				parentId=0;
+			}else{
+				parentId=nodes.id;
+			}
 			var weight=$("#weight").val();
-			var path=$("#path").val();
-			var name=$("#name").val();
+			var path=$("#path").val().trim();
+			var name=$("#name").val().trim();
 			$.ajax({
 				url:"insertModule",
 				method:'post',
-				data:{"modules_Name":name,"parentId":nodes.id,"modules_path":path,"modules_weight":weight},
+				data:{"modules_Name":name,"parentId":parentId,"modules_path":path,"modules_weight":weight},
 				dataType:'json',
 				success:function(data){
 					if(data>0){
@@ -81,7 +90,7 @@
 						$("#addModule_window").dialog("close");
 						myTree();
 					}else
-					    $.messager.alert("提示信息","添加失败！","info");
+					    $.messager.alert("提示信息","该模块已存在该节点！","info");
 				}
 			})
 		}else
@@ -118,8 +127,8 @@
 	function updatesubmitModuleForms(){
 		var nodes = $('#treemenu').tree('getSelected');
 		var upweight=$("#upweight").val(); 
-		var upurl=$("#upurl").val();
-		var upname=$("#upname").val();
+		var upurl=$("#upurl").val().trim();
+		var upname=$("#upname").val().trim();
  		$.ajax({
 			type:"post",
 			url:"updateModule",
@@ -129,10 +138,9 @@
 				if(res>0){
 					myTree();
 					clearModuleForm();
-					// window.parent.location.href = "indexGL";
-					$.messager.alert("提示","修改成功");
+ 					$.messager.alert("提示","修改成功");
 				}else
-				$.messager.alert("错误提示","修改失败");
+				$.messager.alert("提示","该模块已存在该节点！");
 			}
 		});
 	}
@@ -165,11 +173,9 @@
  <body>
  	<table name="center1" class="easyui-datagrid" id="Moduledg" title="模块信息【右击管理模块】" style="width: 100%; height:auto;" data-options="method:'post'">
 	</table>
-	<!-- <div style="margin-bottom: 5px;">
+	 <div style="margin-bottom: 5px;">
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" onclick="addModuleInfo()">添加</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" onclick="updataModuledg()">编辑</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cut" onclick="deleteModuledg()">删除</a>
-	</div> -->
+	</div>   
 	
 	<div id="moduleDiv" title="请选择模块" style="width: 650px; height: 500px; background: #eee;">
 		<ul id="treemenu"></ul>
@@ -192,7 +198,8 @@
 				<tr>
 					<td>权重</td>
 					<td>
-					<input id="weight"  type="hidden" class="slider-input"  />
+					 <input id="weight" type="range"  min="0" max="100" data-show-value="true" data-highlight="true">
+					<!-- <input id="weight"  type="hidden" class="slider-input"  /> -->
 				  	</td>
 				</tr>
 				<tr>
@@ -222,7 +229,8 @@
 				<tr>
 					<td>权重</td>
 					<td>
-					<input id="upweight" name="modules_weight" type="hidden" class="slider-input"  />
+					<input id="upweight"  name="modules_weight" type="range"  min="0" max="100" data-show-value="true" data-highlight="true">
+					<!-- <input id="upweight" name="modules_weight" type="hidden" class="slider-input"  /> -->
 					<!-- <input class="easyui-textbox" type="text" name="modules_weight"  id="upweight" data-options="required:true"></input> -->
 					</td>
 				</tr>
