@@ -155,7 +155,19 @@
 			}
 		});
 	}
-	
+	//验证手机号
+	function vphone() {
+		var phone=$("#stu_Phone1").val().trim();
+		if(phone ==null || phone ==''){
+			$("#yzfphone").html('手机号码不能为空');
+			 document.getElementById('yzfphone').style.color = 'red';
+			return false;
+		}else if(!(/^1[34578]\d{9}$/.test(phone))){
+			$("#yzfphone").html('手机号格式错误');
+			 document.getElementById('yzfphone').style.color = 'red';
+			return false;
+		}
+	}
 	//添加客户
 	//打开添加窗口
 	 function addStu(){		
@@ -164,13 +176,11 @@
 	} 
 	//添加窗口的保存
 	 function insertsave(){
-		    
-		    
 			//获取id参数
 			var stu_Name1= $("#stu_Name1").textbox("getValue");
 			var stu_Sex1 = $("#stu_Sex1").combobox("getValue");
 			var stu_Age1= $("#stu_Age1").textbox("getValue");
-			var stu_Phone1= $("#stu_Phone1").val();//$("#stu_Phone1").numberbox("getValue");					
+			var stu_Phone1=$("#stu_Phone1").validatebox("getValue"); /* $("#stu_Phone1").val(); *///$("#stu_Phone1").validatebox("getValue");					
 			var stu_Status1= $("#stu_Status1").combobox("getValue");//学历
 			var stu_PerState1= $("#stu_PerState1").combobox("getValue");
 			var stu_SourceUrl1= $("#stu_SourceUrl1").combobox("getValue");
@@ -194,8 +204,7 @@
 					stu_qq:stu_qq1,
 					stu_WeiXin:stu_WeiXin,
 					stu_isBaoBei:stu_isBaoBei1,
-					stu_inClassContent:stu_inClassContent1
-					
+					stu_inClassContent:stu_inClassContent1					
 						},
 						function(res) {
 							var res=eval("("+res+")");
@@ -440,7 +449,29 @@
 		//设置隐藏列结束
 		
 		//导出excel表格
+		var poilist='';
+
 		function ExportForm() {
+			
+			$.ajaxSetup({async : false}); //取消ajax的异步提交，变成同步
+			$.ajax({
+				url:'selectpoi',
+				method:'post',
+				dataType:'json',
+				success:function(r){
+					var poi=JSON.stringify(r);//将返回的所有客户的数据转成string类型
+					poilist=poi;
+				}
+			})			
+			var row = $("#stuTab").datagrid("getSelections"); // 获取所有选中的行
+			var stulist='';
+			if(row==null || row==''){
+				stulist=poilist;
+				//stulist=JSON.stringify(poi);
+			}else{
+				stulist=JSON.stringify(row);
+			}
+
 			var header = $('#stuTab').datagrid('options').columns[0];//获取数据的第一行表头
 			var fields="";
 			for (var i = 1; i < header.length-1; i++) {
@@ -452,7 +483,7 @@
 				}
 		
 			}
-			
+			/* 
 			var row = $("#stuTab").datagrid("getSelections"); //获取所有选中的行
 			var stulist='';
 			if(row==null || row==''){
@@ -460,7 +491,7 @@
 				stulist=JSON.stringify(data.rows);
 			}else{
 				stulist=JSON.stringify(row);
-			}
+			} */
 			
 			//window.location.href="/CRM/exportForm?stulist="+stulist+"&fields="+fields;
 			var form=$("<form>");
@@ -645,8 +676,8 @@
 	    		</tr>
 	    		<tr>
 	    			<td>电话：</td>
-	    			<td><input onkeyup="vusertel()" class="easyui-numberbox" id="stu_Phone1" ></td>
-	    			<td><span id="editTel"></span></td>
+	    			<td><input onblur="vphone()" class="easyui-validatebox" id="stu_Phone1" ><!-- data-options="required:true,validType;'phone'" --></td>
+	    			<td><span id="yzfphone"></span></td>
 	    		</tr>
 	    		<tr>
 	    			<td>学历：</td>

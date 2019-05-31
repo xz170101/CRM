@@ -155,7 +155,8 @@ public class UserChecksController {
 	public String qiandao(UserChecks userchecks, HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		userchecks.setUser_Id(user.getUser_Id());//获取user表中的用户id
-		Integer userid = askersService.selectByUsers(user.getUser_Id());//先查询是否有该员工
+		Integer userid = askersService.selectByUsers(user.getUser_Id());//先查询是否有该咨询师
+		Integer useridchecks=userchecksService.selectByUserCheck(user.getUser_Id());//查询员工签到表是否有该员工
 		Integer r_id = userService.selectLoginR_id(user.getUser_Id());//查询员工的id
 		String r_name = roleService.selectbyRolesRid(r_id);//查询角色id
 		if (userid == null) {//如果查询的员工不存在
@@ -167,6 +168,7 @@ public class UserChecksController {
 			askers.setAskers_Name(user.getLoginName());//获取用户的名字
 			askers.setCheckInTime("1");//
 			askersService.insertAskerUsers(askers);//执行添加员工的签到信息的方法
+			
 		} else {//如果这个员工存在
 			//就执行修改操作
 			Askers askers = new Askers();
@@ -176,8 +178,16 @@ public class UserChecksController {
 			askers.setCheckInTime("1");
 			askersService.updateAskers(askers);//执行修改员工的签到信息的方法
 		}
-		session.setAttribute("state", 1);//把签到的状态存在session中
-		Integer i = userchecksService.updateUserchecks(userchecks);//执行修改签到的信息
+		if(useridchecks == null) {
+				UserChecks uchecks=new UserChecks();
+				uchecks.setCheckState(true);
+				uchecks.setUser_Id(user.getUser_Id());
+				uchecks.setUserName(user.getLoginName());
+				uchecks.setCheckInTime("1");
+				userchecksService.insertUserChecks(uchecks);
+		}
+		session.setAttribute("state", 1);//把签到的状态存在session中		
+		Integer i = userchecksService.updateUserchecks(userchecks);//执行修改签到的信息			
 		if (i > 0) {//如果大于0
 			return Result.toClient(true, "签到成功");//返回签到成功
 		} else {

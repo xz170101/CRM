@@ -14,22 +14,33 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
- 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.dyz.entity.Fenye;
 import com.dyz.entity.Student;
+import com.dyz.service.StudentService;
 import com.dyz.util.ExportUtils;
  
 
 @Controller
 public class ExportExcel {
-	@RequestMapping(value="/exportForm",method=RequestMethod.POST)
- 
+	@Autowired
+	private StudentService studentService;
+	
+	@RequestMapping(value="/selectpoi",method=RequestMethod.POST)
+	@ResponseBody
+	public List<Student> select() {
+		
+		return studentService.selectpoi();
+	}
+	@RequestMapping(value="/exportForm",method=RequestMethod.POST) 
 	public void exportForm(HttpServletResponse res,@RequestParam("stulist") String stu ,String fields){
 		Gson gson=new Gson();
 		List<Student> list=gson.fromJson(stu,new TypeToken<List<Student>>(){}.getType());

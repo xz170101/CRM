@@ -123,4 +123,10 @@ public class StudentServiceImpl implements StudentService {
 		return fenye;
 	}
 
+	@Override
+	public List<Student> selectpoi() {
+		// TODO Auto-generated method stub
+		return studentMapper.selectpoi();
+	}
+
 }
