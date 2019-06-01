@@ -88,15 +88,19 @@ public class StudentController {
 	 */
 	@RequestMapping(value="/updateStudent",method=RequestMethod.POST)
 	@ResponseBody
-	public Integer update(Student student) {
-		Integer j = studentService.selectPhone(student.getStu_Phone());
-		Integer i=null;
-		if(j>0) {
-			return -1;
-		}else {			
-			i=studentService.updateStudent(student);
+	public Integer update(Student student,String beforetel) {
+		if(student.getStu_Phone() !=null && beforetel.equals(student.getStu_Phone())) {
+			student.setStu_Phone(beforetel);
+			return studentService.selectPhone(student.getStu_Phone());
+		}else {
+			Integer j = studentService.selectPhone(student.getStu_Phone());
+			if(j>0) {
+				return -1;
+			}else {
+				return studentService.updateStudent(student);
+			}
 		}
-		return i;
+	
 	}
 	/**
 	 * 手动分量
