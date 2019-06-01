@@ -60,4 +60,10 @@ public interface StudentService {
 	 * @return
 	 */
 	List<Student>  selectpoi();
+	/**
+	 * 判断手机号不重复
+	 * @param phone
+	 * @return
+	 */
+	Integer selectPhone(String stu_Phone);
 }

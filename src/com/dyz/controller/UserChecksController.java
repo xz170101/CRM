@@ -49,7 +49,13 @@ public class UserChecksController {
 		return userchecksService.selectUserChecks(fenye);
 	}
 	
-	
+	/**
+	 * 批量签退
+	 * @param userids
+	 * @param userchecks
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "/qiantui", method = RequestMethod.POST)
 	@ResponseBody
 	public String qiantui(String userids, UserChecks userchecks,HttpSession session) {
@@ -74,7 +80,7 @@ public class UserChecksController {
 	 * 全部签退
 	 * @return
 	 */
-	@RequestMapping(value = "/quanCheck", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/quanCheck", method = RequestMethod.POST)
 	@ResponseBody
 	public String quantui() {
 		Integer i = userchecksService.updateQuanTui();
@@ -85,7 +91,7 @@ public class UserChecksController {
 			return Result.toClient(false, "全部签退失败");
 		}
 	}
-
+*/
 	@RequestMapping(value = "/dangtian", method = RequestMethod.POST)
 	@ResponseBody
 	public Integer dangtian(Integer user_Id) {
@@ -130,9 +136,7 @@ public class UserChecksController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		if(userchecks.getCheckState()==false) {
-			Result.toClient(false, "还没有签到不能签退！");
-		}if(date1.getTime() < date.getTime()) {//如果他们签退的时间还没到下班时间的时候
+		if(date1.getTime() < date.getTime()) {//如果他们签退的时间还没到下班时间的时候
 			return Result.toClient(false, "下班时间未到，暂时不能签退！");//就返回false，提示下班时间未到
 		} else {//否则签退状态就为1，1代表以前退
 			userchecks.setCheckOutTime("1");//

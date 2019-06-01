@@ -40,6 +40,7 @@ public class StudentController {
 		fenye.setPageSize(rows);
 		return studentService.selectStudent(fenye);
 	}
+	
 	/**
 	 * 删除客户信息
 	 * @param stu_id
@@ -58,6 +59,10 @@ public class StudentController {
 	@RequestMapping(value="/insertstu",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer insert(Student student, HttpSession session,Boolean fenliang) {
+		Integer j = studentService.selectPhone(student.getStu_Phone());
+		if(j>0) {
+			return -1;
+		}else {
 		Integer i=null;
 		session.setAttribute("fenliang", fenliang);			
 		if(fenliang==true) {
@@ -74,6 +79,25 @@ public class StudentController {
 		}		
 		return i;
 	}
+	}
+	
+	/**
+	 * 修改客户信息
+	 * @param student
+	 * @return
+	 */
+	@RequestMapping(value="/updateStudent",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer update(Student student) {
+		Integer j = studentService.selectPhone(student.getStu_Phone());
+		Integer i=null;
+		if(j>0) {
+			return -1;
+		}else {			
+			i=studentService.updateStudent(student);
+		}
+		return i;
+	}
 	/**
 	 * 手动分量
 	 * @param student
@@ -84,17 +108,7 @@ public class StudentController {
 	public Integer updatezixunname(Student student) {
 		return studentService.updatezixunname(student);
 	}
-	/**
-	 * 修改客户信息
-	 * @param student
-	 * @return
-	 */
-	@RequestMapping(value="/updateStudent",method=RequestMethod.POST)
-	@ResponseBody
-	public Integer update(Student student) {
-		System.out.println("sjsdjgsdj"+student+"      heng");
-		return studentService.updateStudent(student);
-	}
+	
 	/**
 	 * 查询咨询师姓名
 	 * @return

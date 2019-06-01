@@ -130,4 +130,10 @@ public class StudentServiceImpl implements StudentService {
 		return studentMapper.selectpoi();
 	}
 
+	@Override
+	public Integer selectPhone(String stu_Phone) {
+		// TODO Auto-generated method stub
+		return studentMapper.selectPhone(stu_Phone);
+	}
+
 }
