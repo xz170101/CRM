@@ -304,7 +304,8 @@
 		}
 		
 		//修改后的数据的提交
-		function editsave() {		
+		function editsave() {	
+			var beforetel=$('#stuTab').datagrid('getSelected').stu_Phone; 
 			var valid=$("#stu_isValid33").combobox("getValue");
 			if(valid=='否'){
 				valid=0;
@@ -322,7 +323,8 @@
 					 stu_Name:$("#stu_Name3").textbox("getValue"),
 					 stu_Sex:$("#stu_Sex3").combobox("getValue"),
 					 stu_Age:$("#stu_Age3").textbox("getValue"),
-					 stu_Phone:$("#stu_Phone3").textbox("getValue"),					
+					 stu_Phone:$("#stu_Phone3").textbox("getValue"),
+					 beforetel:beforetel,
 					 stu_Status:$("#stu_Status3").combobox("getValue"), 
 					 stu_PerState:$("#stu_PerState3").combobox("getValue"),
 					 stu_SourceUrl:$("#stu_SourceUrl3").combobox("getValue"),
