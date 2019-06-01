@@ -190,17 +190,34 @@ public class UserServiceImp implements UserService{
 	/**
 	 * 根据登录名查询用户；返回的是用户对象
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public User selectUserByName(HttpSession session,String loginName) {
+	public String selectUserByName(HttpSession session,String loginName) {
 		// TODO Auto-generated method stub
-		//Integer i=userService.selectByName(loginName);
-		User user=usermapper.selectUserByName(loginName);//返回值为user_id
-		if(user!=null) {
-			session.setAttribute("user",user);
-			System.out.println("现在session值： "+session.getAttribute("user"));
-			return user;
+ 		User user=usermapper.selectUserByName(loginName);//返回值为user
+		
+		ServletContext context = session.getServletContext();
+		Map<String,Object> userMap = null;
+		if(context.getAttribute("ids")==null) {
+			userMap = new HashMap<String,Object>();
+			context.setAttribute("ids", userMap);
 		}
-		return user;
+		else {
+			userMap = (Map<String,Object>)context.getAttribute("ids");
+		}
+		if(user!=null) {
+ 			Map<String,Object> duixiang  = (Map<String,Object>)context.getAttribute("ids");
+			if(duixiang.containsKey(user.getUser_Id().toString())) {
+				//则不登陆
+ 				return Result.toClient(false, "该用户已在其他设备登录！");
+			} else {
+ 			duixiang.put(user.getUser_Id().toString(), user.getUser_Id());
+			context.setAttribute("ids", duixiang);
+			session.setAttribute("user",user);
+			return Result.toClient(true, "登陆成功");
+			}
+		}
+		return Result.toClient(true, "登陆成功");
 	}
 	/**
 	 * 根据角色查询所有模块
@@ -239,6 +256,7 @@ public class UserServiceImp implements UserService{
 	 * 登录
 	 */
 	int psdWrongTime=0;
+	@SuppressWarnings("unchecked")
 	@Override
 	public String getLogin(User user, String yes, String yzm, HttpSession session, HttpServletRequest req,
 			HttpServletResponse response, Model model) {
@@ -286,8 +304,7 @@ public class UserServiceImp implements UserService{
 						}
 					return Result.toClient(false, "密码不正确");
 				} else {
-					@SuppressWarnings("unchecked")
-					Map<String,Object> duixiang  = (Map<String,Object>)context.getAttribute("ids");
+ 					Map<String,Object> duixiang  = (Map<String,Object>)context.getAttribute("ids");
 					if(duixiang.containsKey(nameId.toString())) {
 						//则不登陆
 						return Result.toClient(false, "该用户已在其他设备登录！");

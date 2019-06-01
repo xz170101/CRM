@@ -62,12 +62,17 @@
 					method:'post',
 					data:{"loginName":logiame},
 					dataType:'json',
-					success:function(data){
-						if(data!=null){
+					success:function(res){
+						if (res.success) {
 							window.location.href = "crmIndex";
 						}else{
-							$.messager.alert("提示","请填写完整信息登录！");
+							$.messager.alert("提示",res.message)
 						}
+						/* if(data!=null){
+							
+						}else{
+							$.messager.alert("提示","请填写完整信息登录！");
+						} */
 					}
 				});
 			}else{
