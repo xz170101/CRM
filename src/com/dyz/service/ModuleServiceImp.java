@@ -30,38 +30,42 @@ public class ModuleServiceImp implements ModuleService {
           // root = TreeNode.getTree(tree);
        return TreeNode.getTree(tree);
  	}
-
+	/**
+	 * 修改节点
+	 */
 	@Override
 	public Integer updateModu(Module module) {
 		// TODO Auto-generated method stub
  		Integer parentId = module.getParentId();
 		String modules_Name = module.getModules_Name();
  		List<Module> modules=moduleMapper.selectModulesByParentId(parentId);//查询该模块下的所有节点
- 		if(modules!=null && modules.size() !=0) {
-			for(Module m:modules) {
-				if(m.getModules_Name().equals(modules_Name)) {
+ 		System.out.println("父节点下的所有模块"+modules);
+ 		/*if(modules!=null && modules.size() !=0) {
+ 			for(int i=0;i<modules.size();i++) {
+  				if(modules_Name.equals(modules.get(i).getModules_Name())) {
  					return 0;
-				} else {
-					return moduleMapper.updateModule(module);
-				}
+				} 
 			}
-		} 
+		} */
 		return moduleMapper.updateModule(module);
 	}
-
+/**
+ * 添加节点
+ */
 	@Override
 	public Integer insertModu(Module module) {
 		// TODO Auto-generated method stub
 		Integer parentId = module.getParentId();
 		String modules_Name = module.getModules_Name();
  		List<Module> modules=moduleMapper.selectModulesByParentId(parentId);
+ 		System.out.println("父节点下的所有模块"+modules);
  		if(modules!=null && modules.size() !=0) {
-			for(Module m:modules) {
-				if(m.getModules_Name().equals(modules_Name)) {
+			for(int i=0;i<modules.size();i++) {
+				System.out.println("添加节点名称：：：：："+modules_Name);
+				System.out.println("源节点名称：：：：："+modules.get(i).getModules_Name());
+				if(modules_Name.equals(modules.get(i).getModules_Name())) {
  					return 0;
-				} else {
-					return moduleMapper.insertModule(module);
-				}
+				} 
 			}
 		} 
 			return moduleMapper.insertModule(module);
