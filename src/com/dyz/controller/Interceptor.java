@@ -46,10 +46,10 @@ public class Interceptor implements HandlerInterceptor {
 				String currentSessionId = session.getId();//获取当前的sessionId
 				System.out.println("保存账户的静态sessionId::::"+sessionId);
 				System.out.println("当前的sessionId::::"+currentSessionId);
-				if (!currentSessionId.equals(sessionId)) {//如果两个sessionId不等，则当前账户强制下线，需要重新登录
+			/*	if (!currentSessionId.equals(sessionId)) {//如果两个sessionId不等，则当前账户强制下线，需要重新登录
 					System.out.println("我是被挤下线的！！！！！！！！！！");
  					response.sendRedirect(request.getContextPath() + "/crm");
-				}
+				}*/
 				return true;
 			}
 			//如果cookie中存的有值也放行

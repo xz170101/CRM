@@ -39,63 +39,86 @@
 			window.location.href="crm";	
 		}
 	});   --%>
-	/* 登陆上先查询登陆的用户今天是否已经签到
-		如果今天已经签到了就隐藏签到的按钮
-	*/
 	$(function(){
+		
+		//判断浏览器关闭执行					
+ 		var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
+		var isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器  
+		var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器
+		var isIE11 = userAgent.indexOf("rv:11.0") > -1; //判断是否是IE11浏览器
+		var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器
+		
+		if(!isIE && !isEdge && !isIE11) {//兼容chrome和firefox
+			var _beforeUnload_time = 0, _gap_time = 0;
+			var is_fireFox = navigator.userAgent.indexOf("Firefox")>-1;//是否是火狐浏览器
+			window.onunload = function (){
+				_gap_time = new Date().getTime() - _beforeUnload_time;
+				if(_gap_time <= 5){
+					$.post('outLogin');//浏览器关闭
+				}else{//浏览器刷新
+				}
+		 	}
+			window.onbeforeunload = function (){ 
+				_beforeUnload_time = new Date().getTime();
+				if(is_fireFox){//火狐关闭执行
+					$.post('outLogin');//浏览器关闭
+				} 
+			};
+			/* 登陆上先查询登陆的用户今天是否已经签到
+			如果今天已经签到了就隐藏签到的按钮 */
 		<%-- var user="<%=session.getAttribute("user")%>"; --%>
 		var uid=${sessionScope.user.user_Id}; 
 		
 		$.post("dangtian",{			
-			user_Id:uid
-		},function(res){
-			if(res>0){
-				$("#qd").attr("style","display:none");				
-			}
-		},"json")		
-	});
-	function qiandao() {
-		$.ajax({
-			url : "qiandao",
-			type : "post",
-			dataType : "json",
-			data : {
-				checkState : 1,
-				checkInTime : 1
-			},
-			success : function(res) {
-				if (res.success) {
-					alert(res.message);
-					//设置按钮为禁用
-					//location.reload();
-					$("#qd").attr("style","display:none");
-					//$("qd").css("background-color","#DCDCDC");
-				} else {
-					alert(res.message);
+				user_Id:uid
+				},function(res){
+					if(res>0){
+						$("#qd").attr("style","display:none");				
+					}
+				},"json")		
+			});
+		function qiandao() {
+			$.ajax({
+				url : "qiandao",
+				type : "post",
+				dataType : "json",
+				data : {
+					checkState : 1,
+					checkInTime : 1
+				},
+				success : function(res) {
+					if (res.success) {
+						alert(res.message);
+						//设置按钮为禁用
+						//location.reload();
+						$("#qd").attr("style","display:none");
+						//$("qd").css("background-color","#DCDCDC");
+					} else {
+						alert(res.message);
+					}
 				}
-			}
-		})
-	}
-
-	function qiantui() {
-		$.ajax({
-			url : "yuaneditCheck",
-			type : "post",
-			dataType : "json",
-			data : {
-				checkState : 0,
-				checkOutTime : 1
-			},
-			success : function(res) {
-				if (res.success) {
-					alert(res.message);					
-					$("#qt").attr("style","display:none");					
-				} else {
-					alert(res.message);
+			})
+		}
+	
+		function qiantui() {
+			$.ajax({
+				url : "yuaneditCheck",
+				type : "post",
+				dataType : "json",
+				data : {
+					checkState : 0,
+					checkOutTime : 1
+				},
+				success : function(res) {
+					if (res.success) {
+						alert(res.message);					
+						$("#qt").attr("style","display:none");					
+					} else {
+						alert(res.message);
+					}
 				}
-			}
-		})
-	}
+			})
+		}
 </script>
  
 <script type="text/javascript">
@@ -269,7 +292,7 @@
 <!-- 版权 -->
 <div data-options="region:'south',split:false,border:false" class="copyright">
     <div class="footer">
-        <span class="pull-left"> 新职170101版权所有 </a>  &copy; Copyright ©2019 ~ <font id="timeYear">2019</font> All Rights Reserved.</span>
+        <span class="pull-left"> 新职170101版权所有 </a>  Copyright ©2019 备案/许可证编号：豫ICP备19014690号-1</span>
         <span class="pull-right">
             <a href="javascript:;"><i class="fa fa-download"></i> 下载管理</a>
             <a href="javascript:;"><i class="fa fa-volume-up"></i> 消息</a>

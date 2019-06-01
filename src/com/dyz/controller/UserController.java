@@ -4,6 +4,9 @@ package com.dyz.controller;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -189,6 +192,16 @@ public class UserController {
 	 return userService.selectByName(loginName);
 	}
 	/**
+	 * 根据用户名查询用户对象
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value ="/selectUByName", method = RequestMethod.POST)
+	@ResponseBody
+	public User selectUByName(HttpSession session,String loginName) {
+		return userService.selectUserByName(session,loginName);
+	}
+	/**
 	 * 根据手机号查询用户 
 	 * @param loginName
 	 * @return
@@ -203,8 +216,15 @@ public class UserController {
     @ResponseBody
     public Integer outLogin(HttpSession session){
         //通过session.invalidata()方法来注销当前的session
+    	System.out.println("浏览器关闭！！！！！！！！！！！");
+    	ServletContext context = session.getServletContext();
+    	Map<String, Object> map = (Map<String, Object>)context.getAttribute("ids");
+    	User user = (User)session.getAttribute("user");
+    	map.remove(user.getUser_Id().toString());
+    	context.setAttribute("ids", map);
     	session.removeAttribute("user");
         session.invalidate();
+        
         return  1;
     } 
     /**
@@ -229,8 +249,6 @@ public class UserController {
         if (!file.isEmpty()) {
             try {
                 // 保存的文件路径(如果用的是Tomcat服务器，/   \文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\upload\\文件夹中  )
-               /*String contextPath = request.getContextPath();
-               String path=contextPath+"/img/";*/
             	String filePath = request.getSession().getServletContext()
                     .getRealPath("/") + "img"+File.separator + file.getOriginalFilename();
                  System.err.println("filePath:"+filePath);
@@ -240,18 +258,6 @@ public class UserController {
                  System.err.println("filePath:"+filePath);
                 // 转存文件
                 file.transferTo(saveDir);
-                //上传到本地
-                
-                //  String t=Thread.currentThread().getContextClassLoader().getResource("").getPath();
-                //  int num=t.indexOf(".metadata");
-                //  String path=t.substring(1,num).replace('/', '\\')+"C\\WebContent\\img\\" + file.getOriginalFilename();
-                //  System.out.println("路径：：：：：：：："+path);
-                //   File saveDir0 = new File(path);
-                //   if (!saveDir0.getParentFile().exists())
-                // 	saveDir0.getParentFile().mkdirs();
-                //  System.err.println("项目路径："+path);
-                // 转存文件
-                // file.transferTo(saveDir0);
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();

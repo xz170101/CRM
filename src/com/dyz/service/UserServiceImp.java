@@ -4,8 +4,11 @@ package com.dyz.service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -171,7 +174,7 @@ public class UserServiceImp implements UserService{
 		return usermapper.findByloginName(username).getPassWord();
 	}
 	/**
-	 * 根据登录名查询用户
+	 * 根据登录名查询用户；返回的是id
 	 */
 	@Override
 	public Integer selectByName(String loginName) {
@@ -181,15 +184,24 @@ public class UserServiceImp implements UserService{
 		if(i==null) {
 			return 0;
 		}else {
-			return i;
+ 			return i;
 		}
 	}
- 
-/*	@Override
-	public Integer updateLockUser(User user) {
+	/**
+	 * 根据登录名查询用户；返回的是用户对象
+	 */
+	@Override
+	public User selectUserByName(HttpSession session,String loginName) {
 		// TODO Auto-generated method stub
-		return null;
-	}*/
+		//Integer i=userService.selectByName(loginName);
+		User user=usermapper.selectUserByName(loginName);//返回值为user_id
+		if(user!=null) {
+			session.setAttribute("user",user);
+			System.out.println("现在session值： "+session.getAttribute("user"));
+			return user;
+		}
+		return user;
+	}
 	/**
 	 * 根据角色查询所有模块
 	 */
@@ -230,6 +242,18 @@ public class UserServiceImp implements UserService{
 	@Override
 	public String getLogin(User user, String yes, String yzm, HttpSession session, HttpServletRequest req,
 			HttpServletResponse response, Model model) {
+		//application
+		
+		ServletContext context = session.getServletContext();
+		Map<String,Object> userMap = null;
+		if(context.getAttribute("ids")==null) {
+			userMap = new HashMap<String,Object>();
+			context.setAttribute("ids", userMap);
+		}
+		else {
+			userMap = (Map<String,Object>)context.getAttribute("ids");
+		}
+		
 		// TODO Auto-generated method stub
 		 //String passWord = user.getPassWord();
 		 user.setPassWord(MD5Util.MD5(user.getPassWord()));
@@ -262,6 +286,12 @@ public class UserServiceImp implements UserService{
 						}
 					return Result.toClient(false, "密码不正确");
 				} else {
+					@SuppressWarnings("unchecked")
+					Map<String,Object> duixiang  = (Map<String,Object>)context.getAttribute("ids");
+					if(duixiang.containsKey(nameId.toString())) {
+						//则不登陆
+						return Result.toClient(false, "该用户已在其他设备登录！");
+					} else {
 						//判断该用户是否锁定
 						Integer lockoutID = usermapper.selectByNameLockout(user.getLoginName());
 						if (lockoutID != null) {
@@ -301,11 +331,14 @@ public class UserServiceImp implements UserService{
 							us.setUser_Id(u.getUser_Id());
 							//登陆成功修改用户最后登录时间
 							usermapper.updateUse(us);
+							duixiang.put(nameId.toString(), nameId);
+							context.setAttribute("ids", duixiang);
 							session.setAttribute("userImg", u.getUexit2String());
 							session.setAttribute("user", u);
-							session.setAttribute("userName", u.getLoginName());
+ 							session.setAttribute("userName", u.getLoginName());
 							return Result.toClient(true, (u != null ? true : false) == true ? "crmIndex" : "登录失败!");
 						}
+					}
 				} 
 			}
 		 } 
@@ -318,8 +351,6 @@ public class UserServiceImp implements UserService{
 	public Integer selectUserByTel(String protectMTel) {
 		// TODO Auto-generated method stub
  		User user=usermapper.selectUserByTel(protectMTel);
- 		//System.out.println("用户：：：："+user);
- 		//System.out.println("用户Id:::"+user.getUser_Id());
 		if(user==null){
 			return 0;
 		}else {
@@ -340,10 +371,10 @@ public class UserServiceImp implements UserService{
  		request.getSession().setAttribute("phoneCode", p);//把验证码存入到键值并存在session中
 		return p;
 	}
-	/*不知道谁写的，俺也不敢删*/
+	 
 	@Override
-		public Integer selectLoginR_id(int userId) {
-			// TODO Auto-generated method stub
-			return usermapper.selectLoginR_id(userId);
-		}
+	public Integer selectLoginR_id(int userId) {
+		// TODO Auto-generated method stub
+		return usermapper.selectLoginR_id(userId);
+	}
 }

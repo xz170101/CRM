@@ -54,38 +54,61 @@
 	   
 	//提交登陆表单
 	function subLogin() {
-		var yes='';
- 		var rembername = $("#rembername").val();
-		if(rembername=='true'){
-			yes='yes';
-		};
-		var login_name=($("#username").val()).trim();
-		var login_pwd=$("#keyboards").val();
-		var code=$("#verification").val().trim();
-		 if(login_name !=null && login_name !=""){
-			 if(/^[a-z0-9]{6,12}$/.test(login_pwd) ){
-				 if(code !=null && code !=""){
-					 $.post("login", {    
-						 loginName:login_name,
-						 passWord:login_pwd,
-						 yzm:code,
-						 yes:yes
-			         }, function(res){
-			        	 if (res.success) {
-						     window.location.href = "crmIndex";
-							} else {
-							 	$.messager.alert("提示！",res.message);
-							}
-			     		},"json");
+ 		if(getCookie('loginName')!=null && getCookie('loginName')!=""){
+			if(getCookie('loginName')==($("#username").val()).trim()){
+ 				var logiame=getCookie('loginName').trim();
+				$.ajax({
+					url:"selectUByName",
+					method:'post',
+					data:{"loginName":logiame},
+					dataType:'json',
+					success:function(data){
+						if(data!=null){
+							window.location.href = "crmIndex";
+						}else{
+							$.messager.alert("提示","请填写完整信息登录！");
+						}
+					}
+				});
+			}else{
+				$.messager.alert("提示！","请填写完整信息登录！");
+			}
+		}else{//cookie中有值【先判断是否有这个用户，如果有直接放行】
+ 			var yes='';
+	 		var rembername = $("#rembername").val();
+			if(rembername=='true'){
+				yes='yes';
+			};
+			var login_name=($("#username").val()).trim();
+			var login_pwd=$("#keyboards").val();
+			var code=$("#verification").val().trim();
+			 if(login_name !=null && login_name !=""){
+				 if(/^[a-z0-9]{6,12}$/.test(login_pwd) ){
+					 if(code !=null && code !=""){
+						 $.post("login", {    
+							 loginName:login_name,
+							 passWord:login_pwd,
+							 yzm:code,
+							 yes:yes
+				         }, function(res){
+				        	 if (res.success) {
+							     window.location.href = "crmIndex";
+								} else {
+								 	$.messager.alert("提示！",res.message);
+								}
+				     		},"json");
+						 }else{
+							 $.messager.alert("提示","请输入四位验证码！");
+						 }
 					 }else{
-						 $.messager.alert("提示","请输入四位验证码！");
-					 }
+			     		$.messager.alert("提示","密码必须为6~12位之间的数字或字母！");
+			     	}
 				 }else{
-		     		$.messager.alert("提示","密码必须为6~12位之间的数字或字母！");
-		     	}
-			 }else{
-				 $.messager.alert("提示","请输入用户名！");
-     	}
+					 $.messager.alert("提示","请输入用户名！");
+	     	}
+		}
+		
+		
 	}
 	//处理记住用户名
 	function changeCheckRembername() {
@@ -174,10 +197,10 @@
 	      	<div class="remeber_name"> 
 				<!-- <input id="checked" type="checkbox" class="normal" onclick="changeCheckRembername();"> -->
 				<b id="checked" class="normal" onclick="changeCheckRembername();" ></b>
-				<label id="login_save" style="float:left;">记住用户名</label>
+				<label id="login_save" style="float:left;">免密登陆</label>
 				<div class="login-wjpw">
  
-					<!-- <!-- <a class="blue" href="javascript:;">忘记用户名？</a> -->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<a href="javascript:void(0);" onclick="fintPwd()"><span class="blue">忘记密码？</span></a>
    
 				</div>
