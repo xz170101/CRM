@@ -99,8 +99,7 @@ public class StudentController {
 			}else {
 				return studentService.updateStudent(student);
 			}
-		}
-	
+		}	
 	}
 	/**
 	 * 手动分量
