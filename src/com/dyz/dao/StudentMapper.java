@@ -57,8 +57,14 @@ public interface StudentMapper {
 	 */
 	List<Student> selectLog(Fenye fenye);
 	/**
-	 * poi查询所有学生
+	 * poi导出表格查询所有学生
 	 * @return
 	 */
 	List<Student>  selectpoi();
+	/**
+	 * 判断手机号不重复
+	 * @param phone
+	 * @return
+	 */
+	Integer selectPhone(String stu_Phone);
 }

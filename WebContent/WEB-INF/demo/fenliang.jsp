@@ -41,14 +41,10 @@
 		}
 
 		$('#fenliang').switchbutton({
-		<%--  var user="<%=session.getAttribute("user")%>"; --%>		 
+		 <%-- var user="<%=session.getAttribute("user")%>"; --%>		 
 			checked : kaiguan,			
-			onChange : function(checked) {	
-				/* var list = $("#cha").val();										
-				if(list.length<1){
-					alert("只有一个人签到，不能自动分量！");
-				}else{ */
-					//$.messager.confirm("提示", "你确定开启自动分量吗？", function(r) {
+			onChange : function(checked) {				
+					$.messager.confirm("提示", "你确定开启自动分量吗？", function(r) {
 						if (r) {					
 								$.ajax({
 									url : "fenliang",
@@ -59,14 +55,14 @@
 									},
 									success : function(res) {
 										$.messager.alert("开启成功");
-										$("#stuTab").datagrid("load");
+										$("#stuTab").datagrid("reload");
 									}
 								})
 							}
-						//})
-					//}			
+						})							
 			}
-		})
+		}) 
+		
 	}	 
 	
 	//批量操作，对咨询师名字的修改		

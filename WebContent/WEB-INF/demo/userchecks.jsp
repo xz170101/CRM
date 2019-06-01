@@ -121,9 +121,9 @@
 					})
 				}
 			})
-		}
+		} 
 		
-		function quantui(){
+		/* function quantui(){
 			$.messager.confirm("提示", "你确定签退所有的的员工吗?", function(r) {
 				if (r) {
 					$.ajax({
@@ -144,13 +144,16 @@
 					})
 				}
 			})
-		}
+		} */
 		
 		//操作列
 		function formatterCaozuo(value, row, index){ 
-			return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='edit("
+			 /*<a href='javascript:void(0)' style='cursor: pointer;' onclick='edit("
 			+ index
-			+ ")'>签退</a> <a href='javascript:void(0)' style='cursor: pointer;' onclick='updateInfo("
+			+ ")'>签退</a>  */
+			 return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='edit("
+				+ index
+				+ ")'>签退</a> <a href='javascript:void(0)' style='cursor: pointer;' onclick='updateInfo("
 			+ index
 			+ ")'>修改</a> <a href='javascript:void(0)' style='cursor: pointer;' onclick='deleteInfo("
 			+ index + ")'>删除</a>";	
@@ -198,8 +201,8 @@
 				iconCls="icon-search" plain="true" onclick="init()">查询</a> 
 			  <a href="javascript:void(0)" class="easyui-linkbutton"
 				iconCls="icon-edit" plain="true" onclick="qiantui()">批量签退</a>
-			  <a href="javascript:void(0)" class="easyui-linkbutton"
-				iconCls="icon-edit" plain="true" onclick="quantui()">全部签退</a>
+			  <!-- <a href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-edit" plain="true" onclick="quantui()">全部签退</a> -->
 		</form>
 	</div>
 </body>

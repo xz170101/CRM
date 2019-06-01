@@ -171,7 +171,7 @@
 				var data = $("#stuTab").datagrid("getData");
 				//获取第index行对应的json对象（再来一遍）。
 				var row = data.rows[index];
-				$.post("deletestu", {
+				$.post("delectstu", {
 					stu_id: row.stu_id,					
 				}, function(res) {
 					var res = eval("(" + res + ")");
@@ -212,8 +212,7 @@
 	} 
 	//添加客户
 	//打开添加窗口
-	 function addStu(){		
-		
+	 function addStu(){			
 		$("#insertStu").dialog("open");			
 	} 
 	//添加窗口的保存
@@ -256,7 +255,7 @@
 								$("#insertStu").dialog("close");
 								$.messager.alert("消息提示","添加成功"); 					
 							} else {
-								$.messager.alert("消息提示","添加失败");
+								$.messager.alert("消息提示","手机号码不已存在");
 							}
 						}, "json");
 			} 
@@ -265,25 +264,7 @@
 		$("#insertStuForm").form("clear");
 		$("#insertStu").dialog("close");
 	}
-		
- 		/* //查看
-		function lookStu(index){
-			var data=$('#stuTab').datagrid('getData');
-			var row=data.rows[index];
-			$('#lookStuForm11').form("load",row);
-			$('#lookStuForm22').form("load",row);
-			$('#stu_Sex2').textbox('setValue',row.stu_Sex==1?'男':'女');//用三元表达式设置值
-			$('#stu_isBaoBei2').textbox('setValue',row.stu_isBaoBei==1?"是":"否");
-			$('#stu_isDel22').textbox('setValue',row.stu_isDel==1?"是":"否");
-			$('#stu_isInClass22').textbox('setValue',row.stu_isInClass==1?"是":"否");
-			$('#stu_isReturnMoney22').textbox('setValue',row.stu_isReturnMoney==1?"是":"否");
-			$('#stu_isPay22').textbox('setValue',row.stu_isPay==1?"是":"否");
-			$('#stu_isHome22').textbox('setValue',row.stu_isHome==1?"是":"否");
-			$('#stu_isReturnVist22').textbox('setValue',row.stu_isReturnVist==1?"是":"否");
-			$('#stu_isValid22').textbox('setValue',row.stu_isValid==0?row.stu_isValid==1?"是":"否":'待定');
-			$('#lookStu').dialog('open');
-		} */
-			
+	
 		
 		//修改打开
 		function updateStu(index){
@@ -381,7 +362,7 @@
 						$('#stuTab').datagrid('reload');
 						$('#editStu').dialog('close');
 					}else{
-						$.messager.alert('提示','修改失败');
+						$.messager.alert('提示','手机号码已经存在');
 					}
 				}
 			})
@@ -844,18 +825,16 @@
 	</div>
 	
 	<!-- 查看窗体 -->
-	<div id="lookStu" class="easyui-dialog" title="查看学生信息" style="width:480px;height:650px;" 
-	data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
+	<div id="lookStu" class="easyui-dialog" title="查看学生信息" style="width:835px;height:620px;" 
+	data-options="resizable:true,modal:true,closed:true,	
 	buttons:[{
 			text:'关闭',
 			handler:function(){setStuclose()}
-		}]">
-		
-		<div id="cc" class="easyui-layout" style="width:450px;height:600px;">   
-	    <div data-options="region:'west',title:'在线录入',split:true"  style="height:300px;padding:5px;background:#eee;">
-		
+		}]">		
+		<div class="easyui-layout" style="width:820px;height:600px;">   
+	    <div data-options="region:'west',title:'在线录入'  " style="width:410px;padding:5px;background:#eee;">		
 	    <form id="lookStuForm11" class="easyui-form">
-	    	<table cellpadding="5">
+	    	<table>
 	    		<tr>
 	    			<td>姓名:</td>
 	    			<td><input class="easyui-textbox" id="stu_Name2" name="stu_Name" ></td>
@@ -920,87 +899,76 @@
 	    </form>
 	    </div>	    
 	    
-	   <div data-options="region:'center',title:'咨询师录入'" style="padding:5px;background:#eee;">
+	   <div data-options="region:'center',title:'咨询师录入'" style="width:410px;padding:5px;background:#eee;">
 	    	<form id="lookStuForm22" class="easyui-form">
 		    	<table cellpadding="5">
 		    		<tr>
 	    				<td>咨询师：</td>
 		    			<td><input class="easyui-textbox" id="stu_ZiXunName22" name="stu_ZiXunName"></td>
-		    		</tr>
-		    		<tr>
+		    		
 		    			<td>课程方向：</td>
 		    			<td><input class="easyui-textbox" id="stu_LearnForward22" name="stu_LearnForward"></td>
 		    		</tr>
 		    		<tr>
 		    			<td>打分：</td>
 		    			<td><input class="easyui-textbox" id="sexitInte22" name="sexitInte"></td>
-		    		</tr>
-		    		<tr>
+		    		
 		    			<td>是否有效：</td>
 		    			<td><input class="easyui-textbox" id="stu_isValid22" name="stu_isValid"></td>
 		    		</tr>
 		    		<tr>
 		    			<td>是否回访：</td>
 		    			<td><input class="easyui-textbox" id="stu_isReturnVist22" name="stu_isReturnVist"></td>
-		    		</tr>
-		    		<tr>
+		    		
 		    			<td>是否上门：</td>
 		    			<td><input class="easyui-textbox" id="stu_isHome22" name="stu_isHome"></td>
 		    		</tr>
 		    		<tr>
 		    			<td>上门时间：</td>
 		    			<td><input class="easyui-textbox" id="stu_HomeTime22" name="stu_HomeTime"></td>
-		    		</tr>
-		    		<tr>
+		    		
 		    			<td>无效原因：</td>
 		    			<td><input class="easyui-textbox" id="stu_LostValid22" name="stu_LostValid"></td>
 		    		</tr>
 		    		<tr>
 		    			<td>是否缴费：</td>
 		    			<td><input class="easyui-textbox" id="stu_isPay22" name="stu_isPay"></td>
-		    		</tr>
-		    		<tr>
+		    		
 		    			<td>缴费时间：</td>
 		    			<td><input class="easyui-textbox" id="stu_PayTime22" name="stu_PayTime"></td>
 		    		</tr>
 		    		<tr>
 		    			<td>缴费金额：</td>
 		    			<td><input class="easyui-textbox" id="stu_Money22" name="stu_Money"></td>
-		    		</tr>
-		    		<tr>
+		    		
 		    			<td>是否退费：</td>
 		    			<td><input class="easyui-textbox" id="stu_isReturnMoney22" name="stu_isReturnMoney"></td>
 		    		</tr>
 		    		<tr>
 		    			<td>是否进班：</td>
 		    			<td><input class="easyui-textbox" id="stu_isInClass22" name="stu_isInClass"></td>
-		    		</tr>
-		    		<tr>
+		    		
 		    			<td>进班时间：</td>
 		    			<td><input class="easyui-textbox" id="stu_inClassTime22" name="stu_inClassTime"></td>
 		    		</tr>
 		    		<tr>
 		    			<td>进班备注：</td>
 		    			<td><input class="easyui-textbox" id="stu_inClassContent22" name="stu_inClassContent"></td>
-		    		</tr>
-		    		<tr>
+		    		
 		    			<td>咨询内容：</td>
 		    			<td><input class="easyui-textbox" id="stu_AskerContent22" name="stu_AskerContent"></td>
 		    		</tr>
 		    		<tr>
 		    			<td>是否删除：</td>
 		    			<td><input class="easyui-textbox" id="stu_isDel22" name="stu_isDel"></td>
-		    		</tr>
 		    		
-		    		<tr>
 		    			<td>咨询师：</td>
 		    			<td><input class="easyui-textbox" id="stu_ZiXunName22" name="stu_ZiXunName"></td>
 		    		</tr>
 		    		<tr>
 		    			<td>退费时间：</td>
 		    			<td><input class="easyui-textbox" id="stu_ReturnMoneyReason22" name="stu_ReturnMoneyReason"></td>
-		    		</tr>
-		    		<tr>
+		    		
 		    			<td>定金金额：</td>
 		    			<td><input class="easyui-textbox" id="stu_preMoney22" name="stu_preMoney"></td>
 		    		</tr>
@@ -1059,8 +1027,7 @@
 	    		<tr>	
 	    			<td>电话:</td>	    			
 	    			<td><input onblur="xphone()" class="easyui-textbox" id="stu_Phone3" name="stu_Phone"></td>	    		
-	    			<td><span id="xgphone"></span></td>
-	    		
+	    			<td><span id="xgphone"></span></td>	    		
 	    		</tr>
 	    		<tr>
 	    			<td>学历:</td>

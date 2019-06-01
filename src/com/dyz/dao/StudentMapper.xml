@@ -155,6 +155,12 @@
 	<select id="selectpoi" resultType="student">
 		select * from students
 	</select>
+	
+	<!-- 查询手机号和邮箱是否有重复的 -->
+	<select id="selectPhone" parameterType="string" resultType="int">
+		select count(stu_id) from students where stu_Phone=#{stu_Phone}
+	</select>	
+	
 	<!-- 查询总条数 -->
 	<select id="selectCount" parameterType="fenye" resultType="int">
 		select count(1) from students 
