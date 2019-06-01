@@ -15,7 +15,6 @@
     <script type="text/javascript" src="js/assets/echars/config.js"></script>
     <script type="text/javascript" src="js/assets/echars/esl.js"></script>
     <script type="text/javascript" src="js/assets/echars/facePrint.js"></script>
-    
     <script type="text/javascript">
     	$(function() {
     		UserCount();
@@ -141,7 +140,7 @@
 				if(data[0].length!=0 && data[0].length!=""){
 						for(var j=0;j<=(data[0].length)-1;j++){
 						  if(data[0][j].name=='Monday'){
-							  aa.splice(0,1,data[0][j].value)
+							  aa.splice(0,1,data[0][j].value)//从第0个位置，删1个，插入data[0][j].value
 							}else if(data[0][j].name=='Tuesday'){
 								aa.splice(1, 1,data[0][j].value)
 							}else if(data[0][j].name=='Wednesday'){
@@ -302,24 +301,38 @@
             </div>
              <div style="float: right; width: 39%;">
                 <div class="panel-box" style="height:260px;">
-                    <div class="panel panel-default">
+                <div class="panel panel-default">
+                        <div class="panel-heading"><i class="fa fa-soundcloud" style="padding-right: 5px;"></i>天气</div>
+                        <div class="panel-body">
+                            <!-- <div id="Canvas3" style="height:320px; width: 100%;"></div> -->
+                             <div id="weather-view-he"></div>
+                        </div>
+                    </div>
+                   <!--  <div class="panel panel-default">
+                        <div class="panel-heading"><i class="fa fa-area-chart fa-lg" style="padding-right: 5px;"></i>成交对比</div>
+                        <div class="panel-body">
+                            <div id="selectWeekCount" style="height: 200px; width: 100%;"></div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>  
+        </div>
+         <div class="rows" style="margin-bottom: 0.8%; overflow: hidden;">  
+           <div style="float: left; width: 60%;">
+                <div class="panel-box" style="height:360px;">
+                 <div class="panel panel-default">
                         <div class="panel-heading"><i class="fa fa-area-chart fa-lg" style="padding-right: 5px;"></i>成交对比</div>
                         <div class="panel-body">
                             <div id="selectWeekCount" style="height: 200px; width: 100%;"></div>
                         </div>
                     </div>
-                </div>
-            </div>  
-        </div>
-        <!-- <div class="rows" style="margin-bottom: 0.8%; overflow: hidden;"> -->
-           <div style="float: left; width: 60%;">
-                <div class="panel-box" style="height:360px;">
-                    <div class="panel panel-default">
+                    <!-- <div class="panel panel-default">
                         <div class="panel-heading"><i class="fa fa-bar-chart fa-lg" style="padding-right: 5px;"></i>柱状图</div>
                         <div class="panel-body">
                             <div id="Canvas3" style="height:320px; width: 100%;"></div>
+                            
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>  
             <div style="float: right; width: 40%;">
@@ -332,14 +345,20 @@
                     </div>
                 </div>
             </div>
-        <!-- </div> -->
+          </div>  
  </div>  
 <script src="js/assets/js/jquery2.1.1.js" type="text/javascript"></script>
 <script src="js/assets/js/echarts.min.js"></script>
 <script src="js/assets/js/charts/Chart.js"></script>
 <script src="js/assets/js/dashboard.js"></script>
  
+ <!-- 天气 -->
  
 
-</body>
+<script>
+WIDGET = {ID: 'PglOTKFu04'};
+</script>
+<script type="text/javascript" src="https://apip.weatherdt.com/view/static/js/r.js?v=1111"></script>
+ 
+  </body>
 </html>

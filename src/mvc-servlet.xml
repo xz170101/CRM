@@ -32,7 +32,8 @@
                 <!-- 需排除拦截的地址 -->  
                 <mvc:exclude-mapping path="/crm"/>
                 <mvc:exclude-mapping path="/checkCode"/>
-              <mvc:exclude-mapping path="/selectUserByName"/> 
+               <mvc:exclude-mapping path="/selectUByName"/> 
+               <mvc:exclude-mapping path="/selectUserByName"/> 
               <mvc:exclude-mapping path="/selectUserByTel"/> 
               <mvc:exclude-mapping path="/sendToPhoneCode"/> 
               <mvc:exclude-mapping path="/resetPassword"/> 

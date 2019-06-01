@@ -143,9 +143,13 @@
 	<select id="findByloginName" resultType="user" parameterType="String">
         select * from `user` where loginName = #{loginName}
     </select>
-	<!--  selectByName-->
+	<!--  根据用户名查询用户返回id-->
 	<select id="selectByName" parameterType="String" resultType="int" >
 		select user_Id from `user` where loginName = #{loginName}
+	</select>	
+	<!--  根据用户名查询用户返回用户对象-->
+	<select id="selectUserByName" parameterType="String" resultType="User" >
+		select * from `user` where loginName = #{loginName}
 	</select>	
 	<!--selectUserByTel  -->
 	<select id="selectUserByTel" parameterType="String" resultType="user" >

@@ -102,6 +102,12 @@ public interface UserService {
 	 * @return
 	 */
 	 Integer selectByName(String loginName);
+	 /**
+	 * 根据名字查询User
+	 * @param loginName
+	 * @return
+	 */
+	 User selectUserByName( HttpSession session,String loginName);
 	/**
 	 * 修改用户的锁定状态
 	 * @param user

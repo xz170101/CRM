@@ -159,6 +159,12 @@ public interface UserMapper {
 	 * @return
 	 */
 	Integer selectLoginR_id(int userId);
+	/**
+	 * 根据用户名查询用户对象
+	 * @param loginName
+	 * @return
+	 */
+	User selectUserByName(String loginName);
 
 	 
 }
