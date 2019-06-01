@@ -253,7 +253,7 @@
 		}
 		
 		var UserName ='<%= session.getAttribute("userName")%>';
-		var webscoket=new WebSocket("ws://47.102.125.51:8080/CRM/NetworkConsultant/"+UserName);
+		var webscoket=new WebSocket("ws://127.0.0.1:8080/CRM/NetworkConsultant/"+UserName);
 		webscoket.onopen=function(){
 			console.log("连接建立");
 		}
@@ -269,10 +269,19 @@
 		}
 		//通讯消息的发送
 		function send(){
+			//在线状态
 			$.post("jishitongxun",{
 				rowc:rowc,
 				name:UserName,
 				mess:$("#tongxun_xiaoxi").val()
+			},function(res){
+				
+			},"json");
+			//离线状态，存入数据库
+			$.post("insertMessage",{
+				me_sender:UserName,
+				me_receiver:rowc,
+				me_content:$("#tongxun_xiaoxi").val()
 			},function(res){
 				
 			},"json");
@@ -283,6 +292,7 @@
 			$("#tongxun_tab").form("clear");
 			$("#win_tongxun").dialog("close");
 		}
+		
    	</script>
 </head>
 <body>
@@ -571,6 +581,10 @@
 			</table>
 		</form>
 	</div>
+	<!-- 设置隐藏列 -->
+	<div id="lie_window" class="easyui-dialog"
+		data-options="title:'设置显示列',modal:true,closed:'true'"
+		style="width: 200px"></div>
 	<!-- 即时通讯websocket -->
 	<div id="win_tongxun" class="easyui-dialog" title="即时通讯"
 		style="width: 400px; height: 200px;"

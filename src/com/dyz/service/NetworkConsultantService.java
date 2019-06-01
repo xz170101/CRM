@@ -1,6 +1,7 @@
 package com.dyz.service;
 
 import com.dyz.entity.Fenye;
+import com.dyz.entity.Message;
 import com.dyz.entity.Student;
 
 public interface NetworkConsultantService {
