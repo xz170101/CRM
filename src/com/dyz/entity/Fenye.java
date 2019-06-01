@@ -36,10 +36,8 @@ public class Fenye {
 	private Student student;
 	
 	private String UserName;
-	
-	
-	
- 
+
+
 	public String getUserName() {
 		return UserName;
 	}

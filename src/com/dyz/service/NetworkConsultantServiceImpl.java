@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.dyz.controller.MyWebsocket;
 import com.dyz.dao.NetworkConsultantMapper;
 import com.dyz.entity.Fenye;
+import com.dyz.entity.Message;
 import com.dyz.entity.Student;
 
 @Service

@@ -67,6 +67,19 @@
 			}	
 			return valid;
 		}
+		function formattersexitInte(value, row, index){
+			var sexitInte='';
+			if(row.sexitInte==0){
+				sexitInte='近期可报名';
+			}else if(row.sexitInte==1){
+				sexitInte='一个月内可报名';
+			}else if(row.sexitInte==2){
+				sexitInte='长期跟踪';
+			}else if(row.sexitInte==3){
+				sexitInte='无效';
+			}
+			return sexitInte;
+		}
 		//回访情况
 		function formatterIsReturnVist(value, row, index){
 			return value==0? '未回访':'已回访';
@@ -89,6 +102,9 @@
 		}
 		function formatterIsBaoBei(value, row, index){
 			return value==0? '否':'是';
+		}
+		function formatterIsstate(value, row, index){
+			return value==0? '未读':'已读';
 		}
 		
 		//查看
@@ -345,9 +361,7 @@
 		function formatternextTime(value, row, index){
 			return row.netFollows.nextFollowTime;
 		}
-		function formattercaozuo(value, row, index){ 
-			return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='lookcontent(" + index + ")'>查看</a>";
-		}
+		
 		//查看日志的打开
 		function sturizhi(index){
 			var data = $("#stuTab").datagrid("getData");
@@ -366,13 +380,22 @@
 		function logclose(){
 			$("#looklog").dialog("close");
 		}  
-		//跟踪日志的查看
-		function lookcontent(index){
-			var data=$('#dg').datagrid('getData');
-			var row=data.rows[index];
-			$('#lookFollowForm').form('load',row);
-			$('#lookFollows').window('open');		
-		} 
+		
+		//离线消息的查看
+		function messageLi(){
+			var userName  ='<%=session.getAttribute("userName")%>';
+			$('#malx').dialog('open');
+			$("#messageAll").datagrid({
+				url:"selectMessage",
+				method:"post",
+				fitColumns:true,
+				singleSelect:true,
+				queryParams:{
+					UserName:userName
+				}
+			})
+		}
+		
 		
 		//跟踪日志的查看的关闭
 		function Followclose(){
@@ -381,7 +404,7 @@
 		
 		//即时通讯
 		var userName  ='<%=session.getAttribute("userName")%>';
-		var webscoket=new WebSocket("ws://47.102.125.51:8080/CRM/NetworkConsultant/"+userName);
+		var webscoket=new WebSocket("ws://127.0.0.1:8080/CRM/NetworkConsultant/"+userName);
 		webscoket.onopen=function(){
 			console.log("连接建立");
 		}
@@ -390,6 +413,28 @@
 		}
 		webscoket.onmessage=function(event){
 			alert(event.data);
+		}
+		function formatterMess(value, row, index){
+			return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='lookMess(" + index + ")'>查看</a>";
+		}
+		
+		//对离线消息的查看以及对状态的修改
+		function lookMess(index){
+			var data=$('#messageAll').datagrid('getData');
+			var row=data.rows[index];
+			$('#lookMessForm').form("load",row);
+			$('#lookMess').dialog('open');
+		}
+		//离线消息内容框关闭
+		function Messclose(){
+			var meid=$('#messageAll').datagrid('getSelected').me_id; 
+			$.post("updateMess",{
+				me_id:meid
+			},function(res){
+				
+			},"json")
+			$('#messageAll').datagrid('reload');
+			$("#lookMess").dialog("close");
 		}
 	</script>
 </head>
@@ -437,7 +482,7 @@
 				<th data-options="field:'stu_FromPart'">来源部门</th>
 				<th data-options="field:'stu_stuConcern'">学员关注</th>
 				<th data-options="field:'stu_isBaoBei',formatter:formatterIsBaoBei">是否报备</th>
-				<th data-options="field:'sexitInte'">打分</th>
+				<th data-options="field:'sexitInte',formatter:formattersexitInte">打分</th>
 				<th data-options="field:'stu_ZiXunName'">咨询师</th>
 				<th data-options="field:'stu_CreateUser'">录入人</th>
 				<th data-options="field:'stu_ReturnMoneyReason'">退费时间</th>
@@ -479,6 +524,7 @@
 				data-options="iconCls:'icon-edit'" onclick="show()">设置隐藏列</a> <a
 				href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-edit'" onclick="ExportForm()">导出表格</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-tip" onclick="messageLi()">消息</a>
 		</form>
 	</div>
 
@@ -813,10 +859,10 @@
 					<td>打分：</td>
 					<td><select id="sexitInte33" name="sexitInte"
 						class="easyui-combobox" style="width: 100px;">
-							<option value="近期可报名">近期可报名</option>
-							<option value="一个月内可报名">一个月内可报名</option>
-							<option value="长期跟踪">长期跟踪</option>
-							<option value="无效">无效</option>
+							<option value="0">近期可报名</option>
+							<option value="1">一个月内可报名</option>
+							<option value="2">长期跟踪</option>
+							<option value="3">无效</option>
 					</select></td>
 					<td>是否有效：</td>
 					<td><select id="stu_isValid33" name="stu_isValid"
@@ -983,25 +1029,38 @@
 					<th
 						data-options="field:'nextFollowTime',formatter:formatternextTime">下次追踪时间</th>
 					<th data-options="field:'conTent',formatter:formatterContent">内容</th>
-					<th data-options="field:'caozuo',formatter:formattercaozuo">操作</th>
 				</tr>
 			</thead>
 		</table>
 	</div>
-	<!-- 对学生进行跟踪 -->
-	<div id="lookFollows" class="easyui-dialog" title="查看跟踪信息"
-		style="width: 400px; height: 300px;"
-		data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true,
-		buttons:[{
-				text:'关闭',
-				handler:function(){Followclose()}
-			}]">
-
-		<form id="lookFollowForm" class="easyui-form">
+	<!-- /离线消息/ -->
+	<div id="malx" class="easyui-dialog" data-options="fitColumns:true,closed:true" style="width: 400px; height: 300px;" title="消息记录">
+		<table id="messageAll">
+			<thead>
+				<tr>
+					<th data-options="field:'me_id'">编号</th>
+					<th data-options="field:'me_sender'">发送人</th>
+					<th data-options="field:'me_startdate'">发送时间</th>
+					<th data-options="field:'me_content'">发送内容</th>
+					<th data-options="field:'me_isstate',formatter:formatterIsstate">状态</th>
+					<th data-options="field:'messa',align:'center',formatter:formatterMess">操作</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<!-- /离线消息内容的查看/ -->
+	<div id="lookMess" class="easyui-dialog" title="消息记录"
+		style="width: 300px; height: 200px;"
+		data-options="iconCls:'icon-tip',resizable:true,modal:true,closed:true,
+	buttons:[{
+			text:'关闭',
+			handler:function(){Messclose()}
+		}]">
+		<form id="lookMessForm" class="easyui-form">
 			<table cellpadding="5">
 				<tr>
-					<td>内容：</td>
-					<td><input class="easyui-textbox" name="conTent"></td>
+					<td>消息内容</td>
+					<td><input readonly class="easyui-textbox" name="me_content"></td>
 				</tr>
 			</table>
 		</form>
