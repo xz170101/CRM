@@ -107,7 +107,7 @@ public interface UserService {
 	 * @param loginName
 	 * @return
 	 */
-	 User selectUserByName( HttpSession session,String loginName);
+	 String selectUserByName( HttpSession session,String loginName);
 	/**
 	 * 修改用户的锁定状态
 	 * @param user

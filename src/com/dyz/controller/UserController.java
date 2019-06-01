@@ -198,7 +198,7 @@ public class UserController {
 	 */
 	@RequestMapping(value ="/selectUByName", method = RequestMethod.POST)
 	@ResponseBody
-	public User selectUByName(HttpSession session,String loginName) {
+	public String selectUByName(HttpSession session,String loginName) {
 		return userService.selectUserByName(session,loginName);
 	}
 	/**
@@ -218,7 +218,8 @@ public class UserController {
         //通过session.invalidata()方法来注销当前的session
     	System.out.println("浏览器关闭！！！！！！！！！！！");
     	ServletContext context = session.getServletContext();
-    	Map<String, Object> map = (Map<String, Object>)context.getAttribute("ids");
+    	@SuppressWarnings("unchecked")
+		Map<String, Object> map = (Map<String, Object>)context.getAttribute("ids");
     	User user = (User)session.getAttribute("user");
     	map.remove(user.getUser_Id().toString());
     	context.setAttribute("ids", map);
