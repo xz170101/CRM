@@ -11,7 +11,10 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+
 @ServerEndpoint("/NetworkConsultant/{name}")
+
+
 public class MyWebsocket{
 	private static Map<String, MyWebsocket> map=new ConcurrentHashMap<>();
 	private Session session=null;

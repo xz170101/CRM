@@ -89,6 +89,7 @@ public class StudentController {
 	@RequestMapping(value="/updateStudent",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer update(Student student,String beforetel) {
+	
 		if(student.getStu_Phone() !=null && beforetel.equals(student.getStu_Phone())) {
 			student.setStu_Phone(beforetel);
 			return studentService.selectPhone(student.getStu_Phone());
@@ -97,6 +98,7 @@ public class StudentController {
 			if(j>0) {
 				return -1;
 			}else {
+				
 				return studentService.updateStudent(student);
 			}
 		}	

@@ -290,18 +290,16 @@
 			</if>
 			<if test="stu_isBaoBei!=null">
 				stu_isBaoBei=#{stu_isBaoBei},
-			</if>	
-			<!-- <if test="stu_ZiXunName !=null and stu_ZiXunName !=''">
-				stu_ZiXunName=#{stu_ZiXunName},
-			</if> -->
+			</if>
+			
 			<if test="stu_CreateUser!=null and stu_CreateUser!=''">
 				stu_CreateUser=#{stu_CreateUser},
 			</if>
 			<if test="stu_LearnForward!=null and stu_LearnForward!=''">
 				stu_LearnForward=#{stu_LearnForward},
 			</if>
-			<if test="sexitInte!=null and sexitInte!=''">
-				sexitInte=#{sexitInte},
+			<if test="sexitString!=null and sexitString!=''">
+				sexitString=#{sexitString},
 			</if>
 			<if test="stu_isValid!=null">
 				stu_isValid=#{stu_isValid},
@@ -318,9 +316,9 @@
 			<if test="stu_HomeTime!=null and stu_HomeTime!=''">
 				stu_HomeTime=#{stu_HomeTime},
 			</if>			
-			<if test="stu_firstVisitTime!=null and stu_firstVisitTime!=''">
+			<!-- <if test="stu_firstVisitTime!=null and stu_firstVisitTime!=''">
 				stu_firstVisitTime=#{stu_firstVisitTime},
-			</if>
+			</if> -->
 			<if test="stu_preMoney !=null and stu_preMoney!=''">
 				stu_preMoney=#{stu_preMoney},
 			</if>
