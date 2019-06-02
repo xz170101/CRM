@@ -34,19 +34,22 @@ public class ModuleServiceImp implements ModuleService {
 	 * 修改节点
 	 */
 	@Override
-	public Integer updateModu(Module module) {
+	public Integer updateModu(Module module,Integer k) {
 		// TODO Auto-generated method stub
  		Integer parentId = module.getParentId();
 		String modules_Name = module.getModules_Name();
  		List<Module> modules=moduleMapper.selectModulesByParentId(parentId);//查询该模块下的所有节点
- 		System.out.println("父节点下的所有模块"+modules);
- 		/*if(modules!=null && modules.size() !=0) {
- 			for(int i=0;i<modules.size();i++) {
-  				if(modules_Name.equals(modules.get(i).getModules_Name())) {
- 					return 0;
-				} 
+ 		if(k==0) {//k=0代表没有修改节点名称
+ 			return moduleMapper.updateModule(module);
+ 		}else {//修改了节点名称，需要判断节点名称是否存在
+	 		if(modules!=null && modules.size() !=0) {
+	 			for(int i=0;i<modules.size();i++) {
+	  				if(modules_Name.equals(modules.get(i).getModules_Name())) {
+	 					return 0;
+					} 
+				}
 			}
-		} */
+ 		}
 		return moduleMapper.updateModule(module);
 	}
 /**

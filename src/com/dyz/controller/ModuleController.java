@@ -38,8 +38,8 @@ public class ModuleController {
 	 */
 	@RequestMapping(value="/updateModule",method=RequestMethod.POST)
 	@ResponseBody
-	public Integer updateModule(Module module) {
-		return  moduleService.updateModu(module);
+	public Integer updateModule(Module module,Integer k) {
+		return  moduleService.updateModu(module,k);
 	}
 	@RequestMapping(value="/insertModule",method=RequestMethod.POST)
 	@ResponseBody

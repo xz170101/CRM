@@ -15,7 +15,7 @@ public interface ModuleService {
 	/**
 	 * 根据Id修改模块
 	 */
-	Integer updateModu(Module module);
+	Integer updateModu(Module module,Integer k);
 	/**
 	 * 添加模块信息
 	 */

@@ -276,7 +276,7 @@ public class UserServiceImp implements UserService{
 		 //String passWord = user.getPassWord();
 		 user.setPassWord(MD5Util.MD5(user.getPassWord()));
 		 String code =(String) session.getAttribute("randomcode_key");
-		 if (!code.equalsIgnoreCase(yzm)) {
+		 if (!(yzm.equalsIgnoreCase(code))) {
 			return Result.toClient(false, "验证码不正确！");
 		} else { 
 			//根句登录名查询用户id判断是否存在该用户
@@ -314,16 +314,7 @@ public class UserServiceImp implements UserService{
 						if (lockoutID != null) {
 							return Result.toClient(false, "该用户被锁定，请联系管理员解锁!");
 						} else {
-							// 登录成功,保存当前用户登录的sessionId
-								String sessionID = req.getRequestedSessionId();
-								System.out.println("当前用户登录的sessionId：：：：："+sessionID);
-								String userName = user.getLoginName();
-								if (!SessionSave.getSessionIdSave().containsKey(userName)) {
-									SessionSave.getSessionIdSave().put(userName, sessionID);
-								}else if(SessionSave.getSessionIdSave().containsKey(userName)&&!sessionID.equals(SessionSave.getSessionIdSave().get(userName))){
-									SessionSave.getSessionIdSave().remove(userName);
-									SessionSave.getSessionIdSave().put(userName, sessionID);
-								}
+							// 登录成功,判断是否存cookie
 							   if ("yes".equals(yes)) {
 								Cookie lname = new Cookie("loginName", u.getLoginName());
 								lname.setPath(req.getContextPath());////默认只对当前路径下的资源有效
