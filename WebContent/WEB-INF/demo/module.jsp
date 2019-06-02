@@ -126,14 +126,20 @@
 	}
 	function updatesubmitModuleForms(){
 		var nodes = $('#treemenu').tree('getSelected');
+		var k;
 		var upweight=$("#upweight").val(); 
 		var upurl=$("#upurl").val().trim();
 		var upname=$("#upname").val().trim();
+		 if(nodes.text==upname){
+				k=0;
+			}else{
+				k=1;
+			}
  		$.ajax({
 			type:"post",
 			url:"updateModule",
 			dataType:'json',
-			data:{"modules_Id":nodes.id,"modules_Name":upname,"parentId":parentId,"modules_path":upurl,"modules_weight":upweight},
+			data:{"k":k,"modules_Id":nodes.id,"modules_Name":upname,"parentId":parentId,"modules_path":upurl,"modules_weight":upweight},
 			success:function(res){
 				if(res>0){
 					myTree();
