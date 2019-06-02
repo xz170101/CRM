@@ -30,4 +30,10 @@ public interface MessageMapper {
 	 * @return
 	 */
 	Integer selectWeiduCount(Fenye fenye);
+	/**
+	 * 根据状态删除已读消息
+	 * @param me_id
+	 * @return
+	 */
+	Integer deleteMessage(String UserName);
 }

@@ -30,4 +30,10 @@ public interface MessageService {
 	 * @return
 	 */
 	Fenye selectWeiduCount(Fenye fenye);
+	/**
+	 * 对已读的消息进行删除
+	 * @param me_isstate
+	 * @return
+	 */
+	Integer deleteMessage(String UserName);
 }

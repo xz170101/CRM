@@ -41,4 +41,10 @@ public class MessageServiceImpl implements MessageService {
 		fenye.setTotal(count);
 		return fenye;
 	}
+
+	@Override
+	public Integer deleteMessage(String UserName) {
+		// TODO Auto-generated method stub
+		return messageMapper.deleteMessage(UserName);
+	}
 }

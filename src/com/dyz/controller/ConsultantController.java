@@ -25,7 +25,7 @@ public class ConsultantController {
 	@RequestMapping(value="/updateStu",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer updateStu(Student student) {
-
+			System.out.println("进来了========"+consultantService.updateStu(student));
 		return consultantService.updateStu(student);
 	}
 

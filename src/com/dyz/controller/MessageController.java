@@ -36,4 +36,9 @@ public class MessageController {
 	public Fenye selectWeiduCount(Fenye fenye) {
 		return messageService.selectWeiduCount(fenye);
 	}
+	@RequestMapping(value="/deleteMessage",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer deleteMessage(String UserName) {
+		return messageService.deleteMessage(UserName);
+	}
 }
