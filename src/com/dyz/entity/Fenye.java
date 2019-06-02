@@ -36,8 +36,16 @@ public class Fenye {
 	private Student student;
 	
 	private String UserName;
+	
+	private Integer me_isstate;
 
 
+	public Integer getMe_isstate() {
+		return me_isstate;
+	}
+	public void setMe_isstate(Integer me_isstate) {
+		this.me_isstate = me_isstate;
+	}
 	public String getUserName() {
 		return UserName;
 	}

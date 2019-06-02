@@ -21,4 +21,7 @@
 	  			me_isstate=1
 	  			where me_id=#{me_id}
 	  	</update>
+	  	<select id="selectWeiduCount" parameterType="fenye" resultType="int">
+	  		select count(1) from message WHERE me_receiver=#{UserName} and me_isstate=0
+	  	</select>
 	</mapper>

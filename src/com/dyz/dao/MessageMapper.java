@@ -24,4 +24,10 @@ public interface MessageMapper {
 	 * @return
 	 */
 	Integer updateMess(Message message);
+	/**
+	 * 查询出未读消息的条数
+	 * @param fenye
+	 * @return
+	 */
+	Integer selectWeiduCount(Fenye fenye);
 }
