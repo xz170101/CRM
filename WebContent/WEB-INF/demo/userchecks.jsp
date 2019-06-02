@@ -189,14 +189,14 @@
 			<label for="name">用户名:</label> 
 			<input class="easyui-validatebox" type="text" id="username" style="width: 80px;" data-options="" />
 			签到状态:
-			<select id="qiandao" class="easyui-combobox" style="width: 100px;">
+			<select id="qiandao" editable="false" class="easyui-combobox" style="width: 100px;">
 				<option value="">--请选择--</option>
 				<option value="1">是</option>
 				<option value="0">否</option>
 			</select>
 			 <label for="name">签到时间:</label>
-			  <input class="easyui-datetimebox" type="text" id="btime" style="width: 80px;" data-options="" /> 
-			  ~ <input class="easyui-datetimebox" type="text" id="etime" style="width: 80px;" data-options="" /> 
+			  <input class="easyui-datetimebox" type="text" id="btime" style="width: 80px;" data-options="editable:false" /> 
+			  ~ <input class="easyui-datetimebox" type="text" id="etime" style="width: 80px;" data-options="editable:false" /> 
 			  <a href="javascript:void(0)" class="easyui-linkbutton"
 				iconCls="icon-search" plain="true" onclick="init()">查询</a> 
 			  <a href="javascript:void(0)" class="easyui-linkbutton"
