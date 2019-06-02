@@ -153,10 +153,7 @@
 			+ ")'>签退</a>  */
 			 return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='edit("
 				+ index
-				+ ")'>签退</a> <a href='javascript:void(0)' style='cursor: pointer;' onclick='updateInfo("
-			+ index
-			+ ")'>修改</a> <a href='javascript:void(0)' style='cursor: pointer;' onclick='deleteInfo("
-			+ index + ")'>删除</a>";	
+				+ ")'>签退</a>";	
 			}
 		//格式化字段
 		function formatterqiandao(value, row, index) {

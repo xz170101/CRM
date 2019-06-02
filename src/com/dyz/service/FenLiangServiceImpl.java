@@ -53,8 +53,7 @@ public class FenLiangServiceImpl implements FenLiangService {
 						}
  
 					}
-					System.out.println(askers.size());
-					System.out.println(i);
+					
 					if (i ==askers.size() - 1) {//咨询师数量 
 							i=-1;
 							askers = fenliangMapper.selectMaxZiXunShi();
