@@ -172,33 +172,48 @@
 		});
 	});
 	//设置隐藏列结束
-		//Excel导出
-		function ExportForm(){
-			var header = $('#stuTab').datagrid('options').columns[0];//获取数据的第一行表头
-			var fields="";
-			for (var i = 1; i < header.length-1; i++) {
-			var field = header[i].field;
-			var hiddenFlag = header[i].hidden;//获取表头的隐藏列
-			if (!hiddenFlag) {//如果字段不是隐藏列的话
-			var dh = i == (header.length - 1) ? "" : ",";//将表头的字段进行分割
-			fields = fields + field + dh;
+		//导出excel表格
+		var poilist='';
+
+		function ExportForm() {
+			
+			$.ajaxSetup({async : false}); //取消ajax的异步提交，变成同步
+			$.ajax({
+				url:'selectpoi',
+				method:'post',
+				dataType:'json',
+				success:function(r){
+					var poi=JSON.stringify(r);//将返回的所有客户的数据转成string类型
+					poilist=poi;
 				}
-			}
+			})			
 			var row = $("#stuTab").datagrid("getSelections"); // 获取所有选中的行
 			var stulist='';
 			if(row==null || row==''){
-			var data = $("#stuTab").datagrid('getData');//获取所有的数据
-			stulist=JSON.stringify(data.rows);
+				stulist=poilist;
+				//stulist=JSON.stringify(poi);
 			}else{
-			stulist=JSON.stringify(row);
+				stulist=JSON.stringify(row);
 			}
-			//window.location.href="/CRM/exportForm?stulist="+stulist+"&fields="+fields;
+
+			var header = $('#stuTab').datagrid('options').columns[0];//获取数据的第一行表头
+			var fields="";
+			for (var i = 1; i < header.length-1; i++) {
+				var field = header[i].field;
+				var hiddenFlag = header[i].hidden;//获取表头的隐藏列
+				if (!hiddenFlag) {//如果字段不是隐藏列的话
+					var dh = i == (header.length - 1) ? "" : ",";//将表头的字段进行分割
+					fields = fields + field + dh;
+				}
+		
+			}
+			
 			var form=$("<form>");
 			form.attr("style",'display:none');
 			form.attr('target','');
 			form.attr('method','post');
 			form.attr('action','/CRM/exportForm');
-
+			
 			var input=$('<input>');
 			input.attr('type','hidden');
 			input.attr('name','fields');
@@ -207,12 +222,13 @@
 			input2.attr('type','hidden');
 			input2.attr('name','stulist');
 			input2.attr('value',stulist);
-
+			
 			$('body').append(form);
 			form.append(input);
 			form.append(input2);
 			form.submit();
-		} 
+		}
+		//导出excel表格结束
 		
 		//修改打开
 		function updateStu(index){
