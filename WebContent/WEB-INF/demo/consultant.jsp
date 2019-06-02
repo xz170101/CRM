@@ -519,27 +519,27 @@
 		<form id="sousuofrm" class="easyui-form">
 			客户姓名:<input class="easyui-textbox" id="sname" style="width: 80px">
 			电话:<input class="easyui-textbox" id="phone" style="width: 80px">
-			是否缴费:<select id="ispay" class="easyui-combobox" style="height: auto;">
+			是否缴费:<select id="ispay" editable="false" class="easyui-combobox" style="height: auto;">
 				<option></option>
 				<option value="0">未缴费</option>
 				<option value="1">已缴费</option>
-			</select> 是否有效:<select id="isvalid" class="easyui-combobox"
+			</select> 是否有效:<select id="isvalid" editable="false" class="easyui-combobox"
 				style="height: auto;">
 				<option></option>
 				<option value="0">无效</option>
 				<option value="1">有效</option>
-			</select> 是否回访:<select id="isreturnvist" class="easyui-combobox"
+			</select> 是否回访:<select id="isreturnvist" editable="false" class="easyui-combobox"
 				style="height: auto;">
 				<option></option>
 				<option value="0">未回访</option>
 				<option value="1">已回访</option>
 			</select> QQ: <input class="easyui-textbox" id="qq" style="width: 80px">
-			创建时间:<input class="easyui-datebox" id="creattime" style="width: 80px">
-			上门时间:<input class="easyui-datebox" id="hometime" style="width: 80px">
-			首次回访时间:<input class="easyui-datebox" id="firstvisittime"
+			创建时间:<input class="easyui-datebox" data-options="editable:false" id="creattime" style="width: 80px">
+			上门时间:<input class="easyui-datebox" data-options="editable:false" id="hometime" style="width: 80px">
+			首次回访时间:<input class="easyui-datebox" data-options="editable:false" id="firstvisittime"
 				style="width: 80px"> 缴费时间:<input class="easyui-datebox"
 				id="paytime" style="width: 80px"> 进班时间:<input
-				class="easyui-datebox" id="inclasstime" style="width: 80px">
+				class="easyui-datebox" data-options="editable:false" id="inclasstime" style="width: 80px">
 
 			<a href="javascript:void(0)" class="easyui-linkbutton"
 				iconCls="icon-search" onclick="init()">查找</a> <a
@@ -730,7 +730,7 @@
 					<td>姓名:</td>
 					<td><input class="easyui-textbox" id="stu_Name3" name="stu_Name"></td>
 					<td>性别:</td>
-					<td><select id="stu_Sex3" class="easyui-combobox">
+					<td><select id="stu_Sex3" editable="false" class="easyui-combobox">
 							
 							<option value="0">男</option>
 							<option value="1">女</option>
@@ -747,7 +747,7 @@
 
 				<tr>
 					<td>学历:</td>
-					<td><select id="stu_Status3" name="stu_Status"
+					<td><select id="stu_Status3" editable="false" name="stu_Status"
 						class="easyui-combobox" style="width: 100px;">
 							<option value="未知">未知</option>
 							<option value="大专">大专</option>
@@ -758,7 +758,7 @@
 							<option value="其他">其他</option>
 					</select></td>
 					<td>状态:</td>
-					<td><select id="stu_PerState3" name="stu_PerState"
+					<td><select id="stu_PerState3" editable="false" name="stu_PerState"
 						class="easyui-combobox" style="width: 100px;">
 							<option value="未知">未知</option>
 							<option value="待业">待业</option>
@@ -769,7 +769,7 @@
 
 				<tr>
 					<td>来源渠道:</td>
-					<td><select id="stu_SourceUrl3" name="stu_SourceUrl"
+					<td><select id="stu_SourceUrl3" editable="false" name="stu_SourceUrl"
 						class="easyui-combobox" style="width: 100px;">
 							<option value="未知">未知</option>
 							<option value="百度">百度</option>
@@ -785,7 +785,7 @@
 							<option value="qq">qq</option>
 					</select></td>
 					<td>来源网站:</td>
-					<td><select id="stu_NetPusherld3" name="stu_NetPusherld"
+					<td><select id="stu_NetPusherld3" editable="false" name="stu_NetPusherld"
 						class="easyui-combobox" style="width: 100px;">
 							<option value="其他">其他</option>
 							<option value="职英b站">职英b站</option>
@@ -798,7 +798,7 @@
 					<td><input class="easyui-textbox" id="stu_SourceKeyWord3"
 						name="stu_SourceKeyWord"></td>
 					<td>所在区域:</td>
-					<td><select id="stu_Address3" name="stu_Address"
+					<td><select id="stu_Address3" editable="false" name="stu_Address"
 						class="easyui-combobox" style="width: 100px;">
 							<option value="未知">未知</option>
 							<option value="其他">其他</option>
@@ -825,7 +825,7 @@
 				<tr>
 					<td>学员关注:</td>
 					<td><select id="stu_stuConcern3" name="stu_stuConcern"
-						class="easyui-combobox" style="width: 100px;">
+						class="easyui-combobox" editable="false" style="width: 100px;">
 							<option value="课程">课程</option>
 							<option value="学费">学费</option>
 							<option value="学时">学时</option>
@@ -836,7 +836,7 @@
 							<option value="其他">其他</option>
 					</select></td>
 					<td>来源部门:</td>
-					<td><select id="stu_FromPart3" name="stu_FromPart"
+					<td><select id="stu_FromPart3" editable="false" name="stu_FromPart"
 						class="easyui-combobox" style="width: 100px;">
 							<option value="网络">网络</option>
 							<option value="市场">市场</option>
@@ -856,14 +856,13 @@
 
 				<tr>
 					<td>是否报备:</td>
-					<td><select id="stu_isBaoBei3" name="stu_isBaoBei"
-						class="easyui-combobox">
-							
+					<td><select id="stu_isBaoBei3" editable="false" name="stu_isBaoBei"
+						class="easyui-combobox">							
 							<option value="0">否</option>
 							<option value="1">是</option>
 					</select></td>
 					<td>课程方向：</td>
-					<td><select id="stu_LearnForward33" name="stu_LearnForward"
+					<td><select id="stu_LearnForward33" editable="false" name="stu_LearnForward"
 						class="easyui-combobox" style="width: 100px;">
 							<option value="软件开发">软件开发</option>
 							<option value="软件设计">软件设计</option>
@@ -882,7 +881,7 @@
 		    		<input class="easyui-textbox" id="stu_inClassTime33" name="stu_inClassTime">
 				<tr>
 					<td>打分：</td>
-					<td><select id="sexitInte33" name="sexitInte"
+					<td><select id="sexitInte33" editable="false" name="sexitInte"
 						class="easyui-combobox" style="width: 100px;">
 							<option value="0">近期可报名</option>
 							<option value="1">一个月内可报名</option>
@@ -890,7 +889,7 @@
 							<option value="3">无效</option>
 					</select></td>
 					<td>是否有效：</td>
-					<td><select id="stu_isValid33" name="stu_isValid"
+					<td><select id="stu_isValid33" editable="false" name="stu_isValid"
 						class="easyui-combobox">
 							
 							<option value="0">无效</option>
@@ -904,7 +903,7 @@
 					<td><input class="easyui-textbox" id="stu_LostValid33"
 						name="stu_LostValid"></td>
 					<td>是否回访：</td>
-					<td><select id="stu_isReturnVist33" name="stu_isReturnVist33"
+					<td><select id="stu_isReturnVist33" editable="false" name="stu_isReturnVist33"
 						class="easyui-combobox">
 						
 							<option value="0">未回访</option>
@@ -917,7 +916,7 @@
 					<td><input class="easyui-datebox" id="stu_firstVisitTime33"
 						name="stu_firstVisitTime"></td>
 					<td>是否上门：</td>
-					<td><select id="stu_isHome33" name="stu_isHome"
+					<td><select id="stu_isHome33" editable="false" name="stu_isHome"
 						class="easyui-combobox">
 
 							<option value="0">否</option>
@@ -934,7 +933,7 @@
 				<tr>
 					
 					<td>是否缴费：</td>
-					<td><select id="stu_isPay33" name="stu_isPay"
+					<td><select id="stu_isPay33" editable="false" name="stu_isPay"
 						class="easyui-combobox">
 							<option value="0">未缴费</option>
 							<option value="1">已缴费</option>
@@ -950,7 +949,7 @@
 
 				<tr>
 					<td>是否退费：</td>
-					<td><select id="stu_isReturnMoney33" name="stu_isReturnMoney"
+					<td><select id="stu_isReturnMoney33" editable="false" name="stu_isReturnMoney"
 						class="easyui-combobox">
 
 							<option value="0">否</option>
@@ -963,7 +962,7 @@
 
 				<tr>
 					<td>是否进班：</td>
-					<td><select id="stu_isInClass33" name="stu_isInClass"
+					<td><select id="stu_isInClass33" editable="false" name="stu_isInClass"
 						class="easyui-combobox">
 							
 							<option value="0">否</option>

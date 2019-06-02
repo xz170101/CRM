@@ -18,7 +18,17 @@
 		 init();
 	});  
 	function init() { //显示加载数据表格
-		//alert($("#ord").combobox("getValue").trim());
+		var startTime=$("#startdate").datetimebox("getValue").trim();
+		var endTime=$("#enddate").datetimebox("getValue").trim();
+		  if(startTime!=null && startTime!="" && endTime!=null && endTime!=""){
+	            var oDate1 = new Date(startTime);
+	            var oDate2 = new Date(endTime);
+	            if(oDate1.getTime() > oDate2.getTime()){
+	            	$("#baruser").form("reset");
+	            	$.messager.alert("提示","创建开始时间不能大于结束时间！");
+	                return false;
+	            }
+	        } 
 			$("#userDG").datagrid({ 
 				 	url:"selectUser",  //数据接口的地址
 				 	method:'post',
@@ -30,11 +40,12 @@
 			        queryParams: { //要发送的参数列表
 			        	text1:$("#ord").combobox("getValue").trim(),
 			        	text2: $("#userName").textbox("getValue").trim(), 
-			        	text3:$("#startdate").datetimebox("getValue").trim(),
-			        	text4:$("#enddate").datetimebox("getValue").trim(),
+			        	text3:startTime,
+			        	text4:endTime,
 			        	text5: $("#lock").combobox("getValue").trim()
 					   }  
 			   });
+			$("#baruser").form("reset");
 	}
 	//头像
 	function formatterImg(value,row,index){
@@ -255,6 +266,7 @@
  				 }   
 			});
 		}
+		 
 	</script>
 </head>
 <body>
@@ -278,11 +290,12 @@
 	</table>
 	<!-- 搜素框 -->
 	<div id="usertb" style="padding:5px; height:auto">
-		    <div style="margin-bottom:5px">
+ 		    <form id="baruser"  class="easyui-form">
 		        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addInfo()">新增</a>&nbsp;&nbsp;&nbsp;&nbsp;
 		        	用户名: <input class="easyui-textbox" id="userName" style="width:80px">
-		        	起止时间：<input class="easyui-datetimebox" id="startdate" style="width:100px">-
-		        			<input class="easyui-datetimebox" id="enddate" style="width:100px">
+		        	创建起止时间：<input class="easyui-datetimebox" data-options="editable:false" id="startdate" style="width:100px">~
+		        			<input  class="easyui-datetimebox" data-options="editable:false" id="enddate" style="width:100px">
+		        			
 		        	是否锁定：<select id="lock" class="easyui-combobox" name="lock" data-options="panelHeight:'auto'" editable="false">
 							    <option value="">-请选择-</option>
 							    <option value="1"> 已锁定</option>
@@ -294,8 +307,9 @@
 						    <option value="loginTime">最后登录时间</option>
 						   </select>
 		        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="init()">查找</a>
-		    </div>
-		</div>
+		    </form>
+		 </div>
+	 
 <script type="text/javascript">
 //对新增表单的验证
 	function vnewusername() {//验证用户名是否存在
@@ -336,8 +350,7 @@
 		return vRegexp('reuserpwd',/^[a-z0-9]{6,12}$/);
 	}
 	function vusertel() {
-		alert("测试修改i");
-		var tel=$("#usertel").val();
+ 		var tel=$("#usertel").val();
 		var telRegexp= /^1[34578]\d{9}$/.test(tel) ;
 		  if(telRegexp){
 			  $("#yzusertel").html('');

@@ -316,7 +316,7 @@ public class UserServiceImp implements UserService{
 						} else {
 							// 登录成功,判断是否存cookie
 							   if ("yes".equals(yes)) {
-								Cookie lname = new Cookie("loginName", u.getLoginName());
+								Cookie lname = new Cookie("loginName", u.getLoginName());//URLEncoder.encode(cookieValue, "UTF-8");
 								lname.setPath(req.getContextPath());////默认只对当前路径下的资源有效
 								lname.setMaxAge(60*60*24*7);//cookie.setMaxAge();单位为秒
 								response.addCookie(lname);
@@ -330,7 +330,7 @@ public class UserServiceImp implements UserService{
 							   if(session.getAttribute("fenliang")==null||session.getAttribute("fenliang").equals("")) {
 									session.setAttribute("fenliang", false);
 								}
-
+							   psdWrongTime=0;
 							//该登录时间
 							User us=new User();
 							SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
