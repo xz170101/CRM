@@ -199,30 +199,43 @@
  			var ename=$("#eename").val();
  			var email=$("#eemail").val();
  			var etel=$("#metel").val();
- 			 
- 			if(!(/^(13|14|15|17|18)\d{9}$/.test(etel))){
- 				 $.messager.alert("提示","手机号码格式有误，请重新输入！");
-	                return false;
-	            }
- 			if(!(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(email))){
-				 $.messager.alert("提示","邮箱格式有误，请重新输入！");
-	                return false;
-	            }
  			if(flag){
-	 			$.post("updateUser",{
-	 					protectEMail:email,
-	                    protectMTel:etel,
-	 					loginName:ename,
-	 					user_Id:userid
-	                 },function(res){
-	                     if(res>0){
-	                      	$("#userDG").datagrid("reload");
-	                      	closeUserForm();
-	                        $.messager.alert("提示！","修改成功！");
-	                     }
-	                 },"json");
- 			} 
- 		}  
+	 			if(!(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(email))){
+					 $.messager.alert("提示","邮箱格式有误，请重新输入！");
+		                return false;
+		            }
+	 			if(!(/^(13|14|15|17|18)\d{9}$/.test(etel))){
+	 				 $.messager.alert("提示","手机号码格式有误，请重新输入！");
+		                return false;
+		         } else{
+		        	 $.ajax({
+		 				url:"selectUserByTel",
+		 				method:'post',
+		 				data:{"protectMTel":etel},
+		 				dataType:'json',
+		 				success:function(data){
+		 					 	if(data>0){
+		 					 		$.messager.alert("提示","一个手机号只能绑定一个用户<br/>请重新输入手机号！");
+		 							return false;
+		 						}else{
+		 							$.post("updateUser",{
+		 								protectEMail:email,
+		 			                    protectMTel:etel,
+		 								loginName:ename,
+		 			 					user_Id:userid
+		 			                 },function(res){
+		 			                     if(res>0){
+		 			                      	$("#userDG").datagrid("reload");
+		 			                      	closeUserForm();
+		 			                        $.messager.alert("提示！","修改成功！");
+		 			                     }
+		 			                 },"json");
+		 						}   
+		 					}
+		 				});
+		 			}  
+	 			}
+	 		}  
 		//删除
 		function delInfo(index){
 			$.messager.confirm('确认','您确认想要删除用户吗？',function(r){   
@@ -299,8 +312,7 @@
  	 						document.getElementById('yznewusername').style.color = 'red';
 							return false;
 						}else{
-							$("#yznewusername").html('ok');
- 							document.getElementById('yznewusername').style.color = 'green';
+							$("#yznewusername").html(' ');
 							return true;
 						}
 					}
@@ -324,6 +336,7 @@
 		return vRegexp('reuserpwd',/^[a-z0-9]{6,12}$/);
 	}
 	function vusertel() {
+		alert("测试修改i");
 		var tel=$("#usertel").val();
 		var telRegexp= /^1[34578]\d{9}$/.test(tel) ;
 		  if(telRegexp){
@@ -339,8 +352,7 @@
  	 						document.getElementById('yzusertel').style.color = 'red';
 							return false;
 						}else{
-							$("#yzusertel").html('ok！');
- 							document.getElementById('yzusertel').style.color = 'green';
+							$("#yzusertel").html(' ');
 							return true;
 						}   
 					}
@@ -363,8 +375,7 @@
 		    msg.style.color = 'red';
 		    return false;
 		  } else {
-		    msg.innerHTML = 'ok';
-		    msg.style.color = 'green';
+		    msg.innerHTML = ' ';
 		    return true;
 		  }
 	}
@@ -373,8 +384,7 @@
 		var elem = document.getElementById(name);
 		var msg = document.getElementById('yz'+name)
 		if (regexp.test(elem.value)) {
-		    msg.innerHTML = 'ok';
-		    msg.style.color = 'green';
+		    msg.innerHTML = ' ';
 		    return true;
 		  } else {
 		    msg.innerHTML = '您的输入不合法';
@@ -422,6 +432,7 @@
 		//	 $.messager.alert("提示!","用户名已存在！");
 		 //}
 	}
+	 
 </script>
 		<!-- 新增面板 -->
 		<div id="adduser_window" class="easyui-dialog" title="新增用户信息" data-options="modal:true,closed:true,iconCls:'icon-save',buttons:[{
@@ -478,7 +489,7 @@
             <table cellpadding="5">
             	<tr>
                     <td> </td>
-                    <td><input    type="hidden"   name="user_Id" id="userid"  /></td>
+                    <td><input  type="hidden" name="user_Id" id="userid"  /></td>
                		<td><span ></span></td>
                 </tr>
                 <tr>
@@ -493,8 +504,8 @@
                 </tr>
                 <tr>
                     <td>手机号:</td>
-                    <td><input type="text" class="easyui-numberbox" name="protectMTel" id="metel" data-options="required:true"></td>
-               		<td><span id="editTel"></span></td>
+                    <td><input type="text"  class="easyui-numberbox" name="protectMTel" id="metel" data-options="required:true"></td>
+               		<td><span id="musertel"></span></td>
                 </tr>                    
             </table>
          </form>

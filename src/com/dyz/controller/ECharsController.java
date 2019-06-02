@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dyz.entity.Fenye;
-import com.dyz.entity.Role;
-import com.dyz.service.ECharsService;
+ import com.dyz.service.ECharsService;
 
 @Controller
 public class ECharsController {
