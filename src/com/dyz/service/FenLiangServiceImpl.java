@@ -7,13 +7,18 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dyz.controller.MyWebsocket;
 import com.dyz.dao.FenLiangMapper;
 import com.dyz.entity.Askers;
+import com.dyz.entity.Message;
 import com.dyz.entity.Student;
 @Service
 public class FenLiangServiceImpl implements FenLiangService {
 	@Autowired
 	private FenLiangMapper fenliangMapper;
+	@Autowired
+	private MessageService messageService;
+	
 	@Override
 	public List<Askers> selectzixunname() {
 		// TODO Auto-generated method stub
@@ -26,34 +31,33 @@ public class FenLiangServiceImpl implements FenLiangService {
 		return fenliangMapper.selectStuByZiXunName();
 	}
 
-	
 	public void fenliang(HttpSession session) {
 		// 未分配的学生并按学生的价值排序
 		List<Student> students = fenliangMapper.selectStuByZiXunName();
 		// 所有签到的咨询师，并按咨询师的价值排序
 		List<Askers> askers = fenliangMapper.selectMaxZiXunShi();
-		Boolean state = (Boolean) session.getAttribute("fenliang");	
-	
 		
+		Boolean state = (Boolean) session.getAttribute("fenliang");			
 		if (state) {
-			if (students.size() > 0 && askers.size() > 1) {
+			if (students.size() > 0 && askers.size() > 1) {//咨询师数量大于1和学生的数量是否大于0
 				Integer count = 0;
 				Integer a = null;
-				for (int i = 0; i <= askers.size() - 1; i++) {
-					
-					if (i < askers.size() - 1) {
+				for (int i = 0; i <= askers.size() - 1; i++) {//进循环					
+					if (i < askers.size() - 1) {//判断咨询师学生的差值
 						a = askers.get(i + 1).getAexit1Int() - askers.get(i).getAexit1Int();
 						//判断咨询师现有学生数量进行判断
 						if (a == 0) {//当咨询师之间的学生数量正好相等
-							a=1;
+							a=1;//继续循环
 						}
 					}
-					if (i ==askers.size() - 1) {
+					
+					if (i ==askers.size() - 1) {//
 							i=-1;
 							askers = fenliangMapper.selectMaxZiXunShi();
 							continue;
 					}
-					for (int k = 0; k < a; k++) {//小于咨询师之间的学生数量相等的长度
+					
+					for (int k = 0; k < a; k++) {//小于咨询师之间的学生数量
 						// 为学生分配咨询师
 						Student stu = new Student();
 						stu.setAskers_Id(askers.get(i).getAskers_Id());
@@ -65,16 +69,19 @@ public class FenLiangServiceImpl implements FenLiangService {
 						asker2.setAskers_Id(askers.get(i).getAskers_Id());
 						fenliangMapper.updateAskersCount(asker2);
 						count++;
-						if (count == students.size()) {
-							System.out.println(count == students.size());
+						if (count == students.size()) {						
 							break;
-						}
+						}						
 					}
+					
 					if (count == students.size()) {
-						/*System.out.println(count == students.size());*/
+						
 						break;
-					}
+					}					
 				}
+				/*Message message=new Message();
+				message.setMe_content("已有"+a+"个学生到你名下");				
+				messageService.insertMessage(message);	*/			
 			}
 		}
 	}

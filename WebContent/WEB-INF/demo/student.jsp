@@ -162,7 +162,7 @@
 	function formatterIsBaoBei(value, row, index){
 		return value==0? '否':'是';
 	}
-		
+	
 	//删除方法
 	function deleteStu(index){
 		$.messager.confirm('确认', '您确认想要删除记录吗？', function(r) {
@@ -183,34 +183,7 @@
 			}
 		});
 	}
-	/*  //验证手机号
-	function vphone() {
-		var phone=$("#stu_Phone1").val().trim();
-		if(phone ==null || phone ==''){
-			$("#yzfphone").html('手机号码不能为空');
-			 document.getElementById('yzfphone').style.color = 'red';
-			return false;
-		}else if (!(/^1([38]\d|5[0-35-9]|7[3678])\d{8}$/).test(phone)) {
-			$("#yzfphone").html('手机号格式错误');
-			 document.getElementById('yzfphone').style.color = 'red';
-			return false;
-		}
-	} 
-	 
-	//验证手机号
-	function xphone() {
-		var phone=$("#stu_Phone3").val().trim();
-		alert(phone);
-		if(phone ==null || phone ==''){
-			$("#xgphone").html('手机号码不能为空');
-			 document.getElementById('xgphone').style.color = 'red';
-			return false;
-		}else if (!(/^1([38]\d|5[0-35-9]|7[3678])\d{8}$/).test(phone)) {
-			$("#xgphone").html('手机号格式错误');
-			 document.getElementById('xgphone').style.color = 'red';
-			return false;
-		}
-	}  */
+	
 	//添加客户
 	//打开添加窗口
 	 function addStu(){			
@@ -227,10 +200,9 @@
 			//获取id参数
 			var stu_Name1= $("#stu_Name1").textbox("getValue");
 			var stu_Sex1 = $("#stu_Sex1").combobox("getValue");
-			var stu_Age1= $('#stu_Age1').slider('getValue');
-						
+			var stu_Age1= $('#stu_Age1').slider('getValue');						
 			var stu_Status1= $("#stu_Status1").combobox("getValue");//学历
-			var stu_PerState1= $("#stu_PerState1").combobox("getValue");
+			var stu_PerState1= $("#stu_PerState1").combobox("getValue");//状态
 			var stu_SourceUrl1= $("#stu_SourceUrl1").combobox("getValue");
 			var stu_SourceKeyWord1 = $("#stu_SourceKeyWord1").textbox("getValue");
 			var stu_qq1= $("#stu_qq1").textbox("getValue");
@@ -238,7 +210,24 @@
 			var stu_isBaoBei1= $("#stu_isBaoBei1").combobox("getValue");
 			var stu_inClassContent1= $("#stu_inClassContent1").textbox("getValue");				
 			var fenliang =<%=session.getAttribute("fenliang")%>; 
-			
+			if(stu_Name1 == null || stu_Name1==""){
+					$.messager.alert("提示","名字不能为空");
+					return false;
+				}
+				if(stu_Sex1 == null || stu_Sex1==""){
+					$.messager.alert("提示","性别不能为空");
+					return false;
+				}
+				if(stu_Age1 == null || stu_Age1==""){
+					$.messager.alert("提示","年龄不能为空");
+					return false;
+				}
+				
+   				if(stu_SourceUrl1 == null || stu_SourceUrl1==""){
+   					$.messager.alert("提示","信息来源不能为空");
+   					return false;
+   				}  				
+   				
 			//提交到添加的controller
 				$.post("insertstu", {
 					fenliang:fenliang,
@@ -260,7 +249,8 @@
 							if(res>0) {
 								$("#stuTab").datagrid("reload"); //通过调用reload方法，让datagrid刷新显示数据
 								$("#insertStu").dialog("close");
-								$.messager.alert("消息提示","添加成功"); 					
+								$.messager.alert("消息提示","添加成功"); 
+								$("#insertStuForm").form("clear");
 							} else {
 								$.messager.alert("消息提示","手机号码不已存在");
 							}
@@ -278,7 +268,7 @@
 			var row=data.rows[index];
 			$('#editStuForm11').form("load",row);
 			$('#editStuForm22').form("load",row);
-			$('#stu_Age3').slider('setValue',row.stu_Age);
+			//$('#stu_Age3').slider('setValue',row.stu_Age);
 			$('#stusid').next().hide();//隐藏编号的字段			
 			$('#stu_preMoneyTime33').next().hide();
 			$('#stu_HomeTime33').next().hide();
@@ -289,7 +279,13 @@
 		
 		//修改后的数据的提交
 		function editsave() {	
-			var beforetel=$('#stuTab').datagrid('getSelected').stu_Phone; 
+			var beforetel=$('#stuTab').datagrid('getSelected').stu_Phone; 			
+		  var phone=$('#stu_Phone3').textbox('getValue');//获取手机号的值
+				if (!(/^1([38]\d|5[0-35-9]|7[3678])\d{8}$/).test(phone)) {//判断手机号的格式
+					alert("您输入的手机号格式不正确");
+					return false;
+				}	 
+				
 			var valid=$("#stu_isValid33").combobox("getValue");
 			if(valid=='否'){
 				valid=0;
@@ -297,22 +293,16 @@
 				valid=1;
 			}if(valid=='待定'){
 				valid=2;
-			}
-			
-			 var phone=$('#stu_Phone3').textbox('getValue');//获取手机号的值
-				if (!(/^1([38]\d|5[0-35-9]|7[3678])\d{8}$/).test(phone)) {//判断手机号的格式
-					alert("您输入的手机号格式不正确");
-					return false;
-				}
+			}	 	
 			$.ajax({
 				url:'updateStudent',
 				method:'post',
 				dataType:'json',
-				data:{
+				data:{					
 					 stu_id:$("#stusid").textbox("getValue"),
 					 stu_Name:$("#stu_Name3").textbox("getValue"),
 					 stu_Sex:$("#stu_Sex3").combobox("getValue"),
-					 stu_Age:$('#stu_Age3').slider('getValue'),
+					 stu_Age:$('#stu_Age3').textbox('getValue'),
 					 stu_Phone:phone,
 					 beforetel:beforetel,
 					 stu_Status:$("#stu_Status3").combobox("getValue"), 
@@ -325,28 +315,29 @@
 					 stu_FromPart:$("#stu_FromPart3").combobox("getValue"),
 					stu_qq:$("#stu_qq3").textbox("getValue"),
 					stu_WeiXin:$("#stu_WeiXin3").textbox("getValue"),			
-					stu_isBaoBei:$("#stu_isBaoBei3").combobox("getValue"),
-					
+					stu_isBaoBei:$("#stu_isBaoBei3").combobox("getValue"),					
 					stu_CreateUser:$("#stu_CreateUser3").textbox("getValue"),										
-					stu_LearnForward:$("#stu_LearnForward33").combobox("getValue"),
-					sexitInte:$("#sexitInte33").combobox("getValue"),
+					stu_LearnForward:$("#stu_LearnForward33").combobox("getValue"),	
+					
+					sexitString:$("#sexitInte33").combobox("getValue"),
 					stu_isValid:valid,
 					stu_LostValid:$("#stu_LostValid33").textbox("getValue"),					
 					stu_isReturnVist:$("#stu_isReturnVist33").combobox("getValue"),
 					stu_isHome:$("#stu_isHome33").combobox("getValue"),
 					stu_HomeTime:$("#stu_HomeTime33").textbox("getValue"),
-					stu_firstVisitTime:$("#stu_firstVisitTime33").datetimebox("getValue"),
+					/* /* stu_firstVisitTime:$("#stu_firstVisitTime33").datetimebox("getValue"), */
 					stu_preMoney:$("#stu_preMoney33").textbox("getValue"),
 					stu_preMoneyTime:$("#stu_preMoneyTime33").textbox("getValue"),
 					stu_ReturnMoneyReason:$("#stu_ReturnMoneyReason33").textbox("getValue"),					
 					stu_isPay:$("#stu_isPay33").combobox("getValue"),
 					stu_PayTime:$("#stu_PayTime33").textbox("getValue"),
-					stu_Money:$("#stu_Money33").numberbox("getValue"),		
+					stu_Money:$("#stu_Money33").textbox("getValue"),		
 					stu_isReturnMoney:$("#stu_isReturnMoney33").combobox("getValue"),			
 					stu_isInClass:$("#stu_isInClass33").combobox("getValue"),	
 					stu_inClassTime:$("#stu_inClassTime33").textbox("getValue"),			
 					stu_inClassContent:$("#stu_inClassContent33").textbox("getValue"), 
-					stu_AskerContent:$("#stu_AskerContent33").textbox("getValue")									
+					stu_AskerContent:$("#stu_AskerContent33").textbox("getValue")
+												
 				},
 				success:function(res){
 					if(res>0){
@@ -497,17 +488,7 @@
 				}
 		
 			}
-			/* 
-			var row = $("#stuTab").datagrid("getSelections"); //获取所有选中的行
-			var stulist='';
-			if(row==null || row==''){
-				var data = $("#stuTab").datagrid('getData');//获取所有的数据
-				stulist=JSON.stringify(data.rows);
-			}else{
-				stulist=JSON.stringify(row);
-			} */
 			
-			//window.location.href="/CRM/exportForm?stulist="+stulist+"&fields="+fields;
 			var form=$("<form>");
 			form.attr("style",'display:none');
 			form.attr('target','');
@@ -574,7 +555,7 @@
 	            <th data-options="field:'stu_FromPart'">来源部门</th>   
 	        	<th data-options="field:'stu_stuConcern'">学员关注</th>  
 	        	<th data-options="field:'stu_isBaoBei',formatter:formatterIsBaoBei">是否报备</th>	       
-	       		<th data-options="field:'sexitInte'">打分</th>
+	       		<th data-options="field:'sexitString'">打分</th>
 	       		<th data-options="field:'stu_ZiXunName'">咨询师备注</th>   
 	            <th data-options="field:'stu_CreateUser'">录入人</th>   
 	            <th data-options="field:'stu_ReturnMoneyReason'">退费时间</th>
@@ -907,7 +888,7 @@
 		    		</tr>
 		    		<tr>
 		    			<td>打分：</td>
-		    			<td><input class="easyui-textbox" readonly="readonly" id="sexitInte22" name="sexitInte"></td>
+		    			<td><input class="easyui-textbox" readonly="readonly" id="sexitInte22" name="sexitString"></td>
 		    		
 		    			<td>是否有效：</td>
 		    			<td><input class="easyui-textbox" readonly="readonly" id="stu_isValid22" name="stu_isValid"></td>
@@ -1008,8 +989,7 @@
 	    		<tr>	
 	    			<td>性别:</td>	    			
 	    			<td>	    			
-	    			<select id="stu_Sex3" class="easyui-combobox">
-	    			 
+	    			<select id="stu_Sex3" name="stu_Sex" class="easyui-combobox">	    			 
 					     <option value="0">男</option> 
 						<option value="1">女</option>
 	    			</select>
@@ -1017,20 +997,19 @@
 	    		</tr>
 	    		<tr>
 	    			<td>年龄:</td>
-	    			<td style="height:50px">
-		    				<input class="easyui-slider" id="stu_Age3" 
-		    				style="width:150px" data-options="showTip:true,rule:[10,'|',40,'|',70,'|',100],min:10,max:100" >
+	    			<td>
+		    				<input class="easyui-textbox" id="stu_Age3" name="stu_Age">
 		    		</td>	    			
 	    		</tr>	    		
 	    		<tr>	
 	    			<td>电话:</td>	    			
-	    			<td><input onblur="xphone()" class="easyui-textbox" id="stu_Phone3" name="stu_Phone"></td>	    		
-	    			<td><span id="xgphone"></span></td>	    		
+	    			<td><input class="easyui-textbox" id="stu_Phone3" name="stu_Phone"></td>	    		
+	    					
 	    		</tr>
 	    		<tr>
 	    			<td>学历:</td>
 	    			<td>
-	    			<select id="stu_Status3" name="stu_Status" class="easyui-combobox" style="width:100px;">   
+	    			<select id="stu_Status3" name="stu_Status" class="easyui-combobox">   
 							  <option value="未知">未知</option> 
 							  <option value="大专">大专</option> 
 							  <option value="高中">高中</option> 
@@ -1044,7 +1023,7 @@
 	    		<tr>	
 	    			<td>状态:</td>	    			
 	    			<td>
-	    			<select id="stu_PerState3" name="stu_PerState" class="easyui-combobox" style="width:100px;">   
+	    			<select id="stu_PerState3" name="stu_PerState" class="easyui-combobox" >   
 							  <option value="未知">未知</option> 
 							  <option value="待业">待业</option> 
 							  <option value="在职">在职</option> 
@@ -1055,7 +1034,7 @@
 	    		<tr>
 	    			<td>来源渠道:</td>
 	    			<td>
-	    				<select id="stu_SourceUrl3" name="stu_SourceUrl" class="easyui-combobox" style="width:100px;">   
+	    				<select id="stu_SourceUrl3" name="stu_SourceUrl" class="easyui-combobox" >   
 							  <option value="未知">未知</option> 
 							  <option value="百度">百度</option> 
 							  <option value="百度移动端">百度移动端</option> 
@@ -1074,7 +1053,7 @@
 	    		<tr>	
 	    			<td>来源网站:</td>	    			
 	    			<td>
-	    			<select id="stu_NetPusherld3" name="stu_NetPusherld" class="easyui-combobox" style="width:100px;">   
+	    			<select id="stu_NetPusherld3" name="stu_NetPusherld" class="easyui-combobox">   
 							  <option value="其他">其他</option> 
 							  <option value="职英b站">职英b站</option> 
 							  <option value="高考站">高考站</option> 
@@ -1089,7 +1068,7 @@
 	    		<tr>	
 	    			<td>所在区域:</td>	    			
 	    			<td>
-	    			<select id="stu_Address3" name="stu_Address" class="easyui-combobox" style="width:100px;">   
+	    			<select id="stu_Address3" name="stu_Address" class="easyui-combobox">   
 							  <option value="未知">未知</option> 
 							  <option value="其他">其他</option> 
 							  <option value="郑州">郑州</option> 
@@ -1115,7 +1094,7 @@
 	    		<tr>
 	    			<td>学员关注:</td>
 	    			<td>
-	    				<select id="stu_stuConcern3" name="stu_stuConcern" class="easyui-combobox" style="width:100px;">   
+	    				<select id="stu_stuConcern3" name="stu_stuConcern" class="easyui-combobox">   
 							  <option value="课程">课程</option> 
 							  <option value="学费">学费</option> 
 							  <option value="学时">学时</option> 
@@ -1130,7 +1109,7 @@
 	    		<tr>	
 	    			<td>来源部门:</td>	    			
 	    			<td>
-	    			<select id="stu_FromPart3" name="stu_FromPart" class="easyui-combobox" style="width:100px;">   
+	    			<select id="stu_FromPart3" name="stu_FromPart" class="easyui-combobox" >   
 							  <option value="网络">网络</option> 
 							  <option value="市场">市场</option> 
 							  <option value="教质">教质</option> 
@@ -1173,18 +1152,17 @@
 		    		<tr>
 		    			<td>课程方向：</td>
 		    			<td>
-		    			<select id="stu_LearnForward33" name="stu_LearnForward" class="easyui-combobox" style="width:100px;">   
+		    			<select id="stu_LearnForward33" name="stu_LearnForward" class="easyui-combobox">   
 							  <option value="软件开发">软件开发</option> 
 							  <option value="软件设计">软件设计</option> 
-							  <option value="网络营销">网络营销</option> 
-													 							 
+							  <option value="网络营销">网络营销</option> 													 							 
 						</select>
 		    			</td>
 		    		</tr>
 		    		<tr>
 		    			<td>打分：</td>
 		    			<td>
-		    			<select id="sexitInte33" name="sexitInte" class="easyui-combobox" style="width:100px;">   
+		    			<select id="sexitInte33" name="sexitString" class="easyui-combobox">   
 							  <option value="近期可报名">近期可报名</option> 
 							  <option value="一个月内可报名">一个月内可报名</option> 
 							  <option value="长期跟踪">长期跟踪</option> 
@@ -1195,8 +1173,7 @@
 		    		<tr>
 		    			<td>是否有效：</td>
 		    			<td>
-		    			<select id="stu_isValid33" name="stu_isValid" class="easyui-combobox">
-	    				
+		    			<select id="stu_isValid33" name="stu_isValid" class="easyui-combobox">	    				
 					     <option value="0">否</option> 
 						 <option value="1">是</option>
 					     <option value="2">待定</option>
@@ -1217,10 +1194,7 @@
 	    			</select>
 		    			</td>
 		    		</tr>
-		    		<tr>
-		    			<td>首访时间：</td>
-		    			<td><input class="easyui-datetimebox" id="stu_firstVisitTime33" name="stu_firstVisitTime"></td>
-		    		</tr>		    		
+		    			    		
 		    		<tr>
 		    			<td>是否上门：</td>
 		    			<td>		    			
@@ -1250,7 +1224,7 @@
 		    		</tr>		    		
 		    		<tr>
 		    			<td>缴费金额：</td>
-		    			<td><input class="easyui-numberbox" id="stu_Money33" name="stu_Money"></td>
+		    			<td><input class="easyui-textbox" id="stu_Money33" name="stu_Money"></td>
 		    		</tr>
 		    		<tr>
 		    			<td>是否退费：</td>
@@ -1281,16 +1255,12 @@
 		    		<tr>
 		    			<td>咨询备注：</td>
 		    			<td><input class="easyui-textbox" id="stu_AskerContent33" name="stu_AskerContent"></td>
-		    		</tr>	    		    		
-		    		
+		    		</tr>
 		    	</table>
 		    </form>
 	    </div>	      
 	</div>	    
 	</div> 	
- 
- 
- 
  
  
  	<!-- 设置隐藏列 -->

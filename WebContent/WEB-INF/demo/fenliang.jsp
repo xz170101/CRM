@@ -13,6 +13,7 @@
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
     	<script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
 	<script>
+
 	$(function(){		
 		init();
 		kaiqi();			
@@ -40,8 +41,7 @@
 			kaiguan = false;
 		}
 
-		$('#fenliang').switchbutton({
-		 <%-- var user="<%=session.getAttribute("user")%>"; --%>		 
+		$('#fenliang').switchbutton({				 
 			checked : kaiguan,			
 			onChange : function(checked) {				
 					$.messager.confirm("提示", "你确定开启自动分量吗？", function(r) {
@@ -52,7 +52,7 @@
 									dataType : "json",
 									data : {
 										checked : checked
-									},
+									},									
 									success : function(res) {
 										$.messager.alert("开启成功");
 										$("#stuTab").datagrid("reload");
@@ -86,7 +86,7 @@
 	  function updateziXunNameclose() {
 		$('#updateziXunName').dialog('close');
 	}  
-	
+	  var UserName ='<%= session.getAttribute("userName")%>';
 	//咨询师名字修改后的数据的提交
 	function updatezixunnamesave() {						
 		var stu_id=[];
@@ -113,7 +113,15 @@
 					$.messager.alert('提示','分量成功');
 					$('#stuTab').datagrid('reload');
 					$('#allasker').datalist('reload');
-					$('#updateziXunName').dialog('close');
+					$('#updateziXunName').dialog('close');					
+					$.post("insertMessage",{
+						me_sender:UserName,//获取登陆人的姓名
+						me_receiver:namezixun,
+						me_content:$("#tishi").val()
+					},function(res){
+						
+					},"json");
+					
 				}else{
 					$.messager.alert('提示','分量失败');
 				}
@@ -129,6 +137,7 @@
 </head>
 <body>
  		<input type="hidden" value="${list}" id="cha">
+ 		<input type="hidden" value="已有新的客户分配到你这里" id="tishi">
 		<input type="hidden" value="${fenliang}" id="fen">
 		自动分量: <input class="easyui-switchbutton" id="fenliang" data-options="onText:'Yes',offText:'No'">
 		 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" onclick="piliang()">手动分量</a> 

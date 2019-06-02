@@ -9,9 +9,13 @@
 			<!-- select s_id FROM
 		student where askerid is null -->
 		</select>
-		<!-- 查询学生最少，并且咨询师权重最高 -->
+		<!-- 查询当天已签到的咨询师并且咨询师权重排序 -->
 		<select id="selectMaxZiXunShi" resultType="askers">
-		SELECT * FROM askers WHERE roleName='咨询师'  and checkState=1  ORDER BY  aexit1Int ASC, weight desc  
+		<!-- SELECT * FROM askers WHERE roleName='咨询师'  and checkState=1  ORDER BY  aexit1Int ASC, weight desc -->  
+	   	
+		SELECT * FROM askers WHERE roleName='咨询师'
+		 and to_days(checkInTime) = to_days(now()) 
+		 and checkState=1  ORDER BY weight desc  
 	   </select>
 		
 		<!-- 查询手里的学生数 -->

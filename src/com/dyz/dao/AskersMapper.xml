@@ -27,9 +27,15 @@
 			and roleName='咨询师'
 		</where> 
 	</select> 
-	
+	<!-- 查询已签到的咨询师 -->
 	 <select id="selectqiandao" resultType="askers">
-	 select * from askers where checkState=1
+	<!-- select * from askers where date(checkInTime)=curdate()
+	 and checkState=1
+	 ORDER BY weight DESC -->
+	SELECT  *
+	FROM askers 
+	WHERE to_days(checkInTime) = to_days(now()) and checkState=1
+	ORDER BY weight DESC
 	 </select> 
 	<!-- 修改员工状态 -->
 	<update id="updateAskers" parameterType="askers">
