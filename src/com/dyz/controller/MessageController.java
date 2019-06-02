@@ -31,4 +31,9 @@ public class MessageController {
 	public Integer updateMess(Message message) {
 		return messageService.updateMess(message);
 	}
+	@RequestMapping(value="/selectWeiduCount",method=RequestMethod.POST)
+	@ResponseBody
+	public Fenye selectWeiduCount(Fenye fenye) {
+		return messageService.selectWeiduCount(fenye);
+	}
 }

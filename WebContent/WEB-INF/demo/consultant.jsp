@@ -431,10 +431,24 @@
 			$.post("updateMess",{
 				me_id:meid
 			},function(res){
-				
+				if(res>0){
+					$('#messageAll').datagrid('reload');
+				}
 			},"json")
-			$('#messageAll').datagrid('reload');
 			$("#lookMess").dialog("close");
+		}
+		//未读消息的条数刷新
+		self.setInterval("Notices()",3000);
+		function Notices(){
+			var userName  ='<%=session.getAttribute("userName")%>';
+			$.post("selectWeiduCount",{
+				UserName:userName,
+				me_isstate:0
+			},function(res){
+				if(res.total>0){
+					$("#source").text(res.total);
+				}
+			},"json")
 		}
 	</script>
 </head>
@@ -497,7 +511,7 @@
 			客户姓名:<input class="easyui-textbox" id="sname" style="width: 80px">
 			电话:<input class="easyui-textbox" id="phone" style="width: 80px">
 			是否缴费:<select id="ispay" class="easyui-combobox" style="height: auto;">
-			 	<option></option>
+				<option></option>
 				<option value="0">未缴费</option>
 				<option value="1">已缴费</option>
 			</select> 是否有效:<select id="isvalid" class="easyui-combobox"
@@ -523,8 +537,9 @@
 				href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-edit'" onclick="show()">设置隐藏列</a> <a
 				href="javascript:void(0)" class="easyui-linkbutton"
-				data-options="iconCls:'icon-edit'" onclick="ExportForm()">导出表格</a>
-				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-tip" onclick="messageLi()">消息</a>
+				data-options="iconCls:'icon-edit'" onclick="ExportForm()">导出表格</a> <a
+				href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-tip" onclick="messageLi()"><span id="source" style="background-color: white" class="badge"></span></a>
 		</form>
 	</div>
 
@@ -1034,7 +1049,9 @@
 		</table>
 	</div>
 	<!-- /离线消息/ -->
-	<div id="malx" class="easyui-dialog" data-options="fitColumns:true,closed:true" style="width: 400px; height: 300px;" title="消息记录">
+	<div id="malx" class="easyui-dialog"
+		data-options="fitColumns:true,closed:true"
+		style="width: 400px; height: 300px;" title="消息记录">
 		<table id="messageAll">
 			<thead>
 				<tr>
@@ -1043,7 +1060,8 @@
 					<th data-options="field:'me_startdate'">发送时间</th>
 					<th data-options="field:'me_content'">发送内容</th>
 					<th data-options="field:'me_isstate',formatter:formatterIsstate">状态</th>
-					<th data-options="field:'messa',align:'center',formatter:formatterMess">操作</th>
+					<th
+						data-options="field:'messa',align:'center',formatter:formatterMess">操作</th>
 				</tr>
 			</thead>
 		</table>

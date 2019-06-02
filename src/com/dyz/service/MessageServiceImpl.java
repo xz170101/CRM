@@ -33,4 +33,12 @@ public class MessageServiceImpl implements MessageService {
 		// TODO Auto-generated method stub
 		return messageMapper.updateMess(message);
 	}
+
+	@Override
+	public Fenye selectWeiduCount(Fenye fenye) {
+		// TODO Auto-generated method stub
+		Integer count = messageMapper.selectWeiduCount(fenye);
+		fenye.setTotal(count);
+		return fenye;
+	}
 }
