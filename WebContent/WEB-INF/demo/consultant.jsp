@@ -329,6 +329,7 @@
 					if(res>0){
 						$.messager.alert('提示','添加成功');
 						$('#stuTab').datagrid('reload');
+						$("#insertFollowForm").form("clear");
 						$('#insertFollow').dialog('close');
 					}else{
 						$.messager.alert('提示','添加失败');

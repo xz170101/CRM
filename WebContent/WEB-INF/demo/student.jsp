@@ -377,12 +377,13 @@
 					followState:$('#followstate').textbox('getValue'),
 					followType:$('#followtype').textbox('getValue'),
 					nextFollowTime:$('#nextfollowtime').datetimebox('getValue'),
-					conTent:$('#content').textbox('getValue')
+					conTent:$('#content1').textbox('getValue')
 				},
 				success:function(res){
 					if(res>0){
 						$.messager.alert('提示','添加成功');
 						$('#stuTab').datagrid('reload');
+						$("#insertFollowForm").form("clear");
 						$('#insertFollow').dialog('close');
 					}else{
 						$.messager.alert('提示','添加失败');
@@ -794,8 +795,8 @@
 	    			<td><input class="easyui-datetimebox" id="nextfollowtime" ></td>
 	    		</tr>
 	    		<tr>
-	    			<td>备注：</td>
-	    			<td><input class="easyui-textbox" id="content" ></td>
+	    			<td>内容：</td>
+	    			<td><input class="easyui-textbox" id="content1" ></td>
 	    		</tr>
 	    		
 	    	</table>
