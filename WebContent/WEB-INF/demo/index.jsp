@@ -18,7 +18,7 @@
 <meta name="author" contect="djcbpl@163.com">
 <meta property="og:title" content="EasyUI">
 <meta property="og:description" content="HTML, CSS, JS">
- 
+<!--  <meta http-equiv="refresh" content="2"> -->
 <!-- Meta -->
 <link rel="Bookmark" href="js/assets/default/images/logoIco.ico" />
 <link rel="Shortcut Icon" href="js/assets/default/images/logoIco.ico" />
@@ -66,7 +66,6 @@
 		如果今天已经签到了就隐藏签到的按钮
 	*/
 	
-	
 		<%-- var user="<%=session.getAttribute("user")%>"; --%>
 		var uid=${sessionScope.user.user_Id}; 
 		
@@ -89,18 +88,17 @@
 			},
 			success : function(res) {
 				if (res.success) {
-					alert(res.message);
+					$.messager.alert("提示",res.message);
 					//设置按钮为禁用
-					//location.reload();
-					$("#qd").attr("style","display:none");
-					//$("qd").css("background-color","#DCDCDC");
-				} else {
+					window.location.reload();
+ 					$("#qd").attr("style","display:none");
+ 				} else {
 					alert(res.message);
 				}
 			}
 		})
 	}
-
+	
 	function qiantui() {
 		$.ajax({
 			url : "yuaneditCheck",

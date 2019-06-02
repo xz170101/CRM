@@ -16,6 +16,17 @@
 	})
 	
 	function init(){
+		var startTime=$("#startTime").datebox("getValue");
+		var endTime=$("#endTime").datebox("getValue");
+		 if(startTime!=null && startTime!="" && endTime!=null && endTime!=""){
+	            var oDate1 = new Date(startTime);
+	            var oDate2 = new Date(endTime);
+	            if(oDate1.getTime() > oDate2.getTime()){
+	            	$("#sousuofrm").form("reset");
+	            	$.messager.alert("提示","跟踪开始时间不能大于结束时间！");
+	                return false;
+	            }
+	        } 
 		$("#dg").datagrid({
 			url:'selectFollows',
 			method:'post',
@@ -31,7 +42,9 @@
 			text5:$("#followstate").textbox("getValue"),	
 			text6:$("#followtype").textbox("getValue")
 			}
+		
 		})
+		
 		$("#sousuofrm").form("reset");
 	}
 	//显示学生名字
@@ -58,6 +71,8 @@
 		function Followclose(){
 			$('#lookFollows').dialog('close');
 		}
+	
+	
 </script>
 </head>
 <body>
@@ -73,8 +88,8 @@
 				<th data-options="field:'nextFollowTime'">下次追踪时间</th>
 				<th data-options="field:'followType'">追踪方式</th>
 				<th data-options="field:'createTime'">创建时间</th>
-				<th data-options="field:'followState'">追踪状态</th>
-				<th data-options="field:'conTent'">内容</th>
+				<th style="width:15%;" data-options="field:'followState'">追踪状态</th>
+				<th style="width:15%;" data-options="field:'conTent'">内容</th>
 				<th data-options="field:'caozuo',formatter:formattercaozuo">操作</th>
 			</tr>
 		</thead>
@@ -84,8 +99,8 @@
 		<form id="sousuofrm" class="easyui-form">
 			客户姓名: <input class="easyui-textbox" id="sname" style="width: 80px">
 			跟踪者: <input class="easyui-textbox" id="zixunname" style="width: 80px">
-			 跟踪时间:<input class="easyui-datebox"   id="startTime" >~
-			 		<input class="easyui-datebox" id="endTime" >	 			
+			 跟踪时间:<input class="easyui-datebox" data-options="editable:false" id="startTime" >~
+			 		<input  class="easyui-datebox" data-options="editable:false" id="endTime" >	 			
 			 回访情况: <input class="easyui-textbox" id="followstate" style="width: 80px">
 			跟踪方式: <input class="easyui-textbox" id="followtype" style="width: 80px">
 			 <a href="javascript:void(0)" class="easyui-linkbutton"

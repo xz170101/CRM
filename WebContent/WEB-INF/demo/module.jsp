@@ -88,6 +88,7 @@
 					if(data>0){
 						$.messager.alert("提示信息","添加成功！","info");
 						$("#addModule_window").dialog("close");
+						$("#addModuleForm").form("clear");
 						myTree();
 					}else
 					    $.messager.alert("提示信息","该模块已存在该节点！","info");

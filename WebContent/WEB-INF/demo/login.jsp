@@ -29,7 +29,6 @@
  
 </head>
 <script type="text/javascript">
-		
 	  $(function() {
 		//复选框对勾
 		if(getCookie('loginName')!=null && getCookie('loginName')!="" ){
@@ -37,7 +36,6 @@
 			$('#checked').attr("class","checked");
 			}
 		});  
-		 
 	  //遍历获取cookie中的值
 	  function getCookie(name){
 		  var strcookie = document.cookie;//获取cookie字符串
@@ -51,7 +49,6 @@
 		  }
 		 return "";
 	 }
-	   
 	//提交登陆表单
 	function subLogin() {
  		if(getCookie('loginName')!=null && getCookie('loginName')!=""){
@@ -68,15 +65,41 @@
 						}else{
 							$.messager.alert("提示",res.message)
 						}
-						/* if(data!=null){
-							
-						}else{
-							$.messager.alert("提示","请填写完整信息登录！");
-						} */
 					}
 				});
 			}else{
-				$.messager.alert("提示！","请填写完整信息登录！");
+				var yes='';
+		 		var rembername = $("#rembername").val();
+				if(rembername=='true'){
+					yes='yes';
+				};
+				var login_name=($("#username").val()).trim();
+				var login_pwd=$("#keyboards").val();
+				var code=$("#verification").val().trim();
+				 if(login_name !=null && login_name !=""){
+					 if(/^[a-z0-9]{6,12}$/.test(login_pwd) ){
+						 if(code !=null && code !=""){
+							 $.post("login", {    
+								 loginName:login_name,
+								 passWord:login_pwd,
+								 yzm:code,
+								 yes:yes
+					         }, function(res){
+					        	 if (res.success) {
+								     window.location.href = "crmIndex";
+									} else {
+									 	$.messager.alert("提示！",res.message);
+									}
+					     		},"json");
+							 }else{
+								 $.messager.alert("提示","请输入四位验证码！");
+							 }
+						 }else{
+				     		$.messager.alert("提示","密码必须为6~12位之间的数字或字母！");
+				     	}
+					 }else{
+						 $.messager.alert("提示","请输入用户名！");
+		     	}
 			}
 		}else{//cookie中有值【先判断是否有这个用户，如果有直接放行】
  			var yes='';
@@ -292,6 +315,7 @@
 				success:function(data){
 						if(data>0){
 							uId=data;
+							$("#yzfUserName").html('');
  							return true;
 						}else{
 							$("#yzfUserName").html('用户名不存在！');
@@ -325,7 +349,7 @@
 				dataType:'json',
 				success:function(data){
 					 	if(data==uId){
-					 		//alert("手机号查到的id:"+data)
+ 					 		$("#yzfUserName").html('');
 							return true;
 						}else{
 							$("#yzfphone").html('手机号不匹配');
