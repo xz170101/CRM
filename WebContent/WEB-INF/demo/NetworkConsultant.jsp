@@ -142,7 +142,8 @@
    								if(res>0) {
    									$("#stuTab").datagrid("reload"); //通过调用reload方法，让datagrid刷新显示数据
    									$("#insertStu").dialog("close");
-   									$.messager.alert("消息提示","添加成功"); 					
+   									$.messager.alert("消息提示","添加成功");
+   									$("#insertStuForm").from('clear');
    								} else {
    									$.messager.alert("消息提示","添加失败");
    								}

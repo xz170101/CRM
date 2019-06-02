@@ -90,8 +90,7 @@
 				if (res.success) {
 					$.messager.alert("提示",res.message);
 					//设置按钮为禁用
-					window.location.reload();
- 					$("#qd").attr("style","display:none");
+  					$("#qd").attr("style","display:none");
  				} else {
 					alert(res.message);
 				}
