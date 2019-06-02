@@ -269,7 +269,7 @@
 		//导出excel表格结束
 		
 		var UserName ='<%= session.getAttribute("userName")%>';
-		var webscoket=new WebSocket("ws://127.0.0.1:8080/CRM/NetworkConsultant/"+UserName);
+		var webscoket=new WebSocket("ws://47.102.125.51:8080/CRM/NetworkConsultant/"+UserName);
 		webscoket.onopen=function(){
 			console.log("连接建立");
 		}

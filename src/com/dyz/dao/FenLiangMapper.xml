@@ -15,7 +15,7 @@
 	   	
 		SELECT * FROM askers WHERE roleName='咨询师'
 		 and to_days(checkInTime) = to_days(now()) 
-		 and checkState=1  ORDER BY weight desc  
+		 and checkState=1  ORDER BY  aexit1Int asc ,  weight desc  
 	   </select>
 		
 		<!-- 查询手里的学生数 -->
