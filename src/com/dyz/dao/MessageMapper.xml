@@ -24,4 +24,7 @@
 	  	<select id="selectWeiduCount" parameterType="fenye" resultType="int">
 	  		select count(1) from message WHERE me_receiver=#{UserName} and me_isstate=0
 	  	</select>
+	  	<delete id="deleteMessage" parameterType="string">
+	  		delete from message where me_receiver=#{UserName} and me_isstate=1
+	  	</delete>
 	</mapper>

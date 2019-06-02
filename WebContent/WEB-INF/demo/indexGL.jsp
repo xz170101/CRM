@@ -60,7 +60,7 @@
 		        </div>
 	        <div id="center_1" data-options="region:'center',iconCls:'icon-ok' ">
 	            <div id="tt" class="easyui-tabs" data-options="fit:true"> <!--这个地方采用tabs控件进行布局-->
-	           		<div class="tabs-panels"><img src="img/timg.jpg" style="width:100%;height:100%;"/></div>
+	           		<div class="tabs-panels"><img src="img/timg.jpg" style="width:60%;height:100%;margin-left:280px;"/></div>
 	            </div>
 	        </div>
 	    </div>
