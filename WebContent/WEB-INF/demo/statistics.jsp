@@ -160,17 +160,17 @@
 					for(var j=0;j<=(data[1].length)-1;j++){
 					  if(data[1][j].name=='Monday'){
 						  	ab.splice(0,1,data[1][j].value)//从第0个位置，删1个，插入data[1][j].value
-						}else if(data[0][j].name=='Tuesday'){
+						}else if(data[1][j].name=='Tuesday'){
 							ab.splice(1, 1,data[1][j].value)
-						}else if(data[0][j].name=='Wednesday'){
+						}else if(data[1][j].name=='Wednesday'){
 							ab.splice(2, 1,data[1][j].value)
-						}else if(data[0][j].name=='Thursday'){
+						}else if(data[1][j].name=='Thursday'){
 							ab.splice(3,1,data[1][j].value)
-						}else if(data[0][j].name=='Friday'){
+						}else if(data[1][j].name=='Friday'){
 							ab.splice(4,1,data[1][j].value)
-						}else if(data[0][j].name=='Saturday'){
+						}else if(data[1][j].name=='Saturday'){
 							ab.splice(5, 1,data[1][j].value)
-						}else if(data[0][j].name=='Sunday'){
+						}else if(data[1][j].name=='Sunday'){
 							ab.splice(6,1,data[1][j].value)
 						}  
 		 			}
