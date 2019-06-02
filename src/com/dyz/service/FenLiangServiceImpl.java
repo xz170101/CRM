@@ -41,8 +41,8 @@ public class FenLiangServiceImpl implements FenLiangService {
 		if (state) {
 			if (students.size() > 0 && askers.size() > 1) {//咨询师数量大于1和学生的数量是否大于0
 				Integer count = 0;
-				Integer a = null;
-				for (int i = 0; i <= askers.size() - 1; i++) {//进循环					
+				Integer a = 0;
+				for (int i = 0; i < askers.size() ; i++) {//进循环					
 					if (i < askers.size() - 1) {//判断咨询师学生的差值
 						a = askers.get(i + 1).getAexit1Int() - askers.get(i).getAexit1Int();
 						//判断咨询师现有学生数量进行判断
@@ -50,13 +50,14 @@ public class FenLiangServiceImpl implements FenLiangService {
 							a=1;//继续循环
 						}
 					}
-					
-					if (i ==askers.size() - 1) {//
+					System.out.println(askers.size());
+					System.out.println(i);
+					if (i ==askers.size() - 1) {//咨询师数量 
 							i=-1;
 							askers = fenliangMapper.selectMaxZiXunShi();
 							continue;
 					}
-					
+					System.out.println(a);
 					for (int k = 0; k < a; k++) {//小于咨询师之间的学生数量
 						// 为学生分配咨询师
 						Student stu = new Student();
